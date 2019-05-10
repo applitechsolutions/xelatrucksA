@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- BEGIN PLUGINS STYLES -->
+    <link rel="stylesheet" href="assets/vendor/open-iconic/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.css">
+    <link rel="stylesheet" href="assets/vendor/flatpickr/flatpickr.min.css">
+    <!-- END PLUGINS STYLES -->
+    <!-- BEGIN THEME STYLES -->
+
+    <!-- BEGIN THEME STYLES -->
+    <link rel="stylesheet" href="assets/stylesheets/theme.min.css" data-skin="default">
+    <link rel="stylesheet" href="assets/stylesheets/theme-dark.min.css" data-skin="dark">
+    <link rel="stylesheet" href="assets/stylesheets/custom.css">
+    <!-- Disable unused skin immediately -->
+    <script>
+        var skin = localStorage.getItem('skin') || 'default';
+        var unusedLink = document.querySelector('link[data-skin]:not([data-skin="' + skin + '"])');
+
+        unusedLink.setAttribute('rel', '');
+        unusedLink.setAttribute('disabled', true);
+    </script>
+    <!-- END THEME STYLES -->
+
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <!-- styles for specific page goes here -->
+    <!-- END PAGE LEVEL STYLES -->
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <app-root></app-root>
+</body>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!-- BEGIN BASE JS -->
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/vendor/bootstrap/js/popper.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!-- END BASE JS -->
+<!-- BEGIN PLUGINS JS -->
+<script src="assets/vendor/pace/pace.min.js"></script>
+<script src="assets/vendor/stacked-menu/stacked-menu.min.js"></script>
+<script src="assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="assets/vendor/flatpickr/flatpickr.min.js"></script>
+
+<script src="assets/vendor/particles.js/particles.min.js"></script>
+<script>
+    /**
+     * Keep in mind that your scripts may not always be executed after the theme is completely ready,
+     * you might need to observe the `theme:load` event to make sure your scripts are executed after the theme is ready.
+     */
+    $(document).on('theme:init', () => {
+        /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+        particlesJS.load('auth-header', 'assets/javascript/pages/particles.json');
+    })
+</script>
+<!-- END PLUGINS JS -->
+
+<script src="assets/javascript/theme.min.js"></script>
+
+</html>

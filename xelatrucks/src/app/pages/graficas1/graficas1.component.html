@@ -1,3 +1,35 @@
-<p>
-  graficas1 works!
-</p>
+<!-- .section-deck -->
+<div class="section-deck">
+    <!-- .card -->
+    <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+            <app-grafico-dona [Label]="graficos.grafico1.labels" [Data]="graficos.grafico1.data" Type="doughnut"></app-grafico-dona>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <!-- .card -->
+    <div class="card card-fluid">
+        <app-grafico-dona [Label]="graficos.grafico2.labels" [Data]="graficos.grafico2.data" Type="doughnut"></app-grafico-dona>
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.section-deck -->
+<!-- .section-deck -->
+<div class="section-deck">
+    <!-- .card -->
+    <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+            <app-grafico-dona [Label]="graficos.grafico3.labels" [Data]="graficos.grafico3.data" Type="doughnut"></app-grafico-dona>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <!-- .card -->
+    <div class="card card-fluid">
+        <app-grafico-dona [Label]="graficos.grafico4.labels" [Data]="graficos.grafico4.data" Type="doughnut"></app-grafico-dona>
+    </div>
+    <!-- /.card -->
+</div>

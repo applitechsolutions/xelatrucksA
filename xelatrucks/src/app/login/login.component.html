@@ -8,18 +8,18 @@
         </p>
     </header>
     <!-- form -->
-    <form class="auth-form">
+    <form class="auth-form" ng-Submit="ingresar()">
         <!-- .form-group -->
         <div class="form-group">
             <div class="form-label-group">
-                <input type="text" id="inputUser" class="form-control" placeholder="Username" required="" autofocus=""> <label for="inputUser">Username</label>
+                <input type="text" id="inputUser" class="form-control" placeholder="Username" autofocus=""> <label for="inputUser">Username</label>
             </div>
         </div>
         <!-- /.form-group -->
         <!-- .form-group -->
         <div class="form-group">
             <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""> <label for="inputPassword">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password"> <label for="inputPassword">Password</label>
             </div>
         </div>
         <!-- /.form-group -->
@@ -27,6 +27,8 @@
         <div class="form-group">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
         </div>
+
+
         <!-- /.form-group -->
         <!-- .form-group -->
         <div class="form-group text-center">

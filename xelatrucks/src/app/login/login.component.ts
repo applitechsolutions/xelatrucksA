@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 
 declare function init_plugins();
 @Component({
@@ -18,5 +17,6 @@ export class LoginComponent implements OnInit {
 
   ingresar() {
     console.log('Ingresando...');
+    this.router.navigate(['/dashboard']);
   }
 }

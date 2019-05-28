@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/service.index';
 import { User } from '../../models/user.model';
+import { DynamicScriptLoaderServiceService } from '../../services/service.index';
 
 @Component({
   selector: 'app-user',
@@ -12,7 +13,7 @@ export class UserComponent implements OnInit {
 
   forma: FormGroup;
 
-  constructor( public _userService: UserService) {
+  constructor( public _userService: UserService, private dynamicScriptLoader: DynamicScriptLoaderServiceService) {
   }
 
   sonIguales( campo1: string, campo2: string) {
@@ -34,6 +35,8 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.loadScripts();
 
     this.forma = new FormGroup({
       nombre: new FormControl(null, Validators.required),
@@ -65,6 +68,13 @@ export class UserComponent implements OnInit {
     .subscribe( resp => {
       console.log(resp);
     });
+  }
+
+  private loadScripts() {
+    // You can load multiple scripts by just providing the key as argument into load method of the service
+    this.dynamicScriptLoader.load('select2js').then(data => {
+      console.log(data);
+    }).catch(error => console.log(error));
   }
 
 }

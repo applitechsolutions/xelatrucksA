@@ -15,6 +15,13 @@ export class SidebarService {
         { titulo: 'Promesas',  url: '/promesas' },
         { titulo: 'RxJs',  url: '/rxjs' }
       ]
+    },
+    {
+      titulo: 'Usuarios',
+      icono: 'menu-icon oi oi-person',
+      submenu: [
+        { titulo: 'Listar Usuarios', url: '/usuarios' }
+      ]
     }
   ];
 

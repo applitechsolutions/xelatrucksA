@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/service.index';
 import { User } from '../../models/user.model';
+
+import * as $ from 'jquery';
+import '../../../assets/vendor/select2/js/select2.js';
 
 @Component({
   selector: 'app-user',
@@ -10,9 +13,11 @@ import { User } from '../../models/user.model';
 })
 export class UserComponent implements OnInit {
 
+  select2: any;
   forma: FormGroup;
 
-  constructor( public _userService: UserService) {
+  constructor( public _userService: UserService,) {
+    
   }
 
   sonIguales( campo1: string, campo2: string) {
@@ -34,6 +39,8 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    $('.select2').select2();
 
     this.forma = new FormGroup({
       nombre: new FormControl(null, Validators.required),

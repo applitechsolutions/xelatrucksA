@@ -29,7 +29,15 @@
                         "styles": [
                             "src/styles.scss"
                         ],
-                        "scripts": [],
+                        "scripts": ["src/assets/vendor/jquery/jquery.min.js",
+                            "src/assets/vendor/bootstrap/js/popper.min.js",
+                            "src/assets/vendor/bootstrap/js/bootstrap.min.js",
+                            "src/assets/vendor/pace/pace.min.js",
+                            "src/assets/vendor/stacked-menu/stacked-menu.min.js",
+                            "src/assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js",
+                            "src/assets/vendor/flatpickr/flatpickr.min.js",
+                            "src/assets/javascript/theme.js"
+                        ],
                         "es5BrowserSupport": true
                     },
                     "configurations": {
@@ -40,7 +48,9 @@
                             }],
                             "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
+                            "sourceMap": {
+                                "scripts": true
+                            },
                             "extractCss": true,
                             "namedChunks": false,
                             "aot": true,

@@ -20,7 +20,8 @@ export class SidebarService {
       titulo: 'Usuarios',
       icono: 'menu-icon oi oi-person',
       submenu: [
-        { titulo: 'Listar Usuarios', url: '/usuarios' }
+        { titulo: 'Listar Usuarios', url: '/usuarios' },
+        { titulo: 'Editar Usuarios', url: '/usuario/luis' }
       ]
     }
   ];

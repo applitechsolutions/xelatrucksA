@@ -14,7 +14,7 @@ export class UserService {
 
   crearUsuario( usuario: User) {
 
-    const url = URL_SERVICES + '/user';
+    const url = URL_SERVICES + '/usuario';
 
     return this.http.post(url, usuario);
 

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserService } from '../../services/service.index';
+import { UserService, DynamicScriptLoaderServiceService } from '../../services/service.index';
 import { User } from '../../models/user.model';
-import { DynamicScriptLoaderServiceService } from '../../services/service.index';
+import * as $ from 'jquery';
 
+declare function select2(): any;
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -44,7 +45,7 @@ export class UserComponent implements OnInit {
       correo: new FormControl(null, [Validators.email, Validators.required]),
       password: new FormControl(null, Validators.required),
       password2: new FormControl(null, Validators.required),
-      role: new FormControl(null)
+      role: new FormControl('ADMIN_ROLE')
     }, { validators: this.sonIguales('password', 'password2')});
   }
 
@@ -58,9 +59,9 @@ export class UserComponent implements OnInit {
 
     const usuario = new User(
       this.forma.value.nombre,
-      this.forma.value.email,
+      this.forma.value.correo,
       this.forma.value.password,
-      this.forma.value.lastName,
+      this.forma.value.apel,
       this.forma.value.role,
     );
 

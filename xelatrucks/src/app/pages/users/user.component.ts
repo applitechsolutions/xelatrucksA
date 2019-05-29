@@ -1,6 +1,6 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserService, DynamicScriptLoaderServiceService } from '../../services/service.index';
+import { UserService } from '../../services/service.index';
 import { User } from '../../models/user.model';
 
 import * as $ from 'jquery';
@@ -17,8 +17,7 @@ export class UserComponent implements OnInit {
   select2: any;
   forma: FormGroup;
 
-  constructor( public _userService: UserService,) {
-    
+  constructor( public _userService: UserService) {
   }
 
   sonIguales( campo1: string, campo2: string) {

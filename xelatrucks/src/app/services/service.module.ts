@@ -5,8 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {
   SharedService,
   SidebarService,
-  UserService,
-  DynamicScriptLoaderServiceService
+  UserService
 } from './service.index';
 
 @NgModule({
@@ -18,8 +17,7 @@ import {
   providers: [
     SharedService,
     SidebarService,
-    UserService,
-    DynamicScriptLoaderServiceService
+    UserService
   ]
 })
 export class ServiceModule { }

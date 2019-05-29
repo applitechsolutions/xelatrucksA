@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { PagesComponent } from '../pages.component';
+
 @Component({
   selector: 'app-graficas1',
   templateUrl: './graficas1.component.html',
@@ -34,9 +36,10 @@ export class Graficas1Component implements OnInit {
     },
   };
 
-  constructor() { }
+  constructor(private parent: PagesComponent) { }
 
   ngOnInit() {
+    //this.parent.select2();
   }
 
 }

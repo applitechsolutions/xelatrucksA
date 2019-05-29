@@ -5,6 +5,7 @@ import { PAGES_ROUTES } from './pages.routes';
 
 // ng2-charts
 import { ChartsModule } from 'ng2-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // temporal
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
@@ -39,7 +40,8 @@ import { HttpClientModule } from '@angular/common/http';
     exports: [
         DashboardComponent,
         ProgressComponent,
-        Graficas1Component
+        Graficas1Component,
+        UserComponent
     ],
     imports: [
         CommonModule,
@@ -48,7 +50,8 @@ import { HttpClientModule } from '@angular/common/http';
         HttpClientModule,
         SharedModule,
         PAGES_ROUTES,
-        ChartsModule
+        ChartsModule,
+        NgbModule
     ]
 })
 

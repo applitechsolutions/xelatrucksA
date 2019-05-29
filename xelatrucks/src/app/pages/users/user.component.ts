@@ -1,8 +1,10 @@
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/service.index';
+import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 
+import swal from 'sweetalert';
 import * as $ from 'jquery';
 import '../../../assets/vendor/select2/js/select2.js';
 
@@ -16,8 +18,9 @@ export class UserComponent implements OnInit {
 
   select2: any;
   forma: FormGroup;
+  @ViewChild('name') nameField: ElementRef;
 
-  constructor( public _userService: UserService) {
+  constructor( public _userService: UserService, public router: Router) {
   }
 
   sonIguales( campo1: string, campo2: string) {
@@ -50,6 +53,7 @@ export class UserComponent implements OnInit {
       password2: new FormControl(null, Validators.required),
       role: new FormControl('ADMIN_ROLE')
     }, { validators: this.sonIguales('password', 'password2')});
+
   }
 
   crearUsuario() {
@@ -70,8 +74,10 @@ export class UserComponent implements OnInit {
 
     this._userService.crearUsuario(usuario)
     .subscribe( resp => {
-      console.log(resp);
+      usuario._id = resp._id;
+      this.router.navigate(['/usuario/' + usuario._id]);
     });
+
   }
 
 }

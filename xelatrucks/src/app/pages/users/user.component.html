@@ -11,7 +11,7 @@
                     <legend>Campos</legend>
                     <!-- .form-group -->
                     <div class="form-group">
-                        <label for="lbl2">Nombre <span class="badge badge-danger">Required</span></label> <input formControlName="nombre" name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese su nombre" required>
+                        <label for="lbl2">Nombre <span class="badge badge-danger">Required</span></label> <input #name formControlName="nombre" name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese su nombre" required>
                     </div>
                     <!-- /.form-group -->
                     <!-- .form-group -->
@@ -26,12 +26,12 @@
                     <!-- /.form-group -->
                     <!-- .form-group -->
                     <div class="form-group">
-                        <label class="d-flex justify-content-between" for="lbl5"><span>Contraseña <span class="badge badge-danger">Obligatorio</span></span> <a href="#passW" data-toggle="password"><i class="fa fa-eye fa-fw"></i> <span>Show</span></a></label>                        <input formControlName="password" name="password" type="password" class="form-control" value="label_with_action" id="passW">
+                        <label class="d-flex justify-content-between" for="lbl5"><span>Contraseña <span class="badge badge-danger">Obligatorio</span></span> <a href="#passW" data-toggle="password"><i class="fa fa-eye fa-fw"></i> <span>Show</span></a></label>                        <input formControlName="password" name="password" type="password" class="form-control" placeholder="Ingrese su contraseña" id="passW" required>
                     </div>
                     <!-- /.form-group -->
                     <!-- .form-group -->
                     <div class="form-group">
-                        <label class="d-flex justify-content-between" for="lbl5"><span>Confirmar Contraseña <span class="badge badge-danger">Obligatorio</span></span> <a href="#confPass" data-toggle="password"><i class="fa fa-eye fa-fw"></i> <span>Show</span></a></label>                        <input formControlName="password2" name="password2" type="password" class="form-control is-invalid" value="label_with_action" id="confPass">
+                        <label class="d-flex justify-content-between" for="lbl5"><span>Confirmar Contraseña <span class="badge badge-danger">Obligatorio</span></span> <a href="#confPass" data-toggle="password"><i class="fa fa-eye fa-fw"></i> <span>Show</span></a></label>                        <input formControlName="password2" name="password2" type="password" class="form-control is-invalid" placeholder="Confirme su contraseña" id="confPass" required>
                         <div class="invalid-feedback" *ngIf="forma.errors?.sonIguales && !forma.pristine">
                             <i class="fa fa-exclamation-circle fa-fw"></i> Las Contraseña debe coincidir. </div>
                     </div>

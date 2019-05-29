@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { UserService } from '../services/service.index';
+import { User } from '../models/user.model';
 
 declare function init_plugins();
 
@@ -14,15 +17,31 @@ export class LoginComponent implements OnInit {
 
   particlesJS: any;
   load: any;
-  constructor( public router: Router ) { }
+  email: string;
+  recuerdame: boolean;
+
+  constructor( public router: Router, public usuarioService: UserService ) { }
 
   ngOnInit() {
     particlesJS.load('auth-header', '../../assets/javascript/pages/particles.json');
     init_plugins();
+
+    this.email = localStorage.getItem('email') || '';
+    if (this.email.length > 1) {
+      this.recuerdame = true;
+    }
   }
 
-  ingresar() {
-    console.log('Ingresando...');
-    this.router.navigate(['/dashboard']);
+  ingresar( forma: NgForm ) {
+
+    if (forma.invalid) {
+      return;
+    }
+
+    const usuario = new User(null, forma.value.email, forma.value.password);
+
+    this.usuarioService.login(usuario, forma.value.recuerdame)
+      .subscribe( correcto => this.router.navigate(['/dashboard']));
+
   }
 }

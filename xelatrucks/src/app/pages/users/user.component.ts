@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService, DynamicScriptLoaderServiceService } from '../../services/service.index';
 import { User } from '../../models/user.model';
+
 import * as $ from 'jquery';
+import '../../../assets/vendor/select2/js/select2.js';
 
 declare function select2(): any;
 @Component({
@@ -12,9 +14,11 @@ declare function select2(): any;
 })
 export class UserComponent implements OnInit {
 
+  select2: any;
   forma: FormGroup;
 
-  constructor( public _userService: UserService, private dynamicScriptLoader: DynamicScriptLoaderServiceService) {
+  constructor( public _userService: UserService,) {
+    
   }
 
   sonIguales( campo1: string, campo2: string) {
@@ -37,7 +41,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
 
-    this.loadScripts();
+    $('.select2').select2();
 
     this.forma = new FormGroup({
       nombre: new FormControl(null, Validators.required),
@@ -69,13 +73,6 @@ export class UserComponent implements OnInit {
     .subscribe( resp => {
       console.log(resp);
     });
-  }
-
-  private loadScripts() {
-    // You can load multiple scripts by just providing the key as argument into load method of the service
-    this.dynamicScriptLoader.load('select2js').then(data => {
-      console.log(data);
-    }).catch(error => console.log(error));
   }
 
 }

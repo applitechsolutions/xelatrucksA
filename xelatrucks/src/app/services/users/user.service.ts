@@ -86,5 +86,10 @@ export class UserService {
 
   }
 
+  cargarUsuarios(desde: number = 0){
+    const url = URL_SERVICES + '/usuario?desde='+desde;
+    return this.http.get(url);
+  }
+
 
 }

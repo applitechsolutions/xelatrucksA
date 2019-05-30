@@ -1,3 +1,4 @@
+export { LoginGuardGuard } from './guards/login-guard.guard';
 export { UserService } from './users/user.service';
 
 

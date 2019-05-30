@@ -29,7 +29,8 @@
                         "styles": [
                             "src/styles.scss"
                         ],
-                        "scripts": ["src/assets/vendor/jquery/jquery.min.js",
+                        "scripts": [
+                            "src/assets/vendor/jquery/jquery.min.js",
                             "src/assets/vendor/bootstrap/js/popper.min.js",
                             "src/assets/vendor/bootstrap/js/bootstrap.min.js",
                             "src/assets/vendor/pace/pace.min.js",

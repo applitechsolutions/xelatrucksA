@@ -19,12 +19,15 @@ export class LoginComponent implements OnInit {
   load: any;
   email: string;
   recuerdame: boolean;
+  CurYear: number;
 
   constructor( public router: Router, public usuarioService: UserService ) { }
 
   ngOnInit() {
     particlesJS.load('auth-header', '../../assets/javascript/pages/particles.json');
     init_plugins();
+
+    this.CurYear = new Date().getFullYear();
 
     this.email = localStorage.getItem('email') || '';
     if (this.email.length > 1) {

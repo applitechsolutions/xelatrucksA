@@ -1,5 +1,5 @@
 <!-- floating action -->
-<button type="button" class="btn btn-success btn-floated"><span class="fa fa-plus"></span></button>
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/usuario', 'new']"><span class="fa fa-plus"></span></button>
 <!-- /floating action -->
 <!-- title and toolbar -->
 <div class="d-md-flex align-items-md-start">
@@ -35,8 +35,8 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                        </div><input #input type="text" class="form-control" placeholder="Buscar Usuario">
-                        <div class="spinner-border text-success" role="status">
+                        </div><input #input (keyup)="buscarUsuarios( input.value )" type="text" class="form-control" placeholder="Buscar Usuario">
+                        <div class="spinner-border text-success" role="status" *ngIf="cargando">
                             <span class="sr-only">Cargando...</span>
                         </div>
                     </div>
@@ -46,8 +46,8 @@
             </div>
             <!-- /.form-group -->
             <!-- .table-responsive -->
-            <div class="text-muted"> Mostrando 1 de 1,000 Usuarios registrados </div>
-            <div class="table-responsive">
+            <div class="text-muted"> Mostrando 1 de {{ totalRegistros }} Usuarios registrados </div>
+            <div class="table-responsive" *ngIf="!cargando">
                 <!-- .table -->
                 <table class="table">
                     <!-- thead -->
@@ -64,13 +64,14 @@
                     <!-- tbody -->
                     <tbody>
                         <!-- tr -->
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr *ngFor="let usuario of usuarios">
+                            <td>{{ usuario.name }}</td>
+                            <td>{{ usuario.lastName}}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ usuario.role }}</td>
                             <td class="align-middle text-right">
-                                <a href="#" class="btn btn-sm btn-icon btn-secondary"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Edit</span></a> <a href="#" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></a>
+                                <a [routerLink]="[ '/usuario', usuario._id]" class=" btn btn-sm btn-icon btn-secondary "><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
+                                <a class="btn btn-sm btn-icon btn-secondary "><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
                             </td>
                         </tr>
                         <!-- /tr -->
@@ -81,33 +82,33 @@
             </div>
             <!-- /.table-responsive -->
             <!-- .pagination -->
-            <ul class="pagination justify-content-center mt-4">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1"><i class="fa fa-lg fa-angle-left"></i></a>
+            <ul class="pagination justify-content-center mt-4 ">
+                <li class="page-item pointer ">
+                    <a class="page-link " (click)="cambiarDesde(-5) "><i class="fa fa-lg fa-angle-left "></i></a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">1</a>
+                <!-- <li class="page-item ">
+                    <a class="page-link " href="# ">1</a>
                 </li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">...</a>
+                <li class="page-item disabled ">
+                    <a class="page-link " href="# " tabindex="-1 ">...</a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">13</a>
+                <li class="page-item ">
+                    <a class="page-link " href="# ">13</a>
                 </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#">14</a>
+                <li class="page-item active ">
+                    <a class="page-link " href="# ">14</a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">15</a>
+                <li class="page-item ">
+                    <a class="page-link " href="# ">15</a>
                 </li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">...</a>
+                <li class="page-item disabled ">
+                    <a class="page-link " href="# " tabindex="-1 ">...</a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">24</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#"><i class="fa fa-lg fa-angle-right"></i></a>
+                <li class="page-item ">
+                    <a class="page-link " href="# ">24</a>
+                </li> -->
+                <li class="page-item pointer ">
+                    <a class="page-link " (click)="cambiarDesde(5) "><i class="fa fa-lg fa-angle-right "></i></a>
                 </li>
             </ul>
             <!-- /.pagination -->

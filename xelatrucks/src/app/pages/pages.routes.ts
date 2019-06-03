@@ -25,7 +25,7 @@ const pagesRoutes: Routes = [
             { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' } },
             // MANTENIMIENTOS
             { path: 'usuarios', component: UsersComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
-            { path: 'usuario/:id', component: UserComponent, data: { titulo: 'Actualizar Usuario' } },
+            { path: 'usuario/:id', component: UserComponent, data: { titulo: 'Actualizar/Crear Usuarios' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
         ]
     },

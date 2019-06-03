@@ -87,9 +87,17 @@ export class UserService {
   }
 
   cargarUsuarios(desde: number = 0){
-    const url = URL_SERVICES + '/usuario?desde='+desde;
+    const url = URL_SERVICES + '/usuario?desde=' + desde;
     return this.http.get(url);
   }
 
+  buscarUsuarios( termino: string) {
+    const url = URL_SERVICES + '/search/coleccion/users/' + termino;
 
+    return this.http.get(url)
+    .pipe(
+      map( (resp: any) => resp.users));
+  }
+
+  
 }

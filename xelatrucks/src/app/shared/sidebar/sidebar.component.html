@@ -8,50 +8,49 @@
             <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="Menu"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>
             <!-- /toggle menu -->
             <!-- .btn-account -->
-            <button class="btn-account d-flex d-md-none" type="button" data-toggle="collapse" data-target="#dropdown-aside"><span class="user-avatar user-avatar-lg"><img src="assets/images/avatars/profile.jpg" alt=""></span> <span class="account-icon"><span class="fa fa-caret-down fa-lg"></span></span> <span class="account-summary"><span class="account-name">Beni Arisandi</span> <span class="account-description">Marketing Manager</span></span></button>
+            <button class="btn-account d-flex d-md-none" type="button" data-toggle="collapse" data-target="#dropdown-aside"><span class="user-avatar user-avatar-lg"><img [src]="usuario.img | imagen" alt=""></span> <span class="account-icon"><span class="fa fa-caret-down fa-lg"></span></span> <span class="account-summary"><span class="account-name">{{ usuario.name + ' ' + usuario.lastName }}</span> <span class="account-description">{{ role }}</span></span></button>
             <!-- /.btn-account -->
             <!-- .dropdown-aside -->
             <div id="dropdown-aside" class="dropdown-aside d-md-none collapse">
                 <!-- dropdown-items -->
                 <div class="pb-3">
-                    <a class="dropdown-item" href="user-profile.html"><span class="dropdown-icon oi oi-person"></span> Profile</a> <a class="dropdown-item" href="#" (click)="UserService.logout()"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
-                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Help Center</a> <a class="dropdown-item" href="#">Ask Forum</a> <a class="dropdown-item" href="#">Keyboard Shortcuts</a>
+                    <a class="dropdown-item" href="#"><span class="dropdown-icon oi oi-person"></span> Perfil</a> <a class="dropdown-item" href="#" (click)="UserService.logout()"><span class="dropdown-icon oi oi-account-logout"></span> Cerrar Sesión</a>
                 </div>
                 <!-- /dropdown-items -->
             </div>
             <!-- /.dropdown-aside -->
             <!-- .top-bar-brand -->
             <div class="top-bar-brand bg-primary">
-                <a href="index.html"><img src="assets/images/brand-inverse.png" height="32" alt=""></a>
+                <a href="#" [routerLink]="[ '/dashboard' ]"><img class=" bordes " src="assets/images/logo-min.png " height="42px " alt=" "></a>
             </div>
             <!-- /.top-bar-brand -->
         </header>
         <!-- /.aside-header -->
         <!-- .aside-menu -->
-        <div class="aside-menu">
+        <div class="aside-menu ">
             <!-- .stacked-menu -->
-            <nav id="stacked-menu" class="stacked-menu">
+            <nav id="stacked-menu " class="stacked-menu ">
                 <!-- .menu -->
-                <ul class="menu">
+                <ul class="menu ">
                     <!-- .menu-item -->
-                    <li class="menu-item">
-                        <a routerLink="/dashboard" routerLinkActive="active" class="menu-link"><span class="menu-icon fas fa-home"></span><span class="menu-text">Dashboard</span></a>
+                    <li class="menu-item ">
+                        <a routerLink="/dashboard " routerLinkActive="active " class="menu-link "><span class="menu-icon fas fa-home "></span><span class="menu-text ">Dashboard</span></a>
                     </li>
                     <!-- /.menu-item -->
                     <!-- .menu-item -->
-                    <li *ngFor="let menu of _sidebar.menu" class="menu-item has-child">
-                        <a class="menu-link"><span [class]="menu.icono"></span> <span class="menu-text">{{menu.titulo}}</span> <span class="badge badge-subtle badge-success">{{menu.submenu.length}}</span></a>
+                    <li *ngFor="let menu of _sidebar.menu " class="menu-item has-child pointer ">
+                        <a class="menu-link "><span [class]="menu.icono "></span> <span class="menu-text ">{{menu.titulo}}</span> <span class="badge badge-subtle badge-success ">{{menu.submenu.length}}</span></a>
                         <!-- child menu -->
-                        <ul class="menu">
-                            <li *ngFor="let submenu of menu.submenu" class="menu-item">
-                                <a [routerLink]="[submenu.url]" routerLinkActive="active" class="menu-link">{{submenu.titulo}}</a>
+                        <ul class="menu ">
+                            <li *ngFor="let submenu of menu.submenu " class="menu-item ">
+                                <a [routerLink]="[submenu.url] " routerLinkActive="active " class="menu-link ">{{submenu.titulo}}</a>
                             </li>
                         </ul>
                         <!-- /child menu -->
                     </li>
                     <!-- /.menu-item -->
                     <!-- .menu-header -->
-                    <li class="menu-header">Interfaces </li>
+                    <li class="menu-header ">Interfaces </li>
                     <!-- /.menu-header -->
                 </ul>
                 <!-- /.menu -->

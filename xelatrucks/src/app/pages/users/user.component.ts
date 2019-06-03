@@ -20,6 +20,8 @@ export class UserComponent implements OnInit {
   forma: FormGroup;
   @ViewChild('name') nameField: ElementRef;
 
+  roles: any[] = [];
+
   constructor( public _userService: UserService, public router: Router) {
   }
 
@@ -42,8 +44,13 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    $('.select2').select2();
+    this.roles = [{
+        role: 'ADMIN_ROLE',
+        texto: 'Admistrador'
+    }, {
+      role: 'USER_ROLE',
+      texto: 'Operativo'
+    }];
 
     this.forma = new FormGroup({
       nombre: new FormControl(null, Validators.required),
@@ -51,14 +58,21 @@ export class UserComponent implements OnInit {
       correo: new FormControl(null, [Validators.email, Validators.required]),
       password: new FormControl(null, Validators.required),
       password2: new FormControl(null, Validators.required),
-      role: new FormControl('ADMIN_ROLE')
+      role: new FormControl(null, Validators.required)
     }, { validators: this.sonIguales('password', 'password2')});
+    //$('.select2').select2();
+
+  }
+
+  asignar() {
+  console.log('c');
 
   }
 
   crearUsuario() {
 
     console.log(this.forma.valid);
+    console.log(this.forma.value);
 
     if (this.forma.invalid) {
       return;

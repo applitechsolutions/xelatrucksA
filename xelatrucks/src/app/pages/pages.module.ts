@@ -25,6 +25,7 @@ import { UserComponent } from './users/user.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { HttpClientModule } from '@angular/common/http';
         PromesasComponent,
         RxjsComponent,
         UsersComponent,
-        UserComponent
+        UserComponent,
+        ProfileComponent
     ],
     exports: [
         DashboardComponent,

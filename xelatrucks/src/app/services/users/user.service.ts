@@ -80,10 +80,16 @@ export class UserService {
 
     return this.http.post(url, usuario)
       .pipe( map( (resp: any) => {
-        swal('Usuario Creado', usuario.email, 'success')
+        swal('Usuario Creado', usuario.email, 'success');
         return resp.usuario;
       }));
 
+  }
+
+  actualizarUsuario( usuario: User ) {
+    const url = URL_SERVICES + '/usuario/' + usuario._id + '?token=' + this.token;
+
+    return this.http.put(url, usuario);
   }
 
   cargarUsuarios(desde: number = 0){
@@ -99,5 +105,4 @@ export class UserService {
       map( (resp: any) => resp.users));
   }
 
-  
 }

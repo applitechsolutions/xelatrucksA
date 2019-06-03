@@ -53,7 +53,7 @@
                     <!-- thead -->
                     <thead>
                         <tr>
-                            <th>Nombre</th>
+                            <th> Nombre </th>
                             <th> Apellido </th>
                             <th> Email </th>
                             <th> Rol </th>
@@ -65,7 +65,8 @@
                     <tbody>
                         <!-- tr -->
                         <tr *ngFor="let usuario of usuarios">
-                            <td>{{ usuario.name }}</td>
+                            <td>
+                                <div class="user-avatar user-avatar-lg mr-3"><img class="img-fluid" [src]="usuario.img | imagen" alt="Card image cap"></div> {{ usuario.name }}</td>
                             <td>{{ usuario.lastName}}</td>
                             <td>{{ usuario.email }}</td>
                             <td>{{ usuario.role }}</td>

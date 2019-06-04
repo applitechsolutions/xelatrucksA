@@ -5,6 +5,7 @@ import { UserService } from '../services/service.index';
 import { User } from '../models/user.model';
 
 declare function init_plugins();
+declare var particlesJS: any;
 
 import * as $ from 'jquery';
 import '../../assets/vendor/particles.js/particles.min.js';
@@ -15,7 +16,6 @@ import '../../assets/vendor/particles.js/particles.min.js';
 })
 export class LoginComponent implements OnInit {
 
-  particlesJS: any;
   load: any;
   email: string;
   recuerdame: boolean;
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   constructor( public router: Router, public usuarioService: UserService ) { }
 
   ngOnInit() {
-    this.particlesJS.load('auth-header', '../../assets/javascript/pages/particles.json');
+    particlesJS.load('auth-header', '../../assets/javascript/pages/particles.json');
     init_plugins();
 
     this.CurYear = new Date().getFullYear();

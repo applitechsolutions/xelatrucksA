@@ -11,7 +11,7 @@ import { PipesModule } from '../pipes/pipes.module';
 
 // temporal
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
-import { NgSelectModule } from '@ng-select/ng-select';
+// import { NgSelectModule } from '@ng-select/ng-select';
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -55,7 +55,6 @@ import { ProfileComponent } from './profile/profile.component';
         SharedModule,
         PAGES_ROUTES,
         ChartsModule,
-        NgSelectModule,
         PipesModule
     ]
 })

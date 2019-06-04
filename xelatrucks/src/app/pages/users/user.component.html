@@ -38,15 +38,11 @@
                     <!-- /.form-group -->
                     <!-- .form-group -->
                     <div class="form-group">
-                        <!-- <label id="role">Rol <span class="badge badge-danger">Required</span></label> <select (change)="asignar()" formControlName="role" name="role" id="select22" class="select2 form-control" style="width:100%!important;" data-toggle="select2"
+                        <label id="role">Rol <span class="badge badge-danger">Required</span></label> <select formControlName="role" name="role" id="custom-select" class="custom-select form-control" style="width:100%!important;" data-toggle="select2"
                             data-placeholder="Seleccione un rol">
                             <option value="" selected> Seleccione un rol </option>
                             <option *ngFor="let role of roles" [value]="role.role"> {{ role.texto }} </option>
-                        </select> -->
-                        <ng-select class="select2 form-control">
-                            <ng-option *ngFor="let role of roles" [value]="role.role">{{role.texto}}</ng-option>
-                            <ng-option [value]="'custom'">Custom</ng-option>
-                        </ng-select>
+                        </select>
                     </div>
                     <!-- /.form-group -->
                 </fieldset>

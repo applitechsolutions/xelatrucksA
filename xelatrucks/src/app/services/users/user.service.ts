@@ -16,7 +16,7 @@ export class UserService {
   usuario: User;
   token: string;
 
-  constructor( 
+  constructor(
     public http: HttpClient,
     public Router: Router,
     public SubirAS: SubirArchivoService
@@ -127,6 +127,18 @@ export class UserService {
     .catch( resp => {
       console.log(resp);
     });
+  }
+
+  borrarUsuario( id: string) {
+    let url = URL_SERVICES + '/usuario/delete/' + id;
+    url += '?token=' + this.token;
+
+    return this.http.put(url, '')
+      .pipe(
+        map( resp => {
+          swal('Usuario borrado', 'El usuario ha sido eliminado correctamente', 'success');
+          return true;
+        }));
   }
 
 }

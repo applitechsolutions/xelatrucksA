@@ -3,6 +3,8 @@ import { User } from '../../models/user.model';
 import { UserService } from '../../services/service.index';
 import { URL_SERVICES } from '../../config/config';
 
+declare var swal: any;
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -22,17 +24,17 @@ export class UsersComponent implements OnInit {
   }
 
   cargarUsuarios() {
-  this.cargando = true;
+    this.cargando = true;
 
-  this.UsuarioService.cargarUsuarios(this.desde)
-  .subscribe( (resp: any) => {
-  this.totalRegistros = resp.total;
-  this.usuarios = resp.usuarios;
-  this.cargando = false;
-  });
+    this.UsuarioService.cargarUsuarios(this.desde)
+    .subscribe( (resp: any) => {
+    this.totalRegistros = resp.total;
+    this.usuarios = resp.usuarios;
+    this.cargando = false;
+    });
   }
 
-  cambiarDesde(valor: number){
+  cambiarDesde(valor: number) {
     const desde = this.desde + valor;
 
     if (desde >= this.totalRegistros) {
@@ -61,6 +63,35 @@ export class UsersComponent implements OnInit {
       .subscribe( (usuarios: User[]) => {
         this.usuarios = usuarios;
         this.cargando = false;
+    });
+  }
+
+  borrarUsuario(usuario: User) {
+    if (usuario._id === this.UsuarioService.usuario._id) {
+      swal('No puede borrar usuario', 'No se puede borrar a si mismo', 'error');
+      return;
+    }
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar a ' + usuario.name + ' ' + usuario.lastName,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+
+      if (borrar) {
+        this.UsuarioService.borrarUsuario(usuario._id)
+          .subscribe((borrado: any) => {
+            console.log( borrado );
+            this.cargarUsuarios();
+            if ((this.totalRegistros - 1) <= this.desde) {
+              this.cambiarDesde(-(this.totalRegistros - 1));
+            }
+          });
+      }
+
     });
   }
 

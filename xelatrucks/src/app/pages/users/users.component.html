@@ -69,10 +69,13 @@
                                 <div class="user-avatar user-avatar-lg mr-3"><img class="img-fluid" [src]="usuario.img | imagen" alt="Card image cap"></div> {{ usuario.name }}</td>
                             <td>{{ usuario.lastName}}</td>
                             <td>{{ usuario.email }}</td>
-                            <td>{{ usuario.role }}</td>
+                            <td>
+                                <span *ngIf="usuario.role==='ADMIN_ROLE'" class="badge badge-pill badge-danger">Administrador</span>
+                                <span *ngIf="usuario.role==='USER_ROLE'" class="badge badge-pill badge-warning">Operativo</span>
+                            </td>
                             <td class="align-middle text-right">
                                 <a [routerLink]="[ '/usuario', usuario._id]" class=" btn btn-sm btn-icon btn-secondary "><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
-                                <a class="btn btn-sm btn-icon btn-secondary "><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
+                                <a (click)="borrarUsuario(usuario)" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
                             </td>
                         </tr>
                         <!-- /tr -->

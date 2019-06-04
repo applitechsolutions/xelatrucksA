@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
   role: string;
 
   imagenSubir: File;
-  imagenTemp: string;
+  imagenTemp: string | ArrayBuffer;
 
   constructor(public userS: UserService) { }
 

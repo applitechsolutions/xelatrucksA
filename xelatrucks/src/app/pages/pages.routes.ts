@@ -27,7 +27,7 @@ const pagesRoutes: Routes = [
             { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil de usuario' } },
             // MANTENIMIENTOS
             { path: 'usuarios', component: UsersComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
-            { path: 'usuario/:id', component: UserComponent, data: { titulo: 'Actualizar/Crear Usuarios' } },
+            { path: 'usuario/:id', component: UserComponent, data: { titulo: 'Crear Usuario' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
         ]
     },

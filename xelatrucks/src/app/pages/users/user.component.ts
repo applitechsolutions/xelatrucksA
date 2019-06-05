@@ -5,8 +5,10 @@ import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 
 import swal from 'sweetalert';
-import * as $ from 'jquery';
 import '../../../assets/vendor/select2/js/select2.js';
+import '../../../assets/javascript/theme.js';
+import { AreaService } from '../../services/areas/area.service';
+import { Area } from '../../models/area.model';
 
 declare function select2(): any;
 @Component({
@@ -21,8 +23,18 @@ export class UserComponent implements OnInit {
   @ViewChild('name') nameField: ElementRef;
 
   roles: any[] = [];
+  areas: Area[] = [];
+  area = {
+    _id: '',
+    nombre: ''
+  };
+  userArea: Area[] = [];
 
-  constructor( public _userService: UserService, public router: Router) {
+  constructor( 
+    public _userService: UserService,
+    public router: Router,
+    public areaS: AreaService
+    ) {
   }
 
   sonIguales( campo1: string, campo2: string) {
@@ -44,13 +56,6 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.roles = [{
-        role: 'ADMIN_ROLE',
-        texto: 'Admistrador'
-    }, {
-      role: 'USER_ROLE',
-      texto: 'Operativo'
-    }];
 
     this.forma = new FormGroup({
       nombre: new FormControl(null, Validators.required),
@@ -58,15 +63,41 @@ export class UserComponent implements OnInit {
       correo: new FormControl(null, [Validators.email, Validators.required]),
       password: new FormControl(null, Validators.required),
       password2: new FormControl(null, Validators.required),
-      role: new FormControl(null, Validators.required)
+      role: new FormControl('', Validators.required)
     }, { validators: this.sonIguales('password', 'password2')});
-    //$('.select2').select2();
+    // $('.select2').select2();
 
+    this.roles = [{
+      role: 'ADMIN_ROLE',
+      texto: 'Admistrador'
+  }, {
+    role: 'USER_ROLE',
+    texto: 'Operativo'
+  }];
+    this.cargarAreas();
   }
 
-  asignar() {
-  console.log('c');
+  cargarAreas() {
+    this.areaS.cargarAreas()
+    .subscribe( (resp: any) => {
+    this.areas = resp.areas;
+    });
+  }
 
+  addArea() {
+    if (this.areas && this.area._id) {
+      const status: Area = this.areas.find(s => s._id === this.area._id);
+      if (status) {
+          if (this.userArea.find(e => e._id === status._id)) {
+            return;
+          } else {
+            this.userArea.push({
+              _id: status._id,
+              name: status.name
+            });
+          }
+      }
+    }
   }
 
   crearUsuario() {
@@ -84,6 +115,7 @@ export class UserComponent implements OnInit {
       this.forma.value.password,
       this.forma.value.apel,
       this.forma.value.role,
+      this.userArea,
     );
 
     this._userService.crearUsuario(usuario)

@@ -6,7 +6,7 @@
     <h6 class="page-title mr-sm-auto"> Listado de usuarios
     </h6>
     <!-- .btn-toolbar -->
-    <div class="btn-toolbar">
+    <!-- <div class="btn-toolbar">
         <button type="button" class="btn btn-light"><i class="oi oi-data-transfer-download"></i> <span class="ml-1">Export</span></button> <button type="button" class="btn btn-light"><i class="oi oi-data-transfer-upload"></i> <span class="ml-1">Import</span></button>
         <div class="dropdown">
             <button type="button" class="btn btn-light" data-toggle="dropdown"><span>More</span> <span class="fa fa-caret-down"></span></button>
@@ -16,7 +16,7 @@
                 <div class="dropdown-divider"></div><a href="#" class="dropdown-item">Share</a> <a href="#" class="dropdown-item">Archive</a> <a href="#" class="dropdown-item">Remove</a>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- /.btn-toolbar -->
 </div>
 <!-- /title and toolbar -->
@@ -70,11 +70,13 @@
                             <td>{{ usuario.lastName}}</td>
                             <td>{{ usuario.email }}</td>
                             <td>
-                                <span *ngIf="usuario.role==='ADMIN_ROLE'" class="badge badge-pill badge-danger">Administrador</span>
-                                <span *ngIf="usuario.role==='USER_ROLE'" class="badge badge-pill badge-warning">Operativo</span>
+                                <select (change)="actualizarRol( usuario )" [(ngModel)]="usuario.role" name="role" id="role" class="form-control custom-select">
+                                    <option value="ADMIN_ROLE">Administrador</option>
+                                    <option value="USER_ROLE">Operativo</option>
+                                </select>
                             </td>
                             <td class="align-middle text-right">
-                                <a [routerLink]="[ '/usuario', usuario._id]" class=" btn btn-sm btn-icon btn-secondary "><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
+                                <a [routerLink]="[ '/usuario', usuario._id]" class=" btn btn-sm btn-icon btn-secondary " alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
                                 <a (click)="borrarUsuario(usuario)" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
                             </td>
                         </tr>

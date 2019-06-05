@@ -76,7 +76,7 @@
                                 </select>
                             </td>
                             <td class="align-middle text-right">
-                                <a [routerLink]="[ '/usuario', usuario._id]" class=" btn btn-sm btn-icon btn-secondary " alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
+                                <a data-toggle="modal" data-target="#exampleModalScrollable" class=" btn btn-sm btn-icon btn-secondary " alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
                                 <a (click)="borrarUsuario(usuario)" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
                             </td>
                         </tr>
@@ -124,3 +124,48 @@
     <!-- /.card -->
 </div>
 <!-- /.page-section -->
+
+<!-- Normal modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 id="exampleModalScrollableLabel" class="modal-title"> Modal title </h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
+                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
+                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
+                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
+                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
+                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
+                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
+                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
+                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
+                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
+                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
+                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
+                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
+                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
+                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
+                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
+                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
+                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Click Me</button> <button type="button" class="btn btn-light">Secondary Action</button>
+            </div>
+            <!-- /.modal-footer -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

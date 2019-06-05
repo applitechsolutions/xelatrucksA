@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 
 import swal from 'sweetalert';
+import * as $ from 'jquery';
 import '../../../assets/vendor/select2/js/select2.js';
 import '../../../assets/javascript/theme.js';
 import { AreaService } from '../../services/areas/area.service';
@@ -56,6 +57,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+    // $('.select2').select2();
 
     this.forma = new FormGroup({
       nombre: new FormControl(null, Validators.required),
@@ -65,15 +67,14 @@ export class UserComponent implements OnInit {
       password2: new FormControl(null, Validators.required),
       role: new FormControl('', Validators.required)
     }, { validators: this.sonIguales('password', 'password2')});
-    // $('.select2').select2();
 
     this.roles = [{
       role: 'ADMIN_ROLE',
       texto: 'Admistrador'
-  }, {
-    role: 'USER_ROLE',
-    texto: 'Operativo'
-  }];
+      }, {
+      role: 'USER_ROLE',
+      texto: 'Operativo'
+    }];
     this.cargarAreas();
   }
 

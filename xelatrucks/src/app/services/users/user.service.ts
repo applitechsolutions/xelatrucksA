@@ -60,6 +60,17 @@ export class UserService {
     this.Router.navigate(['/login']);
   }
 
+  loginGoogle( token: string ) {
+    const url = URL_SERVICES + '/login/google';
+
+    return this.http.post(url, {token} )
+      .pipe(
+        map( (resp: any) => {
+          this.guardarStorage(resp.id, resp.token, resp.usuario);
+          return true;
+        }));
+  }
+
   login( usuario: User, recordar: boolean = false ) {
 
     if (recordar) {

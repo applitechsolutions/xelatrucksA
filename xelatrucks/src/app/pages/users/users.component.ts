@@ -95,4 +95,9 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  actualizarRol( usuario: User ) {
+    this.UsuarioService.actualizarUsuario( usuario )
+    .subscribe();
+  }
+
 }

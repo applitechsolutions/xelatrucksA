@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { pipe } from '@angular/core/src/render3';
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
+import { controllers } from 'chart.js';
 
 @Injectable({
   providedIn: 'root'
@@ -105,8 +106,12 @@ export class UserService {
 
     return this.http.put(url, usuario)
     .pipe( map( ( resp: any) => {
-      const usuarioDB: User = resp.usuario;
-      this.guardarStorage(usuarioDB._id, this.token, usuarioDB);
+
+      if (usuario._id === this.usuario._id) {
+        const usuarioDB: User = resp.usuario;
+        this.guardarStorage(usuarioDB._id, this.token, usuarioDB);
+      }
+
       swal('Usuario actualizado', usuario.name + ' ' + usuario.lastName, 'success');
       return true;
     }));

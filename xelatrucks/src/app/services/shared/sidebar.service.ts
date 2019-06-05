@@ -21,7 +21,7 @@ export class SidebarService {
       icono: 'menu-icon oi oi-person',
       submenu: [
         { titulo: 'Listar Usuarios', url: '/usuarios' },
-        { titulo: 'Editar Usuarios', url: '/usuario/luis' }
+        { titulo: 'Crear Nuevo', url: '/usuario/new' }
       ]
     }
   ];

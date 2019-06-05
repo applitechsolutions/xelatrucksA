@@ -1,0 +1,52 @@
+<!-- Normal modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title"> Modal title </h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body text-center">
+                <!-- .media -->
+                <div class="media mb-3">
+                    <!-- avatar -->
+                    <div class="user-avatar user-avatar-xl fileinput-button">
+                        <div class="fileinput-button-label"> Cambiar foto </div>
+                        <img *ngIf="!imagenTemp" [src]="'xxx' | imagen" alt="">
+                        <img *ngIf="imagenTemp" [src]="imagenTemp" alt=""> <input (change)="seleccionImage( $event.target.files[0] )" id="fileupload-avatar" type="file" name="avatar">
+                    </div>
+                    <!-- /avatar -->
+                    <!-- .media-body -->
+                    <div class="media-body pl-3">
+                        <h3 class="card-title"> Foto </h3>
+                        <h6 class="card-subtitle text-muted"> Haz clic en el Avatar actual para cambiar la foto. </h6>
+                        <p class="card-text">
+                            <small>JPG 400x400, &lt; 2 MB.</small>
+                        </p>
+                        <p class="card-text" *ngIf="imagenSubir"> Ha seleccionado una foto</p>
+                        <!-- The avatar upload progress bar -->
+                        <div id="progress-avatar" class="progress progress-xs fade">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!-- /avatar upload progress bar -->
+                    </div>
+                    <!-- /.media-body -->
+                </div>
+                <!-- /.media -->
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+                <button type="button" (click)="subirImagen()" [disabled]="!imagenTemp" class="btn btn-primary">Subir imagen</button> <button type="button" id="close" (click)="cerrarModal()" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+            </div>
+            <!-- /.modal-footer -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -26,6 +26,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
+import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { ProfileComponent } from './profile/profile.component';
         RxjsComponent,
         UsersComponent,
         UserComponent,
-        ProfileComponent
+        ProfileComponent,
+        ModalUploadComponent
     ],
     exports: [
         DashboardComponent,

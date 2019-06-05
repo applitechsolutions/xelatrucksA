@@ -96,7 +96,7 @@ export class UserService {
     return this.http.post(url, usuario)
       .pipe( map( (resp: any) => {
         swal('Usuario Creado', usuario.email, 'success');
-        return resp.usuario;
+        return resp;
       }));
 
   }

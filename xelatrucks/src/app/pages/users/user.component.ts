@@ -100,12 +100,25 @@ export class UserComponent implements OnInit {
     }
   }
 
+  deleteArea(idArea) {
+      this.userArea.forEach( (area, index) => {
+          if (area._id === idArea) {
+            this.userArea.splice(index, 1);
+          }
+      });
+  }
+
   crearUsuario() {
 
     console.log(this.forma.valid);
     console.log(this.forma.value);
 
     if (this.forma.invalid) {
+      return;
+    }
+
+    if (this.userArea.length === 0) {
+      swal('Oops...', 'Por favor asigna al menos un área', 'warning');
       return;
     }
 
@@ -120,8 +133,7 @@ export class UserComponent implements OnInit {
 
     this._userService.crearUsuario(usuario)
     .subscribe( resp => {
-      usuario._id = resp._id;
-      this.router.navigate(['/usuario/' + usuario._id]);
+      this.router.navigate(['/usuarios']);
     });
 
   }

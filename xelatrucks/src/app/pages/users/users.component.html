@@ -76,7 +76,7 @@
                                 </select>
                             </td>
                             <td class="align-middle text-right">
-                                <a data-toggle="modal" data-target="#exampleModalScrollable" class=" btn btn-sm btn-icon btn-secondary " alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
+                                <a (click)="mostrarAreas( usuario._id, usuario.name + ' ' + usuario.lastName )" data-toggle="modal" data-target="#exampleModalScrollable" class=" btn btn-sm btn-icon btn-secondary " alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
                                 <a (click)="borrarUsuario(usuario)" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
                             </td>
                         </tr>
@@ -133,34 +133,43 @@
         <div class="modal-content">
             <!-- .modal-header -->
             <div class="modal-header">
-                <h5 id="exampleModalScrollableLabel" class="modal-title"> Modal title </h5>
+                <h5 id="exampleModalScrollableLabel" class="modal-title"> {{ modalTitle }} </h5>
             </div>
             <!-- /.modal-header -->
             <!-- .modal-body -->
             <div class="modal-body">
-                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
-                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
-                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
-                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
-                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
-                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
-                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
-                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
-                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
-                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
-                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
-                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
-                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
-                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
-                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
-                <p> Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. </p>
-                <p> Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. </p>
-                <p> Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla. </p>
+                <h5> Asignar áreas de trabajo: </h5>
+                <div class="form-group">
+                    <label class="col-form-label" for="selDefault">Área</label> <select class="form-control custom-select" id="selDefault">
+                      <option value=""> Seleccione un área </option>
+                      <option *ngFor="let area of areas" [value]="area._id" > {{ area.name }} </option>
+                    </select>
+                </div>
+                <button type="button" (click)="addArea()" class="btn btn-warning">Asignar área</button>
+                <br>
+                <!-- .table -->
+                <table class="table dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th> Área </th>
+                            <th> Quitar </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="">
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-danger" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- /.table -->
             </div>
             <!-- /.modal-body -->
             <!-- .modal-footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Click Me</button> <button type="button" class="btn btn-light">Secondary Action</button>
+                <button type="button" class="btn btn-primary">Guardar</button> <button type="button" data-dismiss="modal" class="btn btn-light">Cerrar</button>
             </div>
             <!-- /.modal-footer -->
         </div>

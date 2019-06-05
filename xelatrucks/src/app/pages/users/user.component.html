@@ -47,7 +47,7 @@
                         <!-- /.form-group -->
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label id="role">Rol <span class="badge badge-danger">Required</span></label> <select formControlName="role" name="role" class="custom-select" id="selDefault">
+                            <label id="role">Rol <span class="badge badge-danger">Required</span></label> <select formControlName="role" name="role" class="form-control custom-select" id="selDefault">
                                  <option value=""> Seleccione un rol </option>
                                 <option *ngFor="let role of roles" [value]="role.role"> {{ role.texto }}
                                 </option>
@@ -87,7 +87,7 @@
             <br><br>
             <h5> Asignar áreas de trabajo: </h5>
             <div class="form-group">
-                <label class="col-form-label" for="selDefault">Área</label> <select [(ngModel)]="area._id" class="custom-select" id="selDefault">
+                <label class="col-form-label" for="selDefault">Área</label> <select [(ngModel)]="area._id" class="form-control custom-select" id="selDefault">
                       <option value=""> Seleccione un área </option>
                       <option *ngFor="let area of areas" [value]="area._id" > {{ area.name }} </option>
                     </select>

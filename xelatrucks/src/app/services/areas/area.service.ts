@@ -20,4 +20,9 @@ export class AreaService {
     const url = URL_SERVICES + '/area';
     return this.http.get(url);
   }
+
+  cargarUserAreas(_user: string) {
+    const url = URL_SERVICES + '/userarea/' + _user;
+    return this.http.get(url);
+  }
 }

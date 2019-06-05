@@ -3,6 +3,9 @@ import { User } from '../../models/user.model';
 import { UserService } from '../../services/service.index';
 import { URL_SERVICES } from '../../config/config';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
+import { AreaService } from '../../services/areas/area.service';
+import { UserArea } from 'src/app/models/userArea.model';
+import { Area } from '../../models/area.model';
 
 declare var swal: any;
 
@@ -14,13 +17,22 @@ declare var swal: any;
 export class UsersComponent implements OnInit {
 
   usuarios: User[] = [];
+  userAreas: UserArea[] = [];
+  areas: Area[] = [];
+  area = {
+    _id: '',
+    nombre: ''
+  };
+
   desde: number = 0;
   totalRegistros: number = 0;
   cargando: boolean = true;
+  modalTitle: string = 'Áreas asignadas';
 
   constructor(
     public UsuarioService: UserService,
-    public modalUploadS: ModalUploadService
+    public modalUploadS: ModalUploadService,
+    public areaS: AreaService
     ) { }
 
   ngOnInit() {
@@ -28,6 +40,17 @@ export class UsersComponent implements OnInit {
 
     this.modalUploadS.notificacion
         .subscribe( resp => this.cargarUsuarios());
+
+    this.cargarAreas();
+  }
+
+  // CARGAR LISTADOS
+
+  cargarAreas() {
+    this.areaS.cargarAreas()
+    .subscribe( (resp: any) => {
+    this.areas = resp.areas;
+    });
   }
 
   cargarUsuarios() {
@@ -40,6 +63,8 @@ export class UsersComponent implements OnInit {
     this.cargando = false;
     });
   }
+
+  // TABLA
 
   cambiarDesde(valor: number) {
     const desde = this.desde + valor;
@@ -102,13 +127,44 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  // ACTUALIZAR ROLE
+
   actualizarRol( usuario: User ) {
     this.UsuarioService.actualizarUsuario( usuario )
     .subscribe();
   }
 
+  // ACTUALIZAR FOTO
+
   mostrarModal(id: string) {
     this.modalUploadS.mostrarModal( 'users' , id );
+  }
+
+  // ACTUALIZAR AREAS
+
+  mostrarAreas(user: string, name: string) {
+    this.modalTitle = name;
+
+    this.areaS.cargarUserAreas(user)
+    .subscribe( (resp: any) => {
+      console.log(resp.areas);
+    });
+  }
+
+  addArea() {
+    if (this.areas && this.area._id) {
+      const status: Area = this.areas.find(s => s._id === this.area._id);
+      if (status) {
+          if (this.userAreas.find(e => e._id === status._id)) {
+            return;
+          } else {
+            this.userAreas.push({
+              _id: status._id,
+              name: status.name
+            });
+          }
+      }
+    }
   }
 
 }

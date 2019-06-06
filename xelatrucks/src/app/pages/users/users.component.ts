@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/service.index';
-import { URL_SERVICES } from '../../config/config';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 import { AreaService } from '../../services/areas/area.service';
 import { UserArea } from 'src/app/models/userArea.model';
 import { Area } from '../../models/area.model';
+import { map } from 'rxjs/operators';
 
 declare var swal: any;
 
@@ -23,6 +23,7 @@ export class UsersComponent implements OnInit {
     _id: '',
     nombre: ''
   };
+  user: string = '';
 
   desde: number = 0;
   totalRegistros: number = 0;
@@ -82,7 +83,6 @@ export class UsersComponent implements OnInit {
   }
 
   buscarUsuarios( termino: string){
-    console.log(termino);
 
     if (termino.length <= 0) {
       this.cargarUsuarios();
@@ -116,7 +116,6 @@ export class UsersComponent implements OnInit {
       if (borrar) {
         this.UsuarioService.borrarUsuario(usuario._id)
           .subscribe((borrado: any) => {
-            console.log( borrado );
             this.cargarUsuarios();
             if ((this.totalRegistros - 1) <= this.desde) {
               this.cambiarDesde(-(this.totalRegistros - 1));
@@ -142,29 +141,67 @@ export class UsersComponent implements OnInit {
 
   // ACTUALIZAR AREAS
 
-  mostrarAreas(user: string, name: string) {
+  abrirModal(user: string, name: string) {
     this.modalTitle = name;
+    this.user = user;
 
-    this.areaS.cargarUserAreas(user)
-    .subscribe( (resp: any) => {
-      console.log(resp.areas);
-    });
+    this.mostrarAreas( user );
   }
 
-  addArea() {
+  mostrarAreas(user: string) {
+    this.areaS.cargarUserAreas(user)
+      .subscribe( (resp: any) => {
+        this.userAreas = resp;
+        console.log(this.userAreas);
+        console.log(this.userAreas.map( (resp: any) => resp._area ));
+      });
+  }
+
+  addArea(user: string) {
     if (this.areas && this.area._id) {
       const status: Area = this.areas.find(s => s._id === this.area._id);
       if (status) {
-          if (this.userAreas.find(e => e._id === status._id)) {
+          if (this.userAreas.map( (resp: any) => resp._area ).find(e => e._id === status._id)) {
             return;
           } else {
-            this.userAreas.push({
-              _id: status._id,
-              name: status.name
-            });
+              this.userAreas.push({
+                _area: {
+                  _id: status._id,
+                  name: status.name
+              },
+                _user: user
+              });
           }
       }
     }
+    console.log(this.userAreas);
   }
+
+  deleteArea(idArea: string) {
+
+    const areas: Area[] = this.userAreas.map( (resp: any) => resp._area );
+    areas.forEach( (area, index) => {
+      if (area._id === idArea) {
+        this.userAreas.splice(index, 1);
+      }
+    });
+}
+
+crearUsuario() {
+
+  if (this.userAreas.length === 0) {
+    swal('Oops...', 'Por favor asigna al menos un área', 'warning');
+    return;
+  }
+
+  const areas: Area[] = this.userAreas.map( (resp: any) => resp._area );
+
+  this.areaS.crearUserArea( areas, this.user )
+  .subscribe();
+
+  const element: HTMLElement = document.getElementById('close') as HTMLElement;
+  element.click();
+
+}
 
 }

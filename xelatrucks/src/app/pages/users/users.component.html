@@ -76,7 +76,7 @@
                                 </select>
                             </td>
                             <td class="align-middle text-right">
-                                <a (click)="mostrarAreas( usuario._id, usuario.name + ' ' + usuario.lastName )" data-toggle="modal" data-target="#exampleModalScrollable" class=" btn btn-sm btn-icon btn-secondary " alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
+                                <a (click)="abrirModal( usuario._id, usuario.name + ' ' + usuario.lastName )" data-toggle="modal" data-target="#exampleModalScrollable" class=" btn btn-sm btn-icon btn-secondary " alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
                                 <a (click)="borrarUsuario(usuario)" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
                             </td>
                         </tr>
@@ -140,12 +140,12 @@
             <div class="modal-body">
                 <h5> Asignar áreas de trabajo: </h5>
                 <div class="form-group">
-                    <label class="col-form-label" for="selDefault">Área</label> <select class="form-control custom-select" id="selDefault">
+                    <label class="col-form-label" for="selDefault">Área</label> <select [(ngModel)]="area._id" class="form-control custom-select" id="selDefault">
                       <option value=""> Seleccione un área </option>
                       <option *ngFor="let area of areas" [value]="area._id" > {{ area.name }} </option>
                     </select>
                 </div>
-                <button type="button" (click)="addArea()" class="btn btn-warning">Asignar área</button>
+                <button type="button" (click)="addArea( user )" class="btn btn-warning">Asignar área</button>
                 <br>
                 <!-- .table -->
                 <table class="table dt-responsive nowrap w-100">
@@ -156,10 +156,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="">
-                            <td></td>
+                        <tr *ngFor="let userArea of userAreas">
+                            <td>{{ userArea._area.name }}</td>
                             <td>
-                                <button type="button" class="btn btn-danger" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <button (click)="deleteArea(userArea._area._id)" type="button" class="btn btn-danger" aria-label="Close"><span aria-hidden="true">×</span></button>
                             </td>
                         </tr>
                     </tbody>
@@ -169,7 +169,7 @@
             <!-- /.modal-body -->
             <!-- .modal-footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Guardar</button> <button type="button" data-dismiss="modal" class="btn btn-light">Cerrar</button>
+                <button (click)="crearUsuario()" type="button" class="btn btn-primary">Guardar</button> <button id="close" type="button" data-dismiss="modal" class="btn btn-light">Cerrar</button>
             </div>
             <!-- /.modal-footer -->
         </div>

@@ -31,7 +31,7 @@ export class UserComponent implements OnInit {
   };
   userArea: Area[] = [];
 
-  constructor( 
+  constructor(
     public _userService: UserService,
     public router: Router,
     public areaS: AreaService

@@ -28,7 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
-import { VehicleComponent } from './vehicle.component';
+import { VehicleComponent } from './vehicles/vehicle.component';
 
 
 @NgModule({

@@ -7,21 +7,18 @@ export class SidebarService {
 
   menu: any = [
     {
-      titulo: 'Curso',
-      icono: 'menu-icon oi oi-browser',
-      submenu: [
-        { titulo: 'Progress', url: '/progress' },
-        { titulo: 'Graficas',  url: '/graficas1' },
-        { titulo: 'Promesas',  url: '/promesas' },
-        { titulo: 'RxJs',  url: '/rxjs' }
-      ]
-    },
-    {
       titulo: 'Usuarios',
       icono: 'menu-icon oi oi-person',
       submenu: [
         { titulo: 'Listar Usuarios', url: '/usuarios' },
         { titulo: 'Crear Nuevo', url: '/usuario/new' }
+      ]
+    }, {
+      titulo: 'Vehículos',
+      icono: 'menu-icon fas fa-truck',
+      submenu: [
+        { titulo: 'Listar vehículos', url: '/vehicles' },
+        { titulo: 'Crear vehículo', url: '/vehicle/new' }
       ]
     }
   ];

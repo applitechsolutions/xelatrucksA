@@ -37,7 +37,11 @@
                             "src/assets/vendor/stacked-menu/stacked-menu.min.js",
                             "src/assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js",
                             "src/assets/vendor/flatpickr/flatpickr.min.js",
-                            "src/assets/javascript/theme.js"
+                            "src/assets/javascript/theme.js",
+                            "src/assets/vendor/datatables/jquery.dataTables.min.js",
+                            "src/assets/vendor/datatables/extensions/responsive/dataTables.responsive.min.js",
+                            "src/assets/vendor/datatables/extensions/responsive/responsive.bootstrap4.min.js",
+                            "src/assets/javascript/pages/dataTables.bootstrap.js"
                         ],
                         "es5BrowserSupport": true
                     },

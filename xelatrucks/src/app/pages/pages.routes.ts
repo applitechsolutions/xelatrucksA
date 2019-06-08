@@ -12,6 +12,8 @@ import { LoginGuardGuard } from '../services/guards/login-guard.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
 import { VehicleComponent } from './vehicles/vehicle.component';
+import { PartsComponent } from './parts/parts.component';
+import { PartComponent } from './parts/part.component';
 
 
 
@@ -30,8 +32,11 @@ const pagesRoutes: Routes = [
             // MANTENIMIENTOS
             { path: 'usuarios', component: UsersComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
             { path: 'usuario/:id', component: UserComponent, data: { titulo: 'Crear Usuario' } },
+            // TALLER
             { path: 'vehicles', component: VehiclesComponent, data: { titulo: 'Mantenimiento de Vehículos' } },
             { path: 'vehicle/:id', component: VehicleComponent, data: { titulo: 'Crear Vehículo' } },
+            { path: 'parts', component: PartsComponent, data: { titulo: 'Mantenimiento de Repuestos' } },
+            { path: 'part/:id', component: PartComponent, data: { titulo: 'Crear Repuesto' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
         ]
     },

@@ -13,12 +13,23 @@ export class SidebarService {
         { titulo: 'Listar Usuarios', url: '/usuarios' },
         { titulo: 'Crear Nuevo', url: '/usuario/new' }
       ]
-    }, {
+    }
+  ];
+
+  menuTaller: any = [
+    {
       titulo: 'Vehículos',
       icono: 'menu-icon fas fa-truck',
       submenu: [
         { titulo: 'Listar vehículos', url: '/vehicles' },
         { titulo: 'Crear vehículo', url: '/vehicle/new' }
+      ]
+    },
+    {
+      titulo: 'Repuestos',
+      icono: 'menu-icon fas fa-cogs',
+      submenu: [
+        { titulo: 'Listar Repuestos', url: '/parts' }
       ]
     }
   ];

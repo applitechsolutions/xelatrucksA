@@ -29,6 +29,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
 import { VehicleComponent } from './vehicles/vehicle.component';
+import { PartsComponent } from './parts/parts.component';
+import { PartComponent } from './parts/part.component';
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import { VehicleComponent } from './vehicles/vehicle.component';
         ProfileComponent,
         ModalUploadComponent,
         VehiclesComponent,
-        VehicleComponent
+        VehicleComponent,
+        PartsComponent,
+        PartComponent
     ],
     exports: [
         DashboardComponent,

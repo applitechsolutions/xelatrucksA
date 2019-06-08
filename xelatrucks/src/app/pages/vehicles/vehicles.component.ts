@@ -11,7 +11,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
-//declare function DataTable(): any;
+// declare function DataTable(): any;
 
 @Component({
   selector: 'app-vehicles',
@@ -64,6 +64,8 @@ export class VehiclesComponent implements OnInit {
           zeroRecords: 'Sin resultados encontrados'
       }
     });
+
+    
   }
 
 }

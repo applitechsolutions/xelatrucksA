@@ -1,3 +1,54 @@
-<p>
-  part works!
-</p>
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .page-title-bar -->
+    <header class="page-title-bar">
+        <button class="btn btn-danger btn-floated d-lg-none" type="button" data-toggle="sidebar"><i class="fa fa-th-list"></i></button>
+    </header>
+    <!-- /.page-title-bar -->
+    <!-- .section-deck -->
+    <div class="section-deck">
+        <!-- .card -->
+        <div class="card card-fluid">
+            <!-- .card-body -->
+            <div class="card-body">
+                <h4 class="card-title"> Campos </h4>
+                <h6 class="card-subtitle mb-4"> Aquí puede crear repuestos para el mantenimiento de los vehículos </h6>
+                <!-- form -->
+                <form ngNativeValidate [formGroup]="forma" (ngSubmit)="crearRepuesto()">
+                    <fieldset>
+                        <!-- .row -->
+                        <div class="row mb-3">
+                            <label for="code" class="col-lg-3 text-lg-right">Código</label>
+                            <div class="col-lg-8 col-xl-6">
+                                <input formControlName="code" type="text" id="code" name="code" class="form-control" placeholder="Ingrese el código de la pieza">
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                        <!-- .row -->
+                        <div class="row mb-3">
+                            <label for="desc" class="col-lg-3 text-lg-right">Descripción</label>
+                            <div class="col-lg-8 col-xl-6">
+                                <input formControlName="desc" type="text" id="desc" name="desc" class="form-control" placeholder="Ingrese un nombre o una descripción del respuesto">
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                        <!-- .row -->
+                        <div class="row mb-3">
+                            <label for="minStock" class="col-lg-3 text-lg-right">Existencia mínima</label>
+                            <div class="col-lg-8 col-xl-6">
+                                <input formControlName="minStock" type="number" id="minStock" name="minStock" class="form-control" placeholder="Ingrese una existencía mínima para el repuesto">
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </fieldset>
+                    <button class="btn btn-primary " type="submit " id="btnPart"><i class="fa fa-save "></i> Guardar</button>
+                </form>
+                <!-- /form -->
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.section-deck -->
+</div>
+<!-- /.page-inner -->

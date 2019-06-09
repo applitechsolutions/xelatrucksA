@@ -31,6 +31,8 @@ import { VehiclesComponent } from './vehicles/vehicles.component';
 import { VehicleComponent } from './vehicles/vehicle.component';
 import { PartsComponent } from './parts/parts.component';
 import { PartComponent } from './parts/part.component';
+import { OrdersComponent } from './orders/orders.component';
+import { OrderComponent } from './orders/order.component';
 
 
 @NgModule({
@@ -49,7 +51,9 @@ import { PartComponent } from './parts/part.component';
         VehiclesComponent,
         VehicleComponent,
         PartsComponent,
-        PartComponent
+        PartComponent,
+        OrderComponent,
+        OrdersComponent
     ],
     exports: [
         DashboardComponent,

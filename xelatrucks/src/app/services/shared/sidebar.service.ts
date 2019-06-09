@@ -16,6 +16,17 @@ export class SidebarService {
     }
   ];
 
+  menuViajes: any = [
+    {
+      titulo: 'Pedidos',
+      icono: 'menu-icon fas fa-file-invoice',
+      submenu: [
+        { titulo: 'Listar Pedidos', url: '/orders' },
+        { titulo: 'Crear Pedido', url: '/order/new' }
+      ]
+    }
+  ];
+
   menuTaller: any = [
     {
       titulo: 'Vehículos',

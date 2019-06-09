@@ -18,7 +18,7 @@
                         <legend>Campos</legend>
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label for="lbl2">Nombre <span class="badge badge-danger">Required</span></label> <input #name formControlName="nombre" name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese su nombre" required>
+                            <label for="lbl2">Nombre <span class="badge badge-danger">Obligatorio</span></label> <input #name formControlName="nombre" name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese su nombre" required>
                         </div>
                         <!-- /.form-group -->
                         <!-- .form-group -->
@@ -47,7 +47,7 @@
                         <!-- /.form-group -->
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label id="role">Rol <span class="badge badge-danger">Required</span></label> <select formControlName="role" name="role" class="form-control custom-select" id="selDefault">
+                            <label id="role">Rol <span class="badge badge-danger">Obligatorio</span></label> <select formControlName="role" name="role" class="form-control custom-select" id="selDefault">
                                  <option value=""> Seleccione un rol </option>
                                 <option *ngFor="let role of roles" [value]="role.role"> {{ role.texto }}
                                 </option>

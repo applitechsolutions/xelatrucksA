@@ -14,6 +14,8 @@ import { VehiclesComponent } from './vehicles/vehicles.component';
 import { VehicleComponent } from './vehicles/vehicle.component';
 import { PartsComponent } from './parts/parts.component';
 import { PartComponent } from './parts/part.component';
+import { OrdersComponent } from './orders/orders.component';
+import { OrderComponent } from './orders/order.component';
 
 
 
@@ -32,6 +34,9 @@ const pagesRoutes: Routes = [
             // MANTENIMIENTOS
             { path: 'usuarios', component: UsersComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
             { path: 'usuario/:id', component: UserComponent, data: { titulo: 'Crear Usuario' } },
+            // TRANSPORTES
+            { path: 'orders', component: OrdersComponent, data: { titulo: 'Mantenimiento de Pedidos' } },
+            { path: 'order/:id', component: OrderComponent, data: { titulo: 'Crear Pedido' } },
             // TALLER
             { path: 'vehicles', component: VehiclesComponent, data: { titulo: 'Mantenimiento de Vehículos' } },
             { path: 'vehicle/:id', component: VehicleComponent, data: { titulo: 'Crear Vehículo' } },

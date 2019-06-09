@@ -15,20 +15,20 @@
                 <form>
                     <!-- .fieldset -->
                     <fieldset>
-                        <legend>Imformación principal del Vehículo</legend>
+                        <legend>Datos del pedido</legend>
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label for="lbl2">Código Cementos Progreso  <span class="badge badge-danger">Obligatorio</span></label> <input #name name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese el número de pedido" required>
+                            <label for="lbl2">No. de pedido <span class="badge badge-danger">Obligatorio</span></label> <input #name name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese el número de pedido" required>
                         </div>
                         <!-- /.form-group -->
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label id="role">Marca <span class="badge badge-danger">Obligatorio</span></label><br> <select name="role" class="form-control custom-select col-9" id="selDefault">
-                                 <option value=""> Seleccione una marca </option>
-                                <option *ngFor="" [value]="">
-                                </option>
-                                </select>
-                            <button type="button" class="btn btn-subtle-success col-3" data-toggle="modal" data-target="#exampleModalCenter">Crear Nueva <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                            <label id="role">Destino <span class="badge badge-danger">Obligatorio</span></label><br> <select name="role" class="form-control custom-select col-9" id="selDefault">
+                             <option value=""> Seleccione un destino </option>
+                            <option *ngFor="" [value]="">
+                            </option>
+                            </select>
+                            <button type="button" class="btn btn-subtle-success col-3" data-toggle="modal" data-target="#exampleModalCenter">Crear Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
                         </div>
                         <!-- /.form-group -->
                     </fieldset>
@@ -44,21 +44,7 @@
         <div id="labels" class="card card-fluid">
             <!-- .card-body -->
             <div class="card-body">
-                <!-- .form -->
-                <form>
-                    <!-- .fieldset -->
-                    <fieldset>
-                        <legend>Caracteristicas importantes del Vehículo</legend>
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <label for="lbl2">No. Cementos Progreso  <span class="badge badge-danger">Obligatorio</span></label> <input #name name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese el número de pedido" required>
-                        </div>
-                        <!-- /.form-group -->
-                    </fieldset>
-                    <!-- /.fieldset -->
-                    <button class="btn btn-primary " type="submit " id="btnUser "><i class="fa fa-save "></i> Guardar</button>
-                </form>
-                <!-- /.form -->
+
             </div>
             <!-- /.card-body -->
         </div>
@@ -75,7 +61,7 @@
         <div class="modal-content">
             <!-- .modal-header -->
             <div class="modal-header">
-                <h5 id="exampleModalCenterLabel" class="modal-title"> Nueva Marca </h5>
+                <h5 id="exampleModalCenterLabel" class="modal-title"> Nuevo Destino </h5>
             </div>
             <!-- /.modal-header -->
             <!-- .modal-body -->
@@ -87,6 +73,14 @@
                         <!-- .form-group -->
                         <div class="form-group">
                             <label for="lbl2">Nombre <span class="badge badge-danger">Obligatorio</span></label> <input #name name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese el nombre del destino" required>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="lbl2">Distancia (km) <span class="badge badge-danger">Obligatorio</span></label>
+                            <div class="input-group">
+                                <label class="input-group-prepend" for="pi9"><span class="badge">km</span></label> <input type="number" class="form-control" min="0.00" step="0.01" id="pi9" placeholder="Ingrese la distancia en km del destino" required>
+                            </div>
                         </div>
                         <!-- /.form-group -->
                     </fieldset>

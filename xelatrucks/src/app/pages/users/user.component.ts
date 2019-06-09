@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, NgModule, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/service.index';
 import { Router } from '@angular/router';
@@ -17,7 +17,9 @@ declare function select2(): any;
   templateUrl: './user.component.html',
   styles: []
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, AfterViewInit {
+  _availableFields: Array<any> = ['Value1', 'Value2', 'Value3','Value4'];
+  _selectedFields: Array<string> = [];
 
   select2: any;
   forma: FormGroup;
@@ -36,6 +38,12 @@ export class UserComponent implements OnInit {
     public router: Router,
     public areaS: AreaService
     ) {
+  }
+
+  ngAfterViewInit() {
+    $('.select2').select2();
+    $('.select2').on('change', (e) => this.forma.value.role = $(e.target).val()
+    );
   }
 
   sonIguales( campo1: string, campo2: string) {
@@ -65,7 +73,7 @@ export class UserComponent implements OnInit {
       correo: new FormControl(null, [Validators.email, Validators.required]),
       password: new FormControl(null, Validators.required),
       password2: new FormControl(null, Validators.required),
-      role: new FormControl('', Validators.required)
+      role: new FormControl('')
     }, { validators: this.sonIguales('password', 'password2')});
 
     this.roles = [{

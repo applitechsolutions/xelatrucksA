@@ -47,7 +47,7 @@
                         <!-- /.form-group -->
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label id="role">Rol <span class="badge badge-danger">Obligatorio</span></label> <select formControlName="role" name="role" class="form-control custom-select" id="selDefault">
+                            <label id="role">Rol <span class="badge badge-danger">Obligatorio</span></label> <select formControlName="role" name="role" class="form-control select2" id="selDefault">
                                  <option value=""> Seleccione un rol </option>
                                 <option *ngFor="let role of roles" [value]="role.role"> {{ role.texto }}
                                 </option>

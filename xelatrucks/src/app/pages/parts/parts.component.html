@@ -11,17 +11,19 @@
         <!-- .card-body -->
         <div class="card-body">
             <!-- .table -->
-            <table id="dt-responsive" class="table dt-responsive nowrap w-100">
+            <table class="table dt-responsive nowrap w-100">
                 <thead>
                     <tr>
                         <th> Código </th>
                         <th> Descripción </th>
                         <th> Existencia Mínimia </th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let repuesto of repuestos">
+                        <td> {{ repuesto.code }} </td>
+                        <td> {{ repuesto.desc }} </td>
+                        <td> {{ repuesto.minStock }} </td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -29,7 +31,6 @@
                         <th> Código </th>
                         <th> Descripción </th>
                         <th> Existencia Mínimia </th>
-                        <th></th>
                     </tr>
                 </tfoot>
             </table>

@@ -5,9 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { URL_SERVICES } from '../../config/config';
 import { map } from 'rxjs/operators';
 import swal from 'sweetalert';
-import { pipe } from '@angular/core/src/render3';
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
-import { controllers } from 'chart.js';
 
 @Injectable({
   providedIn: 'root'
@@ -117,7 +115,7 @@ export class UserService {
     }));
   }
 
-  cargarUsuarios(desde: number = 0){
+  cargarUsuarios(desde: number = 0) {
     const url = URL_SERVICES + '/usuario?desde=' + desde;
     return this.http.get(url);
   }

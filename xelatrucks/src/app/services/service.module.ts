@@ -9,7 +9,8 @@ import {
   UserService,
   LoginGuardGuard,
   SubirArchivoService,
-  DatatablesService
+  DatatablesService,
+  PartService
 } from './service.index';
 
 @NgModule({
@@ -25,7 +26,8 @@ import {
     LoginGuardGuard,
     SubirArchivoService,
     ModalUploadService,
-    DatatablesService
+    DatatablesService,
+    PartService
   ]
 })
 export class ServiceModule { }

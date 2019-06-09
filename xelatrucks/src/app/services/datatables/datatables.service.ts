@@ -15,10 +15,12 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class DatatablesService {
 
+  table: any = $('table');
+
   constructor() { }
 
   init_tables() {
-    $('#dt-responsive').DataTable({
+    $('table').DataTable({
       order: [],
       responsive: true,
       columnDefs: [{

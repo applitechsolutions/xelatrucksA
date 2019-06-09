@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DatatablesService } from '../../services/service.index';
-import { Part, Cellar } from '../../models/part.model';
 import { PartService } from '../../services/service.index';
 import { AutoCellar } from '../../models/autoCellar';
+import { Storage } from '../../models/storage';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-parts',
@@ -11,8 +12,7 @@ import { AutoCellar } from '../../models/autoCellar';
 })
 export class PartsComponent implements OnInit {
 
-  repuestos: Part[] = [];
-  cellar: AutoCellar[] = [];
+  repuestos: Storage[] = [];
 
   constructor(public dtService: DatatablesService, public partService: PartService, private chRef: ChangeDetectorRef) { }
 
@@ -24,16 +24,12 @@ export class PartsComponent implements OnInit {
     console.log('cargando repuestos');
     this.partService.cargarRepuestos()
     .subscribe((resp: any) => {
-      this.repuestos = resp.repuestos;
-      this.cellar = this.repuestos
-                      .map((respuesta: any) => respuesta.cellar);
-      console.log(this.cellar);
-
+      resp.repuestos.map((res: any) => this.repuestos = res.storage);
       this.chRef.detectChanges();
 
       this.dtService.init_tables();
 
-      });
+    });
 
   }
 

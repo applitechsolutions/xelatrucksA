@@ -8,52 +8,66 @@
     <!-- .section-deck -->
     <div class="section-deck">
         <!-- .card -->
-        <div id="labels" class="card card-fluid">
+        <div id="labels" class="card card-fluid col-8">
             <!-- .card-body -->
             <div class="card-body">
                 <!-- .form -->
-                <form>
+                <form ngNativeValidate [formGroup]="forma" (ngSubmit)="crearVehiculo()">
                     <!-- .fieldset -->
                     <fieldset>
                         <legend>Imformación principal del Vehículo</legend>
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label for="lbl2">Código Cementos Progreso  <span class="badge badge-danger">Obligatorio</span></label> <input #name name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese el número de pedido" required>
+                            <label for="cp">Código Cementos Progreso  <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="cp" name="cp" type="text" class="form-control" id="cp" placeholder="Ingrese el código que Cementos P. le asignó al Vehículo"
+                                required>
                         </div>
                         <!-- /.form-group -->
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label id="role">Marca <span class="badge badge-danger">Obligatorio</span></label><br> <select name="role" class="form-control custom-select col-9" id="selDefault">
-                                 <option value=""> Seleccione una marca </option>
-                                <option *ngFor="" [value]="">
-                                </option>
-                                </select>
-                            <button type="button" class="btn btn-subtle-success col-3" data-toggle="modal" data-target="#exampleModalCenter">Crear Nueva <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                            <label id="type">Tipo de Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select formControlName="type" name="type" class="form-control select2" id="type" style="width:100%!important;">
+                                    <option value=""> Seleccione un tipo </option>
+                                   <option *ngFor="let type of types" [value]="type.type"> {{ type.text }}
+                                   </option>
+                               </select>
                         </div>
                         <!-- /.form-group -->
-                    </fieldset>
-                    <!-- /.fieldset -->
-                    <button class="btn btn-primary " type="submit " id="btnUser "><i class="fa fa-save "></i> Guardar</button>
-                </form>
-                <!-- /.form -->
-            </div>
-            <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-        <!-- .card -->
-        <div id="labels" class="card card-fluid">
-            <!-- .card-body -->
-            <div class="card-body">
-                <!-- .form -->
-                <form>
-                    <!-- .fieldset -->
-                    <fieldset>
-                        <legend>Caracteristicas importantes del Vehículo</legend>
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label for="lbl2">No. Cementos Progreso  <span class="badge badge-danger">Obligatorio</span></label> <input #name name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese el número de pedido" required>
+                            <label for="plate">No. de placa  <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="plate" name="plate" type="text" class="form-control" id="plate" placeholder="Ingrese el número de placa" required>
                         </div>
                         <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="no">No. de vehículo </label> <input formControlName="no" name="no" type="number" class="form-control" id="no" placeholder="Ingrese el número vehículo">
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <button type="button" class="btn btn-subtle-success col-4 fa-pull-right" data-toggle="modal" data-target="#exampleModalCenter">Crear Nueva <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                            <label id="make">Marca <span class="badge badge-danger">Obligatorio</span></label> <select formControlName="make" name="make" class="form-control select2" id="make" style="width:100%!important;">
+                                        <option value=""> Seleccione una marca </option>
+                                       <option *ngFor="let make of makes" [value]="make.id"> {{ make.name }}
+                                       </option>
+                                   </select>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="model">Modelo </label> <input formControlName="model" name="model" type="number" class="form-control" id="model" placeholder="Ingrese el año al que pertenece el vehículo">
+                        </div>
+                        <!-- /.form-group -->
+                        <div class="row">
+                            <!-- .form-group -->
+                            <div class="form-group col-6">
+                                <label for="km">km's </label> <input formControlName="km" name="km" type="number" step="0.01" class="form-control" id="km" placeholder="Ingrese el kilometraje del vehículo">
+                            </div>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group col-6">
+                                <label for="mts">mt's </label> <input formControlName="mts" name="mts" type="number" step="0.01" class="form-control" id="mts" placeholder="Ingrese los metros de capacidad">
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
                     </fieldset>
                     <!-- /.fieldset -->
                     <button class="btn btn-primary " type="submit " id="btnUser "><i class="fa fa-save "></i> Guardar</button>

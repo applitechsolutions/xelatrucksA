@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import swal from 'sweetalert';
+import { Part } from '../../models/part.model';
+import { PartService } from '../../services/parts/part.service';
 
 @Component({
   selector: 'app-part',
@@ -10,7 +14,10 @@ export class PartComponent implements OnInit {
 
   forma: FormGroup;
 
-  constructor() { }
+  constructor(
+    public partS: PartService,
+    public router: Router,
+  ) { }
 
   ngOnInit() {
     this.forma = new FormGroup({
@@ -20,7 +27,6 @@ export class PartComponent implements OnInit {
     }, {});
   }
 
-  
   crearRepuesto() {
 
     console.log(this.forma.value.role);
@@ -31,23 +37,17 @@ export class PartComponent implements OnInit {
       return;
     }
 
-    if (this.userArea.length === 0) {
-      swal('Oops...', 'Por favor asigna al menos un área', 'warning');
-      return;
-    }
-
-    const usuario = new User(
-      this.forma.value.nombre,
-      this.forma.value.correo,
-      this.forma.value.password,
-      this.forma.value.apel,
-      this.forma.value.role,
-      this.userArea,
+    const part = new Part(
+      this.forma.value.code,
+      this.forma.value.desc,
+      this.forma.value.minStock,
+      false
     );
 
-    this._userService.crearUsuario(usuario)
+    this.partS.crearRepuesto(part)
     .subscribe( resp => {
-      this.router.navigate(['/usuarios']);
+      console.log( resp );
+      this.router.navigate(['/parts']);
     });
 
   }

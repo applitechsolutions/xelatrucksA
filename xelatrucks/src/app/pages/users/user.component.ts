@@ -40,8 +40,7 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     $('.select2').select2();
-    $('.select2').on('change', (e) => this.forma.value.role = $(e.target).val()
-    );
+    $('.select2').on('change', (e) => this.forma.value.role = $(e.target).val());
   }
 
   sonIguales( campo1: string, campo2: string) {

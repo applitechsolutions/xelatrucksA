@@ -10,7 +10,7 @@
                 <form ngNativeValidate [formGroup]="forma" (ngSubmit)="crearVehiculo()">
                     <!-- .fieldset -->
                     <fieldset>
-                        <legend>Imformación principal del Vehículo</legend>
+                        <legend>Información principal del Vehículo</legend>
                         <!-- .form-group -->
                         <div class="form-group">
                             <label for="cp">Código Cementos Progreso  <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="cp" name="cp" type="text" class="form-control" id="cp" placeholder="Ingrese el código que Cementos P. le asignó al Vehículo"
@@ -19,7 +19,7 @@
                         <!-- /.form-group -->
                         <!-- .form-group -->
                         <div class="form-group">
-                            <label id="typeL">Tipo de Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select formControlName="type" name="type" class="form-control custom-select" id="type" style="width:100%!important;">
+                            <label id="typeL">Tipo de Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select #selectT formControlName="type" name="type" class="form-control select2" id="type" style="width:100%!important;">
                                     <option value=""> Seleccione un tipo </option>
                                    <option *ngFor="let type of types" [value]="type.type"> {{ type.text }}
                                    </option>
@@ -34,7 +34,7 @@
                         <!-- .form-group -->
                         <div class="form-group">
                             <button type="button" class="btn btn-subtle-dark col-3 fa-pull-right" data-toggle="modal" data-target="#exampleModalCenter">Crear Nueva <i class="fas fa-external-link-alt fa-pull-right"></i></button>
-                            <label id="makeL">Marca <span class="badge badge-danger">Obligatorio</span></label> <select formControlName="make" name="make" class="form-control select2" id="make" style="width:100%!important;">
+                            <label id="makeL">Marca <span class="badge badge-danger">Obligatorio</span></label> <select #selectM formControlName="make" name="make" class="form-control select2" id="make" style="width:100%!important;">
                                     <option value=""> Seleccione una marca </option>
                                     <option *ngFor="let make of makes" [selected]="make._id === tempMake" [value]="make._id"> {{ make.name }}
                                     </option>
@@ -49,7 +49,7 @@
                             <!-- /.form-group -->
                             <!-- .form-group -->
                             <div class="form-group col-6">
-                                <label for="model">Modelo </label> <input formControlName="model" name="model" type="number" class="form-control" id="model" placeholder="Ingrese el año al que pertenece el modelo">
+                                <label for="model">Modelo </label> <input formControlName="model" name="model" type="number" class="form-control" id="model" placeholder="Ingrese de que año es el modelo">
                             </div>
                             <!-- /.form-group -->
                         </div>

@@ -18,8 +18,6 @@ declare function select2(): any;
   styles: []
 })
 export class UserComponent implements OnInit, AfterViewInit {
-  _availableFields: Array<any> = ['Value1', 'Value2', 'Value3','Value4'];
-  _selectedFields: Array<string> = [];
 
   select2: any;
   forma: FormGroup;

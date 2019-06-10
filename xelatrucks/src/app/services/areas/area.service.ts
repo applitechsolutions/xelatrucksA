@@ -7,33 +7,20 @@ import { map, filter } from 'rxjs/operators';
 import { UserArea } from '../../models/userArea.model';
 import swal from 'sweetalert';
 import { User } from '../../models/user.model';
+import { UserService } from '../users/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AreaService {
 
-  usuario: User;
-  token: string;
-
   constructor(
     public http: HttpClient,
-    public router: Router
+    public router: Router,
+    public userS: UserService
   ) {
-    this.cargarStorage();
+
    }
-
-   cargarStorage() {
-
-    if (localStorage.getItem('token')) {
-      this.token = localStorage.getItem('token');
-      this.usuario = JSON.parse(localStorage.getItem('usuario'));
-    } else {
-      this.token = '';
-      this.usuario = null;
-    }
-
-  }
 
   cargarAreas() {
     const url = URL_SERVICES + '/area';
@@ -53,7 +40,7 @@ export class AreaService {
 
     console.log(areas);
 
-    const url = URL_SERVICES + '/userarea/' + user + '?token=' + this.token;
+    const url = URL_SERVICES + '/userarea/' + user + '?token=' + this.userS.token;
 
     return this.http.post(url, areas)
       .pipe( map( (resp: any) => {

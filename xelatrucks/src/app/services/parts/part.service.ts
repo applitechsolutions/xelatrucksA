@@ -5,30 +5,17 @@ import { User } from 'src/app/models/user.model';
 import { Part } from '../../models/part.model';
 import swal from 'sweetalert';
 import { map } from 'rxjs/operators';
+import { UserService } from '../users/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PartService {
 
-  usuario: User;
-  token: string;
-
-  constructor(public http: HttpClient) {
-    this.cargarStorage();
+  constructor(
+    public http: HttpClient,
+    public userS: UserService) {
    }
-
-   cargarStorage() {
-
-    if (localStorage.getItem('token')) {
-      this.token = localStorage.getItem('token');
-      this.usuario = JSON.parse(localStorage.getItem('usuario'));
-    } else {
-      this.token = '';
-      this.usuario = null;
-    }
-
-  }
 
   cargarRepuestos() {
 
@@ -38,7 +25,7 @@ export class PartService {
 
   crearRepuesto( part: Part) {
 
-    const url = URL_SERVICES + '/repuesto/' + '5cfd7c0ad37998d31c7ca56a?token=' + this.token;
+    const url = URL_SERVICES + '/repuesto/' + '5cfd7c0ad37998d31c7ca56a?token=' + this.userS.token;
 
     return this.http.post(url, part)
       .pipe( map( (resp: any) => {

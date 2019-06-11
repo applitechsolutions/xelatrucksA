@@ -18,8 +18,6 @@ declare function select2(): any;
   styles: []
 })
 export class UserComponent implements OnInit, AfterViewInit {
-  _availableFields: Array<any> = ['Value1', 'Value2', 'Value3','Value4'];
-  _selectedFields: Array<string> = [];
 
   select2: any;
   forma: FormGroup;
@@ -42,8 +40,7 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     $('.select2').select2();
-    $('.select2').on('change', (e) => this.forma.value.role = $(e.target).val()
-    );
+    $('.select2').on('change', (e) => this.forma.value.role = $(e.target).val());
   }
 
   sonIguales( campo1: string, campo2: string) {

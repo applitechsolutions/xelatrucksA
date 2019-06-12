@@ -33,6 +33,7 @@ export class VehicleService {
         .pipe( map( (resp: any) => {
           const vehicleDB = resp.vehiculo;
           swal('Vechículo actualizado', 'Placa #' + vehicleDB.plate , 'success');
+          return resp;
         }));
 
     } else {

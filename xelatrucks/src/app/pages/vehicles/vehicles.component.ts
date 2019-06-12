@@ -5,6 +5,7 @@ import { VehicleService } from '../../services/vehicles/vehicle.service';
 import { Make } from '../../models/make.model';
 import { Basics } from '../../models/basics.model';
 
+declare var swal: any;
 // declare function DataTable(): any;
 
 @Component({
@@ -109,16 +110,77 @@ export class VehiclesComponent implements OnInit {
   }
 
   addBasic() {
-    this.basics.push({
-      code: this.basic.code,
-      name: this.basic.name,
-      description: this.basic.description
-    });
-    this.basic = {};
-    this.vehicleS.crearVehiculo( this.vehicle )
-      .subscribe( resp => {
+    if (this.basic._id) {
+      console.log('EDITANDO...');
+      console.log(this.basics);
+      // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+      const index = this.basics.findIndex(item => item._id === this.basic._id);
+
+      // REMPLAZAMOS EL BASIC en base al index encontrado
+      this.basics.splice(index, 1 , this.basic);
+      this.basic = {};
+      this.vehicle.basics = this.basics;
       console.log(this.vehicle);
+      this.vehicleS.crearVehiculo( this.vehicle )
+        .subscribe( resp => {
+          this.basics = resp.vehiculo.basics;
+        });
+      this.closeP.nativeElement.click();
+    } else {
+      console.log('GUARDANDO...');
+      this.basics.push({
+        code: this.basic.code,
+        name: this.basic.name,
+        description: this.basic.description
       });
-    this.closeP.nativeElement.click();
+      this.basic = {};
+      this.vehicle.basics = this.basics;
+      console.log(this.vehicle);
+      this.vehicleS.crearVehiculo( this.vehicle )
+        .subscribe( resp => {
+          this.basics = resp.vehiculo.basics;
+        });
+      this.closeP.nativeElement.click();
+    }
+  }
+
+  editarBasic( id: string ) {
+    const status: Basics = this.basics.find(s => s._id === id);
+    if (status) {
+      this.basic = {
+        _id: status._id,
+        code: status.code,
+        name: status.name,
+        description: status.description
+      }
+    }
+  }
+
+  deleteBasic( id: string ) {
+    console.log('BORRANDO...');
+    console.log(this.basics);
+    // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+    const index = this.basics.findIndex(item => item._id === id);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar información del vehículo que no se puede recuperar',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+        // ELIMINAMOS EL BASIC en base al index encontrado
+        this.basics.splice(index, 1);
+        // ACTUALIZAMOS LA DB
+        this.vehicle.basics = this.basics;
+        console.log(this.vehicle);
+        this.vehicleS.crearVehiculo( this.vehicle )
+          .subscribe( resp => {
+            this.basics = resp.vehiculo.basics;
+          });
+      }
+    });
   }
 }

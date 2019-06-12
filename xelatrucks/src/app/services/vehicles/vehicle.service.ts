@@ -24,14 +24,26 @@ export class VehicleService {
 
   crearVehiculo( vehicle: Vehicle) {
 
-    const url = URL_SERVICES + '/vehiculo?token=' + this.userS.token;
+    let url = URL_SERVICES + '/vehiculo';
 
-    return this.http.post(url, vehicle)
-      .pipe( map( (resp: any) => {
-        const vehicleDB = resp.vehiculo;
-        swal('Vechiculo creado', 'Placa #' + vehicleDB.plate , 'success');
-        return resp;
-      }));
+    if (vehicle._id) {
+      url += '/' + vehicle._id + '?token=' + this.userS.token;
 
+      return this.http.put(url, vehicle)
+        .pipe( map( (resp: any) => {
+          const vehicleDB = resp.vehiculo;
+          swal('Vechículo actualizado', 'Placa #' + vehicleDB.plate , 'success');
+        }));
+
+    } else {
+      url += '?token=' + this.userS.token;
+
+      return this.http.post(url, vehicle)
+        .pipe( map( (resp: any) => {
+          const vehicleDB = resp.vehiculo;
+          swal('Vechículo creado', 'Placa #' + vehicleDB.plate , 'success');
+          return resp;
+        }));
+    }
   }
 }

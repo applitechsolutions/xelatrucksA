@@ -33,7 +33,7 @@
                         <!-- .form-group -->
                         <div class="form-group">
                             <button type="button" class="btn btn-subtle-dark col-3 fa-pull-right" data-toggle="modal" data-target="#exampleModalCenter">Crear Nueva <i class="fas fa-external-link-alt fa-pull-right"></i></button>
-                            <label id="makeL">Marca <span class="badge badge-danger">Obligatorio</span></label> <select #selectM formControlName="make" name="make" class="form-control select2" id="make" style="width:100%!important;">
+                            <label id="makeL">Marca <span class="badge badge-danger">Obligatorio</span></label> <select #selectM name="make" class="form-control select2" id="make" style="width:100%!important;">
                                     <option value=""> Seleccione una marca </option>
                                     <option *ngFor="let make of makes" [selected]="make._id === tempMake" [value]="make._id"> {{ make.name }}
                                     </option>
@@ -55,12 +55,14 @@
                         <div class="row">
                             <!-- .form-group -->
                             <div class="form-group col-6">
-                                <label for="km">km's </label> <input formControlName="km" name="km" type="number" step="0.01" class="form-control" id="km" placeholder="Ingrese el kilometraje del vehículo">
+                                <label for="km">km's <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="km" name="km" type="number" step="0.01" class="form-control" id="km" placeholder="Ingrese el kilometraje del vehículo"
+                                    required>
                             </div>
                             <!-- /.form-group -->
                             <!-- .form-group -->
                             <div class="form-group col-6">
-                                <label for="mts">mt's </label> <input formControlName="mts" name="mts" type="number" step="0.01" class="form-control" id="mts" placeholder="Ingrese los metros de capacidad">
+                                <label for="mts">mt's <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="mts" name="mts" type="number" step="0.01" class="form-control" id="mts" placeholder="Ingrese los metros de capacidad"
+                                    required>
                             </div>
                             <!-- /.form-group -->
                         </div>

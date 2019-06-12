@@ -40,7 +40,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.forma = new FormGroup({
-      cp: new FormControl(null, Validators.required),
+      cp: new FormControl(null),
       type: new FormControl(''),
       plate: new FormControl(null, Validators.required),
       no: new FormControl(null),

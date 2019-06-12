@@ -19,7 +19,12 @@ export class DatatablesService {
 
   constructor() { }
 
+  destroy_table() {
+    $('table').dataTable().fnDestroy();
+  }
+
   init_tables() {
+
     $('table').DataTable({
       order: [],
       responsive: true,

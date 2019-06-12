@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import swal from 'sweetalert';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Part } from '../../models/part.model';
-import { PartService } from '../../services/parts/part.service';
+import { PartService } from '../../services/service.index';
 
 @Component({
   selector: 'app-part',
@@ -13,11 +12,20 @@ import { PartService } from '../../services/parts/part.service';
 export class PartComponent implements OnInit {
 
   forma: FormGroup;
+  repuesto: Part = new Part('', '', 0, false);
+  idC: string;
 
-  constructor(
-    public partS: PartService,
-    public router: Router,
-  ) { }
+  constructor(public partS: PartService, public router: Router, public activatedRoute: ActivatedRoute ) {
+
+    activatedRoute.params.subscribe( params => {
+
+      const id = params.id;
+
+      if (id !== 'nuevo') {
+        this.cargarRepuesto(id);
+      }
+    });
+  }
 
   ngOnInit() {
     this.forma = new FormGroup({
@@ -25,6 +33,16 @@ export class PartComponent implements OnInit {
       desc: new FormControl(null),
       minStock: new FormControl(0, Validators.required)
     }, {});
+  }
+
+  cargarRepuesto( id: string ) {
+    this.partS.cargarRepuesto(id)
+      .subscribe(repuesto => {
+        this.repuesto = repuesto;
+        this.forma.get('code').setValue(this.repuesto.code);
+        this.forma.get('desc').setValue(this.repuesto.desc);
+        this.forma.get('minStock').setValue(this.repuesto.minStock);
+      });
   }
 
   crearRepuesto() {
@@ -37,18 +55,32 @@ export class PartComponent implements OnInit {
       return;
     }
 
-    const part = new Part(
-      this.forma.value.code,
-      this.forma.value.desc,
-      this.forma.value.minStock,
-      false
-    );
+    let part;
+
+    if (this.repuesto._id) {
+
+      part = new Part(
+        this.forma.value.code,
+        this.forma.value.desc,
+        this.forma.value.minStock,
+        false,
+        this.repuesto._id
+      );
+
+    } else {
+      part = new Part(
+        this.forma.value.code,
+        this.forma.value.desc,
+        this.forma.value.minStock,
+        false
+      );
+    }
 
     this.partS.crearRepuesto(part)
-    .subscribe( resp => {
-      console.log( resp );
-      this.router.navigate(['/parts']);
-    });
+      .subscribe( resp => {
+        console.log( resp );
+        this.router.navigate(['/parts']);
+      });
 
   }
 

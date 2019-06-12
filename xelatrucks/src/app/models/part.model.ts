@@ -7,7 +7,7 @@ export class Part {
         public desc: string,
         public minStock: number,
         public state: boolean,
-        public id?: string,
+        public _id?: string,
         public cellar?: Cellar,
     ) {}
 

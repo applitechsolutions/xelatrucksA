@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/users/user.service';
 import { User } from '../../models/user.model';
 import swal from 'sweetalert';
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 
 @Component({
   selector: 'app-profile',

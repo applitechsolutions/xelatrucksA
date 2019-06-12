@@ -10,4 +10,5 @@ export class AutoCellar {
 
 export interface Storage {
     stock: number;
+    _id?: string;
 }

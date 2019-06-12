@@ -1,6 +1,5 @@
 import { Part } from './part.model';
 
-
 export class Storage {
 
     constructor(

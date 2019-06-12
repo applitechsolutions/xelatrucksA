@@ -15,9 +15,9 @@ export class Vehicle {
         public model?: number,
         public km?: Decimal,
         public mts?: Decimal,
+        public _id?: string,
         public _gondola?: string,
         public basics?: Basics[],
-        public pits?: Pits[],
-        public _id?: string
+        public pits?: Pits[]
     ) {}
 }

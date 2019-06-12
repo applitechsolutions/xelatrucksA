@@ -22,6 +22,13 @@ export class VehicleService {
     return this.http.get(url);
   }
 
+  cargarVehiculo( id: string ) {
+    const url = URL_SERVICES + '/vehiculo/' + id;
+
+    return this.http.get(url)
+      .pipe( map( (resp: any) =>  resp.vehiculo));
+  }
+
   crearVehiculo( vehicle: Vehicle) {
 
     let url = URL_SERVICES + '/vehiculo';
@@ -46,5 +53,17 @@ export class VehicleService {
           return resp;
         }));
     }
+  }
+
+  borrarVehiculo( id: string) {
+    let url = URL_SERVICES + '/vehiculo/delete/' + id;
+    url += '?token=' + this.userS.token;
+
+    return this.http.put(url, '')
+      .pipe(
+        map( resp => {
+          swal('Vehículo borrado', 'El usuario ha sido eliminado correctamente', 'success');
+          return true;
+        }));
   }
 }

@@ -21,7 +21,7 @@ export class PartComponent implements OnInit {
 
       const id = params.id;
 
-      if (id !== 'nuevo') {
+      if (id !== 'new') {
         this.cargarRepuesto(id);
       }
     });

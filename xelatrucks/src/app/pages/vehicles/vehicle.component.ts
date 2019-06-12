@@ -7,8 +7,9 @@ import { MakeService } from '../../services/makes/make.service';
 import swal from 'sweetalert';
 import { Vehicle } from '../../models/vehicle.model';
 import { VehicleService } from '../../services/vehicles/vehicle.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Decimal } from 'src/app/models/decimal.model.js';
+import { type } from 'os';
 
 declare function select2(): any;
 @Component({
@@ -29,11 +30,25 @@ export class VehicleComponent implements OnInit, AfterViewInit {
   makes: Make[] = [];
   tempMake: string = '';
 
+  // Variables usadas al ACTUALIZAR vehiculo
+  tempType: string = '';
+  idVehicle: string = '';
+
   constructor(
     public makeS: MakeService,
     public vehicleS: VehicleService,
-    public router: Router
-  ) { }
+    public router: Router,
+    public activatedRoute: ActivatedRoute
+  ) {
+    activatedRoute.params.subscribe( params => {
+
+      const id = params.id;
+
+      if (id !== 'new') {
+        this.cargarVehiculo(id);
+      }
+    });
+   }
 
   ngAfterViewInit() {
     $('.select2').select2();
@@ -54,6 +69,11 @@ export class VehicleComponent implements OnInit, AfterViewInit {
       name: new FormControl(null, Validators.required)
     }, {});
 
+    this.cargarTypes();
+    this.cargarMarcas();
+  }
+
+  cargarTypes() {
     this.types = [{
       type: 'camion',
       text: 'Camión'
@@ -70,8 +90,6 @@ export class VehicleComponent implements OnInit, AfterViewInit {
       type: 'vehiculo',
       text: 'Vehículo '
     }];
-
-    this.cargarMarcas();
   }
 
   cargarMarcas() {
@@ -79,6 +97,23 @@ export class VehicleComponent implements OnInit, AfterViewInit {
     .subscribe( (resp: any) => {
     this.makes = resp.makes;
     });
+  }
+
+  cargarVehiculo( id: string ) {
+      this.vehicleS.cargarVehiculo( id )
+        .subscribe( resp => {
+        this.idVehicle = resp._id;
+        this.forma.get('cp').setValue(resp.cp);
+        this.tempType = resp.type;
+        this.forma.get('type').setValue(resp.type);
+        this.cargarTypes();
+        this.tempMake = resp._make._id;
+        this.forma.get('plate').setValue(resp.plate);
+        this.forma.get('no').setValue(resp.no);
+        this.forma.get('model').setValue(resp.model);
+        this.forma.get('mts').setValue(resp.mts.$numberDecimal);
+        this.forma.get('km').setValue(resp.km.$numberDecimal);
+        });
   }
 
   crearMarca() {
@@ -134,23 +169,45 @@ export class VehicleComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const vehiculo = new Vehicle (
-      this.forma.value.type,
-      make,
-      this.forma.value.plate,
-      false,
-      this.forma.value.cp,
-      this.forma.value.no,
-      this.forma.value.model,
-      km,
-      mts
-    );
+    if (this.idVehicle === '') {
+      console.log('nuevo');
+      const vehiculo = new Vehicle (
+        this.forma.value.type,
+        make,
+        this.forma.value.plate,
+        false,
+        this.forma.value.cp,
+        this.forma.value.no,
+        this.forma.value.model,
+        km,
+        mts
+      );
 
-    this.vehicleS.crearVehiculo(vehiculo)
-    .subscribe( resp => {
-      console.log(resp);
-      this.router.navigate(['/vehicles']);
-    });
+      this.vehicleS.crearVehiculo(vehiculo)
+      .subscribe( resp => {
+        console.log(resp);
+        this.router.navigate(['/vehicles']);
+      });
+    } else {
+      const vehiculo = new Vehicle (
+        this.forma.value.type,
+        make,
+        this.forma.value.plate,
+        false,
+        this.forma.value.cp,
+        this.forma.value.no,
+        this.forma.value.model,
+        km,
+        mts,
+        this.idVehicle
+      );
+      
+      this.vehicleS.crearVehiculo(vehiculo)
+      .subscribe( resp => {
+        console.log(resp);
+        this.router.navigate(['/vehicles']);
+      });
+    }
   }
 
 }

@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <label id="typeL">Tipo de Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select #selectT formControlName="type" name="type" class="form-control select2" id="type" style="width:100%!important;">
                                     <option value=""> Seleccione un tipo </option>
-                                   <option *ngFor="let type of types" [value]="type.type"> {{ type.text }}
+                                   <option *ngFor="let type of types" [selected]="type.type === tempType" [value]="type.type"> {{ type.text }}
                                    </option>
                                </select>
                         </div>
@@ -69,6 +69,7 @@
                     </fieldset>
                     <!-- /.fieldset -->
                     <button class="btn btn-primary" type="submit" id="btnUser"><i class="fa fa-save"></i> Guardar</button>
+                    <button [routerLink]="[ '/vehicles' ]" type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                 </form>
                 <!-- /.form -->
             </div>

@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import { Vehicle } from '../../models/vehicle.model';
 import { VehicleService } from '../../services/vehicles/vehicle.service';
 import { Router } from '@angular/router';
+import { Decimal } from 'src/app/models/decimal.model.js';
 
 declare function select2(): any;
 @Component({
@@ -40,14 +41,13 @@ export class VehicleComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.forma = new FormGroup({
-      cp: new FormControl(null, Validators.required),
+      cp: new FormControl(null),
       type: new FormControl(''),
       plate: new FormControl(null, Validators.required),
       no: new FormControl(null),
-      make: new FormControl(''),
       model: new FormControl(null),
-      km: new FormControl(null),
-      mts: new FormControl(null)
+      km: new FormControl(0),
+      mts: new FormControl(0)
     }, {});
 
     this.formaMarca = new FormGroup({
@@ -62,10 +62,10 @@ export class VehicleComponent implements OnInit, AfterViewInit {
       text: 'Camión gondola'
     }, {
       type: 'riego',
-      text: 'Camión de riego'
+      text: 'Camión para riego'
     }, {
       type: 'stock',
-      text: 'Vehículo para acomodar materiales'
+      text: 'Excavadora'
     }, {
       type: 'vehiculo',
       text: 'Vehículo '
@@ -108,13 +108,23 @@ export class VehicleComponent implements OnInit, AfterViewInit {
     console.log(this.selectT.nativeElement.value);
     console.log(this.selectM.nativeElement.value);
 
+    const make: Make = {
+      _id: this.selectM.nativeElement.value,
+      name: ''
+    };
+    const km: Decimal = {
+        $numberDecimal: this.forma.value.km
+    }
+    const mts: Decimal = {
+      $numberDecimal: this.forma.value.mts
+    }
+
     // SELECT VALIDATORS
     this.forma.value.type = this.selectT.nativeElement.value;
-    this.forma.value.make = this.selectM.nativeElement.value;
 
     console.log(this.forma.value);
 
-    if (this.forma.value.type === '' || this.forma.value.make === '') {
+    if (this.forma.value.type === '' || make._id === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }
@@ -125,15 +135,15 @@ export class VehicleComponent implements OnInit, AfterViewInit {
     }
 
     const vehiculo = new Vehicle (
-      this.forma.value.cp,
       this.forma.value.type,
-      this.forma.value.make,
+      make,
       this.forma.value.plate,
       false,
+      this.forma.value.cp,
       this.forma.value.no,
       this.forma.value.model,
-      this.forma.value.km,
-      this.forma.value.mts
+      km,
+      mts
     );
 
     this.vehicleS.crearVehiculo(vehiculo)

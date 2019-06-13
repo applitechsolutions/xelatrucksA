@@ -16,6 +16,10 @@ import { PartsComponent } from './parts/parts.component';
 import { PartComponent } from './parts/part.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderComponent } from './orders/order.component';
+import { AutoProvidersComponent } from './auto-providers/auto-providers.component';
+import { AutoProviderComponent } from './auto-providers/auto-provider.component';
+import { BuySparesComponent } from './buy-spares/buy-spares.component';
+import { BuySpareComponent } from './buy-spares/buy-spare.component';
 
 
 
@@ -38,6 +42,10 @@ const pagesRoutes: Routes = [
             { path: 'orders', component: OrdersComponent, data: { titulo: 'Mantenimiento de Pedidos' } },
             { path: 'order/:id', component: OrderComponent, data: { titulo: 'Crear Pedido' } },
             // TALLER
+            { path: 'buySpares', component: BuySparesComponent, data: { titulo: 'Historial de compras' } },
+            { path: 'buySpare/:id', component: BuySpareComponent, data: { titulo: 'Nueva Compra' } },
+            { path: 'autoProviders', component: AutoProvidersComponent, data: { titulo: 'Mantenimiento de Proveedores' } },
+            { path: 'autoProvider/:id', component: AutoProviderComponent, data: { titulo: 'Crear Proveedor' } },
             { path: 'vehicles', component: VehiclesComponent, data: { titulo: 'Mantenimiento de Vehículos' } },
             { path: 'vehicle/:id', component: VehicleComponent, data: { titulo: 'Crear Vehículo' } },
             { path: 'parts', component: PartsComponent, data: { titulo: 'Mantenimiento de Repuestos' } },

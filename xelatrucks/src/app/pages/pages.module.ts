@@ -33,6 +33,10 @@ import { PartsComponent } from './parts/parts.component';
 import { PartComponent } from './parts/part.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderComponent } from './orders/order.component';
+import { AutoProvidersComponent } from './auto-providers/auto-providers.component';
+import { AutoProviderComponent } from './auto-providers/auto-provider.component';
+import { BuySparesComponent } from './buy-spares/buy-spares.component';
+import { BuySpareComponent } from './buy-spares/buy-spare.component';
 
 
 @NgModule({
@@ -53,7 +57,11 @@ import { OrderComponent } from './orders/order.component';
         PartsComponent,
         PartComponent,
         OrderComponent,
-        OrdersComponent
+        OrdersComponent,
+        AutoProvidersComponent,
+        AutoProviderComponent,
+        BuySparesComponent,
+        BuySpareComponent
     ],
     exports: [
         DashboardComponent,

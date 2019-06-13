@@ -56,16 +56,18 @@ export class VehiclesComponent implements OnInit {
 
   ngOnInit() {
     // this.dtService.init_tables();
+    this.cargarVehiculos();
+  }
+
+  cargarVehiculos() {
     this.vehicleS.cargarVehiculos()
     .subscribe( (resp: any) => {
         this.vehicles = resp.vehiculos;
     });
-    console.log(this.vehicles);
   }
 
   seleccionarVehicle(vehicle: Vehicle) {
     this.vehicle = vehicle;
-    console.log(this.vehicle);
     this.selected = true;
     this.pits = vehicle.pits;
     if (vehicle.basics != null) {
@@ -73,8 +75,6 @@ export class VehiclesComponent implements OnInit {
     } else {
       this.basics = [];
     }
-    console.log(this.basic);
-    console.log(this.pits);
     switch (vehicle.type) {
       case 'camion':
         this.icon = 'fas fa-truck';
@@ -112,6 +112,31 @@ export class VehiclesComponent implements OnInit {
         this.info = 'Selecciona un vehículo para comenzar';
         break;
     }
+  }
+
+  borraVehiculo( vehicle: Vehicle ) {
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar al vehículo con la placa #' + vehicle.plate,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+
+      if (borrar) {
+        this.vehicleS.borrarVehiculo( vehicle._id )
+          .subscribe( (borrado: any) => {
+            this.cargarVehiculos();
+            this.icon = 'fas fa-info-circle';
+            this.title = 'Vehículo borrado';
+            this.type = '';
+            this.info = 'Selecciona un vehículo para comenzar';
+            this.selected = false;
+          });
+      }
+
+    });
   }
 
   addBasic() {

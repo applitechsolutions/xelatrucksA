@@ -32,16 +32,32 @@ export class SidebarService {
       titulo: 'Vehículos',
       icono: 'menu-icon fas fa-truck',
       submenu: [
-        { titulo: 'Listar vehículos', url: '/vehicles' },
-        { titulo: 'Crear vehículo', url: '/vehicle/new' }
+        { titulo: 'Listar Vehículos', url: '/vehicles' },
+        { titulo: 'Crear Vehículo', url: '/vehicle/new' }
       ]
     },
     {
       titulo: 'Repuestos',
       icono: 'menu-icon fas fa-cogs',
       submenu: [
-        { titulo: 'Listar Repuestos', url: '/parts' },
+        { titulo: 'Inventario de Repuestos', url: '/parts' },
         { titulo: 'Crear Repuesto', url: '/part/new' }
+      ]
+    },
+    {
+      titulo: 'Compras',
+      icono: 'menu-icon fas fa-shopping-cart',
+      submenu: [
+        { titulo: 'Nueva Compra', url: '/buySpare/new' },
+        { titulo: 'Historial de Compras', url: '/buySpares' }
+      ]
+    },
+    {
+      titulo: 'Proveedores',
+      icono: 'menu-icon fas fa-industry',
+      submenu: [
+        { titulo: 'Listar Proveedores', url: '/autoProviders' },
+        { titulo: 'Crear Proveedor', url: '/autoProvider/new' }
       ]
     }
   ];

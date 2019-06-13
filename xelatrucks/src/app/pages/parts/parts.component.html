@@ -13,17 +13,23 @@
                     <tr>
                         <th> Código </th>
                         <th> Descripción </th>
-                        <th> Existencia Mínimia </th>
-                        <th> Existencia </th>
+                        <th> Existencia Mínima</th>
+                        <th> Existencia Actual</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let repuesto of repuestos">
-                        <td> {{ repuesto._autopart.code }} </td>
+                        <td>
+                            <h6>{{ repuesto._autopart.code }}</h6>
+                        </td>
                         <td> {{ repuesto._autopart.desc }} </td>
-                        <td> {{ repuesto._autopart.minStock }} </td>
-                        <td> {{ repuesto.stock }} </td>
+                        <td>
+                            <h6><span class="badge badge-dark">{{ repuesto._autopart.minStock }}</span></h6>
+                        </td>
+                        <td>
+                            <h5><span class="badge badge-info">{{ repuesto.stock }}</span></h5>
+                        </td>
                         <td class="align-middle text-right">
                             <a [routerLink]="[ '/part', repuesto._autopart._id ]" class=" btn btn-sm btn-icon btn-secondary " alt="Editar "><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
                             <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="borrarRepuesto( repuesto )"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
@@ -34,8 +40,8 @@
                     <tr>
                         <th> Código </th>
                         <th> Descripción </th>
-                        <th> Existencia Mínimia </th>
-                        <th> Existencia Mínimia </th>
+                        <th> Existencia Mínima</th>
+                        <th> Existencia </th>
                         <th></th>
                     </tr>
                 </tfoot>

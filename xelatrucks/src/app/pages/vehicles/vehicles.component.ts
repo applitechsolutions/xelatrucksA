@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DatatablesService } from '../../services/service.index';
 import { Vehicle } from '../../models/vehicle.model';
 import { VehicleService } from '../../services/vehicles/vehicle.service';
-import { Make } from '../../models/make.model';
 import { Basics } from '../../models/basics.model';
+import { Pits } from '../../models/pits.model';
 
 declare var swal: any;
 // declare function DataTable(): any;
@@ -46,6 +46,9 @@ export class VehiclesComponent implements OnInit {
   // Basic del form
   basic: Basics = {};
 
+  pits: Pits[] = [];
+  pit: Pits = {};
+
   constructor(
     public dtService: DatatablesService,
     public vehicleS: VehicleService
@@ -66,6 +69,7 @@ export class VehiclesComponent implements OnInit {
   seleccionarVehicle(vehicle: Vehicle) {
     this.vehicle = vehicle;
     this.selected = true;
+    this.pits = vehicle.pits;
     if (vehicle.basics != null) {
       this.basics = vehicle.basics;
     } else {

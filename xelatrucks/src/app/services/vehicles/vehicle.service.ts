@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../users/user.service';
 import { URL_SERVICES } from 'src/app/config/config';
 import { Vehicle } from '../../models/vehicle.model';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,11 @@ export class VehicleService {
           const vehicleDB = resp.vehiculo;
           swal('Vechículo actualizado', 'Placa #' + vehicleDB.plate , 'success');
           return resp;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
         }));
 
     } else {
@@ -51,6 +57,11 @@ export class VehicleService {
           const vehicleDB = resp.vehiculo;
           swal('Vechículo creado', 'Placa #' + vehicleDB.plate , 'success');
           return resp;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
         }));
     }
   }
@@ -64,6 +75,11 @@ export class VehicleService {
         map( resp => {
           swal('Vehículo borrado', 'El usuario ha sido eliminado correctamente', 'success');
           return true;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
         }));
   }
 }

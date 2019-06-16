@@ -9,7 +9,6 @@ import { Vehicle } from '../../models/vehicle.model';
 import { VehicleService } from '../../services/vehicles/vehicle.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Decimal } from 'src/app/models/decimal.model.js';
-import { type } from 'os';
 
 declare function select2(): any;
 @Component({
@@ -201,7 +200,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         mts,
         this.idVehicle
       );
-      
+
       this.vehicleS.crearVehiculo(vehiculo)
       .subscribe( resp => {
         console.log(resp);

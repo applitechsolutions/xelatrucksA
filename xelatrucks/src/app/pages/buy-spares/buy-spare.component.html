@@ -1,3 +1,220 @@
-<p>
-  buy-spare works!
-</p>
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .section-deck -->
+    <div class="section-deck">
+        <!-- .card -->
+        <div id="labels" class="card card-fluid col-8">
+            <!-- .card-body -->
+            <!-- .form -->
+            <form ngNativeValidate [formGroup]="forma" (ngSubmit)="crearCompra()">
+                <div class="card-body">
+                    <!-- .fieldset -->
+                    <fieldset>
+                        <legend>Encabezado de compra</legend>
+                        <div class="row">
+                            <!-- .form-group -->
+                            <div class="form-group col-3">
+                                <label class="control-label" for="date">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="date" name="name" type="text" class="form-control" data-toggle="flatpickr" required>
+                            </div>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group col-6">
+                                <label id="typeL">Proveedor <span class="badge badge-danger">Obligatorio</span></label> <select #selectP formControlName="provider" name="provider" class="form-control select2" style="width:100%!important;">
+                                    <option value=""> Seleccione un proveedor </option>
+                                   <option *ngFor="let provider of providers" [value]="provider._id"> {{ provider.name }}
+                                   </option>
+                               </select>
+                            </div>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group col-3">
+                                <label>Crear Proveedor</label><br>
+                                <button [routerLink]="[ '/autoProvider', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+                        <div class="row">
+                            <!-- .form-group -->
+                            <div class="form-group col-4">
+                                <label for="noBill">No. de factura </label> <input formControlName="noBill" name="noBill" type="text" class="form-control" id="noBill" placeholder="Ingrese el número de factura">
+                            </div>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group col-4">
+                                <label for="serie">Serie </label> <input formControlName="serie" name="serie" type="text" class="form-control" id="serie" placeholder="Ingrese el número de serie de la factura">
+                            </div>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group col-4">
+                                <label for="noDoc">No. de documento </label> <input formControlName="noDoc" name="noDoc" type="text" class="form-control" id="noDoc" placeholder="Ingrese un número de documento">
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+                        <div class="card mt-2">
+                            <!-- .card-body -->
+                            <div class="card-body">
+                                <h2 class="card-title"> Detalle de compra </h2>
+                                <!-- .table-responsive -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover" style="min-width: 678px">
+                                        <thead>
+                                            <tr>
+                                                <th> Repuesto </th>
+                                                <th> Cantidad </th>
+                                                <th> Costo </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="align-middle"> Alexane Collins </td>
+                                                <td class="align-middle"> fhauck@gmail.com </td>
+                                                <td class="align-middle"> (062) 109-9222 </td>
+                                                <td class="align-middle text-right">
+                                                    <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#clientContactEditModal"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Edit</span></button>
+                                                    <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.table-responsive -->
+                            </div>
+                            <!-- /.card-body -->
+                            <!-- .card-footer -->
+                            <div class="card-footer">
+                                <a href="#addDetail" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar Repuesto</a>
+                            </div>
+                            <!-- /.card-footer -->
+                        </div>
+                        <!-- .card-body -->
+                        <div class="row">
+                            <!-- .col -->
+                            <div class="col-10">
+                            </div>
+                            <!-- /.col -->
+                            <!-- .col -->
+                            <div class="col-2 fa-pull-right">
+                                <!-- .metric -->
+                                <div class="metric">
+                                    <p class="metric-label"> Total </p>
+                                    <h5 class="metric-value">Q 0.00</h5>
+                                </div>
+                                <!-- .metric -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <hr>
+                        <!-- /.d-flex -->
+                        <button class="btn btn-primary" type="submit" id="btnUser"><i class="fa fa-save"></i> Guardar</button>
+                        <button [routerLink]="[ '/buySpares' ]" type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    </fieldset>
+                    <!-- /.fieldset -->
+                </div>
+                <!-- /.card-body -->
+            </form>
+            <!-- /.form -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.section-deck -->
+</div>
+<!-- /.page-inner -->
+<!-- Modal Drawer Right -->
+<div class="modal modal-drawer fade" id="addDetail" tabindex="-1" role="dialog" aria-labelledby="addDetail" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-drawer-right" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 id="exampleModalDrawerRightLabel" class="modal-title"> Catálogo de repuestos </h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+                <br>
+                <p>Aquí puede seleccionar los repuestos disponibles para agregar a su compra</p><br>
+                <!-- .form-group -->
+                <div class="form-group">
+                    <button data-toggle="modal" data-target="#addPart" type="button" class="btn btn-subtle-dark fa-pull-right">Crear Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                    <label id="typeL">Repuesto <span class="badge badge-danger">Obligatorio</span></label>
+                    <select #selectR class="form-control select2" id="selDefault" style="width:100%!important;">
+                        <option value=""> Seleccione un repuesto </option>
+                        <option *ngFor="let storage of storages" [selected]="storage._autopart._id === tempPart"  [value]="storage._autopart._id"> {{ storage._autopart.code + ' ' + storage._autopart.desc }}
+                        </option>
+                    </select>
+                </div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group"><label for="no">Cantidad <span class="badge badge-danger">Obligatorio</span></label><input class="form-control" [(ngModel)]="detail.quantity" id="quantity" name="quantity" placeholder="Ingrese una cantidad" type="number" ng-reflect-name="quantity"
+                        required></div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group"><label for="cost">Costo <span class="badge badge-danger">Obligatorio</span></label><input class="form-control" [(ngModel)]="detail.cost.$numberDecimal" id="cost" name="cost" placeholder="Ingrese el costo" type="number" required></div>
+                <!-- /.form-group -->
+                <button (click)="AgregarDetalle()" class="btn btn-primary" type="submit"><i class="fa fa-cart-plus"></i> Agregar</button>
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+            </div>
+            <!-- /.modal-footer -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- .modal -->
+<div class="modal fade" id="addPart" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 class="modal-title"> Crear Repuesto </h5>
+            </div>
+            <!-- /.modal-header -->
+            <form ngNativeValidate [formGroup]="formaR" (ngSubmit)="crearRepuesto()">
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <input formControlName="codeP" type="text" class="form-control" name="codeP"> <label for="code">Código</label>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <textarea formControlName="descriptionP" name="descriptionP" cols="30" rows="10" class="form-control" placeholder="Detalles del componente"></textarea>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <input formControlName="minStock" type="number" id="minStock" name="minStock" class="form-control" placeholder="Ingrese una existencía mínima para el repuesto" required>
+                            <label for="name">Existencia mínima</label>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.modal-body -->
+                <!-- .modal-footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button> <button #closeP type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                </div>
+                <!-- /.modal-footer -->
+            </form>
+            <!-- /form -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { URL_SERVICES } from '../../config/config';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,11 @@ export class UserService {
         map( (resp: any) => {
           this.guardarStorage(resp.id, resp.token, resp.usuario);
           return true;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal('Error al iniciar sesión', 'Credenciales incorrectas', 'error');
+          return throwError( err );
         }));
   }
 
@@ -84,6 +90,11 @@ export class UserService {
         this.guardarStorage(resp.id, resp.token, resp.usuario);
 
         return true;
+      }),
+      catchError((err, caught) => {
+        console.log(err);
+        swal('Error al iniciar sesión', 'Credenciales incorrectas', 'error');
+        return throwError( err );
       }));
   }
 
@@ -95,6 +106,11 @@ export class UserService {
       .pipe( map( (resp: any) => {
         swal('Usuario Creado', usuario.email, 'success');
         return resp;
+      }),
+      catchError((err, caught) => {
+        console.log(err);
+        swal(err.error.mensaje, err.error.errors.message , 'error');
+        return throwError( err );
       }));
 
   }
@@ -112,6 +128,11 @@ export class UserService {
 
       swal('Usuario actualizado', usuario.name + ' ' + usuario.lastName, 'success');
       return true;
+    }),
+    catchError((err, caught) => {
+      console.log(err);
+      swal(err.error.mensaje, err.error.errors.message , 'error');
+      return throwError( err );
     }));
   }
 
@@ -125,7 +146,12 @@ export class UserService {
 
     return this.http.get(url)
     .pipe(
-      map( (resp: any) => resp.users));
+      map( (resp: any) => resp.users),
+      catchError((err, caught) => {
+        console.log(err);
+        swal(err.error.mensaje, err.error.errors.message , 'error');
+        return throwError( err );
+      }));
   }
 
   cambiarImagen( file: File, id: string ) {
@@ -152,6 +178,11 @@ export class UserService {
         map( resp => {
           swal('Usuario borrado', 'El usuario ha sido eliminado correctamente', 'success');
           return true;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
         }));
   }
 

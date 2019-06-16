@@ -1,3 +1,66 @@
-<p>
-  auto-providers works!
-</p>
+<!-- floating action -->
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/autoProvider', 'new']"><span class="fa fa-plus"></span></button>
+<!-- /floating action -->
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .card -->
+    <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+            <!-- .table -->
+            <table class="table dt-responsive nowrap w-100">
+                <thead>
+                    <tr>
+                        <th> Nombre </th>
+                        <th> Dirección </th>
+                        <th> Teléfonos </th>
+                        <th> Email </th>
+                        <th> Cuentas Bancarias </th>
+                        <th> Detalles </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let autoProvider of autoProviders">
+                        <td>
+                            <h5>{{ autoProvider.name }}</h5>
+                        </td>
+                        <td> {{ autoProvider.address }} </td>
+                        <td>
+                            <h6>{{ autoProvider.mobile1 }}</h6>
+                            <h6>{{ autoProvider.mobile2 }}</h6>
+                        </td>
+                        <td>
+                            {{ autoProvider.email }}
+                        </td>
+                        <td>
+                            {{ autoProvider.account1 }} <br> {{ autoProvider.account2 }}
+                        </td>
+                        <td>
+                            {{ autoProvider.details }}
+                        </td>
+                        <td class="align-middle text-right">
+                            <a [routerLink]="[ '/autoProvider', autoProvider._id ]" class=" btn btn-sm btn-icon btn-secondary" alt="Editar"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Edit</span></a>
+                            <a (click)="borrarProveedor( autoProvider )" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt"></i><span class="sr-only ">Remove</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th> Nombre </th>
+                        <th> Dirección </th>
+                        <th> Teléfonos </th>
+                        <th> Email </th>
+                        <th> Cuentas Bancarias </th>
+                        <th> Detalles </th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.page-section -->

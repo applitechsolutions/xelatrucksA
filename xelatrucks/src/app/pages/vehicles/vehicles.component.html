@@ -105,7 +105,7 @@
                         <a class="nav-link active show" data-toggle="tab" href="#client-billing-contact"> Detalles del vehículo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#vehicle-rims"> Llantas</a>
+                        <a class="nav-link" data-toggle="tab" href="#vehicle-rims"> Neumáticos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#client-projects">Projects</a>
@@ -191,9 +191,26 @@
                 <div class="tab-pane fade" id="vehicle-rims" role="tabpanel" aria-labelledby="vehicle-rims-tab">
                     <!-- .card -->
                     <div class="card">
+                        <!-- .card-header -->
+                        <div class="card-header d-flex">
+                            <h2 class="card-title"><i class="fas fa-truck-monster"> Neumáticos del Vehículo</i></h2>
+                        </div>
+                        <!-- /.card-header -->
                         <!-- .card-body -->
                         <div class="card-body">
-                            <h2 class="card-title"><i class="fas fa-truck-monster"> Llantas del Vehículo</i></h2>
+                            <div class="d-flex justify-content-between">
+                                <h3 id="client-tasks-tab" class="card-title"> To do </h3>
+                                <div class="card-title-control">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-dharmachakra"></i></button>
+                                        <div class="dropdown-arrow"></div>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="#addRim" class="dropdown-item" data-toggle="modal">Agregar nueva llanta</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- .todo-list -->
                             <!-- .table-responsive -->
                             <div class="table-responsive">
                                 <table class="table table-hover" style="min-width: 678px">
@@ -208,15 +225,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="align-middle"> </td>
-                                            <td class="align-middle"> </td>
-                                            <td class="align-middle"> </td>
-                                            <td class="align-middle"> </td>
-                                            <td class="align-middle"> </td>
+                                        <tr *ngFor="let pit of pits">
+                                            <td class="align-middle"> {{ pit.rim.code }} </td>
+                                            <td class="align-middle"> {{ pit.rim.desc }} </td>
+                                            <td class="align-middle"> {{ pit.axis }} </td>
+                                            <td class="align-middle"> {{ pit.place }} </td>
+                                            <td class="align-middle"> {{ pit.side }} </td>
                                             <td class="align-middle text-right">
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target=""><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
+                                                <button (click)="editarPit( pit._id )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addPit"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                                                <button (click)="deletePit( pit._id )" type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -227,7 +244,7 @@
                         <!-- /.card-body -->
                         <!-- .card-footer -->
                         <div class="card-footer">
-                            <a href="#addBasic" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar componente</a>
+                            <a href="#addPit" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar Neumático</a>
                         </div>
                         <!-- /.card-footer -->
                     </div>
@@ -709,5 +726,127 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <!-- .modalRIM -->
+    <div class="modal fade" id="addRim" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog" role="document">
+            <!-- .modal-content -->
+            <div class="modal-content">
+                <!-- .modal-header -->
+                <div class="modal-header">
+                    <h5 class="modal-title"> Crear una nueva Llanta </h5>
+                </div>
+                <!-- /.modal-header -->
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <form ngNativeValidate #f="ngForm" (ngSubmit)="addRim( f )">
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <input [(ngModel)]="rim.code" type="text" class="form-control" name="codeR" required> <label for="code">Código</label>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <input [(ngModel)]="rim.desc" type="text" name="descR" class="form-control" required> <label for="name">Descripión</label>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .modal-footer -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeP type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                        </div>
+                        <!-- /.modal-footer -->
+                    </form>
+                </div>
+                <!-- /.modal-body -->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modalRIM -->
+    <!-- .modalPITS -->
+    <div class="modal fade" id="addPit" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog" role="document">
+            <!-- .modal-content -->
+            <div class="modal-content">
+                <!-- .modal-header -->
+                <div class="modal-header">
+                    <h5 class="modal-title"> Agregar un neumático </h5>
+                </div>
+                <!-- /.modal-header -->
+
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <fieldset>
+                        <legend> Lugar </legend>
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <input [(ngModel)]="pit.axis" type="text" class="form-control" name="codeR" required> <label for="code">Eje</label>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <input [(ngModel)]="pit.place" type="text" name="descR" class="form-control" required> <label for="name">Posición</label>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <input [(ngModel)]="pit.side" type="text" name="descR" class="form-control" required> <label for="name">Lado</label>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                    </fieldset>
+
+                    <fieldset>
+                        <legend> Mantenimiento </legend>
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <select #selectR name="rim" class="form-control select2" id="rim" style="width:100%!important;">
+                                <option value=""> Seleccione una llanta </option>
+                                <option *ngFor="let rim of rims" [selected]="rim._id === tempRim" [value]="rim._id"> {{ rim.code }}  {{ rim.desc }}
+                                </option>
+                            </select>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label class="control-label" for="flatpickr">Fecha de Instalación</label> <input [(ngModel)]="pit.date" name="date" id="flatpickr" type="text" class="form-control">
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="pi9">Total Instalación</label>
+                            <!-- .input-group -->
+                            <div class="input-group">
+                                <label class="input-group-prepend" for="pi9"><span class="badge">Q</span></label> <input [(ngModel)]="pit.total" type="number" step="1" class="form-control" id="pi9">
+                            </div>
+                            <!-- /.input-group -->
+                        </div>
+                        <!-- /.form-group -->
+                    </fieldset>
+                </div>
+                <!-- /.modal-body -->
+                <!-- .modal-footer -->
+                <div class="modal-footer">
+                    <button (click)="addPit()" type="submit" class="btn btn-primary">Guardar</button> <button #closeMP type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                </div>
+                <!-- /.modal-footer -->
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modalPITS -->
 </div>
 <!-- /.page -->

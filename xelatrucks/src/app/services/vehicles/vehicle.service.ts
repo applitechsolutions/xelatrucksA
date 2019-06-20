@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../users/user.service';
 import { URL_SERVICES } from 'src/app/config/config';
 import { Vehicle } from '../../models/vehicle.model';
+import { Rim } from '../../models/rim.model';
 import { map } from 'rxjs/operators';
 import swal from 'sweetalert';
 
@@ -20,6 +21,25 @@ export class VehicleService {
   cargarVehiculos() {
     const url = URL_SERVICES + '/vehiculo';
     return this.http.get(url);
+  }
+
+  cargarRims() {
+    const url = URL_SERVICES + '/llanta';
+    return this.http.get(url);
+  }
+
+  guardarRim( rim: Rim ) {
+    let url = URL_SERVICES + '/llanta';
+    url += '?token=' + this.userS.token;
+
+    return this.http.post(url, rim)
+      .pipe(
+        map( (res: any) => {
+          const rimDB = res.llanta;
+          swal('Llanta creada', rimDB.desc , 'success');
+          return res;
+        })
+      );
   }
 
   cargarVehiculo( id: string ) {

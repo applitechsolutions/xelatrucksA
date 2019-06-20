@@ -1,21 +1,26 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { DatatablesService } from '../../services/service.index';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import * as $ from 'jquery';
+import '../../../assets/vendor/select2/js/select2.js';
+import { DatatablesService, VehicleService } from '../../services/service.index';
 import { Vehicle } from '../../models/vehicle.model';
-import { VehicleService } from '../../services/vehicles/vehicle.service';
 import { Basics } from '../../models/basics.model';
 import { Pits } from '../../models/pits.model';
+import { Rim } from '../../models/rim.model';
 
 declare var swal: any;
-// declare function DataTable(): any;
 
 @Component({
   selector: 'app-vehicles',
   templateUrl: './vehicles.component.html',
   styles: []
 })
-export class VehiclesComponent implements OnInit {
+export class VehiclesComponent implements OnInit, AfterViewInit {
 
   @ViewChild('closeP') closeP: ElementRef;
+  @ViewChild('closeMP') closeMP: ElementRef;
+  @ViewChild('selectR') selectR: ElementRef;
+  select2: any;
 
   // Listado principal
   vehicles: Vehicle[] = [];
@@ -49,6 +54,15 @@ export class VehiclesComponent implements OnInit {
   pits: Pits[] = [];
   pit: Pits = {};
 
+  rims: Rim[] = [];
+  rim: Rim = {
+    code: '',
+    desc: '',
+    state: false
+  };
+
+  tempRim: string = '';
+
   constructor(
     public dtService: DatatablesService,
     public vehicleS: VehicleService
@@ -57,6 +71,12 @@ export class VehiclesComponent implements OnInit {
   ngOnInit() {
     // this.dtService.init_tables();
     this.cargarVehiculos();
+    this.dtService.init_datePicker();
+
+  }
+
+  ngAfterViewInit() {
+    $('.select2').select2();
   }
 
   cargarVehiculos() {
@@ -66,7 +86,13 @@ export class VehiclesComponent implements OnInit {
     });
   }
 
+  cargarRims() {
+    this.vehicleS.cargarRims()
+      .subscribe((resp: any) => this.rims = resp.llantas );
+  }
+
   seleccionarVehicle(vehicle: Vehicle) {
+    this.cargarRims();
     this.vehicle = vehicle;
     this.selected = true;
     this.pits = vehicle.pits;
@@ -182,7 +208,7 @@ export class VehiclesComponent implements OnInit {
         code: status.code,
         name: status.name,
         description: status.description
-      }
+      };
     }
   }
 
@@ -209,6 +235,115 @@ export class VehiclesComponent implements OnInit {
         this.vehicleS.crearVehiculo( this.vehicle )
           .subscribe( resp => {
             this.basics = resp.vehiculo.basics;
+          });
+      }
+    });
+  }
+
+  addRim( forma: NgForm ) {
+
+    if (forma.invalid) {
+      return;
+    }
+
+    const rim = new Rim(forma.value.codeR, forma.value.descR, false);
+
+    this.vehicleS.guardarRim(rim)
+      .subscribe( (res: any) => console.log(res));
+  }
+
+  addPit() {
+
+    this.pit.rim = this.selectR.nativeElement.value;
+
+    if (this.pit._id) {
+      console.log('EDITANDO...');
+      console.log(this.pits);
+      console.log(this.pit);
+      // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+      const index = this.pits.findIndex(item => item._id === this.pit._id);
+
+      // REMPLAZAMOS EL BASIC en base al index encontrado
+      this.pits.splice(index, 1 , this.pit);
+      this.pit = {};
+      this.vehicle.pits = this.pits;
+      console.log(this.vehicle);
+      this.vehicleS.crearVehiculo( this.vehicle )
+      .subscribe( resp => {
+        this.pits = resp.vehiculo.pits;
+      });
+      this.closeMP.nativeElement.click();
+    } else {
+      console.log('GUARDANDO...');
+      this.pits.push({
+        rim: this.pit.rim,
+        km: 0.00,
+        counter: 0.00,
+        axis: this.pit.axis,
+        place: this.pit.place,
+        side: this.pit.side,
+        date: this.pit.date,
+        total: this.pit.total
+      });
+      console.log(this.pits);
+      this.pit = {};
+      this.vehicle.pits = this.pits;
+      console.log(this.vehicle);
+      this.vehicleS.crearVehiculo( this.vehicle )
+        .subscribe( resp => {
+          this.pits = resp.vehiculo.pits;
+        });
+      this.closeMP.nativeElement.click();
+    }
+  }
+
+  editarPit( id: string ) {
+
+    const status: Pits = this.pits.find(s => s._id === id);
+
+    if (status) {
+      this.pit = {
+        rim: status.rim,
+        km: status.km,
+        counter: status.counter,
+        axis: status.axis,
+        place: status.place,
+        side: status.side,
+        date: status.date,
+        total: status.total,
+        _id: status._id
+      };
+      console.log(status.total);
+    }
+
+    $('.select2').val(status.rim._id).trigger('change');
+    this.vehicleS.cargarRims();
+    console.log(this.tempRim);
+  }
+
+  deletePit( id: string ) {
+    console.log('BORRANDO...');
+    console.log(this.pits);
+    // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+    const index = this.pits.findIndex(item => item._id === id);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar información del vehículo que no se puede recuperar',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+        // ELIMINAMOS EL BASIC en base al index encontrado
+        this.pits.splice(index, 1);
+        // ACTUALIZAMOS LA DB
+        this.vehicle.pits = this.pits;
+        console.log(this.vehicle);
+        this.vehicleS.crearVehiculo( this.vehicle )
+          .subscribe( resp => {
+            this.pits = resp.vehiculo.pits;
           });
       }
     });

@@ -8,6 +8,8 @@ import 'datatables.net-buttons/js/buttons.print';
 import 'datatables.net-buttons';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import flatpickr from 'flatpickr';
+import { Spanish } from 'flatpickr/dist/l10n/es';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Injectable({
@@ -64,6 +66,14 @@ export class DatatablesService {
           search: 'Buscar:',
           zeroRecords: 'Sin resultados encontrados'
       }
+    });
+  }
+
+  init_datePicker() {
+    flatpickr('#flatpickr', {
+      locale: Spanish,
+      enableTime: false,
+      dateFormat: 'd/m/Y'
     });
   }
 }

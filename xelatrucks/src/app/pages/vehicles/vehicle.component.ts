@@ -3,13 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 import '../../../assets/vendor/select2/js/select2.js';
 import { Make } from '../../models/make.model';
-import { MakeService } from '../../services/makes/make.service';
+import { MakeService, VehicleService } from '../../services/service.index';
 import swal from 'sweetalert';
 import { Vehicle } from '../../models/vehicle.model';
-import { VehicleService } from '../../services/vehicles/vehicle.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Decimal } from 'src/app/models/decimal.model.js';
-import { type } from 'os';
 
 declare function select2(): any;
 @Component({
@@ -113,7 +111,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         this.forma.get('model').setValue(resp.model);
         this.forma.get('mts').setValue(resp.mts.$numberDecimal);
         this.forma.get('km').setValue(resp.km.$numberDecimal);
-        });
+      });
   }
 
   crearMarca() {
@@ -125,7 +123,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
     }
 
     const make = new Make (
-          this.formaMarca.value.name
+      this.formaMarca.value.name
     );
 
     this.makeS.crearMarca( make )
@@ -148,11 +146,11 @@ export class VehicleComponent implements OnInit, AfterViewInit {
       name: ''
     };
     const km: Decimal = {
-        $numberDecimal: this.forma.value.km
-    }
+      $numberDecimal: this.forma.value.km
+    };
     const mts: Decimal = {
       $numberDecimal: this.forma.value.mts
-    }
+    };
 
     // SELECT VALIDATORS
     this.forma.value.type = this.selectT.nativeElement.value;
@@ -201,7 +199,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         mts,
         this.idVehicle
       );
-      
+
       this.vehicleS.crearVehiculo(vehiculo)
       .subscribe( resp => {
         console.log(resp);

@@ -3,11 +3,12 @@ import { Area } from '../../models/area.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { URL_SERVICES } from '../../config/config';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, catchError } from 'rxjs/operators';
 import { UserArea } from '../../models/userArea.model';
 import swal from 'sweetalert';
 import { User } from '../../models/user.model';
 import { UserService } from '../users/user.service';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,11 @@ export class AreaService {
       .pipe(
         map( (resp: any) => {
           return resp.areas;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
         }));
   }
 
@@ -46,6 +52,11 @@ export class AreaService {
       .pipe( map( (resp: any) => {
         swal('Cambios guardados', 'Áreas actualizadas correctamente', 'success');
         return resp;
+      }),
+      catchError((err, caught) => {
+        console.log(err);
+        swal(err.error.mensaje, err.error.errors.message , 'error');
+        return throwError( err );
       }));
 
   }

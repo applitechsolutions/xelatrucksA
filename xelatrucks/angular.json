@@ -36,7 +36,6 @@
                             "src/assets/vendor/pace/pace.min.js",
                             "src/assets/vendor/stacked-menu/stacked-menu.min.js",
                             "src/assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js",
-                            "src/assets/vendor/flatpickr/flatpickr.min.js",
                             "src/assets/javascript/theme.js"
                         ],
                         "es5BrowserSupport": true

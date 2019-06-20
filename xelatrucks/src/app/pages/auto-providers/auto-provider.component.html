@@ -1,3 +1,78 @@
-<p>
-  auto-provider works!
-</p>
+<div class="card card-fluid col-8">
+    <!-- .card-body -->
+    <div class="card-body">
+        <h4 class="card-title"> Información Principal </h4>
+        <h6 class="card-subtitle mb-4"> Aquí puede ingresar la Información necesaria de cada proveedor </h6>
+        <!-- form -->
+        <form ngNativeValidate [formGroup]="forma" (ngSubmit)="crearProveedor()">
+            <!-- .row -->
+            <div class="row mb-3">
+                <label for="name" class="col-lg-3 text-lg-right">Nombre <span class="badge badge-danger">Obligatorio</span></label>
+                <div class="col-lg-8 col-xl-6">
+                    <input formControlName="name" type="text" id="name" name="name" class="form-control" placeholder="Ingrese un nombre" required>
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- .row -->
+            <div class="row mb-3">
+                <label for="address" class="col-lg-3 text-lg-right">Dirección</label>
+                <div class="col-lg-8 col-xl-6">
+                    <input formControlName="address" type="text" id="address" name="address" class="form-control" placeholder="Ingrese una dirección">
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- .row -->
+            <div class="row mb-3">
+                <label for="mobile1" class="col-lg-3 text-lg-right">Teléfono</label>
+                <div class="col-lg-8 col-xl-6">
+                    <input formControlName="mobile1" type="text" id="mobile1" name="mobile1" class="form-control" placeholder="(+502) Ingrese un número de teléfono">
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- .row -->
+            <div class="row mb-3">
+                <label for="mobile2" class="col-lg-3 text-lg-right">Teléfono 2 <span class="badge badge-secondary"><em>Opcional</em></span></label>
+                <div class="col-lg-8 col-xl-6">
+                    <input formControlName="mobile2" type="text" id="mobile2" name="mobile2" class="form-control" placeholder="(+502) Ingrese un número de teléfono">
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- .row -->
+            <div class="row mb-3">
+                <label for="mail" class="col-lg-3 text-lg-right">Email</label>
+                <div class="col-lg-8 col-xl-6">
+                    <input formControlName="email" type="email" id="email" name="email" class="form-control" placeholder="Ingrese una dirección de Email">
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- .row -->
+            <div class="row mb-3">
+                <label for="account1" class="col-lg-3 text-lg-right">No. de cuenta bancaria</label>
+                <div class="col-lg-8 col-xl-6">
+                    <input formControlName="account1" type="text" id="account1" name="account1" class="form-control" placeholder="Ingrese un número de cuenta">
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- .row -->
+            <div class="row mb-3">
+                <label for="account2" class="col-lg-3 text-lg-right">No. de cuenta bancaria 2 <span class="badge badge-secondary"><em>Opcional</em></span></label>
+                <div class="col-lg-8 col-xl-6">
+                    <input formControlName="account2" type="text" id="account2" name="account2" class="form-control" placeholder="Ingrese un número de cuenta">
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- .row -->
+            <div class="row mb-3">
+                <label for="details" class="col-lg-3 text-lg-right">Detalles </label>
+                <div class="col-lg-8 col-xl-6">
+                    <textarea formControlName="details" name="details" id="details" cols="30" rows="5" class="form-control" placeholder="Detalles sobre el proveedor"></textarea>
+                </div>
+            </div>
+            <!-- /.row -->
+            <button class="btn btn-primary " type="submit " id="btnPart"><i class="fa fa-save "></i> Guardar</button>
+            <button [routerLink]="[ '/autoProviders' ]" type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+        </form>
+        <!-- /form -->
+    </div>
+    <!-- /.card-body -->
+</div>

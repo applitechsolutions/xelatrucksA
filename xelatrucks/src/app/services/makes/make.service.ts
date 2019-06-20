@@ -3,8 +3,9 @@ import { URL_SERVICES } from '../../config/config';
 import { HttpClient } from '@angular/common/http';
 import { Make } from '../../models/make.model';
 import { UserService } from '../users/user.service';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,11 @@ export class MakeService {
           const makeDB = resp.marca;
           swal('Marca creada', makeDB.name , 'success');
           return resp;
+      }),
+      catchError((err, caught) => {
+        console.log(err);
+        swal(err.error.mensaje, err.error.errors.message , 'error');
+        return throwError( err );
       }));
   }
 }

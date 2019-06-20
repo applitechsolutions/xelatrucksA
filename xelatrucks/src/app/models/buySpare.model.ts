@@ -1,6 +1,7 @@
 import { Decimal } from './decimal.model';
 import { AutoProvider } from './autoProvider.model';
 import { DetailsSpare } from './detailsSpare.model';
+import { Storage } from './storage';
 
 export class BuySpare {
 
@@ -13,6 +14,6 @@ export class BuySpare {
         public serie?: string,
         public noDoc?: string,
         public details?: DetailsSpare[],
-        public _id?: string
+        public _id?: string,
     ) {}
 }

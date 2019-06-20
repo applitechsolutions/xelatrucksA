@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { URL_SERVICES } from '../../config/config';
 import { HttpClient } from '@angular/common/http';
 import { Part } from '../../models/part.model';
-import swal from 'sweetalert';
 import { map, catchError } from 'rxjs/operators';
 import { UserService } from '../users/user.service';
 import { AutoCellar } from '../../models/autoCellar';
 import { throwError } from 'rxjs/internal/observable/throwError';
+
+declare var swal: any;
 
 @Injectable({
   providedIn: 'root'
@@ -60,12 +61,18 @@ export class PartService {
 
     } else {
 
-        url += '/5d056ea5bebc86c11351e4bb?token=' + this.userS.token;
+        url += '/5d0bc3314b057796a0896e14?token=' + this.userS.token;
 
         return this.http.post(url, part)
           .pipe( map( (resp: any) => {
             const partDB = resp.repuesto;
-            swal('Repuesto creado', partDB.desc, 'success');
+            swal({
+              title: '¡Repuesto creado!',
+              text: partDB.desc,
+              icon: 'success',
+              button: false,
+              timer: 1000
+            });
             return resp;
           }),
           catchError((err, caught) => {

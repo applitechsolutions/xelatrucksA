@@ -24,12 +24,11 @@ export class BuySpareService {
 
   crearCompra( buySpare: BuySpare ) {
 
-    let url = URL_SERVICES + '/autoProveedor';
+    let url = URL_SERVICES + '/compraRepuesto';
     url += '?token=' + this.userS.token;
 
     return this.http.post(url, buySpare )
       .pipe( map( (resp: any) => {
-        const compraDB = resp.compra;
         swal('Compra creada', 'Inventario de repuestos actualizado', 'success');
         return resp;
       }),

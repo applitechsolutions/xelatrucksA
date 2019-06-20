@@ -25,10 +25,10 @@
                         </td>
                         <td> {{ repuesto._autopart.desc }} </td>
                         <td>
-                            <h6><span class="badge badge-dark">{{ repuesto._autopart.minStock }}</span></h6>
+                            <h5 class="text-muted">{{ repuesto._autopart.minStock }}</h5>
                         </td>
                         <td>
-                            <h5><span class="badge badge-info">{{ repuesto.stock }}</span></h5>
+                            <h5>{{ repuesto.stock }}</h5>
                         </td>
                         <td class="align-middle text-right">
                             <a [routerLink]="[ '/part', repuesto._autopart._id ]" class=" btn btn-sm btn-icon btn-secondary " alt="Editar "><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>

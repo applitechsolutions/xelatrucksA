@@ -2,14 +2,16 @@ import { Component, OnInit, AfterViewInit, Provider, ViewChild, ElementRef } fro
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 import '../../../assets/vendor/select2/js/select2.js';
-import swal from 'sweetalert';
+import flatpickr from 'flatpickr';
 import { DetailsSpare } from '../../models/detailsSpare.model';
 import { Storage } from '../../models/storage';
-import { PartService } from '../../services/parts/part.service';
+import { PartService, AutoProviderService, BuySpareService} from '../../services/service.index';
 import { Part } from '../../models/part.model';
-import { AutoProviderService } from '../../services/autoProviders/auto-provider.service';
 import { Router } from '@angular/router';
+import { BuySpare } from '../../models/buySpare.model';
+import { Decimal } from '../../models/decimal.model';
 
+declare var swal: any;
 declare function select2(): any;
 @Component({
   selector: 'app-buy-spare',
@@ -20,6 +22,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
 
   @ViewChild('closeP') modalClose: ElementRef;
   @ViewChild('selectR') selectR: ElementRef;
+  @ViewChild('selectP') selectP: ElementRef;
 
   forma: FormGroup;
   formaR: FormGroup;
@@ -29,14 +32,15 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
   detail: DetailsSpare = {
     _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
     quantity: null,
-    cost: { $numberDecimal: null }
+    cost: null
   };
   tempPart: string = '';
 
   constructor(
     public partS: PartService,
     public providerS: AutoProviderService,
-    public router: Router
+    public router: Router,
+    public buySpareS: BuySpareService
   ) { }
 
   ngAfterViewInit() {
@@ -44,12 +48,14 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    flatpickr('#date', {});
     this.forma = new FormGroup({
       date: new FormControl(null, Validators.required),
       provider: new FormControl(''),
       noBill: new FormControl(null),
       serie: new FormControl(null),
-      noDoc: new FormControl(null)
+      noDoc: new FormControl(null),
+      total: new FormControl(0, Validators.required)
     }, {});
 
     this.formaR = new FormGroup({
@@ -108,13 +114,110 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
   }
 
   AgregarDetalle() {
-      this.detail._part._id = this.selectR.nativeElement.value;
-      this.detail._part.desc = this.selectR.nativeElement.selectedOptions;
-      console.log(this.detail);
+    if (this.selectR.nativeElement.value === '' || this.detail.quantity === null || this.detail.cost === null) {
+      swal('Oops...', 'Por favor ingrese los campos obligatorios', 'warning');
+      return;
+    }
+    if (this.details.find(e => e._part._id === this.selectR.nativeElement.value)) {
+      const row = this.details.find(e => e._part._id === this.selectR.nativeElement.value);
+      const index = this.details.findIndex(e => e._part._id === this.selectR.nativeElement.value);
+      // RESTAR EL SUBTOTAL AL TOTAL DEL RESGISTRO YA EXISTENTE
+      this.forma.get('total').setValue(this.forma.value.total - (row.quantity * row.cost));
+      // RECALCULO LA CANTIDAD Y EL SUBTOTAL
+      this.detail.quantity = row.quantity + this.detail.quantity;
+      this.detail._part = row._part;
+      // REMPLAZAMOS EL REPUESTO en base al index encontrado
+      this.details.splice(index, 1, this.detail);
+    } else {
+      const part = this.storages.find(e => e._autopart._id === this.selectR.nativeElement.value);
+      this.detail._part = part._autopart;
+      this.details.push({
+      _part: this.detail._part,
+      quantity: this.detail.quantity,
+      cost: this.detail.cost
+      });
+    }
+    // SUMAR AL TOTAL
+    this.forma.get('total').setValue(this.forma.value.total + (this.detail.quantity * this.detail.cost));
+
+    swal({
+      title: '¡Agregado!',
+      text: 'Repuesto agregado al detalle',
+      icon: 'success',
+      button: false,
+      timer: 1000
+    });
+    this.detail = {
+    _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
+     quantity: null,
+     cost: null
+   };
+  }
+
+  quitarDetalle( id: string ) {
+    console.log('BORRANDO...');
+    console.log(this.details);
+    // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+    const index = this.details.findIndex(item => item._part._id === id);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar un registro del detalle, esto afectará el total de la compra',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+        // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
+        const row = this.details.find(e => e._part._id === id);
+        // ACTUALIZAMOS el total
+        this.forma.get('total').setValue(this.forma.value.total - (row.quantity * row.cost));
+
+        // ELIMINAMOS EL DETALLE en base al index encontrado
+        this.details.splice(index, 1);
+
+      }
+    });
   }
 
   crearCompra() {
 
-  }
+    // SELECT VALIDATORS
+    this.forma.value.provider = this.selectP.nativeElement.value;
 
+    const total: Decimal = {
+      $numberDecimal: this.forma.value.total
+    };
+
+    console.log(this.forma.value);
+    console.log('ESTAMOS EN CREAR COMPRA');
+
+    if (this.forma.value.provider === '' || total.$numberDecimal === 0) {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      return;
+    }
+
+    if (this.forma.invalid) {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      return;
+    }
+
+    const buySpare = new BuySpare (
+       this.forma.value.provider,
+       this.forma.value.date,
+       total,
+       false,
+       this.forma.value.noBill,
+       this.forma.value.serie,
+       this.forma.value.noDoc,
+       this.details
+    );
+
+    this.buySpareS.crearCompra( buySpare )
+    .subscribe( resp => {
+      console.log(resp);
+      // this.router.navigate(['/vehicles']);
+    });
+  }
 }

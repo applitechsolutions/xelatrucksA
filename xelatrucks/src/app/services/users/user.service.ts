@@ -25,6 +25,25 @@ export class UserService {
     this.cargarStorage();
   }
 
+  renuevaToken() {
+    const url = URL_SERVICES + '/login/renuevatoken?token=' + this.token;
+
+    return this.http.get( url )
+    .pipe(
+    map( (resp: any) => {
+      this.token = resp.token;
+      localStorage.setItem('token', this.token );
+      
+      console.log('TOKEN RENOVADO!!! XD');
+      
+      return true;
+    }), catchError((err, caught) => {
+      this.Router.navigate(['/login']);
+      swal('Error de autentificación', 'El tiempo de la sesión ha caducado por favor vuelva a iniciar sesión' , 'error');
+      return throwError( err );
+    }));
+  }
+
   estaLogueado() {
     return (this.token.length > 5) ? true : false;
   }

@@ -61,7 +61,7 @@ export class PartService {
 
     } else {
 
-        url += '/5d0bc3314b057796a0896e14?token=' + this.userS.token;
+        url += this.userS.token;
 
         return this.http.post(url, part)
           .pipe( map( (resp: any) => {

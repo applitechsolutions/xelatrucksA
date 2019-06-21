@@ -24,35 +24,28 @@ import { BuySpareComponent } from './buy-spares/buy-spare.component';
 
 
 const pagesRoutes: Routes = [
-    {
-        path: '',
-        component: PagesComponent,
-        canActivate: [ LoginGuardGuard ],
-        children: [
-            { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
-            { path: 'progress', component: ProgressComponent, data: { titulo: 'ProgressBar' } },
-            { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
-            { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
-            { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' } },
-            { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil de usuario' } },
-            // MANTENIMIENTOS
-            { path: 'usuarios', component: UsersComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
-            { path: 'usuario/:id', component: UserComponent, data: { titulo: 'Crear Usuario' } },
-            // TRANSPORTES
-            { path: 'orders', component: OrdersComponent, data: { titulo: 'Mantenimiento de Pedidos' } },
-            { path: 'order/:id', component: OrderComponent, data: { titulo: 'Crear Pedido' } },
-            // TALLER
-            { path: 'buySpares', component: BuySparesComponent, data: { titulo: 'Historial de compras' } },
-            { path: 'buySpare/:id', component: BuySpareComponent, data: { titulo: 'Nueva Compra' } },
-            { path: 'autoProviders', component: AutoProvidersComponent, data: { titulo: 'Mantenimiento de Proveedores' } },
-            { path: 'autoProvider/:id', component: AutoProviderComponent, data: { titulo: 'Crear Proveedor' } },
-            { path: 'vehicles', component: VehiclesComponent, data: { titulo: 'Mantenimiento de Vehículos' } },
-            { path: 'vehicle/:id', component: VehicleComponent, data: { titulo: 'Crear Vehículo' } },
-            { path: 'parts', component: PartsComponent, data: { titulo: 'Mantenimiento de Repuestos' } },
-            { path: 'part/:id', component: PartComponent, data: { titulo: 'Crear Repuesto' } },
-            { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
-        ]
-    },
+    { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+    { path: 'progress', component: ProgressComponent, data: { titulo: 'ProgressBar' } },
+    { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
+    { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
+    { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' } },
+    { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil de usuario' } },
+    // MANTENIMIENTOS
+    { path: 'usuarios', component: UsersComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
+    { path: 'usuario/:id', component: UserComponent, data: { titulo: 'Crear Usuario' } },
+    // TRANSPORTES
+    { path: 'orders', component: OrdersComponent, data: { titulo: 'Mantenimiento de Pedidos' } },
+    { path: 'order/:id', component: OrderComponent, data: { titulo: 'Crear Pedido' } },
+    // TALLER
+    { path: 'buySpares', component: BuySparesComponent, data: { titulo: 'Historial de compras' } },
+    { path: 'buySpare/:id', component: BuySpareComponent, data: { titulo: 'Nueva Compra' } },
+    { path: 'autoProviders', component: AutoProvidersComponent, data: { titulo: 'Mantenimiento de Proveedores' } },
+    { path: 'autoProvider/:id', component: AutoProviderComponent, data: { titulo: 'Crear Proveedor' } },
+    { path: 'vehicles', component: VehiclesComponent, data: { titulo: 'Mantenimiento de Vehículos' } },
+    { path: 'vehicle/:id', component: VehicleComponent, data: { titulo: 'Crear Vehículo' } },
+    { path: 'parts', component: PartsComponent, data: { titulo: 'Mantenimiento de Repuestos' } },
+    { path: 'part/:id', component: PartComponent, data: { titulo: 'Crear Repuesto' } },
+    { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

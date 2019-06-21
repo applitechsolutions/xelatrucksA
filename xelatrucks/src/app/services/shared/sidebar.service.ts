@@ -40,7 +40,7 @@ export class SidebarService {
       titulo: 'Repuestos',
       icono: 'menu-icon fas fa-cogs',
       submenu: [
-        { titulo: 'Inventario de Repuestos', url: '/parts' },
+        { titulo: 'Inventario', url: '/parts' },
         { titulo: 'Crear Repuesto', url: '/part/new' }
       ]
     },

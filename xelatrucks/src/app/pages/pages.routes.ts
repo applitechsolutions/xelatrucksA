@@ -1,4 +1,4 @@
-import { RouterModule, Routes, canActivate } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';

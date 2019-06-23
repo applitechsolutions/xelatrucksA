@@ -81,8 +81,8 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     // this.dtService.init_tables();
     this.cargarVehiculos();
 
-    this.date = this.fromJsonDate(new Date());
-    this.dtService.init_datePicker(this.date);
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtService.init_datePicker(today);
 
     // Inicializar form de los pits
     this.formPit = new FormGroup({
@@ -286,16 +286,18 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   }
 
+  resetModal() {
+    this.formPit.reset();
+  }
+
   addPit() {
 
     // Limpiamos el formulario
-
-
     // Se llena la llanta de la con native element del select
     this.formPit.get('rim').setValue(this.selectR.nativeElement.value);
 
-    // Se transforma la fecha
-    const fechaApi = this.toApiDate(this.dateP.nativeElement.value);
+    const fecha = moment(this.dateP.nativeElement.value, 'DD/MM/YYYY').toDate();
+
     let pit;
 
     if (this.pit._id) {
@@ -312,7 +314,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         this.formPit.value.axis,
         this.formPit.value.place,
         this.formPit.value.side,
-        fechaApi,
+        fecha.toString(),
         this.formPit.value.total,
         this.pit._id
       );
@@ -338,12 +340,12 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         axis: this.formPit.value.axis,
         place: this.formPit.value.place,
         side: this.formPit.value.side,
-        date: fechaApi,
+        date: fecha.toString(),
         total: this.formPit.value.total
       });
       this.vehicle.pits = this.pits;
       console.log(this.pits);
-      console.log(fechaApi);
+      console.log(this.dateP.nativeElement.value);
       console.log(this.dateP.nativeElement.value);
       $('.select2').val('').trigger('change');
       this.vehicleS.crearVehiculo( this.vehicle )
@@ -360,6 +362,8 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     const status: Pits = this.pits.find(s => s._id === id);
 
     const fecha = this.fromJsonDate(status.date);
+
+    console.log(fecha);
 
     if (status) {
       this.formPit.get('axis').setValue(status.axis);
@@ -410,13 +414,22 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   fromJsonDate(jDate): string {
 
+    console.log(jDate);  
+
     const bDate: Date = new Date(jDate);
+
+    console.log(bDate);
+
     const formattedDate = moment(bDate).format('DD/MM/YYYY');
+
+    console.log(bDate);
+
     return formattedDate.toString().substring(0, 10);  // Ignore time
   }
 
-  toApiDate(bDate) {
-    const apiDate: string = new Date(bDate).toUTCString();
-    return apiDate;
-  }
+  // toApiDate(bDate) {
+  //   const formattedDate = moment(bDate).format('DD/MM/YYYY');
+  //   const apiDate: string = new Date(bDate).toUTCString();
+  //   return apiDate;
+  // }
 }

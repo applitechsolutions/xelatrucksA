@@ -107,7 +107,7 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#vehicle-rims"> Neumáticos</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#client-projects">Projects</a>
                     </li>
                     <li class="nav-item">
@@ -115,7 +115,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#client-expenses">Expenses</a>
-                    </li>
+                    </li> -->
                 </ul>
                 <!-- /.nav-tabs -->
             </div>
@@ -132,13 +132,13 @@
                                 <h2 id="client-billing-contact-tab" class="card-title"> #: {{this.vehicle.no}} {{ this.type + ' ' + this.title }} </h2>
                             </div>
                             <p class="metric-value h1 fa-pull-right">
-                                <span class="value">{{ this.vehicle.km.$numberDecimal }}</span> <sup>km</sup>
+                                <span class="value">{{ this.vehicle.km }}</span> <sup>km</sup>
                             </p>
                             <address> 
                                 <strong>Código Cementos Progreso:</strong> {{ this.vehicle.cp }}<br> 
                                 <strong>Marca:</strong> {{ this.vehicle._make.name }}<br> 
                                 <strong>Modelo:</strong> {{ this.vehicle.model }} <br>
-                                <strong>mts:</strong> {{ this.vehicle.mts.$numberDecimal }}
+                                <strong>mts:</strong> {{ this.vehicle.mts }}
                             </address>
                             <button *ngIf="selected" (click)="borraVehiculo( this.vehicle )" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
                             <button *ngIf="selected" [routerLink]="[ '/vehicle', this.vehicle._id ]" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>

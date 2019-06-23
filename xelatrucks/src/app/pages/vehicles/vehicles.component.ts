@@ -41,8 +41,8 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     plate: '_',
     model: 0,
     state: false,
-    km: { $numberDecimal: 0.00 },
-    mts: { $numberDecimal: 0.00 }
+    km: 0.00,
+    mts: 0.00
   };
 
   // Basics del vehiculo
@@ -302,6 +302,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     const status: Pits = this.pits.find(s => s._id === id);
 
     if (status) {
+
       this.pit = {
         rim: status.rim,
         km: status.km,
@@ -313,14 +314,14 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         total: status.total,
         _id: status._id
       };
-      console.log(status.total);
     }
 
     $('.select2').val(status.rim._id).trigger('change');
+    this.dtService.init_datePicker();
     this.vehicleS.cargarRims();
     console.log(this.tempRim);
   }
-
+  
   deletePit( id: string ) {
     console.log('BORRANDO...');
     console.log(this.pits);

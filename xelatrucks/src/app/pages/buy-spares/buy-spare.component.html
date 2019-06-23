@@ -14,7 +14,7 @@
                         <div class="row">
                             <!-- .form-group -->
                             <div class="form-group col-3">
-                                <label class="control-label" for="date">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="date" name="date" id="date" type="text" class="form-control" data-toggle="flatpickr" required>
+                                <label class="control-label" for="date">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="date" name="date" id="flatpickr" type="text" class="form-control" required>
                             </div>
                             <!-- /.form-group -->
                             <!-- .form-group -->
@@ -56,7 +56,7 @@
                                 <h2 class="card-title"> Detalle de compra </h2>
                                 <!-- .table-responsive -->
                                 <div class="table-responsive">
-                                    <table class="table table-hover" style="min-width: 678px">
+                                    <table id="table1" class="table table-hover" style="min-width: 678px">
                                         <thead>
                                             <tr>
                                                 <th> Repuesto </th>
@@ -70,7 +70,7 @@
                                             <tr *ngFor="let det of details">
                                                 <td class="align-middle"> {{ det._part.code + ' ' + det._part.desc }} </td>
                                                 <td class="align-middle"> {{ det.quantity }} </td>
-                                                <td class="align-middle"> {{ det.cost }} </td>
+                                                <td class="align-middle"> {{ det.cost | number : '1.2-2' }} </td>
                                                 <td class="align-middle"> {{ det.quantity * det.cost | number : '1.2-2' }} </td>
                                                 <td class="align-middle text-right">
                                                     <button (click)='quitarDetalle( det._part._id )' type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>

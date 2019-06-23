@@ -1,4 +1,3 @@
-import { Decimal } from './decimal.model';
 import { AutoProvider } from './autoProvider.model';
 import { DetailsSpare } from './detailsSpare.model';
 import { Storage } from './storage';
@@ -8,7 +7,7 @@ export class BuySpare {
     constructor(
         public _provider: AutoProvider,
         public date: Date,
-        public total: Decimal,
+        public total: number,
         public state: boolean = false,
         public noBill?: string,
         public serie?: string,

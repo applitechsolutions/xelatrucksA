@@ -2,14 +2,16 @@ import { Component, OnInit, AfterViewInit, Provider, ViewChild, ElementRef } fro
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 import '../../../assets/vendor/select2/js/select2.js';
-import flatpickr from 'flatpickr';
 import { DetailsSpare } from '../../models/detailsSpare.model';
 import { Storage } from '../../models/storage';
 import { PartService, AutoProviderService, BuySpareService} from '../../services/service.index';
 import { Part } from '../../models/part.model';
 import { Router } from '@angular/router';
 import { BuySpare } from '../../models/buySpare.model';
-import { Decimal } from '../../models/decimal.model';
+import { DatatablesService } from '../../services/datatables/datatables.service';
+import { DatePipe, formatDate } from '@angular/common';
+import * as moment from 'moment/moment';
+import { AutoProvider } from '../../models/autoProvider.model';
 
 declare var swal: any;
 declare function select2(): any;
@@ -40,15 +42,16 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
     public partS: PartService,
     public providerS: AutoProviderService,
     public router: Router,
-    public buySpareS: BuySpareService
+    public buySpareS: BuySpareService,
+    public dtS: DatatablesService
   ) { }
 
   ngAfterViewInit() {
     $('.select2').select2();
+    this.dtS.init_datePicker();
   }
 
   ngOnInit() {
-    flatpickr('#date', {});
     this.forma = new FormGroup({
       date: new FormControl(null, Validators.required),
       provider: new FormControl(''),
@@ -186,14 +189,10 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
     // SELECT VALIDATORS
     this.forma.value.provider = this.selectP.nativeElement.value;
 
-    const total: Decimal = {
-      $numberDecimal: this.forma.value.total
-    };
-
     console.log(this.forma.value);
     console.log('ESTAMOS EN CREAR COMPRA');
 
-    if (this.forma.value.provider === '' || total.$numberDecimal === 0) {
+    if (this.forma.value.provider === '' || this.forma.value.total === 0) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }
@@ -203,10 +202,17 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    const provider: AutoProvider = {
+
+      _id: this.forma.value.provider,
+      name: '',
+      state: false
+    };
+
     const buySpare = new BuySpare (
-       this.forma.value.provider,
-       this.forma.value.date,
-       total,
+       provider,
+       moment(this.forma.value.date, 'DD/MM/YYYY').toDate(),
+       this.forma.value.total,
        false,
        this.forma.value.noBill,
        this.forma.value.serie,
@@ -217,7 +223,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
     this.buySpareS.crearCompra( buySpare )
     .subscribe( resp => {
       console.log(resp);
-      // this.router.navigate(['/vehicles']);
+      this.router.navigate(['/buySpares']);
     });
   }
 }

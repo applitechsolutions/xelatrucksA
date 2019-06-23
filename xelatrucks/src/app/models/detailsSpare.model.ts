@@ -1,4 +1,3 @@
-import { Decimal } from './decimal.model';
 import { Part } from './part.model';
 
 export class DetailsSpare {

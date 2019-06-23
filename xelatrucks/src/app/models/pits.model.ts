@@ -1,5 +1,4 @@
 import { Rim } from './rim.model';
-import { Decimal } from './decimal.model';
 
 export class Pits {
 

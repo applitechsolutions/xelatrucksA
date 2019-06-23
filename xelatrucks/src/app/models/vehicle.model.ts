@@ -1,7 +1,6 @@
 import { Basics } from './basics.model';
 import { Pits } from './pits.model';
 import { Make } from './make.model';
-import { Decimal } from './decimal.model';
 
 export class Vehicle {
 
@@ -13,8 +12,8 @@ export class Vehicle {
         public cp?: string,
         public no?: number,
         public model?: number,
-        public km?: Decimal,
-        public mts?: Decimal,
+        public km?: number,
+        public mts?: number,
         public _id?: string,
         public _gondola?: string,
         public basics?: Basics[],

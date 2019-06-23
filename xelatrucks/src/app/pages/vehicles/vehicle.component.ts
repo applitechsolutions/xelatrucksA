@@ -7,7 +7,6 @@ import { MakeService, VehicleService } from '../../services/service.index';
 import swal from 'sweetalert';
 import { Vehicle } from '../../models/vehicle.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Decimal } from 'src/app/models/decimal.model.js';
 
 declare function select2(): any;
 @Component({
@@ -109,8 +108,8 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         this.forma.get('plate').setValue(resp.plate);
         this.forma.get('no').setValue(resp.no);
         this.forma.get('model').setValue(resp.model);
-        this.forma.get('mts').setValue(resp.mts.$numberDecimal);
-        this.forma.get('km').setValue(resp.km.$numberDecimal);
+        this.forma.get('mts').setValue(resp.mts);
+        this.forma.get('km').setValue(resp.km);
       });
   }
 
@@ -145,12 +144,6 @@ export class VehicleComponent implements OnInit, AfterViewInit {
       _id: this.selectM.nativeElement.value,
       name: ''
     };
-    const km: Decimal = {
-      $numberDecimal: this.forma.value.km
-    };
-    const mts: Decimal = {
-      $numberDecimal: this.forma.value.mts
-    };
 
     // SELECT VALIDATORS
     this.forma.value.type = this.selectT.nativeElement.value;
@@ -177,8 +170,8 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         this.forma.value.cp,
         this.forma.value.no,
         this.forma.value.model,
-        km,
-        mts
+        this.forma.value.km,
+        this.forma.value.mts
       );
 
       this.vehicleS.crearVehiculo(vehiculo)
@@ -195,8 +188,8 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         this.forma.value.cp,
         this.forma.value.no,
         this.forma.value.model,
-        km,
-        mts,
+        this.forma.value.km,
+        this.forma.value.mts,
         this.idVehicle
       );
 

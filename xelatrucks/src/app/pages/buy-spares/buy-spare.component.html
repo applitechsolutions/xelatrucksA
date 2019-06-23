@@ -70,8 +70,8 @@
                                             <tr *ngFor="let det of details">
                                                 <td class="align-middle"> {{ det._part.code + ' ' + det._part.desc }} </td>
                                                 <td class="align-middle"> {{ det.quantity }} </td>
-                                                <td class="align-middle"> {{ det.cost | number : '1.2-2' }} </td>
-                                                <td class="align-middle"> {{ det.quantity * det.cost | number : '1.2-2' }} </td>
+                                                <td class="align-middle">Q {{ det.cost | number : '1.2-2' }} </td>
+                                                <td class="align-middle">Q {{ det.quantity * det.cost | number : '1.2-2' }} </td>
                                                 <td class="align-middle text-right">
                                                     <button (click)='quitarDetalle( det._part._id )' type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
                                                 </td>

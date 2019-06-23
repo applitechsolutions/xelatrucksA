@@ -48,7 +48,8 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     $('.select2').select2();
-    this.dtS.init_datePicker();
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtS.init_datePicker(today);
   }
 
   ngOnInit() {

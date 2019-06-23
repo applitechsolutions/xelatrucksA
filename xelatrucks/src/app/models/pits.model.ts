@@ -9,7 +9,7 @@ export class Pits {
         public axis?: string,
         public place?: string,
         public side?: string,
-        public date?: Date,
+        public date?: string,
         public total?: number,
         public _id?: string
     ) {}

@@ -117,11 +117,12 @@ export class DatatablesService {
     });
   }
 
-  init_datePicker() {
+  init_datePicker( defaultdate: string ) {
     flatpickr('#flatpickr', {
       locale: Spanish,
       enableTime: false,
-      dateFormat: 'd/m/Y'
+      dateFormat: 'd/m/Y',
+      defaultDate: defaultdate
     });
   }
 }

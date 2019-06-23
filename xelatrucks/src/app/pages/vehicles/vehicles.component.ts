@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import * as $ from 'jquery';
+import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
 import { DatatablesService, VehicleService } from '../../services/service.index';
 import { Vehicle } from '../../models/vehicle.model';
@@ -19,8 +20,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   @ViewChild('closeP') closeP: ElementRef;
   @ViewChild('closeMP') closeMP: ElementRef;
+  @ViewChild('closeMR') closeMR: ElementRef;
   @ViewChild('selectR') selectR: ElementRef;
+  @ViewChild('datePit') dateP: ElementRef;
   select2: any;
+
+  // fecha de hoy
+  date: string;
 
   // Listado principal
   vehicles: Vehicle[] = [];
@@ -51,6 +57,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   // Basic del form
   basic: Basics = {};
 
+  // form de PITS
+  formPit: FormGroup;
+
   pits: Pits[] = [];
   pit: Pits = {};
 
@@ -71,7 +80,21 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     // this.dtService.init_tables();
     this.cargarVehiculos();
-    this.dtService.init_datePicker();
+
+    this.date = this.fromJsonDate(new Date());
+    this.dtService.init_datePicker(this.date);
+
+    // Inicializar form de los pits
+    this.formPit = new FormGroup({
+      axis: new FormControl(null, Validators.required),
+      place: new FormControl(null, Validators.required),
+      side: new FormControl(null, Validators.required),
+      rim: new FormControl(''),
+      date: new FormControl(null),
+      total: new FormControl(0, Validators.required),
+      km: new FormControl(0),
+      counter: new FormControl(0)
+    });
 
   }
 
@@ -249,12 +272,31 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     const rim = new Rim(forma.value.codeR, forma.value.descR, false);
 
     this.vehicleS.guardarRim(rim)
-      .subscribe( (res: any) => console.log(res));
+      .subscribe( (resp: any) => {
+        swal({
+          title: 'Exito!',
+          text: 'Llanta creada correctamente' + resp.desc,
+          icon: 'success',
+          button: false,
+          timer: 1000
+        });
+        this.closeMR.nativeElement.click();
+        this.cargarRims();
+      });
+
   }
 
   addPit() {
 
-    this.pit.rim = this.selectR.nativeElement.value;
+    // Limpiamos el formulario
+    this.formPit.reset();
+
+    // Se llena la llanta de la con native element del select
+    this.formPit.get('rim').setValue(this.selectR.nativeElement.value);
+
+    // Se transforma la fecha
+    const fechaApi = this.toApiDate(this.formPit.value.date);
+    let pit;
 
     if (this.pit._id) {
       console.log('EDITANDO...');
@@ -263,11 +305,25 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
       const index = this.pits.findIndex(item => item._id === this.pit._id);
 
+      pit = new Pits(
+        this.formPit.value.rim,
+        this.formPit.value.km,
+        this.formPit.value.counter,
+        this.formPit.value.axis,
+        this.formPit.value.place,
+        this.formPit.value.side,
+        fechaApi,
+        this.formPit.value.total,
+        this.pit._id
+      );
+
+
       // REMPLAZAMOS EL BASIC en base al index encontrado
-      this.pits.splice(index, 1 , this.pit);
+      this.pits.splice(index, 1, pit);
       this.pit = {};
+      this.formPit.reset();
       this.vehicle.pits = this.pits;
-      console.log(this.vehicle);
+      $('.select2').val('').trigger('change');
       this.vehicleS.crearVehiculo( this.vehicle )
       .subscribe( resp => {
         this.pits = resp.vehiculo.pits;
@@ -276,19 +332,18 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     } else {
       console.log('GUARDANDO...');
       this.pits.push({
-        rim: this.pit.rim,
+        rim: this.formPit.value.rim,
         km: 0.00,
         counter: 0.00,
-        axis: this.pit.axis,
-        place: this.pit.place,
-        side: this.pit.side,
-        date: this.pit.date,
-        total: this.pit.total
+        axis: this.formPit.value.axis,
+        place: this.formPit.value.place,
+        side: this.formPit.value.side,
+        date: this.formPit.value.date,
+        total: this.formPit.value.total
       });
-      console.log(this.pits);
-      this.pit = {};
+      this.formPit.reset();
       this.vehicle.pits = this.pits;
-      console.log(this.vehicle);
+      $('.select2').val('').trigger('change');
       this.vehicleS.crearVehiculo( this.vehicle )
         .subscribe( resp => {
           this.pits = resp.vehiculo.pits;
@@ -301,25 +356,23 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
     const status: Pits = this.pits.find(s => s._id === id);
 
-    if (status) {
+    const fecha = this.fromJsonDate(status.date);
 
-      this.pit = {
-        rim: status.rim,
-        km: status.km,
-        counter: status.counter,
-        axis: status.axis,
-        place: status.place,
-        side: status.side,
-        date: status.date,
-        total: status.total,
-        _id: status._id
-      };
+    if (status) {
+      this.formPit.get('axis').setValue(status.axis);
+      this.formPit.get('place').setValue(status.place);
+      this.formPit.get('side').setValue(status.side);
+      this.formPit.get('date').setValue(fecha);
+      this.formPit.get('total').setValue(status.total);
+      this.formPit.get('rim').setValue(status.rim);
+      this.formPit.get('km').setValue(status.km);
+      this.formPit.get('counter').setValue(status.counter);
+      this.pit._id = status._id;
     }
 
     $('.select2').val(status.rim._id).trigger('change');
-    this.dtService.init_datePicker();
+    this.dtService.init_datePicker(fecha);
     this.vehicleS.cargarRims();
-    console.log(this.tempRim);
   }
   
   deletePit( id: string ) {
@@ -348,5 +401,17 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
           });
       }
     });
+  }
+
+  fromJsonDate(jDate): string {
+
+    const bDate: Date = new Date(jDate);
+    const formattedDate = moment(bDate).format('DD/MM/YYYY');
+    return formattedDate.toString().substring(0, 10);  // Ignore time
+  }
+
+  toApiDate(bDate) {
+    const apiDate: string = new Date(bDate).toUTCString();
+    return apiDate;
   }
 }

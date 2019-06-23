@@ -756,7 +756,7 @@
                         <!-- /.form-group -->
                         <!-- .modal-footer -->
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeP type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMR type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
                         </div>
                         <!-- /.modal-footer -->
                     </form>
@@ -769,7 +769,7 @@
     </div>
     <!-- /.modalRIM -->
     <!-- .modalPITS -->
-    <div class="modal fade" id="addPit" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addPit" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
         <!-- .modal-dialog -->
         <div class="modal-dialog" role="document">
             <!-- .modal-content -->
@@ -780,68 +780,70 @@
                 </div>
                 <!-- /.modal-header -->
 
-                <!-- .modal-body -->
-                <div class="modal-body">
-                    <fieldset>
-                        <legend> Lugar </legend>
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input [(ngModel)]="pit.axis" type="text" class="form-control" name="codeR" required> <label for="code">Eje</label>
+                <form ngNativeValidate [formGroup]="formPit" (ngSubmit)="addPit()" action="#">
+                    <!-- .modal-body -->
+                    <div class="modal-body">
+                        <fieldset>
+                            <legend> Lugar </legend>
+                            <!-- .form-group -->
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <input formControlName="axis" name="axis" type="text" class="form-control" required> <label for="axis">Eje</label>
+                                </div>
                             </div>
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input [(ngModel)]="pit.place" type="text" name="descR" class="form-control" required> <label for="name">Posición</label>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <input formControlName="place" name="place" type="text" class="form-control" required> <label for="place">Posición</label>
+                                </div>
                             </div>
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input [(ngModel)]="pit.side" type="text" name="descR" class="form-control" required> <label for="name">Lado</label>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <input formControlName="side" name="side" type="text" class="form-control" required> <label for="name">Lado</label>
+                                </div>
                             </div>
-                        </div>
-                        <!-- /.form-group -->
-                    </fieldset>
+                            <!-- /.form-group -->
+                        </fieldset>
 
-                    <fieldset>
-                        <legend> Mantenimiento </legend>
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <select #selectR name="rim" class="form-control select2" id="rim" style="width:100%!important;">
-                                <option value=""> Seleccione una llanta </option>
-                                <option *ngFor="let rim of rims" [selected]="rim._id === tempRim" [value]="rim._id"> {{ rim.code }}  {{ rim.desc }}
-                                </option>
-                            </select>
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <label class="control-label" for="flatpickr">Fecha de Instalación</label> <input [(ngModel)]="pit.date" name="date" id="flatpickr" type="text" class="form-control">
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <label for="pi9">Total Instalación</label>
-                            <!-- .input-group -->
-                            <div class="input-group">
-                                <label class="input-group-prepend" for="pi9"><span class="badge">Q</span></label> <input [(ngModel)]="pit.total" type="number" step="1" class="form-control" id="pi9">
+                        <fieldset>
+                            <legend> Mantenimiento </legend>
+                            <!-- .form-group -->
+                            <div class="form-group">
+                                <select #selectR name="rim" class="form-control select2" id="rim" style="width:100%!important;">
+                                    <option value=""> Seleccione una llanta </option>
+                                    <option *ngFor="let rim of rims" [selected]="rim._id === tempRim" [value]="rim._id"> {{ rim.code }}  {{ rim.desc }}
+                                    </option>
+                                </select>
                             </div>
-                            <!-- /.input-group -->
-                        </div>
-                        <!-- /.form-group -->
-                    </fieldset>
-                </div>
-                <!-- /.modal-body -->
-                <!-- .modal-footer -->
-                <div class="modal-footer">
-                    <button (click)="addPit()" type="submit" class="btn btn-primary">Guardar</button> <button #closeMP type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                </div>
-                <!-- /.modal-footer -->
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group">
+                                <label class="control-label" for="flatpickr">Fecha de Instalación</label> <input #datePit formControlName="date" name="date" id="flatpickr" type="text" class="form-control">
+                            </div>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group">
+                                <label for="pi9">Total Instalación</label>
+                                <!-- .input-group -->
+                                <div class="input-group">
+                                    <label class="input-group-prepend" for="pi9"><span class="badge">Q</span></label> <input formControlName="total" name="total" type="number" step="0.01" class="form-control" id="pi9">
+                                </div>
+                                <!-- /.input-group -->
+                            </div>
+                            <!-- /.form-group -->
+                        </fieldset>
+                    </div>
+                    <!-- /.modal-body -->
+                    <!-- .modal-footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMP type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                    </div>
+                    <!-- /.modal-footer -->
 
+                </form>
             </div>
             <!-- /.modal-content -->
         </div>

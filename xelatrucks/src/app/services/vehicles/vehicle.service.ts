@@ -37,8 +37,7 @@ export class VehicleService {
       .pipe(
         map( (res: any) => {
           const rimDB = res.llanta;
-          swal('Llanta creada', rimDB.desc , 'success');
-          return res;
+          return rimDB;
         })
       );
   }

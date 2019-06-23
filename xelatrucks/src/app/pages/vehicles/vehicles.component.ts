@@ -289,13 +289,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   addPit() {
 
     // Limpiamos el formulario
-    this.formPit.reset();
+
 
     // Se llena la llanta de la con native element del select
     this.formPit.get('rim').setValue(this.selectR.nativeElement.value);
 
     // Se transforma la fecha
-    const fechaApi = this.toApiDate(this.formPit.value.date);
+    const fechaApi = this.toApiDate(this.dateP.nativeElement.value);
     let pit;
 
     if (this.pit._id) {
@@ -317,12 +317,12 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         this.pit._id
       );
 
-
       // REMPLAZAMOS EL BASIC en base al index encontrado
       this.pits.splice(index, 1, pit);
+      console.log(pit);
       this.pit = {};
-      this.formPit.reset();
       this.vehicle.pits = this.pits;
+      console.log(this.vehicles);
       $('.select2').val('').trigger('change');
       this.vehicleS.crearVehiculo( this.vehicle )
       .subscribe( resp => {
@@ -338,11 +338,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         axis: this.formPit.value.axis,
         place: this.formPit.value.place,
         side: this.formPit.value.side,
-        date: this.formPit.value.date,
+        date: fechaApi,
         total: this.formPit.value.total
       });
-      this.formPit.reset();
       this.vehicle.pits = this.pits;
+      console.log(this.pits);
+      console.log(fechaApi);
+      console.log(this.dateP.nativeElement.value);
       $('.select2').val('').trigger('change');
       this.vehicleS.crearVehiculo( this.vehicle )
         .subscribe( resp => {
@@ -350,6 +352,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         });
       this.closeMP.nativeElement.click();
     }
+    this.formPit.reset();
   }
 
   editarPit( id: string ) {
@@ -370,11 +373,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       this.pit._id = status._id;
     }
 
+    console.log(this.formPit.value);
+
     $('.select2').val(status.rim._id).trigger('change');
     this.dtService.init_datePicker(fecha);
     this.vehicleS.cargarRims();
   }
-  
+
   deletePit( id: string ) {
     console.log('BORRANDO...');
     console.log(this.pits);

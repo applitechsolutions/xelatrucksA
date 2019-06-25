@@ -26,8 +26,8 @@ export class VerificaTokenGuard implements CanActivate {
     const expirado = this.expirado( payload.exp );
 
     if (expirado) {
-      return false;
       this.router.navigate(['/login']);
+      return false;
     }
 
     return this.verificaRenueva( payload.exp );
@@ -45,10 +45,11 @@ export class VerificaTokenGuard implements CanActivate {
       if (tokenExp.getTime() > ahora.getTime()) {
           resolve( true );
       } else {
+        // console.log('RENUEVA');
         this.userS.renuevaToken()
           .subscribe( () => {
             resolve( true );
-          }, () =>{
+          }, () => {
             reject( false );
             this.router.navigate(['/login']);
           });

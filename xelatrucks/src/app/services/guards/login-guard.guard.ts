@@ -15,10 +15,10 @@ export class LoginGuardGuard implements CanActivate {
   canActivate() {
 
     if ( this.usuarioService.estaLogueado() ) {
-       // console.log('PASO EL PROVOCAR');
+       console.log('PASO EL PROVOCAR');
        return true;
     } else {
-      // console.log('TAL VEZ TRADEA');
+      console.log('TAL VEZ TRADEA');
       this.router.navigate(['/login']);
       return false;
     }

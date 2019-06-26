@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as $ from 'jquery';
+import * as moment from 'moment/moment';
 import 'datatables.net';
 import 'datatables.net-bs4';
 import 'datatables.net-buttons/js/buttons.flash';
@@ -125,4 +126,12 @@ export class DatatablesService {
       defaultDate: defaultdate
     });
   }
+
+  fromJsonDate(jDate): string {
+
+    const bDate: Date = new Date(jDate);
+    const formattedDate = moment(bDate).format('DD/MM/YYYY');
+    return formattedDate.toString().substring(0, 10);  // Ignore time
+  }
+
 }

@@ -199,7 +199,7 @@
                         <!-- .card-body -->
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <h3 id="client-tasks-tab" class="card-title"> To do </h3>
+                                <h3 id="client-tasks-tab" class="card-title"> </h3>
                                 <div class="card-title-control">
                                     <div class="dropdown">
                                         <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-dharmachakra"></i></button>
@@ -232,7 +232,8 @@
                                             <td class="align-middle"> {{ pit.place }} </td>
                                             <td class="align-middle"> {{ pit.side }} </td>
                                             <td class="align-middle text-right">
-                                                <button (click)="editarPit( pit._id )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addPit"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                                                <button (click)="editarPit( pit._id, false )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addPit"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                                                <button (click)="editarPit( pit._id, true )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addPit"><i class="fas fa-wrench"></i> <span class="sr-only">Mantenimiento</span></button>
                                                 <button (click)="deletePit( pit._id )" type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
                                             </td>
                                         </tr>
@@ -252,17 +253,17 @@
                     <!-- .card -->
                     <div class="card">
                         <div class="card-header border-0" id="headingCompletedTodo">
-                            <button class="btn btn-block btn-reset d-flex justify-content-between collapsed" data-toggle="collapse" data-target="#completedTodo" aria-expanded="false" aria-controls="completedTodo"><span><i class="fa fa-history text-muted mr-2"></i> Mantenimientos Realizados (n)</span> <span class="collapse-indicator"><i class="fa fa-fw fa-chevron-down"></i></span></button>
+                            <button class="btn btn-block btn-reset d-flex justify-content-between collapsed" data-toggle="collapse" data-target="#completedTodo" aria-expanded="false" aria-controls="completedTodo"><span><i class="fa fa-history text-muted mr-2"></i> Mantenimientos Realizados ( {{ Hpits.length }} )</span> <span class="collapse-indicator"><i class="fa fa-fw fa-chevron-down"></i></span></button>
                         </div>
                         <div id="completedTodo" class="collapse" aria-labelledby="headingCompletedTodo">
                             <div class="card-body pt-0">
                                 <!-- .todo-list -->
                                 <div class="todo-list todo-list-bordered">
                                     <!-- .todo -->
-                                    <div class="todo">
+                                    <div class="todo" *ngFor="let pit of Hpits">
                                         <!-- .custom-control -->
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="todo2" checked> <label class="custom-control-label" for="todo2"><span>Sidebar enhancement: adding fluid width & expand classes like bootstrap navbar</span></label>
+                                            <input type="checkbox" class="custom-control-input" id="todo2"> <label class="custom-control-label" for="todo2"><span>Anterior llanta {{ pit.rim.code }} {{ pit.rim.desc }}, cambiada en la fecha {{ dtService.fromJsonDate(pit.date) }}</span></label>
                                         </div>
                                         <!-- /.custom-control -->
                                         <!-- .todo-actions -->

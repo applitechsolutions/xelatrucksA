@@ -1,4 +1,5 @@
 import { Rim } from './rim.model';
+import { Vehicle } from './vehicle.model';
 
 export class Pits {
 
@@ -11,7 +12,8 @@ export class Pits {
         public side?: string,
         public date?: string,
         public total?: number,
-        public _id?: string
+        public _id?: string,
+        public vehicle?: Vehicle
     ) {}
 
 }

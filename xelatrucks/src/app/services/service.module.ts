@@ -11,7 +11,8 @@ import {
   LoginGuardGuard,
   SubirArchivoService,
   DatatablesService,
-  PartService
+  PartService,
+  PitService
 } from './service.index';
 
 @NgModule({
@@ -29,6 +30,7 @@ import {
     ModalUploadService,
     DatatablesService,
     PartService,
+    PitService,
     VerificaTokenGuard
   ]
 })

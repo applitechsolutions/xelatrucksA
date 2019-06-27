@@ -110,12 +110,6 @@
                     <li *ngIf="selected" class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#client-projects">Combustible</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#client-invoices">Invoices</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#client-expenses">Expenses</a>
-                    </li> -->
                 </ul>
                 <!-- /.nav-tabs -->
             </div>
@@ -288,20 +282,58 @@
                         <div class="card-header d-flex">
                             <!-- .dropdown -->
                             <div class="dropdown">
-                                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-filter mr-1"></i> FILTRO (4) <i class="fa fa-caret-down"></i></button>
+                                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-filter mr-1"></i> FILTROS (5) <i class="fa fa-caret-down"></i></button>
                                 <div class="dropdown-arrow"></div>
                                 <!-- .dropdown-menu -->
                                 <div class="dropdown-menu stop-propagation">
                                     <h6 id="client-projects-tab" class="dropdown-header"> Listar por </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientProjectFilter" value="0" checked> <span class="custom-control-label">Semana</span></label>
                                     <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientProjectFilter" value="1"> <span class="custom-control-label">Mes </span></label>
+                                    <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientProjectFilter" value="1"> <span class="custom-control-label">Trimestre </span></label>
                                     <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientProjectFilter" value="2"> <span class="custom-control-label">Año </span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientProjectFilter" value="3"> <span class="custom-control-label">Todos </span></label>
                                 </div>
                                 <!-- /.dropdown-menu -->
                             </div>
                             <!-- /.dropdown -->
-                            <button type="button" class="btn btn-primary ml-auto">Agregar cupón</button>
+                            <button type="button" data-toggle="modal" data-target="#addGas" class="btn btn-primary ml-auto">Agregar cupón</button>
                         </div>
                         <!-- /.card-header -->
+                        <div class="row">
+                            <!-- .col -->
+                            <div class="col-3 fa-pull-right">
+                                <!-- .metric -->
+                                <div class="metric">
+                                    <p class="metric-label"> Total Gastado </p>
+                                    <h5 class="metric-value">Q 15243.12 </h5>
+                                </div>
+                                <!-- .metric -->
+                            </div>
+                            <!-- /.col -->
+                            <!-- .col -->
+                            <div class="col-3 fa-pull-right">
+                                <!-- .metric -->
+                                <div class="metric">
+                                    <p class="metric-label"> Galones </p>
+                                    <h5 class="metric-value"> 135 </h5>
+                                </div>
+                                <!-- .metric -->
+                            </div>
+                            <!-- /.col -->
+                            <!-- .col -->
+                            <div class="col-3 fa-pull-right">
+                                <!-- .metric -->
+                                <div class="metric">
+                                    <p class="metric-label"> Cupones </p>
+                                    <h5 class="metric-value"> 30 </h5>
+                                </div>
+                                <!-- .metric -->
+                            </div>
+                            <!-- /.col -->
+                            <!-- .col -->
+                            <div class="col-10">
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <hr>
                         <!-- .table-responsive -->
                         <div class="table-responsive">
                             <!-- .table -->
@@ -309,10 +341,10 @@
                                 <!-- thead -->
                                 <thead>
                                     <tr>
-                                        <th style="min-width:260px"> Project </th>
-                                        <th> Start </th>
-                                        <th> Due </th>
-                                        <th> Status </th>
+                                        <th> Código </th>
+                                        <th> Fecha </th>
+                                        <th> Galones </th>
+                                        <th> Total </th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -392,286 +424,6 @@
                     <!-- /.card -->
                 </div>
                 <!-- /.tab-pane -->
-                <!-- .tab-pane -->
-                <div class="tab-pane fade" id="client-invoices" role="tabpanel" aria-labelledby="client-invoices-tab">
-                    <!-- .card -->
-                    <div class="card">
-                        <!-- .card-header -->
-                        <div class="card-header d-flex">
-                            <!-- .dropdown -->
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-filter mr-1"></i> All (5) <i class="fa fa-caret-down"></i></button>
-                                <div class="dropdown-arrow"></div>
-                                <!-- .dropdown-menu -->
-                                <div class="dropdown-menu stop-propagation">
-                                    <h6 id="client-invoices-tab" class="dropdown-header"> Invoices </h6><label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="0" checked> <span class="custom-control-label">All (5)</span></label>
-                                    <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="1"> <span class="custom-control-label">Draft (1)</span></label> <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="2"> <span class="custom-control-label">Send (2)</span></label>                                    <label class="custom-control custom-radio"><input type="radio" class="custom-control-input" name="clientInvoiceFilter" value="3"> <span class="custom-control-label">Paid (0)</span></label>
-                                </div>
-                                <!-- /.dropdown-menu -->
-                            </div>
-                            <!-- /.dropdown -->
-                            <button type="button" class="btn btn-primary ml-auto">Add invoice</button>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- .table-responsive -->
-                        <div class="table-responsive">
-                            <!-- .table -->
-                            <table class="table">
-                                <!-- thead -->
-                                <thead>
-                                    <tr>
-                                        <th style="min-width:256px"> Project </th>
-                                        <th></th>
-                                        <th> Due </th>
-                                        <th> Amount </th>
-                                        <th> Received </th>
-                                        <th> Status </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <!-- /thead -->
-                                <!-- tbody -->
-                                <tbody>
-                                    <!-- tr -->
-                                    <tr>
-                                        <td class="align-middle text-truncate">
-                                            <div class="media align-items-center">
-                                                <a href="#" class="tile bg-pink text-white mr-2">SP</a>
-                                                <div class="media-body">
-                                                    <a href="#">Syrena Project</a> <small class="d-block text-muted">Invoice #9463</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle"></td>
-                                        <td class="align-middle"> 09/16/2018 </td>
-                                        <td class="align-middle"> $1,500 </td>
-                                        <td class="align-middle"> $1,500 </td>
-                                        <td class="align-middle">
-                                            <span class="badge badge-success">Paid</span>
-                                        </td>
-                                        <td class="align-middle text-right">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span class="sr-only">Actions</span></button>
-                                                <div class="dropdown-arrow"></div>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <button class="dropdown-item" type="button">Edit</button> <button class="dropdown-item" type="button">Delete</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- /tr -->
-                                    <!-- tr -->
-                                    <tr>
-                                        <td class="align-middle text-truncate">
-                                            <div class="media align-items-center">
-                                                <a href="#" class="tile bg-purple text-white mr-2">BA</a>
-                                                <div class="media-body">
-                                                    <a href="#">Mobile App Gex</a> <small class="d-block text-muted">Invoice #0754</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle"></td>
-                                        <td class="align-middle"> 12/13/2018 </td>
-                                        <td class="align-middle"> $1,000 </td>
-                                        <td class="align-middle"> - </td>
-                                        <td class="align-middle">
-                                            <span class="badge badge-warning">Outstanding</span>
-                                        </td>
-                                        <td class="align-middle text-right">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span class="sr-only">Actions</span></button>
-                                                <div class="dropdown-arrow"></div>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <button class="dropdown-item" type="button">Edit</button> <button class="dropdown-item" type="button">Delete</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- /tr -->
-                                    <!-- tr -->
-                                    <tr>
-                                        <td class="align-middle text-truncate">
-                                            <div class="media align-items-center">
-                                                <a href="#" class="tile bg-teal text-white mr-2">SB</a>
-                                                <div class="media-body">
-                                                    <a href="#">SVG Icon Bundle</a> <small class="d-block text-muted">Invoice #8613</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle">
-                                            <i class="fa fa-paperclip text-muted"></i>
-                                        </td>
-                                        <td class="align-middle"> 02/09/2019 </td>
-                                        <td class="align-middle"> $3,000 </td>
-                                        <td class="align-middle"> $500 </td>
-                                        <td class="align-middle">
-                                            <span class="badge badge-warning">Outstanding</span>
-                                        </td>
-                                        <td class="align-middle text-right">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span class="sr-only">Actions</span></button>
-                                                <div class="dropdown-arrow"></div>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <button class="dropdown-item" type="button">Edit</button> <button class="dropdown-item" type="button">Delete</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- /tr -->
-                                    <!-- tr -->
-                                    <tr>
-                                        <td class="align-middle text-truncate">
-                                            <div class="media align-items-center">
-                                                <a href="#" class="tile bg-red text-white mr-2">LB</a>
-                                                <div class="media-body">
-                                                    <a href="#">Landing Page Booster</a> <small class="d-block text-muted">Invoice #9458</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle"></td>
-                                        <td class="align-middle"> 05/30/2018 </td>
-                                        <td class="align-middle"> $499 </td>
-                                        <td class="align-middle"> - </td>
-                                        <td class="align-middle">
-                                            <span class="badge badge-danger">Past Due</span>
-                                        </td>
-                                        <td class="align-middle text-right">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span class="sr-only">Actions</span></button>
-                                                <div class="dropdown-arrow"></div>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <button class="dropdown-item" type="button">Edit</button> <button class="dropdown-item" type="button">Delete</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- /tr -->
-                                </tbody>
-                                <!-- /tbody -->
-                            </table>
-                            <!-- /.table -->
-                        </div>
-                        <!-- /.table-responsive -->
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.tab-pane -->
-                <!-- .tab-pane -->
-                <div class="tab-pane fade" id="client-expenses" role="tabpanel" aria-labelledby="client-expenses-tab">
-                    <!-- .card -->
-                    <div class="card">
-                        <!-- .card-header -->
-                        <div class="card-header d-flex">
-                            <!-- .dropdown -->
-                            <div class="dropdown">
-                                <button class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>This Year</span> <i class="fa fa-fw fa-caret-down"></i></button>
-                                <div class="dropdown-arrow"></div>
-                                <!-- .dropdown-menu -->
-                                <div class="dropdown-menu dropdown-menu-md stop-propagation">
-                                    <!-- .custom-control -->
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" id="clientExpensesDateFilter0" name="clientExpensesDateFilter" value="0"> <label class="custom-control-label" for="clientExpensesDateFilter0">Last 7 days</label>
-                                    </div>
-                                    <!-- /.custom-control -->
-                                    <!-- .custom-control -->
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" id="clientExpensesDateFilter1" name="clientExpensesDateFilter" value="1"> <label class="custom-control-label" for="clientExpensesDateFilter1">Last 3 days</label>
-                                    </div>
-                                    <!-- /.custom-control -->
-                                    <!-- .custom-control -->
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" id="clientExpensesDateFilter2" name="clientExpensesDateFilter" value="2"> <label class="custom-control-label" for="clientExpensesDateFilter2">This month</label>
-                                    </div>
-                                    <!-- /.custom-control -->
-                                    <!-- .custom-control -->
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" id="clientExpensesDateFilter3" name="clientExpensesDateFilter" value="3"> <label class="custom-control-label" for="clientExpensesDateFilter3">Last month</label>
-                                    </div>
-                                    <!-- /.custom-control -->
-                                    <!-- .custom-control -->
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" id="clientExpensesDateFilter4" name="clientExpensesDateFilter" value="4" checked> <label class="custom-control-label" for="clientExpensesDateFilter4">This year</label>
-                                    </div>
-                                    <!-- /.custom-control -->
-                                </div>
-                                <!-- /.dropdown-menu -->
-                            </div>
-                            <!-- /.dropdown -->
-                            <button id="client-expenses-tab" type="button" class="btn btn-primary ml-auto">Add expense</button>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- .table-responsive -->
-                        <div class="table-responsive">
-                            <!-- .table -->
-                            <table class="table">
-                                <!-- thead -->
-                                <thead>
-                                    <tr>
-                                        <th> Date </th>
-                                        <th> Amount </th>
-                                        <th style="min-width:200px"> Vendor </th>
-                                        <th></th>
-                                        <th> Category </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <!-- /thead -->
-                                <!-- tbody -->
-                                <tbody>
-                                    <!-- tr -->
-                                    <tr>
-                                        <td class="align-middle"> 04/11/2018 </td>
-                                        <td class="align-middle"> $360.00 </td>
-                                        <td class="align-middle"> Facebook, Inc. </td>
-                                        <td class="align-middle">
-                                            <i class="fa fa-paperclip text-muted"></i>
-                                        </td>
-                                        <td class="align-middle">
-                                            <span class="badge text-white bg-purple">Campaign</span>
-                                        </td>
-                                        <td class="align-middle text-right">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span class="sr-only">Actions</span></button>
-                                                <div class="dropdown-arrow"></div>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <button class="dropdown-item" type="button">Edit</button> <button class="dropdown-item" type="button">Delete</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- /tr -->
-                                    <!-- tr -->
-                                    <tr>
-                                        <td class="align-middle"> 09/15/2018 </td>
-                                        <td class="align-middle"> $49.00 </td>
-                                        <td class="align-middle"> Adobe Systems </td>
-                                        <td class="align-middle">
-                                            <i class="fa fa-paperclip text-muted"></i>
-                                        </td>
-                                        <td class="align-middle">
-                                            <span class="badge text-white bg-orange">Other</span>
-                                        </td>
-                                        <td class="align-middle text-right">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span class="sr-only">Actions</span></button>
-                                                <div class="dropdown-arrow"></div>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <button class="dropdown-item" type="button">Edit</button> <button class="dropdown-item" type="button">Delete</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- /tr -->
-                                </tbody>
-                                <!-- /tbody -->
-                            </table>
-                            <!-- /.table -->
-                        </div>
-                        <!-- /.table-responsive -->
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
         </div>
@@ -679,7 +431,7 @@
     </div>
     <!-- /.page-sidebar -->
     <!-- Keep in mind that modals should be placed outsite of page sidebar -->
-    <!-- .modal -->
+    <!-- .modalBASIC -->
     <div class="modal fade" id="addBasic" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
         <!-- .modal-dialog -->
         <div class="modal-dialog" role="document">
@@ -725,7 +477,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
+    <!-- /.modalBASIC -->
     <!-- .modalRIM -->
     <div class="modal fade" id="addRim" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
         <!-- .modal-dialog -->
@@ -850,5 +602,65 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modalPITS -->
+    <!-- .modalGASOLINE -->
+    <div class="modal fade" id="addGas" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog" role="document">
+            <!-- .modal-content -->
+            <div class="modal-content">
+                <!-- .modal-header -->
+                <div class="modal-header">
+                    <h5 class="modal-title"> #: {{this.vehicle.no}} {{ this.type + ' ' + this.title }} </h5>
+                </div>
+                <!-- /.modal-header -->
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <div class="form-label-group">
+                            <input [(ngModel)]="basic.code" type="text" class="form-control" name="codeG"> <label for="codeG">Código del Cupón</label>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label class="control-label" for="flatpickr">Fecha del Cúpon</label> <input #dateGal formControlName="date" name="dateG" id="flatpickr" type="text" class="form-control">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="row">
+                        <!-- .form-group -->
+                        <div class="form-group col-6">
+                            <label for="gallons">Galones</label>
+                            <!-- .input-group -->
+                            <div class="input-group">
+                                <label class="input-group-prepend" for="gallons"><span class="badge"></span></label> <input formControlName="total" name="total" type="number" step="0.01" min="0" class="form-control" id="gallons" placeholder="Ingrese una cantidad">
+                            </div>
+                            <!-- /.input-group -->
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="pi9">Total</label>
+                            <!-- .input-group -->
+                            <div class="input-group">
+                                <label class="input-group-prepend" for="totalG"><span class="badge">Q</span></label> <input formControlName="total" name="totalG" type="number" step="0.01" min="0" class="form-control" id="totalG">
+                            </div>
+                            <!-- /.input-group -->
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                </div>
+                <!-- /.modal-body -->
+                <!-- .modal-footer -->
+                <div class="modal-footer">
+                    <button (click)="addBasic()" type="submit" class="btn btn-primary">Guardar</button> <button #closeP type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                </div>
+                <!-- /.modal-footer -->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modalGASOLINE -->
 </div>
-<!-- /.page -->
+<!-- /.page -->z

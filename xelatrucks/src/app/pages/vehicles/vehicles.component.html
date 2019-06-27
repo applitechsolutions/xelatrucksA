@@ -257,24 +257,50 @@
                         </div>
                         <div id="completedTodo" class="collapse" aria-labelledby="headingCompletedTodo">
                             <div class="card-body pt-0">
-                                <!-- .todo-list -->
-                                <div class="todo-list todo-list-bordered">
-                                    <!-- .todo -->
-                                    <div class="todo" *ngFor="let pit of Hpits">
-                                        <!-- .custom-control -->
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="todo2"> <label class="custom-control-label" for="todo2"><span>Anterior llanta {{ pit.rim.code }} {{ pit.rim.desc }}, cambiada en la fecha {{ dtService.fromJsonDate(pit.date) }}</span></label>
+                                <div class="d-flex justify-content-between">
+                                    <h3 id="client-tasks-tab" class="card-title"> </h3>
+                                    <div class="card-title-control">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-dharmachakra"></i></button>
+                                            <div class="dropdown-arrow"></div>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="#addRim" class="dropdown-item" data-toggle="modal">Agregar nueva llanta</a>
+                                            </div>
                                         </div>
-                                        <!-- /.custom-control -->
-                                        <!-- .todo-actions -->
-                                        <div class="todo-actions d-block">
-                                            <button type="button" class="btn btn-sm btn-icon btn-light" data-todoid="2"><i class="fa fa-arrows-alt"></i></button> <button type="button" class="btn btn-sm btn-icon btn-light" data-todoid="2"><i class="fa fa-trash-alt"></i></button>
-                                        </div>
-                                        <!-- /.todo-actions -->
                                     </div>
-                                    <!-- /.todo -->
                                 </div>
-                                <!-- /.todo-list -->
+                                <!-- .todo-list -->
+                                <div class="table-responsive">
+                                    <table id="table1" class="table table-hover" style="min-width: 678px">
+                                        <thead>
+                                            <tr>
+                                                <th> Fecha de Instalación </th>
+                                                <th> Llanta </th>
+                                                <th> Posición </th>
+                                                <th> Costo </th>
+                                                <th> Kilometraje </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let pit of Hpits">
+                                                <td class="align-middle"> {{ dtService.fromJsonDate(pit.date) }} </td>
+                                                <td class="align-middle"> {{ pit.rim.code }} {{ pit.rim.desc }} </td>
+                                                <td class="align-middle"> {{ pit.axis }} {{ pit.place }} {{ pit.side }} </td>
+                                                <td class="align-middle"> {{ pit.total }} </td>
+                                                <td class="align-middle"> {{ pit.km }} </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th> Fecha de Instalación </th>
+                                                <th> Llanta </th>
+                                                <th> Posición </th>
+                                                <th> Costo </th>
+                                                <th> Kilometraje </th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

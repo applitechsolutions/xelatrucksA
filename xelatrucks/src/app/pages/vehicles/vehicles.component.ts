@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
@@ -80,7 +80,8 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   constructor(
     public dtService: DatatablesService,
     public vehicleS: VehicleService,
-    public pitService: PitService
+    public pitService: PitService,
+    private chRef: ChangeDetectorRef
     ) { }
 
   ngOnInit() {
@@ -122,7 +123,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   cargarHistorialPits( id: string ) {
     this.pitService.cargarPits( id )
-      .subscribe( (res: any) => this.Hpits = res.pits );
+      .subscribe( (res: any) => {
+        this.Hpits = res.pits;
+        this.dtService.destroy_table();
+        this.chRef.detectChanges();
+        this.dtService.init_tables();
+      });
+
   }
 
   seleccionarVehicle(vehicle: Vehicle) {
@@ -300,6 +307,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   resetModal() {
     this.formPit.reset();
+    this.formPit.controls.axis.enable();
+    this.formPit.controls.place.enable();
+    this.formPit.controls.side.enable();
   }
 
   addPit() {
@@ -342,9 +352,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         this.formPit.value.rim,
         this.formPit.value.km,
         this.formPit.value.counter,
-        this.formPit.value.axis,
-        this.formPit.value.place,
-        this.formPit.value.side,
+        this.formPit.getRawValue().axis,
+        this.formPit.getRawValue().place,
+        this.formPit.getRawValue().side,
         fecha.toString(),
         this.formPit.value.total,
         this.pit._id
@@ -387,17 +397,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   editarPit( id: string, main: boolean ) {
 
-    if (main) {
-      this.formPit.controls.axis.disable();
-      this.formPit.controls.place.disable();
-      this.formPit.controls.side.disable();
-    } else {
-      this.formPit.controls.axis.enable();
-      this.formPit.controls.place.enable();
-      this.formPit.controls.side.enable();
-    }
-
-    this.pitMain = main;
     const status: Pits = this.pits.find(s => s._id === id);
 
     const fecha = this.dtService.fromJsonDate(status.date);
@@ -430,6 +429,18 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         _id: status._id
       }
     }
+
+    if (main) {
+      this.formPit.controls.axis.disable();
+      this.formPit.controls.place.disable();
+      this.formPit.controls.side.disable();
+    } else {
+      this.formPit.controls.axis.enable();
+      this.formPit.controls.place.enable();
+      this.formPit.controls.side.enable();
+    }
+
+    this.pitMain = main;
 
     $('.select2').val(status.rim._id).trigger('change');
     this.dtService.init_datePicker(fecha);

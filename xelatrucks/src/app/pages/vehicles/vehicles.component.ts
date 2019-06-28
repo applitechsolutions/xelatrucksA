@@ -326,7 +326,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
       this.pitService.crearPit( this.pit )
         .subscribe( resp => {
-          console.log(resp);
           this.Hpits.push({
             rim: resp.rim,
             km: resp.km,
@@ -338,6 +337,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
             total: resp.total,
             vehicle: resp.vehicle
           });
+          this.cargarHistorialPits( resp.vehicle._id );
         });
     }
 

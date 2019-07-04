@@ -1,0 +1,42 @@
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .section-deck -->
+    <div class="section-deck">
+        <!-- .card -->
+        <div class="card card-fluid col-8">
+            <!-- .card-body -->
+            <div class="card-body">
+                <br>
+                <h6 class="card-subtitle mb-4"><strong>Aquí puede crear un nuevo mecánico para el mantenimiento de los vehículos</strong></h6>
+
+                <form ngNativeValidate [formGroup]="formaMech" (ngSubmit)="crearMech()" action="#">
+                    <fieldset>
+                        <legend>Campos</legend>
+                        <!-- .row -->
+                        <div class="row mb-3">
+                            <label for="code" class="col-lg-3 text-lg-right">Código</label>
+                            <div class="col-lg-8 col-xl-6">
+                                <input formControlName="code" type="text" id="code" name="code" class="form-control" placeholder="Ingrese el código del mecánico" required>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                        <!-- .row -->
+                        <div class="row mb-3">
+                            <label for="desc" class="col-lg-3 text-lg-right">Nombre</label>
+                            <div class="col-lg-8 col-xl-6">
+                                <input formControlName="name" type="text" id="name" name="name" class="form-control" placeholder="Ingrese el nombre del mecánico">
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </fieldset>
+                    <button class="btn btn-primary " type="submit" id="btnMech"><i class="fa fa-save"></i> Guardar</button>
+                    <button [routerLink]="[ '/mechs' ]" type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.section-deck -->
+</div>
+<!-- /.page-inner -->

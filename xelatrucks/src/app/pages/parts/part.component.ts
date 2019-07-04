@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Part } from '../../models/part.model';
 import { PartService } from '../../services/service.index';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-part',
@@ -52,6 +53,7 @@ export class PartComponent implements OnInit {
     console.log(this.forma.value);
 
     if (this.forma.invalid) {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }
 

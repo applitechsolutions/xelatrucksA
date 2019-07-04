@@ -45,6 +45,14 @@ export class SidebarService {
       ]
     },
     {
+      titulo: 'Mecánicos',
+      icono: 'menu-icon fas fa-user-cog',
+      submenu: [
+        { titulo: 'Listado Mecánicos', url: '/mechs' },
+        { titulo: 'Crear Mecánico', url: '/mech/new' }
+      ]
+    },
+    {
       titulo: 'Compras',
       icono: 'menu-icon fas fa-shopping-cart',
       submenu: [

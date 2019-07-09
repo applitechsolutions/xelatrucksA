@@ -8,6 +8,7 @@ import { Vehicle } from '../../models/vehicle.model';
 import { Basics } from '../../models/basics.model';
 import { Pits } from '../../models/pits.model';
 import { Rim } from '../../models/rim.model';
+import { Gas } from '../../models/gas.model';
 
 declare var swal: any;
 
@@ -23,6 +24,8 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   @ViewChild('closeMR') closeMR: ElementRef;
   @ViewChild('selectR') selectR: ElementRef;
   @ViewChild('datePit') dateP: ElementRef;
+  @ViewChild('dateG') dateG: ElementRef;
+  @ViewChild('closeMG') closeMG: ElementRef;
   select2: any;
 
   // fecha de hoy
@@ -75,6 +78,12 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     state: false
   };
 
+  gasolines: Gas[] = [];
+  // form de GAS
+  formGas: FormGroup;
+  totalGas: number;
+  totalGal: number;
+
   tempRim: string = '';
 
   constructor(
@@ -101,6 +110,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       total: new FormControl(0, Validators.required),
       km: new FormControl(0),
       counter: new FormControl(0)
+    });
+
+    this.formGas = new FormGroup({
+      dateG: new FormControl(null),
+      gallons: new FormControl(null, Validators.required),
+      total: new FormControl(null, Validators.required),
+      code: new FormControl(null)
     });
 
   }
@@ -138,11 +154,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.vehicle = vehicle;
     this.selected = true;
     this.pits = vehicle.pits;
-    if (vehicle.basics != null) {
-      this.basics = vehicle.basics;
-    } else {
-      this.basics = [];
-    }
+    this.basics = vehicle.basics;
+    this.gasolines = vehicle.gasoline;
+    this.calcularTotalesG();
     switch (vehicle.type) {
       case 'camion':
         this.icon = 'fas fa-truck';
@@ -310,6 +324,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.formPit.controls.axis.enable();
     this.formPit.controls.place.enable();
     this.formPit.controls.side.enable();
+    this.formGas.reset();
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtService.init_datePicker(today);
   }
 
   addPit() {
@@ -395,6 +412,62 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.formPit.reset();
   }
 
+  addGas() {
+
+    const fecha = moment(this.dateG.nativeElement.value, 'DD/MM/YYYY').toDate();
+
+    let pit;
+
+    if (this.pit._id) {
+      console.log('EDITANDO...');
+      console.log(this.pit);
+      // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+      const index = this.pits.findIndex(item => item._id === this.pit._id);
+
+      pit = new Pits(
+        this.formPit.value.rim,
+        this.formPit.value.km,
+        this.formPit.value.counter,
+        this.formPit.getRawValue().axis,
+        this.formPit.getRawValue().place,
+        this.formPit.getRawValue().side,
+        fecha.toString(),
+        this.formPit.value.total,
+        this.pit._id
+      );
+
+      // REMPLAZAMOS EL BASIC en base al index encontrado
+      this.pits.splice(index, 1, pit);
+      console.log(pit);
+      this.pit = {};
+      this.vehicle.pits = this.pits;
+      console.log(this.vehicles);
+      $('.select2').val('').trigger('change');
+      this.vehicleS.crearVehiculo( this.vehicle )
+      .subscribe( resp => {
+        this.pits = resp.vehiculo.pits;
+      });
+      this.closeMP.nativeElement.click();
+    } else {
+      console.log('GUARDANDO...');
+      this.gasolines.push({
+        date: fecha.toString(),
+        gallons: this.formGas.value.gallons,
+        total: this.formGas.value.total,
+        code: this.formGas.value.code
+      });
+      this.vehicle.gasoline = this.gasolines;
+      this.vehicleS.crearVehiculo( this.vehicle )
+        .subscribe( resp => {
+          this.gasolines = resp.vehiculo.gasoline;
+        });
+      this.closeMG.nativeElement.click();
+    }
+
+    this.calcularTotalesG();
+    this.formGas.reset();
+  }
+
   editarPit( id: string, main: boolean ) {
 
     const status: Pits = this.pits.find(s => s._id === id);
@@ -475,5 +548,11 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  calcularTotalesG() {
+    // SUMAS PARA LOS TOTAL DE GASOLINA Y GALONES CONSUMIDOS -------------
+    this.totalGas = this.gasolines.reduce((sum, item) => sum + item.total, 0);
+    this.totalGal = this.gasolines.reduce((sum, item) => sum + item.gallons, 0);
+    // ------------
+  }
 
 }

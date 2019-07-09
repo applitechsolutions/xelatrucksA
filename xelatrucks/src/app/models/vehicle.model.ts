@@ -1,6 +1,7 @@
 import { Basics } from './basics.model';
 import { Pits } from './pits.model';
 import { Make } from './make.model';
+import { Gas } from './gas.model';
 
 export class Vehicle {
 
@@ -17,6 +18,7 @@ export class Vehicle {
         public _id?: string,
         public _gondola?: string,
         public basics?: Basics[],
-        public pits?: Pits[]
+        public pits?: Pits[],
+        public gasoline?: Gas[]
     ) {}
 }

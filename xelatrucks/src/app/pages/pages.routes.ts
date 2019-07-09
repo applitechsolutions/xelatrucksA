@@ -21,6 +21,8 @@ import { AutoProviderComponent } from './auto-providers/auto-provider.component'
 import { BuySparesComponent } from './buy-spares/buy-spares.component';
 import { BuySpareComponent } from './buy-spares/buy-spare.component';
 import { VerificaTokenGuard } from '../services/service.index';
+import { MechanicsComponent } from './mechanics/mechanics.component';
+import { MechanicComponent } from './mechanics/mechanic.component';
 
 const pagesRoutes: Routes = [
     {
@@ -133,6 +135,18 @@ const pagesRoutes: Routes = [
         component: PartComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Crear Repuesto' }
+    },
+    {
+        path: 'mechs',
+        component: MechanicsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Mantenimiento de Mecánicos' }
+    },
+    {
+        path: 'mech/:id',
+        component: MechanicComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Crear Mecánico' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
 ];

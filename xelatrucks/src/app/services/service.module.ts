@@ -12,7 +12,8 @@ import {
   SubirArchivoService,
   DatatablesService,
   PartService,
-  PitService
+  PitService,
+  MechanicService
 } from './service.index';
 
 @NgModule({
@@ -31,6 +32,7 @@ import {
     DatatablesService,
     PartService,
     PitService,
+    MechanicService,
     VerificaTokenGuard
   ]
 })

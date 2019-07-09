@@ -33,6 +33,8 @@ import { AutoProvidersComponent } from './auto-providers/auto-providers.componen
 import { AutoProviderComponent } from './auto-providers/auto-provider.component';
 import { BuySparesComponent } from './buy-spares/buy-spares.component';
 import { BuySpareComponent } from './buy-spares/buy-spare.component';
+import { MechanicsComponent } from './mechanics/mechanics.component';
+import { MechanicComponent } from './mechanics/mechanic.component';
 
 
 @NgModule({
@@ -55,7 +57,9 @@ import { BuySpareComponent } from './buy-spares/buy-spare.component';
         AutoProvidersComponent,
         AutoProviderComponent,
         BuySparesComponent,
-        BuySpareComponent
+        BuySpareComponent,
+        MechanicsComponent,
+        MechanicComponent
     ],
     exports: [
         DashboardComponent,

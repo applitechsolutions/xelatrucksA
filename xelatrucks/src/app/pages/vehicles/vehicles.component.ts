@@ -193,20 +193,18 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /* #region  VEHICULOS */
-addGondola( formG: NgForm ) {
-  if (formG.invalid) {
-    swal('Oops...', 'Algunos campos son obligatorios', 'warning');
-    return;
+  addGondola( formG: NgForm ) {
+    if (formG.invalid) {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      return;
+    }
+
+    const gondola = new Gondola( formG.value.plateG );
+
   }
 
-  const gondola = new Gondola( formG.value.plateG, false );
+  /* #region  VEHICULOS */
 
-}
-
-/**
- * VEHICULOS
- */
   cargarVehiculos() {
     this.vehicleS.cargarVehiculos()
       .subscribe((resp: any) => {
@@ -308,12 +306,17 @@ addGondola( formG: NgForm ) {
       // REMPLAZAMOS EL BASIC en base al index encontrado
       this.basics.splice(index, 1, this.basic);
       this.basic = {};
-      this.vehicle.basics = this.basics;
-      console.log(this.vehicle);
-      this.vehicleS.crearVehiculo(this.vehicle)
-        .subscribe(resp => {
-          this.basics = resp.vehiculo.basics;
-        });
+      // CONDICIONAMOS SI ES GONDOLA O TRUCK
+      if (this.isGondola) {
+
+      } else if (!this.isGondola) {
+        this.vehicle.basics = this.basics;
+        this.vehicleS.crearVehiculo(this.vehicle)
+          .subscribe(resp => {
+            this.basics = resp.vehiculo.basics;
+          });
+      }
+
       this.closeP.nativeElement.click();
     } else {
       console.log('GUARDANDO...');

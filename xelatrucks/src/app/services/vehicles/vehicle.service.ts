@@ -7,6 +7,7 @@ import { Rim } from '../../models/rim.model';
 import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import { Gas } from '../../models/gas.model';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,51 @@ export class VehicleService {
 
     return this.http.get(url)
       .pipe( map( (resp: any) =>  resp.vehiculo));
+  }
+
+  crearGasoline( gasoline: Gas, idVehicle: string ) {
+
+    let url = URL_SERVICES + '/vehiculo/gasoline';
+
+    if (gasoline._id) {
+      url += '/' + idVehicle;
+      url += '?token=' + this.userS.token;
+
+      return this.http.put(url, gasoline )
+        .pipe( map( (resp: any) => {
+            const vehicleDB = resp.vehiculo;
+            swal('Vechículo creado', 'Placa #' + vehicleDB.plate , 'success');
+            return resp;
+          }),
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message , 'error');
+            return throwError( err );
+          }));
+
+    } else {
+        url += '/' + idVehicle;
+        url += '?token=' + this.userS.token;
+
+        return this.http.post(url, gasoline)
+          .pipe( map( (resp: any) => {
+            const vehicleDB = resp.vehiculo;
+            swal('Vechículo creado', 'Placa #' + vehicleDB.plate , 'success');
+            return resp;
+          }),
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message , 'error');
+            return throwError( err );
+          }));
+    }
+  }
+
+  cargarGasolines( id: string, fecha1: Date, fecha2: Date ) {
+    const url = URL_SERVICES + '/vehiculo/gasolines?id=' + id + '&fecha1=' + fecha1 + '&fecha2=' + fecha2;
+
+    return this.http.get(url)
+      .pipe( map( (resp: any) =>  resp.gasoline));
   }
 
   crearVehiculo( vehicle: Vehicle) {

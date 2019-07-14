@@ -35,6 +35,7 @@ import { BuySparesComponent } from './buy-spares/buy-spares.component';
 import { BuySpareComponent } from './buy-spares/buy-spare.component';
 import { MechanicsComponent } from './mechanics/mechanics.component';
 import { MechanicComponent } from './mechanics/mechanic.component';
+import { NgxLoadingModule, ngxLoadingAnimationTypes  } from 'ngx-loading';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { MechanicComponent } from './mechanics/mechanic.component';
         SharedModule,
         PAGES_ROUTES,
         ChartsModule,
-        PipesModule
+        PipesModule,
+        NgxLoadingModule.forRoot({})
     ]
 })
 

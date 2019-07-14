@@ -12,6 +12,7 @@ import { Gas } from '../../models/gas.model';
 import { Gondola } from '../../models/gondola.model';
 
 declare var swal: any;
+declare function inputNumber();
 
 @Component({
   selector: 'app-vehicles',
@@ -20,72 +21,83 @@ declare var swal: any;
 })
 export class VehiclesComponent implements OnInit, AfterViewInit {
 
+  select2: any;
+  public loading = false;
+  date: string; // fecha de hoy
+
+  // VEHICULOS ******************************************************************************************
+    // Listado principal
+    vehicles: Vehicle[] = [];
+
+    // Info principal
+    icon: string = 'fas fa-info-circle';
+    title: string = 'Información';
+    type: string = '';
+    info: string = 'Selecciona un vehículo para comenzar';
+    selected: boolean = false;
+
+    // Inicializacion del vehiculo
+    vehicle: Vehicle = {
+      no: 0,
+      cp: '_',
+      type: '',
+      _make: { _id: '', name: '_'},
+      plate: '_',
+      model: 0,
+      state: false,
+      km: 0.00,
+      mts: 0.00
+    };
+
+  // BASICS ***********************************************************************************************
   @ViewChild('closeP') closeP: ElementRef;
+
+    // listado
+    basics: Basics[] = [];
+    // Basic del form
+    basic: Basics = {};
+
+  // PITS **************************************************************************************************
   @ViewChild('closeMP') closeMP: ElementRef;
-  @ViewChild('closeMR') closeMR: ElementRef;
   @ViewChild('selectR') selectR: ElementRef;
+  @ViewChild('closeMR') closeMR: ElementRef;
   @ViewChild('datePit') dateP: ElementRef;
+
+    // form de PITS
+    formPit: FormGroup;
+
+    // Arreglo de pits
+    pits: Pits[] = [];
+    // Objeto de Pit
+    pit: Pits = {};
+
+    Hpits: Pits[] = [];
+    pitMain: boolean;
+
+    rims: Rim[] = [];
+    rim: Rim = {
+      code: '',
+      desc: '',
+      state: false
+    };
+
+    tempRim: string = '';
+
+  // GASOLINES ************************************************************************************************
   @ViewChild('dateG') dateG: ElementRef;
   @ViewChild('closeMG') closeMG: ElementRef;
-  select2: any;
-
-  // fecha de hoy
-  date: string;
-
-  // Listado principal
-  vehicles: Vehicle[] = [];
-
-  // Info principal
-  icon: string = 'fas fa-info-circle';
-  title: string = 'Información';
-  type: string = '';
-  info: string = 'Selecciona un vehículo para comenzar';
-  selected: boolean = false;
-
-  // Inicializacion del vehiculo
-  vehicle: Vehicle = {
-    no: 0,
-    cp: '_',
-    type: '',
-    _make: { _id: '', name: '_'},
-    plate: '_',
-    model: 0,
-    state: false,
-    km: 0.00,
-    mts: 0.00
-  };
-
-  // Basics del vehiculo
-  // listado
-  basics: Basics[] = [];
-  // Basic del form
-  basic: Basics = {};
-
-  // form de PITS
-  formPit: FormGroup;
-
-  // Arreglo de pits
-  pits: Pits[] = [];
-  // Objeto de Pit
-  pit: Pits = {};
-
-  Hpits: Pits[] = [];
-  pitMain: boolean;
-
-  rims: Rim[] = [];
-  rim: Rim = {
-    code: '',
-    desc: '',
-    state: false
-  };
+  @ViewChild('date1') date1: ElementRef;
+  @ViewChild('date2') date2: ElementRef;
+  @ViewChild('codeG') codeG: ElementRef;
 
   gasolines: Gas[] = [];
   // form de GAS
   formGas: FormGroup;
+  idGas: string = '';
   totalGas: number;
   totalGal: number;
-
-  tempRim: string = '';
+  fecha1Consulta: string;
+  fecha2Consulta: string;
 
   // Informacion de la Gondola
   isGondola: boolean = false;
@@ -133,27 +145,22 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     $('.select2').select2();
   }
 
+  resetModal() {
+    this.formPit.reset();
+    this.formPit.controls.axis.enable();
+    this.formPit.controls.place.enable();
+    this.formPit.controls.side.enable();
+    this.formGas.reset();
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtService.init_datePicker(today);
+  }
+
+  // VEHICULOS ******************************************************************************************
   cargarVehiculos() {
     this.vehicleS.cargarVehiculos()
     .subscribe( (resp: any) => {
         this.vehicles = resp.vehiculos;
     });
-  }
-
-  cargarRims() {
-    this.vehicleS.cargarRims()
-      .subscribe((resp: any) => this.rims = resp.llantas );
-  }
-
-  cargarHistorialPits( id: string ) {
-    this.pitService.cargarPits( id )
-      .subscribe( (res: any) => {
-        this.Hpits = res.pits;
-        this.dtService.destroy_table();
-        this.chRef.detectChanges();
-        this.dtService.init_tables();
-      });
-
   }
 
   seleccionarVehicle(vehicle: Vehicle) {
@@ -163,8 +170,10 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.selected = true;
     this.pits = vehicle.pits;
     this.basics = vehicle.basics;
-    this.gasolines = vehicle.gasoline;
+    this.gasolines = [];
     this.calcularTotalesG();
+    this.fecha1Consulta = '-';
+    this.fecha2Consulta = '-';
     switch (vehicle.type) {
       case 'camion':
         this.icon = 'fas fa-truck';
@@ -230,6 +239,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // BASICS ******************************************************************************************
   addBasic() {
     if (this.basic._id) {
       console.log('EDITANDO...');
@@ -305,6 +315,23 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // PITS ******************************************************************************************
+  cargarRims() {
+    this.vehicleS.cargarRims()
+      .subscribe((resp: any) => this.rims = resp.llantas );
+  }
+
+  cargarHistorialPits( id: string ) {
+    this.pitService.cargarPits( id )
+      .subscribe( (res: any) => {
+        this.Hpits = res.pits;
+        this.dtService.destroy_table();
+        this.chRef.detectChanges();
+        this.dtService.init_tables();
+      });
+
+  }
+
   addRim( forma: NgForm ) {
 
     if (forma.invalid) {
@@ -326,16 +353,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         this.cargarRims();
       });
 
-  }
-
-  resetModal() {
-    this.formPit.reset();
-    this.formPit.controls.axis.enable();
-    this.formPit.controls.place.enable();
-    this.formPit.controls.side.enable();
-    this.formGas.reset();
-    const today = moment(new Date()).format('DD/MM/YYYY');
-    this.dtService.init_datePicker(today);
   }
 
   addPit() {
@@ -421,62 +438,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.formPit.reset();
   }
 
-  addGas() {
-
-    const fecha = moment(this.dateG.nativeElement.value, 'DD/MM/YYYY').toDate();
-
-    let pit;
-
-    if (this.pit._id) {
-      console.log('EDITANDO...');
-      console.log(this.pit);
-      // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
-      const index = this.pits.findIndex(item => item._id === this.pit._id);
-
-      pit = new Pits(
-        this.formPit.value.rim,
-        this.formPit.value.km,
-        this.formPit.value.counter,
-        this.formPit.getRawValue().axis,
-        this.formPit.getRawValue().place,
-        this.formPit.getRawValue().side,
-        fecha.toString(),
-        this.formPit.value.total,
-        this.pit._id
-      );
-
-      // REMPLAZAMOS EL BASIC en base al index encontrado
-      this.pits.splice(index, 1, pit);
-      console.log(pit);
-      this.pit = {};
-      this.vehicle.pits = this.pits;
-      console.log(this.vehicles);
-      $('.select2').val('').trigger('change');
-      this.vehicleS.crearVehiculo( this.vehicle )
-      .subscribe( resp => {
-        this.pits = resp.vehiculo.pits;
-      });
-      this.closeMP.nativeElement.click();
-    } else {
-      console.log('GUARDANDO...');
-      this.gasolines.push({
-        date: fecha.toString(),
-        gallons: this.formGas.value.gallons,
-        total: this.formGas.value.total,
-        code: this.formGas.value.code
-      });
-      this.vehicle.gasoline = this.gasolines;
-      this.vehicleS.crearVehiculo( this.vehicle )
-        .subscribe( resp => {
-          this.gasolines = resp.vehiculo.gasoline;
-        });
-      this.closeMG.nativeElement.click();
-    }
-
-    this.calcularTotalesG();
-    this.formGas.reset();
-  }
-
   editarPit( id: string, main: boolean ) {
 
     const status: Pits = this.pits.find(s => s._id === id);
@@ -530,6 +491,115 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   }
 
   deletePit( id: string ) {
+    console.log('BORRANDO...');
+    console.log(this.pits);
+    // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+    const index = this.pits.findIndex(item => item._id === id);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar información del vehículo que no se puede recuperar',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+        // ELIMINAMOS EL BASIC en base al index encontrado
+        this.pits.splice(index, 1);
+        // ACTUALIZAMOS LA DB
+        this.vehicle.pits = this.pits;
+        console.log(this.vehicle);
+        this.vehicleS.crearVehiculo( this.vehicle )
+          .subscribe( resp => {
+            this.pits = resp.vehiculo.pits;
+          });
+      }
+    });
+  }
+
+
+  // GASOLINES ******************************************************************************************
+
+  searchG() {
+    this.loading = true;
+    const id = this.vehicle._id;
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
+
+    this.vehicleS.cargarGasolines(id, fecha1, fecha2).subscribe( resp => {
+      console.log(resp);
+      this.gasolines = resp;
+      this.calcularTotalesG();
+      this.fecha1Consulta = this.date1.nativeElement.value;
+      this.fecha2Consulta = this.date2.nativeElement.value;
+      this.loading = false;
+    });
+  }
+
+  addGas() {
+
+    const fecha = moment(this.dateG.nativeElement.value, 'DD/MM/YYYY').toDate();
+
+    if (this.idGas !== '') {
+      console.log('EDITANDO...');
+
+      // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+      const index = this.gasolines.findIndex(item => item._id === this.idGas);
+
+      const gasoline = new Gas(
+        fecha.toString(),
+        this.formGas.value.gallons,
+        this.formGas.value.total,
+        this.formGas.value.code,
+        false,
+        this.idGas
+      );
+
+      // REMPLAZAMOS EL BASIC en base al index encontrado
+      this.gasolines.splice(index, 1, gasoline);
+      this.idGas = '';
+      this.vehicle.gasoline = this.gasolines;
+      this.vehicleS.crearGasoline( gasoline, this.vehicle._id )
+      .subscribe( resp => {});
+
+    } else {
+      console.log('GUARDANDO...');
+
+      const gasoline = new Gas(
+        fecha.toString(),
+        this.formGas.value.gallons,
+        this.formGas.value.total,
+        this.formGas.value.code
+      );
+
+      this.vehicleS.crearGasoline( gasoline, this.vehicle._id )
+        .subscribe( resp => {});
+    }
+
+    this.closeMG.nativeElement.click();
+    this.calcularTotalesG();
+    this.formGas.reset();
+  }
+
+  editarGas(id: string) {
+
+    const status: Gas = this.gasolines.find(s => s._id === id);
+
+    if (status) {
+      const fecha = this.dtService.fromJsonDate(status.date);
+
+      this.formGas.get('dateG').setValue(fecha);
+      this.formGas.get('code').setValue(status.code);
+      this.formGas.get('gallons').setValue(status.gallons);
+      this.formGas.get('total').setValue(status.total);
+      this.dtService.init_datePicker(fecha);
+      this.codeG.nativeElement.focus();
+      this.idGas = status._id;
+    }
+  }
+
+  deleteGas( id: string ) {
     console.log('BORRANDO...');
     console.log(this.pits);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics

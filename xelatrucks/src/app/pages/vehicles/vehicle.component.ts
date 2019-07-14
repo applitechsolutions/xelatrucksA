@@ -7,6 +7,8 @@ import { MakeService, VehicleService } from '../../services/service.index';
 import swal from 'sweetalert';
 import { Vehicle } from '../../models/vehicle.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Basics } from '../../models/basics.model';
+import { Pits } from '../../models/pits.model';
 
 declare function select2(): any;
 @Component({
@@ -26,6 +28,8 @@ export class VehicleComponent implements OnInit, AfterViewInit {
   types: any[] = [];
   makes: Make[] = [];
   tempMake: string = '';
+  basics: Basics[] = [];
+  pits: Pits[] = [];
 
   // Variables usadas al ACTUALIZAR vehiculo
   tempType: string = '';
@@ -190,7 +194,10 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         this.forma.value.model,
         this.forma.value.km,
         this.forma.value.mts,
-        this.idVehicle
+        this.idVehicle,
+        '',
+        this.basics,
+        this.pits
       );
 
       this.vehicleS.crearVehiculo(vehiculo)

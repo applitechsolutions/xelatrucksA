@@ -25,6 +25,15 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   public loading = false;
   date: string; // fecha de hoy
 
+  /** GONDOLA */
+    // Informacion de la Gondola
+    isTruckG: boolean = false;
+    isAsigned: boolean = false;
+    inGondola: boolean = false;
+    isGondola: boolean = false;
+    // Objeto de Gondola
+    gondola: Gondola = { plate: '' };
+
   // VEHICULOS ******************************************************************************************
   @ViewChild('detalles') detalles: ElementRef;
     // Listado principal
@@ -101,15 +110,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   fecha1Consulta: string;
   fecha2Consulta: string;
 
-
-  // Informacion de la Gondola
-  isGondola: boolean = false;
-  isAsigned: boolean = false;
-  inGondola: boolean = false;
-
-  // Objeto de Gondola
-  gondola: Gondola = { plate: '' };
-
   constructor(
     public dtService: DatatablesService,
     public vehicleS: VehicleService,
@@ -172,56 +172,18 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  seleccionarGondola(vehicle: Vehicle) {
+  seleccionarGondola(gondola: Gondola) {
   this.cargarRims();
-  this.cargarHistorialPits( vehicle._id );
-  this.vehicle = vehicle;
+  this.cargarHistorialPits( gondola._id, true);
+  this.gondola = gondola;
   this.selected = true;
-  this.pits = vehicle.pits;
-  this.basics = vehicle.basics;
-  this.gasolines = [];
-  this.calcularTotalesG();
-  this.fecha1Consulta = '-';
-  this.fecha2Consulta = '-';
-  this.isGondola = false;
-  switch (vehicle.type) {
-    case 'camion':
-      this.icon = 'fas fa-truck';
-      this.type = 'Camión: ';
-      this.title = this.vehicle.plate;
-      this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
-      break;
-    case 'camionG':
-      this.isGondola = true;
-      this.icon = 'fas fa-truck-moving';
-      this.type = 'Camión gondola: ';
-      this.title = this.vehicle.plate;
-      this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
-      break;
-    case 'vehiculo':
-      this.icon = 'fas fa-truck-pickup';
-      this.type = 'Vehículo: ';
-      this.title = this.vehicle.plate;
-      this.info = this.vehicle._make.name;
-      break;
-    case 'riego':
-      this.icon = 'fas fa-truck-monster';
-      this.type = 'Camión para riego: ';
-      this.title = this.vehicle.plate;
-      this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
-      break;
-    case 'stock':
-      this.icon = 'fas fa-snowplow';
-      this.type = 'Excavadora: ';
-      this.title = this.vehicle.plate;
-      this.info = this.vehicle._make.name;
-      break;
-    default:
-      this.icon = 'fas fa-info-circle';
-      this.title = 'Información';
-      this.info = 'Selecciona un vehículo para comenzar';
-      break;
-  }
+  this.isGondola = true;
+  this.pits = gondola.pits;
+  this.basics = gondola.basics;
+  this.isTruckG = false;
+  this.icon = 'fas fa-truck-moving';
+  this.type = 'Gondola: ';
+  this.title = this.gondola.plate;
   }
 
 /**
@@ -236,7 +198,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   seleccionarVehicle(vehicle: Vehicle) {
     this.cargarRims();
-    this.cargarHistorialPits( vehicle._id );
+    this.cargarHistorialPits( vehicle._id, false );
     this.vehicle = vehicle;
     this.selected = true;
     this.pits = vehicle.pits;
@@ -245,11 +207,11 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.calcularTotalesG();
     this.fecha1Consulta = '-';
     this.fecha2Consulta = '-';
-    if (this.isGondola && vehicle.type !== 'camionG' && this.inGondola) {
+    if (this.isTruckG && vehicle.type !== 'camionG' && this.inGondola) {
       this.detalles.nativeElement.click();
       this.inGondola = false;
     }
-    this.isGondola = false;
+    this.isTruckG = false;
     switch (vehicle.type) {
       case 'camion':
         this.icon = 'fas fa-truck';
@@ -258,7 +220,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
         break;
       case 'camionG':
-        this.isGondola = true;
+        this.isTruckG = true;
         this.icon = 'fas fa-truck-moving';
         this.type = 'Camión gondola: ';
         this.title = this.vehicle.plate;
@@ -397,15 +359,14 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       .subscribe((resp: any) => this.rims = resp.llantas );
   }
 
-  cargarHistorialPits( id: string ) {
-    this.pitService.cargarPits( id )
+  cargarHistorialPits( id: string, isTruckG: boolean ) {
+    this.pitService.cargarPits( id , isTruckG)
       .subscribe( (res: any) => {
         this.Hpits = res.pits;
         this.dtService.destroy_table();
         this.chRef.detectChanges();
         this.dtService.init_tables();
       });
-
   }
 
   addRim( forma: NgForm ) {

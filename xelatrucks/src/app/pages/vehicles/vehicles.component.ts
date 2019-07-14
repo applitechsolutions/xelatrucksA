@@ -28,6 +28,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   // VEHICULOS ******************************************************************************************
     // Listado principal
     vehicles: Vehicle[] = [];
+    gondolas: Gondola[] = [];
 
     // Info principal
     icon: string = 'fas fa-info-circle';
@@ -156,7 +157,20 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.dtService.init_datePicker(today);
   }
 
-  // VEHICULOS ******************************************************************************************
+/**
+ * GONDOLAS
+ */
+
+cargarGondolas() {
+  this.vehicleS.cargarVehiculos()
+  .subscribe( (resp: any) => {
+      this.vehicles = resp.vehiculos;
+  });
+}
+
+/**
+ * VEHICULOS
+ */
   cargarVehiculos() {
     this.vehicleS.cargarVehiculos()
     .subscribe( (resp: any) => {

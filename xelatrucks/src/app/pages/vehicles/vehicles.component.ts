@@ -3,7 +3,7 @@ import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
-import { DatatablesService, VehicleService, PitService } from '../../services/service.index';
+import { DatatablesService, VehicleService, PitService, GondolaService } from '../../services/service.index';
 import { Vehicle } from '../../models/vehicle.model';
 import { Basics } from '../../models/basics.model';
 import { Pits } from '../../models/pits.model';
@@ -112,12 +112,14 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     public dtService: DatatablesService,
     public vehicleS: VehicleService,
     public pitService: PitService,
-    private chRef: ChangeDetectorRef
+    private chRef: ChangeDetectorRef,
+    private gondolaS: GondolaService
     ) { }
 
   ngOnInit() {
     // this.dtService.init_tables();
     this.cargarVehiculos();
+    this.cargarGondolas();
 
     const today = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_datePicker(today);
@@ -162,9 +164,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
  */
 
 cargarGondolas() {
-  this.vehicleS.cargarVehiculos()
+  this.gondolaS.cargarGondolas()
   .subscribe( (resp: any) => {
-      this.vehicles = resp.vehiculos;
+    this.gondolas = resp.gondolas;
   });
 }
 

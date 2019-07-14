@@ -194,6 +194,19 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   }
 
   /* #region  VEHICULOS */
+addGondola( formG: NgForm ) {
+  if (formG.invalid) {
+    swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+    return;
+  }
+
+  const gondola = new Gondola( formG.value.plateG, false );
+
+}
+
+/**
+ * VEHICULOS
+ */
   cargarVehiculos() {
     this.vehicleS.cargarVehiculos()
       .subscribe((resp: any) => {
@@ -284,7 +297,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   }
   /* #endregion */
 
-  // BASICS ******************************************************************************************
+// BASICS ******************************************************************************************
   addBasic() {
     if (this.basic._id) {
       console.log('EDITANDO...');
@@ -379,6 +392,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   addRim(forma: NgForm) {
 
     if (forma.invalid) {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }
 
@@ -687,7 +701,5 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.totalGal = this.gasolines.reduce((sum, item) => sum + item.gallons, 0);
     // ------------
   }
-
-
 
 }

@@ -323,7 +323,7 @@
                 <!-- .tab-pane -->
                 <div class="tab-pane fade" id="client-projects" role="tabpanel" aria-labelledby="client-projects-tab">
                     <!-- .card -->
-                    <div class="card">
+                    <div class="card" #customLoadingTemplate>
                         <!-- .card-header -->
                         <div class="card-header d-flex">
                             <!-- .form-group -->
@@ -447,7 +447,7 @@
                                 <h2 id="client-billing-contact-tab" class="card-title"> No tiene una Góndola Asignada </h2>
                             </div>
                             <!-- grid column -->
-                            <div class="offset-2 col-xl-6">
+                            <div class="col-xl-6">
                                 <!-- .card -->
                                 <div class="card card-fluid">
                                     <!-- .card-header -->
@@ -455,7 +455,7 @@
                                         <div class="d-flex align-items-center">
                                             <span class="mr-auto">Góndolas Disponibles</span>
                                             <div class="dropdown">
-                                                <button type="button" class="btn btn-icon btn-light" data-toggle="modal" data-target="#"><i class="fa fa-ellipsis-v"></i></button>
+                                                <button type="button" class="btn btn-icon btn-light" data-toggle="modal" data-target="#addGondola"><i class="fas fa-plus-square"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -468,7 +468,7 @@
                                             <thead class="thead-">
                                                 <tr>
                                                     <th style="min-width:200px"> Placa </th>
-                                                    <th></th>
+                                                    <th> Asignar </th>
                                                 </tr>
                                             </thead>
                                             <!-- /thead -->
@@ -477,8 +477,8 @@
                                                 <!-- tr -->
                                                 <tr>
                                                     <td></td>
-                                                    <td class="align-middle text-right">
-                                                        <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i class="fas fa-check-double"></i> <span class="sr-only">Asignar</span></button>
                                                     </td>
                                                 </tr>
                                                 <!-- /tr -->
@@ -494,39 +494,6 @@
                             <!-- /grid column -->
                         </div>
                         <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                    <!-- .card -->
-                    <div *ngIf="selected" class="card mt-4">
-                        <!-- .card-body -->
-                        <div class="card-body">
-                            <h2 class="card-title"> Componentes básicos del vehículo </h2>
-                            <!-- .table-responsive -->
-                            <div class="table-responsive">
-                                <table class="table table-hover" style="min-width: 678px">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="align-middle text-right">
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addBasic"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
-                                                <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.card-body -->
-                        <!-- .card-footer -->
-                        <div class="card-footer">
-                            <a href="#addBasicG" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar componente</a>
-                        </div>
-                        <!-- /.card-footer -->
                     </div>
                     <!-- /.card -->
                 </div>

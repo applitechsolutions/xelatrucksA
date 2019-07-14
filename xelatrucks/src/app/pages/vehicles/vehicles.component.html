@@ -170,6 +170,9 @@
                     <li *ngIf="selected" class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#client-projects">Combustible</a>
                     </li>
+                    <li *ngIf="selected && isGondola" class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#type-gondola">Góndola</a>
+                    </li>
                 </ul>
                 <!-- /.nav-tabs -->
             </div>
@@ -470,6 +473,64 @@
                     <!-- /.card -->
                 </div>
                 <!-- /.tab-pane -->
+                <!-- .tab-pane -->
+                <div class="tab-pane fade" id="type-gondola" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                    <!-- .card -->
+                    <div class="card">
+                        <!-- .card-body -->
+                        <div *ngIf="isAsigned" class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h2 id="client-billing-contact-tab" class="card-title"> Góndola Asignada: {{ vehicle._gondola.plate }} </h2>
+                            </div>
+                            <button *ngIf="selected" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Remover</span></button>
+                        </div>
+                        <!-- /.card-body -->
+                        <!-- .card-body -->
+                        <div *ngIf="!isAsigned" class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h2 id="client-billing-contact-tab" class="card-title"> No tiene una Góndola Asignada </h2>
+
+                            </div>
+                            <button href="#addGongola" *ngIf="selected" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right" data-toggle="modal"><i class="fas fa-plus-square"></i> <span class="sr-only">Asignar</span></button>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    <!-- .card -->
+                    <div *ngIf="selected" class="card mt-4">
+                        <!-- .card-body -->
+                        <div class="card-body">
+                            <h2 class="card-title"> Componentes básicos del vehículo </h2>
+                            <!-- .table-responsive -->
+                            <div class="table-responsive">
+                                <table class="table table-hover" style="min-width: 678px">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-middle text-right">
+                                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addBasic"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                                                <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.card-body -->
+                        <!-- .card-footer -->
+                        <div class="card-footer">
+                            <a href="#addBasicG" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar componente</a>
+                        </div>
+                        <!-- /.card-footer -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
         </div>
@@ -711,5 +772,40 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modalGASOLINE -->
+    <!-- .modalGondola -->
+    <div class="modal fade" id="addGondola" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
+        <!-- .modal-dialog -->
+        <div class="modal-dialog" role="document">
+            <!-- .modal-content -->
+            <div class="modal-content">
+                <!-- .modal-header -->
+                <div class="modal-header">
+                    <h5 class="modal-title"> Crear una nueva Llanta </h5>
+                </div>
+                <!-- /.modal-header -->
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <form ngNativeValidate #f="ngForm" (ngSubmit)="addRim( f )">
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <input [(ngModel)]="gondola.plate" type="text" class="form-control" name="plateG" required> <label for="plate">Placa</label>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .modal-footer -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMR type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                        </div>
+                        <!-- /.modal-footer -->
+                    </form>
+                </div>
+                <!-- /.modal-body -->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modalGondola -->
 </div>
 <!-- /.page -->

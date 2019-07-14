@@ -1,0 +1,13 @@
+import { Basics } from './basics.model';
+import { Pits } from './pits.model';
+
+export class Gondola {
+
+    constructor(
+        public plate: string,
+        public truck?: string,
+        public basics?: Basics[],
+        public pits?: Pits[],
+        public _id?: string
+    ) {}
+}

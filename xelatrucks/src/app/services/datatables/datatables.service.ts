@@ -130,13 +130,7 @@ export class DatatablesService {
 
   fromJsonDate(jDate): string {
 
-    const str = jDate.toString();
-
-    let newDate = str.substring(0, 4) + '/';
-    newDate += str.substring(4, 6) + '/';
-    newDate += str.substring(6);
-
-    const bDate: Date = new Date(newDate);
+    const bDate: Date = new Date(jDate);
     const formattedDate = moment(bDate).format('DD/MM/YYYY');
     return formattedDate.toString().substring(0, 10);  // Ignore time
   }

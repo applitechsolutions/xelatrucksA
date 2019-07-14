@@ -6,6 +6,7 @@ export { UserService } from './users/user.service';
 export { PartService } from './parts/part.service';
 export { MechanicService } from './mechanics/mechanic.service';
 export { VehicleService } from './vehicles/vehicle.service';
+export { GondolaService } from './gondolas/gondola.service';
 export { MakeService } from './makes/make.service';
 export { AutoProviderService } from './autoProviders/auto-provider.service';
 export { BuySpareService } from './buySpares/buy-spare.service';

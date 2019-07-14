@@ -13,7 +13,9 @@ import {
   DatatablesService,
   PartService,
   PitService,
-  MechanicService
+  MechanicService,
+  VehicleService,
+  GondolaService
 } from './service.index';
 
 @NgModule({
@@ -33,6 +35,8 @@ import {
     PartService,
     PitService,
     MechanicService,
+    VehicleService,
+    GondolaService,
     VerificaTokenGuard
   ]
 })

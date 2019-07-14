@@ -195,7 +195,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         this.forma.value.km,
         this.forma.value.mts,
         this.idVehicle,
-        '',
+        null,
         this.basics,
         this.pits
       );

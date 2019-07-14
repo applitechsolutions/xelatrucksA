@@ -9,6 +9,7 @@ import { Basics } from '../../models/basics.model';
 import { Pits } from '../../models/pits.model';
 import { Rim } from '../../models/rim.model';
 import { Gas } from '../../models/gas.model';
+import { Gondola } from '../../models/gondola.model';
 
 declare var swal: any;
 
@@ -85,6 +86,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   totalGal: number;
 
   tempRim: string = '';
+
+  // Informacion de la Gondola
+  isGondola: boolean = false;
+  isAsigned: boolean = false;
+
+  // Objeto de Gondola
+  gondola: Gondola = { plate: '' };
 
   constructor(
     public dtService: DatatablesService,
@@ -164,25 +172,26 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         this.title = this.vehicle.plate;
         this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
         break;
-        case 'camionG':
+      case 'camionG':
+        this.isGondola = true;
         this.icon = 'fas fa-truck-moving';
         this.type = 'Camión gondola: ';
         this.title = this.vehicle.plate;
         this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
         break;
-        case 'vehiculo':
+      case 'vehiculo':
         this.icon = 'fas fa-truck-pickup';
         this.type = 'Vehículo: ';
         this.title = this.vehicle.plate;
         this.info = this.vehicle._make.name;
         break;
-        case 'riego':
+      case 'riego':
         this.icon = 'fas fa-truck-monster';
         this.type = 'Camión para riego: ';
         this.title = this.vehicle.plate;
         this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
         break;
-        case 'stock':
+      case 'stock':
         this.icon = 'fas fa-snowplow';
         this.type = 'Excavadora: ';
         this.title = this.vehicle.plate;

@@ -100,6 +100,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   fecha1Consulta: string;
   fecha2Consulta: string;
 
+
   // Informacion de la Gondola
   isGondola: boolean = false;
   isAsigned: boolean = false;
@@ -188,6 +189,7 @@ cargarGondolas() {
     this.calcularTotalesG();
     this.fecha1Consulta = '-';
     this.fecha2Consulta = '-';
+    this.isGondola = false;
     switch (vehicle.type) {
       case 'camion':
         this.icon = 'fas fa-truck';

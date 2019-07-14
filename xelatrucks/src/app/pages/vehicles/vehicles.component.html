@@ -445,28 +445,55 @@
                         <div *ngIf="!isAsigned" class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h2 id="client-billing-contact-tab" class="card-title"> No tiene una Góndola Asignada </h2>
-                                <!-- .table-responsive -->
-                                <div class="table-responsive">
-                                    <table class="table table-hover" style="min-width: 678px">
-                                        <thead>
-                                            <tr>
-                                                <th> Placa </th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="align-middle"> </td>
-                                                <td class="align-middle text-right">
-                                                    <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addPit"><i class="fas fa-plus-square"></i> <span class="sr-only">Asignar</span></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.table-responsive -->
+                                <h4 class="card-title">Gondolas Disponibles</h4>
                             </div>
                             <button href="#addGongola" *ngIf="selected" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right" data-toggle="modal"><i class="fas fa-plus-square"></i> <span class="sr-only">Asignar</span></button>
+                            <!-- grid column -->
+                            <div class="col-xl-6 col-xl-offset-4">
+                                <!-- .card -->
+                                <div class="card card-fluid">
+                                    <!-- .card-header -->
+                                    <div class="card-header border-0">
+                                        <div class="d-flex align-items-center">
+                                            <span class="mr-auto">Góndolas Disponibles</span>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn btn-icon btn-light" data-toggle="modal" data-target="#"><i class="fa fa-ellipsis-v"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <!-- .table-responsive -->
+                                    <div class="table-responsive">
+                                        <!-- .table -->
+                                        <table class="table table-striped">
+                                            <!-- thead -->
+                                            <thead class="thead-">
+                                                <tr>
+                                                    <th style="min-width:200px"> Placa </th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <!-- /thead -->
+                                            <!-- tbody -->
+                                            <tbody>
+                                                <!-- tr -->
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="align-middle text-right">
+                                                        <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                                                    </td>
+                                                </tr>
+                                                <!-- /tr -->
+                                            </tbody>
+                                            <!-- /tbody -->
+                                        </table>
+                                        <!-- /.table -->
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /grid column -->
                         </div>
                         <!-- /.card-body -->
                     </div>

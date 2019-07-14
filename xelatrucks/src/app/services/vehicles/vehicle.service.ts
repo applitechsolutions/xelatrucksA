@@ -5,9 +5,9 @@ import { URL_SERVICES } from 'src/app/config/config';
 import { Vehicle } from '../../models/vehicle.model';
 import { Rim } from '../../models/rim.model';
 import { map, catchError } from 'rxjs/operators';
-import swal from 'sweetalert';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { Gas } from '../../models/gas.model';
+import swal from 'sweetalert';
 
 @Injectable({
   providedIn: 'root'
@@ -95,7 +95,7 @@ export class VehicleService {
       .pipe( map( (resp: any) =>  resp.gasoline));
   }
 
-  crearVehiculo( vehicle: Vehicle) {
+  crearVehiculo( vehicle: Vehicle ) {
 
     let url = URL_SERVICES + '/vehiculo';
 

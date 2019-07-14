@@ -25,7 +25,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   public loading = false;
   date: string; // fecha de hoy
 
-  /** GONDOLA */
+  // GONDOLA *********************************************************************************************
+  @ViewChild('closeMGo') closeMGo: ElementRef;
+
   // Informacion de la Gondola
   isTruckG: boolean = false;
   isAsigned: boolean = false;
@@ -162,9 +164,8 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.dtService.init_datePicker(today);
   }
 
-  /**
-   * GONDOLAS
-   */
+
+  /* #region  GONDOLAS */
 
   cargarGondolas() {
     this.gondolaS.cargarGondolas()
@@ -193,22 +194,35 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /* #region  VEHICULOS */
-addGondola( formG: NgForm ) {
-  if (formG.invalid) {
-    swal('Oops...', 'Algunos campos son obligatorios', 'warning');
-    return;
+
+  addGondola(formG: NgForm) {
+    if (formG.invalid) {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      return;
+    }
+
+    const gondola = new Gondola(formG.value.plateG);
+
+    this.gondolaS.crearGondola(gondola)
+      .subscribe( (res: any) => {
+        swal({
+          title: 'Exito!',
+          text: 'Góndola creada correctamente' + res.plate,
+          icon: 'success',
+          button: false,
+          timer: 1000
+        });
+        this.closeMGo.nativeElement.click();
+        this.cargarGondolas();
+      });
+
   }
 
-  const gondola = new Gondola( formG.value.plateG );
+  /* #endregion */
+
+  /* #region  VEHICULOS */
 
 
-
-}
-
-/**
- * VEHICULOS
- */
   cargarVehiculos() {
     this.vehicleS.cargarVehiculos()
       .subscribe((resp: any) => {
@@ -300,8 +314,7 @@ addGondola( formG: NgForm ) {
   /* #endregion */
 
 
-
-  /* #region BASICS */
+  /* #region  BASICS */
   addBasic() {
     if (this.basic._id) {
       console.log('EDITANDO...');
@@ -379,15 +392,15 @@ addGondola( formG: NgForm ) {
   /* #endregion */
 
 
-  // PITS ******************************************************************************************
+  /* #region  PITS */
   cargarRims() {
     this.vehicleS.cargarRims()
       .subscribe((resp: any) => this.rims = resp.llantas);
   }
 
-  cargarHistorialPits( id: string, isGondola: boolean ) {
-    this.pitService.cargarPits( id, isGondola )
-      .subscribe( (res: any) => {
+  cargarHistorialPits(id: string, isGondola: boolean) {
+    this.pitService.cargarPits(id, isGondola)
+      .subscribe((res: any) => {
         this.Hpits = res.pits;
         this.dtService.destroy_table();
         this.chRef.detectChanges();
@@ -444,7 +457,7 @@ addGondola( formG: NgForm ) {
             total: resp.total,
             vehicle: resp.vehicle
           });
-          this.cargarHistorialPits( resp.vehicle._id, false );
+          this.cargarHistorialPits(resp.vehicle._id, false);
         });
     }
 
@@ -581,10 +594,10 @@ addGondola( formG: NgForm ) {
         }
       });
   }
+  /* #endregion */
 
 
-  // GASOLINES ******************************************************************************************
-
+  /* #region  GASOLINE */
   searchG() {
     this.loading = true;
     const id = this.vehicle._id;
@@ -707,5 +720,6 @@ addGondola( formG: NgForm ) {
     this.totalGal = this.gasolines.reduce((sum, item) => sum + item.gallons, 0);
     // ------------
   }
+  /* #endregion */
 
 }

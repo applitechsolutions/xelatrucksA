@@ -14,11 +14,15 @@ export class PitService {
 
   constructor( public http: HttpClient, public userService: UserService ) { }
 
-  cargarPits( id: string ) {
+  cargarPits( id: string, isGondola: boolean ) {
 
-    const url = URL_SERVICES + '/pit/' + id;
-    return this.http.get(url);
-
+    if (isGondola) {
+      const url = URL_SERVICES + '/pit/gondola/' + id;
+      return this.http.get(url);
+    } else if (!isGondola) {
+      const url = URL_SERVICES + '/pit/' + id;
+      return this.http.get(url);
+    }
   }
 
   crearPit( pit: Pits ) {

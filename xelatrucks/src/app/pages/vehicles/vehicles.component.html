@@ -123,10 +123,10 @@
                     <li *ngIf="selected" class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#vehicle-rims" (click)="inGondola = false;"> Neumáticos</a>
                     </li>
-                    <li *ngIf="selected" class="nav-item">
+                    <li *ngIf="selected && !isGondola" class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#gasolines" (click)="inGondola = false;">Combustible</a>
                     </li>
-                    <li *ngIf="selected && isGondola" class="nav-item" (click)="inGondola = true;">
+                    <li *ngIf="selected && isTruckG" class="nav-item" (click)="inGondola = true;">
                         <a class="nav-link" data-toggle="tab" href="#type-gondola">Góndola</a>
                     </li>
                 </ul>
@@ -430,7 +430,7 @@
                 </div>
                 <!-- /.tab-pane -->
                 <!-- .tab-pane -->
-                <div *ngIf="selected && isGondola" class="tab-pane fade" id="type-gondola" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                <div *ngIf="selected && isTruckG" class="tab-pane fade" id="type-gondola" role="tabpanel" aria-labelledby="client-billing-contact-tab">
                     <!-- .card -->
                     <div class="card">
                         <!-- .card-body -->

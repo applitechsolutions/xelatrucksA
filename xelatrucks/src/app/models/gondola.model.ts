@@ -5,10 +5,10 @@ export class Gondola {
 
     constructor(
         public plate: string,
-        public state: boolean,
-        public truck?: string,
+        public _truck?: string,
         public basics?: Basics[],
         public pits?: Pits[],
+        public state?: boolean,
         public _id?: string
     ) {}
 }

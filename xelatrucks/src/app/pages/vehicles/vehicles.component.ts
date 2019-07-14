@@ -199,7 +199,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const gondola = new Gondola( formG.value.plateG );
+  const gondola = new Gondola( formG.value.plateG );
+
+
 
   }
 
@@ -295,7 +297,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   }
   /* #endregion */
 
-// BASICS ******************************************************************************************
+
+
+  /* #region BASICS */
   addBasic() {
     if (this.basic._id) {
       console.log('EDITANDO...');
@@ -375,6 +379,8 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         }
       });
   }
+  /* #endregion */
+
 
   // PITS ******************************************************************************************
   cargarRims() {
@@ -382,9 +388,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       .subscribe((resp: any) => this.rims = resp.llantas);
   }
 
-  cargarHistorialPits(id: string, isTruckG: boolean) {
-    this.pitService.cargarPits(id, isTruckG)
-      .subscribe((res: any) => {
+  cargarHistorialPits( id: string, isGondola: boolean ) {
+    this.pitService.cargarPits( id, isGondola )
+      .subscribe( (res: any) => {
         this.Hpits = res.pits;
         this.dtService.destroy_table();
         this.chRef.detectChanges();
@@ -441,7 +447,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
             total: resp.total,
             vehicle: resp.vehicle
           });
-          this.cargarHistorialPits(resp.vehicle._id);
+          this.cargarHistorialPits( resp.vehicle._id, false );
         });
     }
 

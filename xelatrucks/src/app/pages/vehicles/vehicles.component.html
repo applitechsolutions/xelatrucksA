@@ -29,7 +29,7 @@
                     <!-- /.list-group-item-body -->
                     <!-- .list-group-item-figure -->
                     <div *ngIf="vehicle.type === 'camionG'" class="list-group-item-figure">
-                        <div class="tile tile-circle bg-red"> <i class="fas fa-truck-moving"></i> </div>
+                        <div class="tile tile-circle bg-orange"> <i class="fas fa-truck-moving"></i> </div>
                     </div>
                     <!-- /.list-group-item-figure -->
                     <!-- .list-group-item-body -->
@@ -78,13 +78,13 @@
                     <a href="#" (click)="seleccionarGondola( gondola )" class="stretched-link"></a>
                     <!-- .list-group-item-figure -->
                     <div class="list-group-item-figure">
-                        <div class="tile tile-circle bg-danger"> <i class="fas fa-truck-moving"></i> </div>
+                        <div class="tile tile-circle bg-red"> <i class="fas fa-truck-moving"></i> </div>
                     </div>
                     <!-- /.list-group-item-figure -->
                     <!-- .list-group-item-body -->
                     <div class="list-group-item-body">
                         <h4 class="list-group-item-title">Gondola: {{ gondola.plate }} </h4>
-                        <p class="list-group-item-text"> #{{ 'Camión asignado: ' + gondola._truck.plate }} </p>
+                        <p class="list-group-item-text"> {{ 'Camión asignado: ' + gondola._truck.plate }} </p>
                     </div>
                     <!-- /.list-group-item-body -->
                 </div>
@@ -118,15 +118,15 @@
                 <!-- .nav-tabs -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active show" data-toggle="tab" href="#client-billing-contact"> Detalles del vehículo</a>
+                        <a #detalles class="nav-link active show" data-toggle="tab" href="#detalles" (click)="inGondola = false;"> Detalles del vehículo</a>
                     </li>
                     <li *ngIf="selected" class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#vehicle-rims"> Neumáticos</a>
+                        <a class="nav-link" data-toggle="tab" href="#vehicle-rims" (click)="inGondola = false;"> Neumáticos</a>
                     </li>
                     <li *ngIf="selected" class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#client-projects">Combustible</a>
+                        <a class="nav-link" data-toggle="tab" href="#gasolines" (click)="inGondola = false;">Combustible</a>
                     </li>
-                    <li *ngIf="selected && isGondola" class="nav-item">
+                    <li *ngIf="selected && isGondola" class="nav-item" (click)="inGondola = true;">
                         <a class="nav-link" data-toggle="tab" href="#type-gondola">Góndola</a>
                     </li>
                 </ul>
@@ -136,7 +136,7 @@
             <!-- .tab-content -->
             <div class="tab-content pt-4" id="clientDetailsTabs">
                 <!-- .tab-pane -->
-                <div class="tab-pane fade show active" id="client-billing-contact" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                <div class="tab-pane fade show active" id="detalles" role="tabpanel" aria-labelledby="client-billing-contact-tab">
                     <!-- .card -->
                     <div class="card">
                         <!-- .card-body -->
@@ -321,7 +321,7 @@
                 </div>
                 <!-- /.tab-pane -->
                 <!-- .tab-pane -->
-                <div class="tab-pane fade" id="client-projects" role="tabpanel" aria-labelledby="client-projects-tab">
+                <div class="tab-pane fade" id="gasolines" role="tabpanel" aria-labelledby="client-projects-tab">
                     <!-- .card -->
                     <div class="card">
                         <!-- .card-header -->
@@ -336,8 +336,8 @@
                                 <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
                             </div>
                             <!-- /.form-group -->
-                            <a (click)="searchG()" class="tile bg-primary tile-circle tile-lg"><i class="fas fa-search"></i></a>
-                            <button type="button" (click)="resetModal()" data-toggle="modal" data-target="#addGas" class="btn btn-primary ml-auto">Agregar cupón</button>
+                            <button type="button" (click)="searchG()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                            <button type="button" (click)="resetModal()" data-toggle="modal" data-target="#addGas" class="btn btn-outline-primary ml-auto">Agregar cupón</button>
                         </div>
                         <!-- /.card-header -->
                         <div class="row">
@@ -430,7 +430,7 @@
                 </div>
                 <!-- /.tab-pane -->
                 <!-- .tab-pane -->
-                <div class="tab-pane fade" id="type-gondola" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                <div *ngIf="selected && isGondola" class="tab-pane fade" id="type-gondola" role="tabpanel" aria-labelledby="client-billing-contact-tab">
                     <!-- .card -->
                     <div class="card">
                         <!-- .card-body -->

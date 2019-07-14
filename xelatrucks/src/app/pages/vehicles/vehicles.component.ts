@@ -26,47 +26,48 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   date: string; // fecha de hoy
 
   /** GONDOLA */
-    // Informacion de la Gondola
-    isTruckG: boolean = false;
-    isAsigned: boolean = false;
-    inGondola: boolean = false;
-    isGondola: boolean = false;
-    // Objeto de Gondola
-    gondola: Gondola = { plate: '' };
+  // Informacion de la Gondola
+  isTruckG: boolean = false;
+  isAsigned: boolean = false;
+  inGondola: boolean = false;
+  isGondola: boolean = false;
+  inGas: boolean = false;
+  // Objeto de Gondola
+  gondola: Gondola = { plate: '' };
 
   // VEHICULOS ******************************************************************************************
   @ViewChild('detalles') detalles: ElementRef;
-    // Listado principal
-    vehicles: Vehicle[] = [];
-    gondolas: Gondola[] = [];
+  // Listado principal
+  vehicles: Vehicle[] = [];
+  gondolas: Gondola[] = [];
 
-    // Info principal
-    icon: string = 'fas fa-info-circle';
-    title: string = 'Información';
-    type: string = '';
-    info: string = 'Selecciona un vehículo para comenzar';
-    selected: boolean = false;
+  // Info principal
+  icon: string = 'fas fa-info-circle';
+  title: string = 'Información';
+  type: string = '';
+  info: string = 'Selecciona un vehículo para comenzar';
+  selected: boolean = false;
 
-    // Inicializacion del vehiculo
-    vehicle: Vehicle = {
-      no: 0,
-      cp: '_',
-      type: '',
-      _make: { _id: '', name: '_'},
-      plate: '_',
-      model: 0,
-      state: false,
-      km: 0.00,
-      mts: 0.00
-    };
+  // Inicializacion del vehiculo
+  vehicle: Vehicle = {
+    no: 0,
+    cp: '_',
+    type: '',
+    _make: { _id: '', name: '_' },
+    plate: '_',
+    model: 0,
+    state: false,
+    km: 0.00,
+    mts: 0.00
+  };
 
   // BASICS ***********************************************************************************************
   @ViewChild('closeP') closeP: ElementRef;
 
-    // listado
-    basics: Basics[] = [];
-    // Basic del form
-    basic: Basics = {};
+  // listado
+  basics: Basics[] = [];
+  // Basic del form
+  basic: Basics = {};
 
   // PITS **************************************************************************************************
   @ViewChild('closeMP') closeMP: ElementRef;
@@ -74,25 +75,25 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   @ViewChild('closeMR') closeMR: ElementRef;
   @ViewChild('datePit') dateP: ElementRef;
 
-    // form de PITS
-    formPit: FormGroup;
+  // form de PITS
+  formPit: FormGroup;
 
-    // Arreglo de pits
-    pits: Pits[] = [];
-    // Objeto de Pit
-    pit: Pits = {};
+  // Arreglo de pits
+  pits: Pits[] = [];
+  // Objeto de Pit
+  pit: Pits = {};
 
-    Hpits: Pits[] = [];
-    pitMain: boolean;
+  Hpits: Pits[] = [];
+  pitMain: boolean;
 
-    rims: Rim[] = [];
-    rim: Rim = {
-      code: '',
-      desc: '',
-      state: false
-    };
+  rims: Rim[] = [];
+  rim: Rim = {
+    code: '',
+    desc: '',
+    state: false
+  };
 
-    tempRim: string = '';
+  tempRim: string = '';
 
   // GASOLINES ************************************************************************************************
   @ViewChild('dateG') dateG: ElementRef;
@@ -116,7 +117,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     public pitService: PitService,
     private chRef: ChangeDetectorRef,
     private gondolaS: GondolaService
-    ) { }
+  ) { }
 
   ngOnInit() {
     // this.dtService.init_tables();
@@ -161,31 +162,38 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.dtService.init_datePicker(today);
   }
 
-/**
- * GONDOLAS
- */
+  /**
+   * GONDOLAS
+   */
 
   cargarGondolas() {
     this.gondolaS.cargarGondolas()
-    .subscribe( (resp: any) => {
-      this.gondolas = resp.gondolas;
-    });
+      .subscribe((resp: any) => {
+        this.gondolas = resp.gondolas;
+      });
   }
 
   seleccionarGondola(gondola: Gondola) {
-  this.cargarRims();
-  this.cargarHistorialPits( gondola._id, true);
-  this.gondola = gondola;
-  this.selected = true;
-  this.isGondola = true;
-  this.pits = gondola.pits;
-  this.basics = gondola.basics;
-  this.isTruckG = false;
-  this.icon = 'fas fa-truck-moving';
-  this.type = 'Gondola: ';
-  this.title = this.gondola.plate;
+    this.cargarRims();
+    this.cargarHistorialPits(gondola._id, true);
+    this.gondola = gondola;
+    this.selected = true;
+    this.isGondola = true;
+    this.pits = gondola.pits;
+    this.basics = gondola.basics;
+    this.isTruckG = false;
+    this.icon = 'fas fa-truck-moving';
+    this.type = 'Gondola: ';
+    this.title = this.gondola.plate;
+    this.info = 'Gondola Seleccionada';
+    if (this.inGas || this.inGondola) {
+      this.detalles.nativeElement.click();
+      this.inGas = false;
+      this.inGondola = false;
+    }
   }
 
+  /* #region  VEHICULOS */
 addGondola( formG: NgForm ) {
   if (formG.invalid) {
     swal('Oops...', 'Algunos campos son obligatorios', 'warning');
@@ -203,14 +211,14 @@ addGondola( formG: NgForm ) {
  */
   cargarVehiculos() {
     this.vehicleS.cargarVehiculos()
-    .subscribe( (resp: any) => {
+      .subscribe((resp: any) => {
         this.vehicles = resp.vehiculos;
-    });
+      });
   }
 
   seleccionarVehicle(vehicle: Vehicle) {
     this.cargarRims();
-    this.cargarHistorialPits( vehicle._id, false );
+    this.cargarHistorialPits(vehicle._id, false);
     this.vehicle = vehicle;
     this.selected = true;
     this.pits = vehicle.pits;
@@ -224,6 +232,7 @@ addGondola( formG: NgForm ) {
       this.inGondola = false;
     }
     this.isTruckG = false;
+    this.isGondola = false;
     switch (vehicle.type) {
       case 'camion':
         this.icon = 'fas fa-truck';
@@ -264,7 +273,7 @@ addGondola( formG: NgForm ) {
     }
   }
 
-  borraVehiculo( vehicle: Vehicle ) {
+  borraVehiculo(vehicle: Vehicle) {
     swal({
       title: '¿Está seguro?',
       text: 'Está a punto de borrar al vehículo con la placa #' + vehicle.plate,
@@ -272,22 +281,23 @@ addGondola( formG: NgForm ) {
       buttons: true,
       dangerMode: true,
     })
-    .then( borrar => {
+      .then(borrar => {
 
-      if (borrar) {
-        this.vehicleS.borrarVehiculo( vehicle._id )
-          .subscribe( (borrado: any) => {
-            this.cargarVehiculos();
-            this.icon = 'fas fa-info-circle';
-            this.title = 'Vehículo borrado';
-            this.type = '';
-            this.info = 'Selecciona un vehículo para comenzar';
-            this.selected = false;
-          });
-      }
+        if (borrar) {
+          this.vehicleS.borrarVehiculo(vehicle._id)
+            .subscribe((borrado: any) => {
+              this.cargarVehiculos();
+              this.icon = 'fas fa-info-circle';
+              this.title = 'Vehículo borrado';
+              this.type = '';
+              this.info = 'Selecciona un vehículo para comenzar';
+              this.selected = false;
+            });
+        }
 
-    });
+      });
   }
+  /* #endregion */
 
 
 
@@ -300,12 +310,12 @@ addGondola( formG: NgForm ) {
       const index = this.basics.findIndex(item => item._id === this.basic._id);
 
       // REMPLAZAMOS EL BASIC en base al index encontrado
-      this.basics.splice(index, 1 , this.basic);
+      this.basics.splice(index, 1, this.basic);
       this.basic = {};
       this.vehicle.basics = this.basics;
       console.log(this.vehicle);
-      this.vehicleS.crearVehiculo( this.vehicle )
-        .subscribe( resp => {
+      this.vehicleS.crearVehiculo(this.vehicle)
+        .subscribe(resp => {
           this.basics = resp.vehiculo.basics;
         });
       this.closeP.nativeElement.click();
@@ -319,15 +329,15 @@ addGondola( formG: NgForm ) {
       this.basic = {};
       this.vehicle.basics = this.basics;
       console.log(this.vehicle);
-      this.vehicleS.crearVehiculo( this.vehicle )
-        .subscribe( resp => {
+      this.vehicleS.crearVehiculo(this.vehicle)
+        .subscribe(resp => {
           this.basics = resp.vehiculo.basics;
         });
       this.closeP.nativeElement.click();
     }
   }
 
-  editarBasic( id: string ) {
+  editarBasic(id: string) {
     const status: Basics = this.basics.find(s => s._id === id);
     if (status) {
       this.basic = {
@@ -339,7 +349,7 @@ addGondola( formG: NgForm ) {
     }
   }
 
-  deleteBasic( id: string ) {
+  deleteBasic(id: string) {
     console.log('BORRANDO...');
     console.log(this.basics);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
@@ -352,19 +362,19 @@ addGondola( formG: NgForm ) {
       buttons: true,
       dangerMode: true,
     })
-    .then( borrar => {
-      if (borrar) {
-        // ELIMINAMOS EL BASIC en base al index encontrado
-        this.basics.splice(index, 1);
-        // ACTUALIZAMOS LA DB
-        this.vehicle.basics = this.basics;
-        console.log(this.vehicle);
-        this.vehicleS.crearVehiculo( this.vehicle )
-          .subscribe( resp => {
-            this.basics = resp.vehiculo.basics;
-          });
-      }
-    });
+      .then(borrar => {
+        if (borrar) {
+          // ELIMINAMOS EL BASIC en base al index encontrado
+          this.basics.splice(index, 1);
+          // ACTUALIZAMOS LA DB
+          this.vehicle.basics = this.basics;
+          console.log(this.vehicle);
+          this.vehicleS.crearVehiculo(this.vehicle)
+            .subscribe(resp => {
+              this.basics = resp.vehiculo.basics;
+            });
+        }
+      });
   }
   /* #endregion */
 
@@ -372,7 +382,7 @@ addGondola( formG: NgForm ) {
   // PITS ******************************************************************************************
   cargarRims() {
     this.vehicleS.cargarRims()
-      .subscribe((resp: any) => this.rims = resp.llantas );
+      .subscribe((resp: any) => this.rims = resp.llantas);
   }
 
   cargarHistorialPits( id: string, isGondola: boolean ) {
@@ -385,7 +395,7 @@ addGondola( formG: NgForm ) {
       });
   }
 
-  addRim( forma: NgForm ) {
+  addRim(forma: NgForm) {
 
     if (forma.invalid) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
@@ -395,7 +405,7 @@ addGondola( formG: NgForm ) {
     const rim = new Rim(forma.value.codeR, forma.value.descR, false);
 
     this.vehicleS.guardarRim(rim)
-      .subscribe( (resp: any) => {
+      .subscribe((resp: any) => {
         swal({
           title: 'Exito!',
           text: 'Llanta creada correctamente' + resp.desc,
@@ -421,8 +431,8 @@ addGondola( formG: NgForm ) {
     if (this.pitMain) {
       console.log('MANTENIMIENTO...');
 
-      this.pitService.crearPit( this.pit )
-        .subscribe( resp => {
+      this.pitService.crearPit(this.pit)
+        .subscribe(resp => {
           this.Hpits.push({
             rim: resp.rim,
             km: resp.km,
@@ -464,10 +474,10 @@ addGondola( formG: NgForm ) {
       this.vehicle.pits = this.pits;
       console.log(this.vehicles);
       $('.select2').val('').trigger('change');
-      this.vehicleS.crearVehiculo( this.vehicle )
-      .subscribe( resp => {
-        this.pits = resp.vehiculo.pits;
-      });
+      this.vehicleS.crearVehiculo(this.vehicle)
+        .subscribe(resp => {
+          this.pits = resp.vehiculo.pits;
+        });
       this.closeMP.nativeElement.click();
     } else {
       console.log('GUARDANDO...');
@@ -483,8 +493,8 @@ addGondola( formG: NgForm ) {
       });
       this.vehicle.pits = this.pits;
       $('.select2').val('').trigger('change');
-      this.vehicleS.crearVehiculo( this.vehicle )
-        .subscribe( resp => {
+      this.vehicleS.crearVehiculo(this.vehicle)
+        .subscribe(resp => {
           this.pits = resp.vehiculo.pits;
         });
       this.closeMP.nativeElement.click();
@@ -492,7 +502,7 @@ addGondola( formG: NgForm ) {
     this.formPit.reset();
   }
 
-  editarPit( id: string, main: boolean ) {
+  editarPit(id: string, main: boolean) {
 
     const status: Pits = this.pits.find(s => s._id === id);
 
@@ -544,7 +554,7 @@ addGondola( formG: NgForm ) {
     this.vehicleS.cargarRims();
   }
 
-  deletePit( id: string ) {
+  deletePit(id: string) {
     console.log('BORRANDO...');
     console.log(this.pits);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
@@ -557,19 +567,19 @@ addGondola( formG: NgForm ) {
       buttons: true,
       dangerMode: true,
     })
-    .then( borrar => {
-      if (borrar) {
-        // ELIMINAMOS EL BASIC en base al index encontrado
-        this.pits.splice(index, 1);
-        // ACTUALIZAMOS LA DB
-        this.vehicle.pits = this.pits;
-        console.log(this.vehicle);
-        this.vehicleS.crearVehiculo( this.vehicle )
-          .subscribe( resp => {
-            this.pits = resp.vehiculo.pits;
-          });
-      }
-    });
+      .then(borrar => {
+        if (borrar) {
+          // ELIMINAMOS EL BASIC en base al index encontrado
+          this.pits.splice(index, 1);
+          // ACTUALIZAMOS LA DB
+          this.vehicle.pits = this.pits;
+          console.log(this.vehicle);
+          this.vehicleS.crearVehiculo(this.vehicle)
+            .subscribe(resp => {
+              this.pits = resp.vehiculo.pits;
+            });
+        }
+      });
   }
 
 
@@ -581,7 +591,7 @@ addGondola( formG: NgForm ) {
     const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
     const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
-    this.vehicleS.cargarGasolines(id, fecha1, fecha2).subscribe( resp => {
+    this.vehicleS.cargarGasolines(id, fecha1, fecha2).subscribe(resp => {
       console.log(resp);
       this.gasolines = resp;
       this.calcularTotalesG();
@@ -614,8 +624,8 @@ addGondola( formG: NgForm ) {
       this.gasolines.splice(index, 1, gasoline);
       this.idGas = '';
       this.vehicle.gasoline = this.gasolines;
-      this.vehicleS.crearGasoline( gasoline, this.vehicle._id )
-      .subscribe( resp => {});
+      this.vehicleS.crearGasoline(gasoline, this.vehicle._id)
+        .subscribe(resp => { });
 
     } else {
       console.log('GUARDANDO...');
@@ -628,8 +638,8 @@ addGondola( formG: NgForm ) {
         false
       );
 
-      this.vehicleS.crearGasoline( gasoline, this.vehicle._id )
-        .subscribe( resp => {});
+      this.vehicleS.crearGasoline(gasoline, this.vehicle._id)
+        .subscribe(resp => { });
     }
 
     this.closeMG.nativeElement.click();
@@ -654,7 +664,7 @@ addGondola( formG: NgForm ) {
     }
   }
 
-  deleteGas( id: string ) {
+  deleteGas(id: string) {
     console.log('BORRANDO...');
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
     const index = this.gasolines.findIndex(item => item._id === id);
@@ -667,28 +677,28 @@ addGondola( formG: NgForm ) {
       buttons: true,
       dangerMode: true,
     })
-    .then( borrar => {
-      if (borrar) {
-        // ELIMINAMOS EL BASIC en base al index encontrado
-        this.gasolines.splice(index, 1);
-        // ACTUALIZAMOS LA DB
-        this.vehicle.gasoline = this.gasolines;
+      .then(borrar => {
+        if (borrar) {
+          // ELIMINAMOS EL BASIC en base al index encontrado
+          this.gasolines.splice(index, 1);
+          // ACTUALIZAMOS LA DB
+          this.vehicle.gasoline = this.gasolines;
 
-        const gasoline = new Gas(
-          status.date,
-          status.gallons,
-          status.total,
-          status.code,
-          false,
-          id
-        );
+          const gasoline = new Gas(
+            status.date,
+            status.gallons,
+            status.total,
+            status.code,
+            false,
+            id
+          );
 
-        this.vehicleS.borrarGasoline( gasoline, this.vehicle._id )
-        .subscribe( resp => {});
+          this.vehicleS.borrarGasoline(gasoline, this.vehicle._id)
+            .subscribe(resp => { });
 
-        this.calcularTotalesG();
-      }
-    });
+          this.calcularTotalesG();
+        }
+      });
   }
 
   calcularTotalesG() {

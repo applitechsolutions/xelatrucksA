@@ -11,6 +11,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import flatpickr from 'flatpickr';
 import { Spanish } from 'flatpickr/dist/l10n/es';
+import { formatDate } from '@angular/common';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Injectable({
@@ -129,7 +130,13 @@ export class DatatablesService {
 
   fromJsonDate(jDate): string {
 
-    const bDate: Date = new Date(jDate);
+    const str = jDate.toString();
+
+    let newDate = str.substring(0, 4) + '/';
+    newDate += str.substring(4, 6) + '/';
+    newDate += str.substring(6);
+
+    const bDate: Date = new Date(newDate);
     const formattedDate = moment(bDate).format('DD/MM/YYYY');
     return formattedDate.toString().substring(0, 10);  // Ignore time
   }

@@ -26,6 +26,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   date: string; // fecha de hoy
 
   // VEHICULOS ******************************************************************************************
+  @ViewChild('detalles') detalles: ElementRef;
     // Listado principal
     vehicles: Vehicle[] = [];
     gondolas: Gondola[] = [];
@@ -104,6 +105,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   // Informacion de la Gondola
   isGondola: boolean = false;
   isAsigned: boolean = false;
+  inGondola: boolean = false;
 
   // Objeto de Gondola
   gondola: Gondola = { plate: '', state: false };
@@ -163,12 +165,64 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
  * GONDOLAS
  */
 
-cargarGondolas() {
-  this.gondolaS.cargarGondolas()
-  .subscribe( (resp: any) => {
-    this.gondolas = resp.gondolas;
-  });
-}
+  cargarGondolas() {
+    this.gondolaS.cargarGondolas()
+    .subscribe( (resp: any) => {
+      this.gondolas = resp.gondolas;
+    });
+  }
+
+  seleccionarGondola(vehicle: Vehicle) {
+  this.cargarRims();
+  this.cargarHistorialPits( vehicle._id );
+  this.vehicle = vehicle;
+  this.selected = true;
+  this.pits = vehicle.pits;
+  this.basics = vehicle.basics;
+  this.gasolines = [];
+  this.calcularTotalesG();
+  this.fecha1Consulta = '-';
+  this.fecha2Consulta = '-';
+  this.isGondola = false;
+  switch (vehicle.type) {
+    case 'camion':
+      this.icon = 'fas fa-truck';
+      this.type = 'Camión: ';
+      this.title = this.vehicle.plate;
+      this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
+      break;
+    case 'camionG':
+      this.isGondola = true;
+      this.icon = 'fas fa-truck-moving';
+      this.type = 'Camión gondola: ';
+      this.title = this.vehicle.plate;
+      this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
+      break;
+    case 'vehiculo':
+      this.icon = 'fas fa-truck-pickup';
+      this.type = 'Vehículo: ';
+      this.title = this.vehicle.plate;
+      this.info = this.vehicle._make.name;
+      break;
+    case 'riego':
+      this.icon = 'fas fa-truck-monster';
+      this.type = 'Camión para riego: ';
+      this.title = this.vehicle.plate;
+      this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
+      break;
+    case 'stock':
+      this.icon = 'fas fa-snowplow';
+      this.type = 'Excavadora: ';
+      this.title = this.vehicle.plate;
+      this.info = this.vehicle._make.name;
+      break;
+    default:
+      this.icon = 'fas fa-info-circle';
+      this.title = 'Información';
+      this.info = 'Selecciona un vehículo para comenzar';
+      break;
+  }
+  }
 
 addGondola( formG: NgForm ) {
   if (formG.invalid) {
@@ -201,6 +255,10 @@ addGondola( formG: NgForm ) {
     this.calcularTotalesG();
     this.fecha1Consulta = '-';
     this.fecha2Consulta = '-';
+    if (this.isGondola && vehicle.type !== 'camionG' && this.inGondola) {
+      this.detalles.nativeElement.click();
+      this.inGondola = false;
+    }
     this.isGondola = false;
     switch (vehicle.type) {
       case 'camion':

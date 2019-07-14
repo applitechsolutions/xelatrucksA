@@ -35,7 +35,7 @@ import { BuySparesComponent } from './buy-spares/buy-spares.component';
 import { BuySpareComponent } from './buy-spares/buy-spare.component';
 import { MechanicsComponent } from './mechanics/mechanics.component';
 import { MechanicComponent } from './mechanics/mechanic.component';
-import { NgxLoadingModule, ngxLoadingAnimationTypes  } from 'ngx-loading';
+import { NgxLoadingModule } from 'ngx-loading';
 
 
 @NgModule({

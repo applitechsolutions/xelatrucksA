@@ -430,7 +430,7 @@
                 </div>
                 <!-- /.tab-pane -->
                 <!-- .tab-pane -->
-                <div class="tab-pane fade" id="type-gondola" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                <div class="tab-pane fade" id="type-gondola" role="tabpanel" aria-labelledby="gondola-tab">
                     <!-- .card -->
                     <div class="card">
                         <!-- .card-body -->
@@ -475,8 +475,8 @@
                                             <!-- tbody -->
                                             <tbody>
                                                 <!-- tr -->
-                                                <tr>
-                                                    <td></td>
+                                                <tr *ngFor="let gondola of gondolas">
+                                                    <td> {{ gondola.plate }} </td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i class="fas fa-check-double"></i> <span class="sr-only">Asignar</span></button>
                                                     </td>
@@ -747,12 +747,12 @@
             <div class="modal-content">
                 <!-- .modal-header -->
                 <div class="modal-header">
-                    <h5 class="modal-title"> Crear una nueva Llanta </h5>
+                    <h5 class="modal-title"> Crear una nueva Góndola </h5>
                 </div>
                 <!-- /.modal-header -->
                 <!-- .modal-body -->
                 <div class="modal-body">
-                    <form ngNativeValidate #f="ngForm" (ngSubmit)="addRim( f )">
+                    <form ngNativeValidate #fG="ngForm" (ngSubmit)="addGondola( fG )">
                         <!-- .form-group -->
                         <div class="form-group">
                             <div class="form-label-group">

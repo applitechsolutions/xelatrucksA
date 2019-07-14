@@ -5,6 +5,7 @@ export class Gondola {
 
     constructor(
         public plate: string,
+        public state: boolean,
         public truck?: string,
         public basics?: Basics[],
         public pits?: Pits[],

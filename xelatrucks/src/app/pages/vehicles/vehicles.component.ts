@@ -106,7 +106,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   isAsigned: boolean = false;
 
   // Objeto de Gondola
-  gondola: Gondola = { plate: '' };
+  gondola: Gondola = { plate: '', state: false };
 
   constructor(
     public dtService: DatatablesService,
@@ -168,6 +168,16 @@ cargarGondolas() {
   .subscribe( (resp: any) => {
     this.gondolas = resp.gondolas;
   });
+}
+
+addGondola( formG: NgForm ) {
+  if (formG.invalid) {
+    swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+    return;
+  }
+
+  const gondola = new Gondola( formG.value.plateG, false );
+
 }
 
 /**
@@ -257,7 +267,7 @@ cargarGondolas() {
     });
   }
 
-  // BASICS ******************************************************************************************
+// BASICS ******************************************************************************************
   addBasic() {
     if (this.basic._id) {
       console.log('EDITANDO...');
@@ -353,6 +363,7 @@ cargarGondolas() {
   addRim( forma: NgForm ) {
 
     if (forma.invalid) {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }
 
@@ -661,7 +672,5 @@ cargarGondolas() {
     this.totalGal = this.gasolines.reduce((sum, item) => sum + item.gallons, 0);
     // ------------
   }
-
-
 
 }

@@ -192,7 +192,9 @@ addGondola( formG: NgForm ) {
     return;
   }
 
-  const gondola = new Gondola( formG.value.plateG, false );
+  const gondola = new Gondola( formG.value.plateG );
+
+
 
 }
 
@@ -287,7 +289,9 @@ addGondola( formG: NgForm ) {
     });
   }
 
-// BASICS ******************************************************************************************
+
+
+  /* #region BASICS */
   addBasic() {
     if (this.basic._id) {
       console.log('EDITANDO...');
@@ -362,6 +366,8 @@ addGondola( formG: NgForm ) {
       }
     });
   }
+  /* #endregion */
+
 
   // PITS ******************************************************************************************
   cargarRims() {
@@ -369,8 +375,8 @@ addGondola( formG: NgForm ) {
       .subscribe((resp: any) => this.rims = resp.llantas );
   }
 
-  cargarHistorialPits( id: string, isTruckG: boolean ) {
-    this.pitService.cargarPits( id , isTruckG)
+  cargarHistorialPits( id: string, isGondola: boolean ) {
+    this.pitService.cargarPits( id, isGondola )
       .subscribe( (res: any) => {
         this.Hpits = res.pits;
         this.dtService.destroy_table();
@@ -428,7 +434,7 @@ addGondola( formG: NgForm ) {
             total: resp.total,
             vehicle: resp.vehicle
           });
-          this.cargarHistorialPits( resp.vehicle._id );
+          this.cargarHistorialPits( resp.vehicle._id, false );
         });
     }
 

@@ -61,7 +61,7 @@ export class VehicleService {
       return this.http.put(url, gasoline )
         .pipe( map( (resp: any) => {
             const vehicleDB = resp.vehiculo;
-            swal('Vechículo creado', 'Placa #' + vehicleDB.plate , 'success');
+            swal('Vechículo Actualizado', 'Placa #' + vehicleDB.plate , 'success');
             return resp;
           }),
           catchError((err, caught) => {
@@ -129,6 +129,25 @@ export class VehicleService {
           return throwError( err );
         }));
     }
+  }
+
+  borrarGasoline( gasoline: Gas, idVehicle: string ) {
+
+    let url = URL_SERVICES + '/vehiculo/gasoline/delete';
+
+    url += '/' + idVehicle;
+    url += '?token=' + this.userS.token;
+    return this.http.put(url, gasoline )
+      .pipe( map( (resp: any) => {
+          const vehicleDB = resp.vehiculo;
+          swal('Vechículo actualizado', 'Placa #' + vehicleDB.plate , 'success');
+          return resp;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
+        }));
   }
 
   borrarVehiculo( id: string) {

@@ -604,13 +604,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   deleteGas( id: string ) {
     console.log('BORRANDO...');
-    console.log(this.pits);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
-    const index = this.pits.findIndex(item => item._id === id);
+    const index = this.gasolines.findIndex(item => item._id === id);
+    const status: Gas = this.gasolines.find(s => s._id === id);
 
     swal({
       title: '¿Está seguro?',
-      text: 'Está a punto de borrar información del vehículo que no se puede recuperar',
+      text: 'Está a punto de borrar información del consumo de gasolina de un vehiculo',
       icon: 'warning',
       buttons: true,
       dangerMode: true,
@@ -618,14 +618,23 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     .then( borrar => {
       if (borrar) {
         // ELIMINAMOS EL BASIC en base al index encontrado
-        this.pits.splice(index, 1);
+        this.gasolines.splice(index, 1);
         // ACTUALIZAMOS LA DB
-        this.vehicle.pits = this.pits;
-        console.log(this.vehicle);
-        this.vehicleS.crearVehiculo( this.vehicle )
-          .subscribe( resp => {
-            this.pits = resp.vehiculo.pits;
-          });
+        this.vehicle.gasoline = this.gasolines;
+
+        const gasoline = new Gas(
+          status.date,
+          status.gallons,
+          status.total,
+          status.code,
+          false,
+          id
+        );
+
+        this.vehicleS.borrarGasoline( gasoline, this.vehicle._id )
+        .subscribe( resp => {});
+
+        this.calcularTotalesG();
       }
     });
   }

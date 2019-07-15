@@ -140,7 +140,7 @@
                     <!-- .card -->
                     <div class="card">
                         <!-- .card-body -->
-                        <div class="card-body">
+                        <div *ngIf="!isGondola" class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h2 id="client-billing-contact-tab" class="card-title"> #: {{this.vehicle.no}} {{ this.type + ' ' + this.title }} </h2>
                             </div>
@@ -155,6 +155,15 @@
                             </address>
                             <button *ngIf="selected" (click)="borraVehiculo( this.vehicle )" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
                             <button *ngIf="selected" [routerLink]="[ '/vehicle', this.vehicle._id ]" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                        </div>
+                        <!-- /.card-body -->
+                        <!-- .card-body -->
+                        <div *ngIf="isGondola" class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h2 id="client-billing-contact-tab" class="card-title"> {{ this.type + ' ' + this.title }} </h2>
+                            </div>
+                            <button *ngIf="selected" (click)="borraGondola( this.gondola )" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
+                            <button *ngIf="selected" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
                         </div>
                         <!-- /.card-body -->
                     </div>

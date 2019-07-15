@@ -327,12 +327,17 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       // REMPLAZAMOS EL BASIC en base al index encontrado
       this.basics.splice(index, 1, this.basic);
       this.basic = {};
-      this.vehicle.basics = this.basics;
-      console.log(this.vehicle);
-      this.vehicleS.crearVehiculo(this.vehicle)
-        .subscribe(resp => {
-          this.basics = resp.vehiculo.basics;
-        });
+      // CONDICIONAMOS SI ES GONDOLA O TRUCK
+      if (this.isGondola) {
+
+      } else if (!this.isGondola) {
+        this.vehicle.basics = this.basics;
+        this.vehicleS.crearVehiculo(this.vehicle)
+          .subscribe(resp => {
+            this.basics = resp.vehiculo.basics;
+          });
+      }
+
       this.closeP.nativeElement.click();
     } else {
       console.log('GUARDANDO...');

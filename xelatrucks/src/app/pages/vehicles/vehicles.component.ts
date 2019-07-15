@@ -201,17 +201,20 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const gondola = new Gondola(formG.value.plateG);
+    const truck: Vehicle = {
+      type: '',
+      plate: '',
+      _make: null,
+      state: false,
+      _id: null
+    }
+
+    const vacio: any[] = [];
+
+    const gondola = new Gondola(formG.value.plateG, truck, vacio, vacio);
 
     this.gondolaS.crearGondola(gondola)
       .subscribe( (res: any) => {
-        swal({
-          title: 'Exito!',
-          text: 'Góndola creada correctamente' + res.plate,
-          icon: 'success',
-          button: false,
-          timer: 1000
-        });
         this.closeMGo.nativeElement.click();
         this.cargarGondolas();
       });
@@ -221,7 +224,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   /* #endregion */
 
   /* #region  VEHICULOS */
-
 
   cargarVehiculos() {
     this.vehicleS.cargarVehiculos()

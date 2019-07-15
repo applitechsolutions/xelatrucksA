@@ -5,7 +5,8 @@ import { URL_SERVICES } from 'src/app/config/config';
 import { Gondola } from '../../models/gondola.model';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
-import swal from 'sweetalert';
+
+declare var swal: any;
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,14 @@ export class GondolaService {
 
       return this.http.put(url, gondola)
         .pipe( map( (res: any) => {
+          const gondolaDB = res.gondola;
+          swal({
+            title: 'Exito!',
+            text: 'Góndola creada correctamente' + gondolaDB.plate,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
           return res;
         }),
         catchError((err, caught) => {
@@ -44,6 +53,14 @@ export class GondolaService {
 
       return this.http.post(url, gondola)
         .pipe( map( (res: any) => {
+          const gondolaDB = res.gondola;
+          swal({
+            title: 'Exito!',
+            text: 'Góndola actualizada correctamente' + gondolaDB.plate,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
           return res;
         }),
         catchError((err, caught) => {

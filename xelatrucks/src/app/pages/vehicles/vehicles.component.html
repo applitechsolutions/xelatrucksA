@@ -84,7 +84,7 @@
                     <!-- .list-group-item-body -->
                     <div class="list-group-item-body">
                         <h4 class="list-group-item-title">Gondola: {{ gondola.plate }} </h4>
-                        <p class="list-group-item-text"> {{ 'Camión asignado: ' + gondola._truck.plate }} </p>
+                        <p class="list-group-item-text"> {{ 'Camión asignado: '}} </p>
                     </div>
                     <!-- /.list-group-item-body -->
                 </div>
@@ -436,7 +436,7 @@
                         <!-- .card-body -->
                         <div *ngIf="isAsigned" class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h2 id="client-billing-contact-tab" class="card-title"> Góndola Asignada: {{ vehicle._gondola.plate }} </h2>
+                                <h2 id="client-billing-contact-tab" class="card-title"> Góndola Asignada: </h2>
                             </div>
                             <button *ngIf="selected" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Remover</span></button>
                         </div>

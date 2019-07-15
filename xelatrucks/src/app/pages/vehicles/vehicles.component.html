@@ -202,7 +202,7 @@
                         <!-- /.card-body -->
                         <!-- .card-footer -->
                         <div class="card-footer">
-                            <a href="#addBasic" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar componente</a>
+                            <a href="#addBasic" (click)="this.basic = {};" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar componente</a>
                         </div>
                         <!-- /.card-footer -->
                     </div>
@@ -312,15 +312,6 @@
                                                 <td class="align-middle"> {{ pit.km }} </td>
                                             </tr>
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th> Fecha de Instalación </th>
-                                                <th> Llanta </th>
-                                                <th> Posición </th>
-                                                <th> Costo </th>
-                                                <th> Kilometraje </th>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -332,7 +323,7 @@
                 <!-- .tab-pane -->
                 <div class="tab-pane fade" id="gasolines" role="tabpanel" aria-labelledby="client-projects-tab">
                     <!-- .card -->
-                    <div class="card" #customLoadingTemplate>
+                    <div class="card">
                         <!-- .card-header -->
                         <div class="card-header d-flex">
                             <!-- .form-group -->
@@ -399,7 +390,7 @@
                         <!-- .table-responsive -->
                         <div class="table-responsive">
                             <!-- .table -->
-                            <table class="table">
+                            <table class="table" #customLoadingTemplate>
                                 <!-- thead -->
                                 <thead>
                                     <tr>
@@ -430,10 +421,12 @@
                                 </tbody>
                                 <!-- /tbody -->
                             </table>
-                            <!-- /.table -->
-                            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
                         </div>
                         <!-- /.table-responsive -->
+                        <ng-template #customLoadingTemplate>
+                        </ng-template>
+                        <!-- /.table -->
+                        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
                     </div>
                     <!-- /.card -->
                 </div>

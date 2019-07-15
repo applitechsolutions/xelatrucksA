@@ -327,7 +327,11 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       this.basic = {};
       // CONDICIONAMOS SI ES GONDOLA O TRUCK
       if (this.isGondola) {
-
+          this.gondola.basics = this.basics;
+          this.gondolaS.crearGondola( this.gondola )
+            .subscribe(resp => {
+              this.basics = resp.gondola.basics;
+            });
       } else if (!this.isGondola) {
         this.vehicle.basics = this.basics;
         this.vehicleS.crearVehiculo(this.vehicle)
@@ -345,12 +349,22 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         description: this.basic.description
       });
       this.basic = {};
-      this.vehicle.basics = this.basics;
-      console.log(this.vehicle);
-      this.vehicleS.crearVehiculo(this.vehicle)
-        .subscribe(resp => {
-          this.basics = resp.vehiculo.basics;
-        });
+      if (this.isGondola) {
+        this.gondola.basics = this.basics;
+        console.log(this.gondola);
+        this.gondolaS.crearGondola( this.gondola )
+          .subscribe(resp => {
+            this.basics = resp.gondola.basics;
+          });
+      } else if (!this.isGondola) {
+        this.vehicle.basics = this.basics;
+        console.log(this.vehicle);
+        this.vehicleS.crearVehiculo(this.vehicle)
+          .subscribe(resp => {
+            this.basics = resp.vehiculo.basics;
+          });
+      }
+
       this.closeP.nativeElement.click();
     }
   }
@@ -385,12 +399,20 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
           // ELIMINAMOS EL BASIC en base al index encontrado
           this.basics.splice(index, 1);
           // ACTUALIZAMOS LA DB
-          this.vehicle.basics = this.basics;
-          console.log(this.vehicle);
-          this.vehicleS.crearVehiculo(this.vehicle)
-            .subscribe(resp => {
-              this.basics = resp.vehiculo.basics;
-            });
+          if (!this.isGondola) {
+            this.vehicle.basics = this.basics;
+            console.log(this.vehicle);
+            this.vehicleS.crearVehiculo(this.vehicle)
+              .subscribe(resp => {
+                this.basics = resp.vehiculo.basics;
+              });
+          } else if (this.isGondola) {
+            this.gondola.basics = this.basics;
+            this.gondolaS.crearGondola( this.gondola )
+              .subscribe(resp => {
+              this.basics = resp.gondola.basics;
+              });
+          }
         }
       });
   }

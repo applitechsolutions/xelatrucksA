@@ -84,7 +84,8 @@
                     <!-- .list-group-item-body -->
                     <div class="list-group-item-body">
                         <h4 class="list-group-item-title">Gondola: {{ gondola.plate }} </h4>
-                        <p class="list-group-item-text"> {{ 'Camión asignado: '}} </p>
+                        <p *ngIf="gondola._truck !== null" class="list-group-item-text"> {{ 'Camión asignado: ' + gondola._truck.plate }} </p>
+                        <p *ngIf="gondola._truck === null" class="list-group-item-text"> Camión sin asignar </p>
                     </div>
                     <!-- /.list-group-item-body -->
                 </div>
@@ -332,7 +333,7 @@
                 <!-- .tab-pane -->
                 <div class="tab-pane fade" id="gasolines" role="tabpanel" aria-labelledby="client-projects-tab">
                     <!-- .card -->
-                    <div class="card" #customLoadingTemplate>
+                    <div class="card">
                         <!-- .card-header -->
                         <div class="card-header d-flex">
                             <!-- .form-group -->
@@ -431,11 +432,13 @@
                                 <!-- /tbody -->
                             </table>
                             <!-- /.table -->
+                            <ng-template #customLoadingTemplate></ng-template>
                             <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
                         </div>
                         <!-- /.table-responsive -->
                     </div>
                     <!-- /.card -->
+
                 </div>
                 <!-- /.tab-pane -->
                 <!-- .tab-pane -->
@@ -487,7 +490,7 @@
                                                 <tr *ngFor="let gondola of gondolas">
                                                     <td> {{ gondola.plate }} </td>
                                                     <td>
-                                                        <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i class="fas fa-check-double"></i> <span class="sr-only">Asignar</span></button>
+                                                        <button (click)="asignarGondola( gondola )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i class="fas fa-check-double"></i> <span class="sr-only">Asignar</span></button>
                                                     </td>
                                                 </tr>
                                                 <!-- /tr -->

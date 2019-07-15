@@ -209,15 +209,17 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       _id: null
     }
 
-    const vacio: any[] = [];
-
-    const gondola = new Gondola(formG.value.plateG, truck, vacio, vacio);
+    const gondola = new Gondola(formG.value.plateG, truck);
 
     this.gondolaS.crearGondola(gondola)
       .subscribe( (res: any) => {
         this.closeMGo.nativeElement.click();
         this.cargarGondolas();
       });
+
+  }
+
+  asignarGondola( gondola: Gondola ) {
 
   }
 

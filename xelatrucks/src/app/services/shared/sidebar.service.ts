@@ -37,19 +37,19 @@ export class SidebarService {
       ]
     },
     {
+      titulo: 'Mantenimientos',
+      icono: 'menu-icon fas fa-tools',
+      submenu: [
+        { titulo: 'Listar Mantenimientos', url: '/maintenances' },
+        { titulo: 'Crear Mantenimiento', url: '/maintenance/new' }
+      ]
+    },
+    {
       titulo: 'Repuestos',
       icono: 'menu-icon fas fa-cogs',
       submenu: [
         { titulo: 'Inventario', url: '/parts' },
         { titulo: 'Crear Repuesto', url: '/part/new' }
-      ]
-    },
-    {
-      titulo: 'Mecánicos',
-      icono: 'menu-icon fas fa-user-cog',
-      submenu: [
-        { titulo: 'Listado Mecánicos', url: '/mechs' },
-        { titulo: 'Crear Mecánico', url: '/mech/new' }
       ]
     },
     {
@@ -66,6 +66,14 @@ export class SidebarService {
       submenu: [
         { titulo: 'Listar Proveedores', url: '/autoProviders' },
         { titulo: 'Crear Proveedor', url: '/autoProvider/new' }
+      ]
+    },
+    {
+      titulo: 'Mecánicos',
+      icono: 'menu-icon fas fa-user-cog',
+      submenu: [
+        { titulo: 'Listado Mecánicos', url: '/mechs' },
+        { titulo: 'Crear Mecánico', url: '/mech/new' }
       ]
     }
   ];

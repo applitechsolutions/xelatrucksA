@@ -23,6 +23,11 @@ export class GondolaService {
     return this.http.get(url);
   }
 
+  cargarDisponibles() {
+    const url = URL_SERVICES + '/gondola/availables';
+    return this.http.get(url);
+  }
+
   crearGondola( gondola: Gondola ) {
 
     let url = URL_SERVICES + '/gondola';
@@ -68,6 +73,61 @@ export class GondolaService {
           swal(err.error.mensaje, err.error.errors.message , 'error');
           return throwError( err );
         }));
+    }
+
+  }
+
+  asignarGondola( gondola: Gondola ) {
+
+    let url = URL_SERVICES + '/gondola/';
+
+    console.log( gondola );
+
+    if (gondola._truck._id !== null) {
+      url += 'asignar/' + gondola._id;
+      url += '?token=' + this.userS.token;
+
+      return this.http.put(url, gondola)
+        .pipe( map( (res: any) => {
+          const gondolaDB = res.gondola;
+          swal({
+            title: 'Exito!',
+            text: 'Góndola asignada correctamente' + gondolaDB.plate,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
+          return res;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
+        }));
+
+    } else {
+
+      url += 'desasignar/' + gondola._id;
+      url += '?token=' + this.userS.token;
+
+      return this.http.put(url, gondola)
+        .pipe( map( (res: any) => {
+          const gondolaDB = res.gondola;
+          swal({
+            title: 'Exito!',
+            text: 'Góndola desasignada correctamente' + gondolaDB.plate,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
+          return res;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
+        }));
+
     }
 
   }

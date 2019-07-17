@@ -436,22 +436,35 @@
                 <!-- .tab-pane -->
                 <div *ngIf="selected && isTruckG" class="tab-pane fade" id="type-gondola" role="tabpanel" aria-labelledby="client-billing-contact-tab">
                     <!-- .card -->
-                    <div class="card">
+                    <div class="card col-md-6">
                         <!-- .card-body -->
-                        <div *ngIf="isAsigned" class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h2 id="client-billing-contact-tab" class="card-title"> Góndola Asignada: </h2>
+                        <div *ngIf="vehicle._gondola !== null" class="card-body">
+                            <!-- grid row -->
+                            <div class="row text-center text-sm-left">
+                                <!-- grid column -->
+                                <div class="col-sm-auto col-12 mb-2">
+                                    <span class="tile tile-xl bg-pink"><i class="fas fa-truck-loading"></i></span>
+                                </div>
+                                <!-- /grid column -->
+                                <!-- grid column -->
+                                <div class="col">
+                                    <h1 class="page-title"> Góndola Asignada: {{ vehicle._gondola.plate }} </h1>
+                                    <div class="page-item">
+                                        <button (click)="desasignarGondola( vehicle._gondola )" type="button" class="btn btn-lg btn-icon btn-secondary fa-pull-right"><i class="fas fa-toggle-off"></i> <span class="sr-only">Remover</span></button>
+                                    </div>
+                                </div>
+                                <!-- /grid column -->
                             </div>
-                            <button *ngIf="selected" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Remover</span></button>
+                            <!-- /grid row -->
                         </div>
                         <!-- /.card-body -->
                         <!-- .card-body -->
-                        <div *ngIf="!isAsigned" class="card-body">
+                        <div *ngIf="vehicle._gondola === null" class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h2 id="client-billing-contact-tab" class="card-title"> No tiene una Góndola Asignada </h2>
                             </div>
                             <!-- grid column -->
-                            <div class="col-xl-6">
+                            <div class="col">
                                 <!-- .card -->
                                 <div class="card card-fluid">
                                     <!-- .card-header -->
@@ -479,10 +492,10 @@
                                             <!-- tbody -->
                                             <tbody>
                                                 <!-- tr -->
-                                                <tr *ngFor="let gondola of gondolas">
+                                                <tr *ngFor="let gondola of gondolasAv">
                                                     <td> {{ gondola.plate }} </td>
                                                     <td>
-                                                        <button (click)="asignarGondola( gondola )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i class="fas fa-check-double"></i> <span class="sr-only">Asignar</span></button>
+                                                        <button (click)="asignarGondola( gondola )" type="button" class="btn btn-sm btn-icon btn-secondary"><i class="fas fa-toggle-on"></i> <span class="sr-only">Asignar</span></button>
                                                     </td>
                                                 </tr>
                                                 <!-- /tr -->

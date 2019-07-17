@@ -30,10 +30,13 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   // Informacion de la Gondola
   isTruckG: boolean = false;
-  isAsigned: boolean = false;
   inGondola: boolean = false;
   isGondola: boolean = false;
   inGas: boolean = false;
+
+  // Gondolas Disponibles
+  gondolasAv: Gondola[] = [];
+
   // Objeto de Gondola
   gondola: Gondola = { plate: '' };
 
@@ -174,6 +177,11 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       });
   }
 
+  cargarDisponibles() {
+    this.gondolaS.cargarDisponibles()
+      .subscribe((res: any) => this.gondolasAv = res.gondolas);
+  }
+
   seleccionarGondola(gondola: Gondola) {
     this.cargarRims();
     this.cargarHistorialPits(gondola._id, true);
@@ -207,7 +215,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       _make: null,
       state: false,
       _id: null
-    }
+    };
 
     const gondola = new Gondola(formG.value.plateG, truck);
 
@@ -221,6 +229,53 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   asignarGondola( gondola: Gondola ) {
 
+    gondola._truck = this.vehicle;
+
+    this.gondolaS.asignarGondola(gondola)
+      .subscribe( (res: any) => {
+
+        this.vehicle._gondola = res.gondola;
+
+        const index = this.gondolas.findIndex(item => item._id === res.gondola._id);
+        this.gondolas.splice(index, 1, res.gondola);
+
+      });
+
+  }
+
+  desasignarGondola( gondola: Gondola ) {
+
+    const truck: Vehicle = {
+      type: '',
+      plate: '',
+      _make: null,
+      state: false,
+      _id: null
+    };
+
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de remover la góndola del camión # ' + gondola.plate,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then(borrar => {
+      if (borrar) {
+
+          gondola._truck = truck;
+          this.gondolaS.asignarGondola(gondola)
+            .subscribe( (res: any) => {
+
+              this.cargarDisponibles();
+              this.vehicle._gondola = null;
+              const index = this.gondolas.findIndex(item => item._id === res.gondola._id);
+              this.gondolas.splice(index, 1, res.gondola);
+            });
+        }
+
+      });
   }
 
   /* #endregion */
@@ -235,6 +290,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   }
 
   seleccionarVehicle(vehicle: Vehicle) {
+    this.cargarDisponibles();
     this.cargarRims();
     this.cargarHistorialPits(vehicle._id, false);
     this.vehicle = vehicle;

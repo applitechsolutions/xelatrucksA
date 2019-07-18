@@ -36,6 +36,8 @@ import { BuySpareComponent } from './buy-spares/buy-spare.component';
 import { MechanicsComponent } from './mechanics/mechanics.component';
 import { MechanicComponent } from './mechanics/mechanic.component';
 import { NgxLoadingModule } from 'ngx-loading';
+import { MaintenancesComponent } from './maintenances/maintenances.component';
+import { MaintenanceComponent } from './maintenances/maintenance.component';
 
 
 @NgModule({
@@ -60,7 +62,9 @@ import { NgxLoadingModule } from 'ngx-loading';
         BuySparesComponent,
         BuySpareComponent,
         MechanicsComponent,
-        MechanicComponent
+        MechanicComponent,
+        MaintenancesComponent,
+        MaintenanceComponent
     ],
     exports: [
         DashboardComponent,

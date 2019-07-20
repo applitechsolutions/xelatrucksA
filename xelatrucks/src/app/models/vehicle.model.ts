@@ -16,10 +16,10 @@ export class Vehicle {
         public model?: number,
         public km?: number,
         public mts?: number,
-        public _id?: string,
         public _gondola?: Gondola,
+        public _id?: string,
         public basics?: Basics[],
         public pits?: Pits[],
-        public gasoline?: Gas[]
+        public gasoline?: Gas[],
     ) {}
 }

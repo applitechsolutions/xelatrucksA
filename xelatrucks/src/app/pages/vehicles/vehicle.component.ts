@@ -166,6 +166,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
 
     if (this.idVehicle === '') {
       console.log('nuevo');
+
       const vehiculo = new Vehicle (
         this.forma.value.type,
         make,
@@ -175,9 +176,9 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         this.forma.value.no,
         this.forma.value.model,
         this.forma.value.km,
-        this.forma.value.mts
+        this.forma.value.mts,
+        null
       );
-
       this.vehicleS.crearVehiculo(vehiculo)
       .subscribe( resp => {
         console.log(resp);
@@ -194,8 +195,8 @@ export class VehicleComponent implements OnInit, AfterViewInit {
         this.forma.value.model,
         this.forma.value.km,
         this.forma.value.mts,
-        this.idVehicle,
         null,
+        this.idVehicle,
         this.basics,
         this.pits
       );

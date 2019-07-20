@@ -120,16 +120,13 @@
                 <!-- .nav-tabs -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a #detalles class="nav-link active show" data-toggle="tab" href="#detalles" (click)="inGondola = false; inGas = false;"> Detalles del vehículo</a>
+                        <a #detalles class="nav-link active show" data-toggle="tab" href="#maintenance" (click)="inGondola = false; inGas = false;"> Mantenimiento actual</a>
                     </li>
-                    <li *ngIf="selected" class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#vehicle-rims" (click)="inGondola = false; inGas = false;"> Neumáticos</a>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#terminados" (click)="inGondola = false; inGas = false;"> Mantenimientos terminados</a>
                     </li>
-                    <li *ngIf="selected && !isGondola" class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#gasolines" (click)="inGondola = false; inGas = true;">Combustible</a>
-                    </li>
-                    <li *ngIf="selected && isTruckG" class="nav-item" (click)="inGondola = true; inGas = false;">
-                        <a class="nav-link" data-toggle="tab" href="#type-gondola">Góndola</a>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#aprobados" (click)="inGondola = false; inGas = true;">Mantenimientos Aprobados</a>
                     </li>
                 </ul>
                 <!-- /.nav-tabs -->
@@ -138,38 +135,345 @@
             <!-- .tab-content -->
             <div class="tab-content pt-4" id="clientDetailsTabs">
                 <!-- .tab-pane -->
-                <div class="tab-pane fade show active" id="detalles" role="tabpanel" aria-labelledby="client-billing-contact-tab">
-                    <!-- .card -->
-                    <div class="card">
-                        <!-- .card-body -->
-                        <div *ngIf="!isGondola" class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h2 id="client-billing-contact-tab" class="card-title"> #: {{this.vehicle.no}} {{ this.type + ' ' + this.title }} </h2>
+                <div class="tab-pane fade show active" id="maintenance" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                    <!-- .section-block -->
+                    <div class="section-block">
+                        <!-- Default Steps -->
+                        <!-- .bs-stepper -->
+                        <div id="stepper" class="bs-stepper">
+                            <!-- .card -->
+                            <div class="card">
+                                <!-- .card-header -->
+                                <div class="card-header">
+                                    <!-- .steps -->
+                                    <div class="steps steps-" role="tablist">
+                                        <ul>
+                                            <li class="step" data-target="#test-l-1">
+                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="fas fa-external-link-alt"></i></span> <span class="d-none d-sm-inline">Crear nuevo</span></a>
+                                            </li>
+                                            <li class="step" data-target="#test-l-2">
+                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="oi oi-person"></i></span> <span class="d-none d-sm-inline">Detalles del mantenimiento</span></a>
+                                            </li>
+                                            <!-- <li class="step" data-target="#test-l-3">
+                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="oi oi-credit-card"></i></span> <span class="d-none d-sm-inline">Payment</span></a>
+                                            </li> -->
+                                            <li class="step" data-target="#test-l-4">
+                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span> <span class="d-none d-sm-inline">Confirm</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.steps -->
+                                </div>
+                                <!-- /.card-header -->
+                                <!-- .card-body -->
+                                <div class="card-body">
+                                    <form id="stepper-form" name="stepperForm" class="p-lg-4 p-sm-3 p-0">
+                                        <!-- .content -->
+                                        <div id="test-l-1" class="content dstepper-none fade">
+                                            <!-- fieldset -->
+                                            <fieldset>
+                                                <legend>Seleccione los mécanicos que van a colaborar en el mantenimiento</legend>
+                                                <!-- .card -->
+                                                <div class="card mt-4">
+                                                    <!-- .card-body -->
+                                                    <div class="card-body">
+                                                        <!-- .table-responsive -->
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover" style="min-width: 678px">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th> Código </th>
+                                                                        <th> Nombre </th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="align-middle"> </td>
+                                                                        <td class="align-middle"> </td>
+                                                                        <td class="align-middle"> </td>
+                                                                        <td class="align-middle text-right">
+                                                                            <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addBasic"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                                                                            <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- /.table-responsive -->
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                    <!-- .card-footer -->
+                                                    <div class="card-footer">
+                                                        <a href="#addBasic" (click)="this.basic = {};" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar colaborador</a>
+                                                    </div>
+                                                    <!-- /.card-footer -->
+                                                </div>
+                                                <!-- /.card -->
+                                                <!-- .form-group -->
+                                                <hr class="mt-5">
+                                                <!-- .d-flex -->
+                                                <div class="d-flex">
+                                                    <p> Already have an account? Please <a href="#">Signin</a>. </p><button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset01">Next step</button>
+                                                </div>
+                                                <!-- /.d-flex -->
+                                            </fieldset>
+                                            <!-- /fieldset -->
+                                        </div>
+                                        <!-- /.content -->
+                                        <!-- .content -->
+                                        <div id="test-l-2" class="content dstepper-none fade">
+                                            <!-- fieldset -->
+                                            <fieldset>
+                                                <legend>Personal Information</legend>
+                                                <!-- .row -->
+                                                <div class="row">
+                                                    <!-- grid column -->
+                                                    <div class="col-md-6 mb-4">
+                                                        <div class="form-label-group">
+                                                            <input type="text" id="firstName" class="form-control" name="firstName" value="Beni" data-parsley-group="fieldset02" required=""> <label for="firstName">First name</label>
+                                                        </div>
+                                                        <div class="invalid-feedback"> Valid first name is required. </div>
+                                                    </div>
+                                                    <!-- /grid column -->
+                                                    <!-- grid column -->
+                                                    <div class="col-md-6 mb-4">
+                                                        <div class="form-label-group">
+                                                            <input type="text" id="lastName" class="form-control" name="lastName" value="Arisandi" data-parsley-group="fieldset02" required=""> <label for="lastName">Last name</label>
+                                                        </div>
+                                                        <div class="invalid-feedback"> Valid last name is required. </div>
+                                                    </div>
+                                                    <!-- /grid column -->
+                                                </div>
+                                                <!-- /.row -->
+                                                <!-- .form-group -->
+                                                <div class="form-group mb-4">
+                                                    <div class="form-label-group">
+                                                        <input type="text" id="address" class="form-control" name="address" value="5888 Mya Causeway" data-parsley-group="fieldset02" placeholder="Address" required=""> <label for="address">Address</label>
+                                                    </div>
+                                                    <div class="invalid-feedback"> Please enter your shipping address. </div>
+                                                </div>
+                                                <!-- /.form-group -->
+                                                <!-- .form-group -->
+                                                <div class="form-group mb-4">
+                                                    <div class="form-label-group">
+                                                        <input type="text" id="address2" class="form-control" name="address2" value="Apartment 185" placeholder="Apt. or suite"> <label for="address2">Apartment or suite <span class="badge badge-secondary"><em>Optional</em></span></label>
+                                                    </div>
+                                                </div>
+                                                <!-- /.form-group -->
+                                                <!-- .row -->
+                                                <div class="row">
+                                                    <!-- grid column -->
+                                                    <div class="col-md-3 mb-4">
+                                                        <div class="form-label-group">
+                                                            <input type="text" id="zip" class="form-control" name="zip" value="97729" data-parsley-group="fieldset02" required=""> <label for="zip">Zip</label>
+                                                        </div>
+                                                        <div class="invalid-feedback"> Zip code required. </div>
+                                                    </div>
+                                                    <!-- /grid column -->
+                                                    <!-- grid column -->
+                                                    <div class="col-md-5 mb-4">
+                                                        <select id="country" class="custom-select custom-select-lg d-block w-100" name="country" data-parsley-group="fieldset02" required="">
+                                                    <option value=""> Choose... </option>
+                                                    <option selected> United States </option>
+                                                  </select>
+                                                        <div class="invalid-feedback"> Please select a valid country. </div>
+                                                    </div>
+                                                    <!-- /grid column -->
+                                                    <!-- grid column -->
+                                                    <div class="col-md-4 mb-4">
+                                                        <select id="state" class="custom-select custom-select-lg d-block w-100" name="state" data-parsley-group="fieldset02" required="">
+                                                    <option value=""> Choose... </option>
+                                                    <option selected> California </option>
+                                                  </select>
+                                                        <div class="invalid-feedback"> Please provide a valid state. </div>
+                                                    </div>
+                                                    <!-- /grid column -->
+                                                </div>
+                                                <!-- /.row -->
+                                                <hr class="mt-5">
+                                                <div class="d-flex">
+                                                    <button type="button" class="prev btn btn-secondary">Previous</button> <button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset02">Next step</button>
+                                                </div>
+                                            </fieldset>
+                                            <!-- /fieldset -->
+                                        </div>
+                                        <!-- /.content -->
+                                        <!-- .content -->
+                                        <div id="test-l-3" class="content dstepper-none fade">
+                                            <!-- fieldset -->
+                                            <fieldset>
+                                                <legend>Payment Information</legend>
+                                                <!-- .custom-control -->
+                                                <div class="custom-control custom-radio mb-4">
+                                                    <input type="radio" id="pmd1" class="custom-control-input" name="paymentMethod" value="creditcard" data-parsley-group="fieldset03" required=""> <label class="custom-control-label" for="pmd1">Credit card</label>
+                                                    <!-- .custom-control-hint -->
+                                                    <div class="custom-control-hint">
+                                                        <!-- .row -->
+                                                        <div class="row">
+                                                            <!-- form col -->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <div class="form-label-group">
+                                                                        <input type="text" id="pm1" name="ccholder" class="form-control" data-parsley-group="creditcard" placeholder="Name on card" required=""> <label for="pm1">Card holder</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /form col -->
+                                                            <!-- form col -->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <div class="form-label-group">
+                                                                        <input type="text" name="ccnumber" class="form-control" id="pm2" data-mask="cc" data-parsley-group="creditcard" placeholder="4242 4242 4242 4242" required=""> <label for="pm2">Card number</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /form col -->
+                                                        </div>
+                                                        <!-- /.row -->
+                                                        <!-- .row -->
+                                                        <div class="row">
+                                                            <!-- form col -->
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <div class="form-label-group">
+                                                                        <input type="text" id="pm3" name="ccexpdate" class="form-control" data-mask="expdatecc" data-parsley-group="creditcard" placeholder="MM/YY" required=""> <label for="pm3">Exp. date</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /form col -->
+                                                            <!-- form col -->
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <div class="form-label-group">
+                                                                        <input type="text" id="pm4" name="cccvc" class="form-control" data-mask="cvc" data-parsley-group="creditcard" placeholder="XXX" required=""> <label for="pm4">CVC</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /form col -->
+                                                            <!-- form col -->
+                                                            <div class="col-md-6">
+                                                                <!-- you can change attribute type to type="submit" on your real project -->
+                                                                <button type="button" id="savecc" class="btn btn-lg btn-primary btn-block">Save</button>
+                                                            </div>
+                                                            <!-- /form col -->
+                                                        </div>
+                                                        <!-- /.row -->
+                                                    </div>
+                                                    <!-- /.custom-control-hint -->
+                                                </div>
+                                                <!-- /.custom-control -->
+                                                <!-- .custom-control -->
+                                                <div class="custom-control custom-radio mb-4">
+                                                    <input type="radio" id="pmd2" class="custom-control-input" name="paymentMethod" value="paypal" checked> <label class="custom-control-label" for="pmd2">Paypal</label>
+                                                    <!-- .custom-control-hint -->
+                                                    <div class="custom-control-hint">
+                                                        <div class="row">
+                                                            <div class="col-md-10 col-lg-8">
+                                                                <div class="form-group">
+                                                                    <div class="input-group h-auto">
+                                                                        <div class="form-label-group">
+                                                                            <input type="text" name="paypalid" class="form-control" value="paypal@looper.com" readonly> <label>Personal account</label>
+                                                                        </div>
+                                                                        <div class="input-group-append ml-auto">
+                                                                            <span class="input-group-text text-success"><strong>Connected</strong></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div><button class="btn btn-danger" type="button">Disconnect</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.custom-control-hint -->
+                                                </div>
+                                                <!-- /.custom-control -->
+                                                <!-- .custom-control -->
+                                                <div class="custom-control custom-radio mb-4">
+                                                    <input type="radio" id="pmd3" class="custom-control-input" name="paymentMethod" value="stripe"> <label class="custom-control-label" for="pmd3">Stripe</label>
+                                                    <!-- .custom-control-hint -->
+                                                    <div class="custom-control-hint">
+                                                        <button class="btn btn-primary" type="button">Connect with <strong><em>Stripe</em></strong></button>
+                                                    </div>
+                                                    <!-- /.custom-control-hint -->
+                                                </div>
+                                                <!-- /.custom-control -->
+                                                <hr class="mt-5">
+                                                <div class="d-flex">
+                                                    <button type="button" class="prev btn btn-secondary">Previous</button> <button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset03">Next step</button>
+                                                </div>
+                                            </fieldset>
+                                            <!-- /fieldset -->
+                                        </div>
+                                        <!-- /.content -->
+                                        <!-- .content -->
+                                        <div id="test-l-4" class="content dstepper-none fade">
+                                            <!-- fieldset -->
+                                            <fieldset>
+                                                <legend>Terms Agreement</legend>
+                                                <!-- .card -->
+                                                <div class="card bg-light">
+                                                    <div class="card-body overflow-auto" style="height: 260px">
+                                                        <p> Ad vero quidem sit magni, sed eum laudantium, alias, consequuntur commodi eveniet nesciunt debitis esse sint temporibus id magnam accusamus perferendis laborum? Nobis ducimus minus blanditiis voluptates
+                                                            et, eligendi laborum. Ea suscipit, aperiam libero id dicta quia architecto iusto tenetur, dignissimos veritatis adipisci et! Recusandae impedit repudiandae, quam sunt repellat quia iusto tempora
+                                                            temporibus alias deleniti, nulla? Laborum expedita optio quam quasi, esse magni sit tempore! </p>
+                                                        <p> Dicta asperiores ea voluptatum nihil quasi, officia tempora voluptates. Quidem reprehenderit nesciunt culpa, architecto iure, neque itaque suscipit, iusto, porro ipsum consequatur! </p>
+                                                        <p> Ad vero quidem sit magni, sed eum laudantium, alias, consequuntur commodi eveniet nesciunt debitis esse sint temporibus id magnam accusamus perferendis laborum? Nobis ducimus minus blanditiis voluptates
+                                                            et, eligendi laborum. Ea suscipit, aperiam libero id dicta quia architecto iusto tenetur, dignissimos veritatis adipisci et! Recusandae impedit repudiandae, quam sunt repellat quia iusto tempora
+                                                            temporibus alias deleniti, nulla? Laborum expedita optio quam quasi, esse magni sit tempore! </p>
+                                                        <p> Dicta asperiores ea voluptatum nihil quasi, officia tempora voluptates. Quidem reprehenderit nesciunt culpa, architecto iure, neque itaque suscipit, iusto, porro ipsum consequatur! </p>
+                                                    </div>
+                                                </div>
+                                                <!-- /.card -->
+                                                <!-- .form-group -->
+                                                <div class="form-group">
+                                                    <!-- .custom-control -->
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" id="agreement" name="agreement" class="custom-control-input" data-parsley-group="agreement" required=""> <label class="custom-control-label" for="agreement">Agree to terms and conditions</label>
+                                                    </div>
+                                                    <!-- /.custom-control -->
+                                                </div>
+                                                <!-- /.form-group -->
+                                                <hr class="mt-5">
+                                                <div class="d-flex">
+                                                    <button type="button" class="prev btn btn-secondary">Previous</button> <button type="submit" class="submit btn btn-primary ml-auto" data-validate="agreement">Submit</button>
+                                                </div>
+                                            </fieldset>
+                                            <!-- /fieldset -->
+                                        </div>
+                                        <!-- /.content -->
+                                    </form>
+                                    <!-- /form -->
+                                </div>
+                                <!-- /.card-body -->
                             </div>
-                            <p class="metric-value h1 fa-pull-right">
-                                <span class="value">{{ this.vehicle.km }}</span> <sup>km</sup>
-                            </p>
-                            <address> 
-                            <strong>Código Cementos Progreso:</strong> {{ this.vehicle.cp }}<br> 
-                            <strong>Marca:</strong> {{ this.vehicle._make.name }}<br> 
-                            <strong>Modelo:</strong> {{ this.vehicle.model }} <br>
-                            <strong>mts:</strong> {{ this.vehicle.mts }}
-                        </address>
-                            <button *ngIf="selected" (click)="borraVehiculo( this.vehicle )" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
-                            <button *ngIf="selected" [routerLink]="[ '/vehicle', this.vehicle._id ]" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                            <!-- /.card -->
                         </div>
-                        <!-- /.card-body -->
-                        <!-- .card-body -->
-                        <div *ngIf="isGondola" class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h2 id="client-billing-contact-tab" class="card-title"> {{ this.type + ' ' + this.title }} </h2>
+                        <!-- /.bs-stepper -->
+                        <!-- toasts container -->
+                        <div aria-live="polite" aria-atomic="true">
+                            <!-- Position it -->
+                            <div style="position: fixed; top: 4.5rem; right: 1rem; z-index: 1050">
+                                <!-- .toast -->
+                                <div id="submitfeedback" class="toast bg-dark border-dark text-light fade hide" data-delay="3000" role="alert" aria-live="assertive" aria-atomic="true">
+                                    <div class="toast-header bg-primary text-white"> See your browser console </div>
+                                    <div class="toast-body">
+                                        <strong>Congrats!</strong> You see the submit feedback. </div>
+                                </div>
+                                <!-- /.toast -->
                             </div>
-                            <button *ngIf="selected" (click)="borraGondola( this.gondola )" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
-                            <button *ngIf="selected" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
                         </div>
-                        <!-- /.card-body -->
+                        <!-- /toasts container -->
                     </div>
-                    <!-- /.card -->
+                    <!-- /.section-block -->
+                </div>
+                <!-- /.tab-pane -->
+                <!-- .tab-pane -->
+                <div class="tab-pane fade" id="terminados" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                    <h6>Mantenimientos terminados</h6>
+                </div>
+                <!-- /.tab-pane -->
+                <!-- .tab-pane -->
+                <div class="tab-pane fade" id="aprobados" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                    <h6>Mantenimientos Aprobados</h6>
                 </div>
                 <!-- /.tab-pane -->
             </div>

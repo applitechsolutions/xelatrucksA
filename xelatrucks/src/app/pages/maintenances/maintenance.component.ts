@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Vehicle } from 'src/app/models/vehicle.model';
-import { Gondola } from 'src/app/models/gondola.model';
-import { GondolaService, VehicleService } from 'src/app/services/service.index';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Vehicle } from '../../models/vehicle.model';
+import { Gondola } from '../../models/gondola.model';
+import { GondolaService, VehicleService } from '../../services/service.index';
+
+declare function init_step();
 
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html',
   styles: []
 })
-export class MaintenanceComponent implements OnInit {
+export class MaintenanceComponent implements OnInit, AfterViewInit {
   public loading = false;
 
   // Listado principal
@@ -50,6 +52,10 @@ export class MaintenanceComponent implements OnInit {
     this.cargarGondolas();
   }
 
+  ngAfterViewInit(): void {
+    init_step();
+  }
+
   /* #region  GONDOLAS */
   cargarGondolas() {
     this.gondolaS.cargarGondolas()
@@ -70,12 +76,70 @@ export class MaintenanceComponent implements OnInit {
   }
   /* #endregion */
 
-  /* #region   */
+  /* #region   VEHICULOS*/
   cargarVehiculos() {
     this.vehicleS.cargarVehiculos()
       .subscribe((resp: any) => {
         this.vehicles = resp.vehiculos;
       });
+  }
+
+  seleccionarVehicle(vehicle: Vehicle) {
+    this.cargarDisponibles();
+    this.cargarRims();
+    this.cargarHistorialPits(vehicle._id, false);
+    this.vehicle = vehicle;
+    this.selected = true;
+    this.pits = vehicle.pits;
+    this.basics = vehicle.basics;
+    this.gasolines = [];
+    this.calcularTotalesG();
+    this.fecha1Consulta = '-';
+    this.fecha2Consulta = '-';
+    if (this.isTruckG && vehicle.type !== 'camionG' && this.inGondola) {
+      this.detalles.nativeElement.click();
+      this.inGondola = false;
+    }
+    this.isTruckG = false;
+    this.isGondola = false;
+    switch (vehicle.type) {
+      case 'camion':
+        this.icon = 'fas fa-truck';
+        this.type = 'Camión: ';
+        this.title = this.vehicle.plate;
+        this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
+        break;
+      case 'camionG':
+        this.isTruckG = true;
+        this.icon = 'fas fa-truck-moving';
+        this.type = 'Camión gondola: ';
+        this.title = this.vehicle.plate;
+        this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
+        break;
+      case 'vehiculo':
+        this.icon = 'fas fa-truck-pickup';
+        this.type = 'Vehículo: ';
+        this.title = this.vehicle.plate;
+        this.info = this.vehicle._make.name;
+        break;
+      case 'riego':
+        this.icon = 'fas fa-truck-monster';
+        this.type = 'Camión para riego: ';
+        this.title = this.vehicle.plate;
+        this.info = '#' + this.vehicle.no + ' ' + this.vehicle._make.name + ' CP: ' + this.vehicle.cp;
+        break;
+      case 'stock':
+        this.icon = 'fas fa-snowplow';
+        this.type = 'Excavadora: ';
+        this.title = this.vehicle.plate;
+        this.info = this.vehicle._make.name;
+        break;
+      default:
+        this.icon = 'fas fa-info-circle';
+        this.title = 'Información';
+        this.info = 'Selecciona un vehículo para comenzar';
+        break;
+    }
   }
   /* #endregion */
 

@@ -40,7 +40,7 @@ export class GondolaService {
           const gondolaDB = res.gondola;
           swal({
             title: 'Exito!',
-            text: 'Góndola creada correctamente' + gondolaDB.plate,
+            text: 'Góndola actualizada correctamente' + gondolaDB.plate,
             icon: 'success',
             button: false,
             timer: 1000
@@ -61,7 +61,7 @@ export class GondolaService {
           const gondolaDB = res.gondola;
           swal({
             title: 'Exito!',
-            text: 'Góndola actualizada correctamente' + gondolaDB.plate,
+            text: 'Góndola creada correctamente' + gondolaDB.plate,
             icon: 'success',
             button: false,
             timer: 1000

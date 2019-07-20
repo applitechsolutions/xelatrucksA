@@ -531,7 +531,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     if (this.pitMain) {
       console.log('MANTENIMIENTO...');
 
-      this.pitService.crearPit(this.pit)
+      this.pitService.crearPit(this.pit, this.isGondola)
         .subscribe(resp => {
           this.Hpits.push({
             rim: resp.rim,
@@ -542,16 +542,21 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
             side: resp.side,
             date: resp.date,
             total: resp.total,
-            vehicle: resp.vehicle
+            vehicle: resp.vehicle,
+            gondola: resp.gondola
           });
-          this.cargarHistorialPits(resp.vehicle._id, false);
+          console.log(resp);
+          if (this.isGondola) {
+            this.cargarHistorialPits(resp.gondola._id, this.isGondola);
+          } else if (!this.isGondola) {
+            this.cargarHistorialPits(resp.vehicle._id, this.isGondola);
+          }
         });
     }
 
 
     if (this.pit._id) {
       console.log('EDITANDO...');
-      console.log(this.pit);
       // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
       const index = this.pits.findIndex(item => item._id === this.pit._id);
 
@@ -569,15 +574,22 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
       // REMPLAZAMOS EL BASIC en base al index encontrado
       this.pits.splice(index, 1, pit);
-      console.log(pit);
       this.pit = {};
-      this.vehicle.pits = this.pits;
-      console.log(this.vehicles);
       $('.select2').val('').trigger('change');
-      this.vehicleS.crearVehiculo(this.vehicle)
-        .subscribe(resp => {
-          this.pits = resp.vehiculo.pits;
-        });
+      if (this.isGondola) {
+        this.gondola.pits = this.pits;
+        this.gondolaS.crearGondola(this.gondola)
+          .subscribe(res => {
+            this.pits = res.gondola.pits;
+
+          });
+      } else if (!this.isGondola) {
+        this.vehicle.pits = this.pits;
+        this.vehicleS.crearVehiculo(this.vehicle)
+          .subscribe(resp => {
+            this.pits = resp.vehiculo.pits;
+          });
+      }
       this.closeMP.nativeElement.click();
     } else {
       console.log('GUARDANDO...');
@@ -591,15 +603,26 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         date: fecha.toString(),
         total: this.formPit.value.total
       });
-      this.vehicle.pits = this.pits;
+
       $('.select2').val('').trigger('change');
-      this.vehicleS.crearVehiculo(this.vehicle)
-        .subscribe(resp => {
-          this.pits = resp.vehiculo.pits;
-        });
+      if (this.isGondola) {
+        console.log(this.gondola);
+        this.gondola.pits = this.pits;
+        this.gondolaS.crearGondola(this.gondola)
+          .subscribe(res => {
+            this.pits = res.gondola.pits;
+          });
+
+      } else if (!this.isGondola) {
+
+        this.vehicle.pits = this.pits;
+        this.vehicleS.crearVehiculo(this.vehicle)
+          .subscribe(resp => {
+            this.pits = resp.vehiculo.pits;
+          });
+      }
       this.closeMP.nativeElement.click();
     }
-    this.formPit.reset();
   }
 
   editarPit(id: string, main: boolean) {
@@ -633,8 +656,12 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
           state: false,
           _id: this.vehicle._id
         },
+        gondola: {
+          plate: '',
+          _id: this.gondola._id
+        },
         _id: status._id
-      }
+      };
     }
 
     if (main) {
@@ -671,13 +698,22 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
         if (borrar) {
           // ELIMINAMOS EL BASIC en base al index encontrado
           this.pits.splice(index, 1);
+
           // ACTUALIZAMOS LA DB
-          this.vehicle.pits = this.pits;
-          console.log(this.vehicle);
-          this.vehicleS.crearVehiculo(this.vehicle)
-            .subscribe(resp => {
-              this.pits = resp.vehiculo.pits;
-            });
+          if (this.isGondola) {
+            this.gondola.pits = this.pits;
+            this.gondolaS.crearGondola(this.gondola)
+              .subscribe( res => {
+                this.pits = res.gondola.pits;
+              });
+          } else if (!this.isGondola) {
+
+            this.vehicle.pits = this.pits;
+            this.vehicleS.crearVehiculo(this.vehicle)
+              .subscribe(resp => {
+                this.pits = resp.vehiculo.pits;
+              });
+          }
         }
       });
   }

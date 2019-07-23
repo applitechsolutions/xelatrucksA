@@ -217,14 +217,51 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       _id: null
     };
 
-    const gondola = new Gondola(formG.value.plateG, truck);
+    if (this.gondola._id) {
+      const gondola = new Gondola(formG.value.plateG, truck, this.gondola.basics, this.gondola.pits, false, this.gondola._id );
+      this.gondolaS.crearGondola(gondola)
+        .subscribe( (res: any) => {
+          this.closeMGo.nativeElement.click();
+          this.cargarGondolas();
+          this.title = res.gondola.plate;
+        });
+    } else {
 
-    this.gondolaS.crearGondola(gondola)
-      .subscribe( (res: any) => {
-        this.closeMGo.nativeElement.click();
-        this.cargarGondolas();
+      const gondola = new Gondola(formG.value.plateG, truck);
+
+      this.gondolaS.crearGondola(gondola)
+        .subscribe( (res: any) => {
+          this.closeMGo.nativeElement.click();
+          this.cargarGondolas();
+        });
+    }
+
+  }
+
+
+  borrarGondola( gondola: Gondola ) {
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de eliminar la góndola #' + gondola.plate,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then(borrar => {
+      if (borrar) {
+        gondola.state = true;
+        this.gondolaS.borrarGondola(gondola)
+          .subscribe( (res: any) => {
+            this.cargarGondolas();
+            this.icon = 'fas fa-info-circle';
+            this.title = 'Góndola borrada';
+            this.type = '';
+            this.info = 'Selecciona un vehículo para comenzar';
+            this.selected = false;
+          });
+        }
+
       });
-
   }
 
   asignarGondola( gondola: Gondola ) {

@@ -77,6 +77,29 @@ export class GondolaService {
 
   }
 
+  borrarGondola( gondola: Gondola ) {
+    let url = URL_SERVICES + '/gondola/delete/' + gondola._id;
+    url += '?token=' + this.userS.token;
+
+    return this.http.put(url, gondola)
+      .pipe( map( (res: any) => {
+          const gondolaDB = res.gondola;
+          swal({
+            title: 'Exito!',
+            text: 'Góndola eliminada correctamente' + gondolaDB.plate,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
+          return res;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
+        }));
+  }
+
   asignarGondola( gondola: Gondola ) {
 
     let url = URL_SERVICES + '/gondola/';

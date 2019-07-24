@@ -25,19 +25,35 @@ export class PitService {
     }
   }
 
-  crearPit( pit: Pits ) {
+  crearPit( pit: Pits, isGondola: boolean ) {
 
-    const url = URL_SERVICES + '/pit?token=' + this.userService.token;
+    if (isGondola) {
+      const url = URL_SERVICES + '/pit/gondola?token=' + this.userService.token;
+      return this.http.post(url, pit)
+        .pipe(
+          map( (res: any ) => {
+            return res.pit;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message , 'error');
+            return throwError( err );
+          })
+        );
+    } else if (!isGondola) {
 
-    return this.http.post(url, pit)
-      .pipe(
-        map( (res: any) => {
-          return res.pit;
-        }),
-        catchError((err, caught) => {
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
-        })
-      );
+      const url = URL_SERVICES + '/pit?token=' + this.userService.token;
+
+      return this.http.post(url, pit)
+        .pipe(
+          map( (res: any) => {
+            return res.pit;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message , 'error');
+            return throwError( err );
+          })
+        );
+    }
+
   }
 }

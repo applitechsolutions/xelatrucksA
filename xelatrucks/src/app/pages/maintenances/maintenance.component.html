@@ -120,12 +120,12 @@
                 <!-- .nav-tabs -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a #detalles class="nav-link active show" data-toggle="tab" href="#maintenance" (click)="inGondola = false; inGas = false;"> Mantenimiento actual</a>
+                        <a #detalles class="nav-link active show" data-toggle="tab" href="#maintenance" (click)="inGondola = false; inGas = false;"> Mantenimiento Actual</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#terminados" (click)="inGondola = false; inGas = false;"> Mantenimientos terminados</a>
+                    <li *ngIf="selected" class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#terminados" (click)="inGondola = false; inGas = false;"> Mantenimientos Terminados</a>
                     </li>
-                    <li class="nav-item">
+                    <li *ngIf="selected" class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#aprobados" (click)="inGondola = false; inGas = true;">Mantenimientos Aprobados</a>
                     </li>
                 </ul>
@@ -145,20 +145,24 @@
                             <div class="card">
                                 <!-- .card-header -->
                                 <div class="card-header">
+                                    <h5 *ngIf="mantenimiento._user !== null">Vehículo en mantenimiento</h5>
+                                    <p *ngIf="mantenimiento._user !== null" class="text-muted"> Aquí puede consultar el estado del vehículo dentro del taller. </p>
+                                    <h5 *ngIf="mantenimiento._user === null">Vehiculo disponible</h5>
+                                    <p *ngIf="mantenimiento._user === null" class="text-muted"> Aqui puede ingresar el vehículo al taller para un nuevo mantenimiento. </p>
                                     <!-- .steps -->
                                     <div class="steps steps-" role="tablist">
                                         <ul>
                                             <li class="step" data-target="#test-l-1">
-                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="fas fa-external-link-alt"></i></span> <span class="d-none d-sm-inline">Crear nuevo</span></a>
+                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="fas fa-external-link-alt"></i></span> <span class="d-none d-sm-inline">Entrada </span></a>
                                             </li>
                                             <li class="step" data-target="#test-l-2">
-                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="oi oi-person"></i></span> <span class="d-none d-sm-inline">Detalles del mantenimiento</span></a>
+                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="fas fa-calendar-week"></i></span> <span class="d-none d-sm-inline">Detalles del mantenimiento</span></a>
                                             </li>
                                             <!-- <li class="step" data-target="#test-l-3">
                                                 <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="oi oi-credit-card"></i></span> <span class="d-none d-sm-inline">Payment</span></a>
                                             </li> -->
                                             <li class="step" data-target="#test-l-4">
-                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="oi oi-check"></i></span> <span class="d-none d-sm-inline">Confirm</span></a>
+                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="fas fa-sign-out-alt"></i></span> <span class="d-none d-sm-inline">Salida </span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -172,49 +176,54 @@
                                         <div id="test-l-1" class="content dstepper-none fade">
                                             <!-- fieldset -->
                                             <fieldset>
-                                                <legend>Seleccione los mécanicos que van a colaborar en el mantenimiento</legend>
-                                                <!-- .card -->
-                                                <div class="card mt-4">
-                                                    <!-- .card-body -->
-                                                    <div class="card-body">
-                                                        <!-- .table-responsive -->
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" style="min-width: 678px">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th> Código </th>
-                                                                        <th> Nombre </th>
-                                                                        <th></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td class="align-middle"> </td>
-                                                                        <td class="align-middle"> </td>
-                                                                        <td class="align-middle"> </td>
-                                                                        <td class="align-middle text-right">
-                                                                            <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addBasic"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
-                                                                            <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <!-- /.table-responsive -->
-                                                    </div>
-                                                    <!-- /.card-body -->
-                                                    <!-- .card-footer -->
-                                                    <div class="card-footer">
-                                                        <a href="#addBasic" (click)="this.basic = {};" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar colaborador</a>
-                                                    </div>
-                                                    <!-- /.card-footer -->
+                                                <div *ngIf="!selected" class="alert alert-warning has-icon" role="alert">
+                                                    <div class="alert-icon">
+                                                        <span class="fa fa-bullhorn"></span>
+                                                    </div>Seleccione un vehículo para comenzar...
                                                 </div>
-                                                <!-- /.card -->
+                                                <div *ngIf="selected">
+                                                    <legend>Agregue los mecánicos que van a colaborar en el mantenimiento</legend>
+                                                    <!-- .form-group -->
+                                                    <div class="form-group">
+                                                        <label id="typeL">Mecánico </label>
+                                                        <select #selectM name="mech" class="form-control select2" style="width:100%!important;">
+                                                            <option value=""> Seleccione un mecánico </option>
+                                                            <option *ngFor="let mech of mecanicos" [value]="mech._id"> {{ mech.code + ' ' + mech.name }}
+                                                            </option>
+                                                            </select>
+                                                    </div>
+                                                    <!-- /.form-group -->
+                                                    <button (click)="addMech();" class="btn btn-primary offset-5" type="submit"><i class="fas fa-user-plus"></i> Agregar</button>
+                                                    <hr>
+                                                    <!-- .table-responsive -->
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover" style="min-width: 678px">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th> Código </th>
+                                                                    <th> Nombre </th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let mech of mantenimiento._mech">
+                                                                    <td class="align-middle"> {{ mech.code }} </td>
+                                                                    <td class="align-middle"> {{ mech.name }} </td>
+                                                                    <td class="align-middle">
+                                                                        <button (click)='deleteMech( mech._id )' type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!-- /.table-responsive -->
+                                                    <button type="button" class="btn btn-success btn-lg btn-block">Comen </button>
+                                                </div>
                                                 <!-- .form-group -->
                                                 <hr class="mt-5">
                                                 <!-- .d-flex -->
                                                 <div class="d-flex">
-                                                    <p> Already have an account? Please <a href="#">Signin</a>. </p><button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset01">Next step</button>
+                                                    <p> Por favor siga los siguientes pasos para realizar un mantenimiento. </p><button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset01">Siguiente</button>
                                                 </div>
                                                 <!-- /.d-flex -->
                                             </fieldset>
@@ -293,7 +302,7 @@
                                                 <!-- /.row -->
                                                 <hr class="mt-5">
                                                 <div class="d-flex">
-                                                    <button type="button" class="prev btn btn-secondary">Previous</button> <button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset02">Next step</button>
+                                                    <button type="button" class="prev btn btn-secondary">Anterior</button> <button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset02">Siguiente</button>
                                                 </div>
                                             </fieldset>
                                             <!-- /fieldset -->
@@ -398,7 +407,7 @@
                                                 <!-- /.custom-control -->
                                                 <hr class="mt-5">
                                                 <div class="d-flex">
-                                                    <button type="button" class="prev btn btn-secondary">Previous</button> <button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset03">Next step</button>
+                                                    <button type="button" class="prev btn btn-secondary">Previous</button> <button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset03">Siguiente</button>
                                                 </div>
                                             </fieldset>
                                             <!-- /fieldset -->
@@ -476,6 +485,10 @@
                     <h6>Mantenimientos Aprobados</h6>
                 </div>
                 <!-- /.tab-pane -->
+                <ng-template #customLoadingTemplate>
+                </ng-template>
+                <!-- /.table -->
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
             </div>
             <!-- /.tab-content -->
         </div>

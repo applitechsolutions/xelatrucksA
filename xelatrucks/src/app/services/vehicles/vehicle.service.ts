@@ -19,7 +19,6 @@ export class VehicleService {
     public userS: UserService
   ) { }
 
-
   cargarVehiculos() {
     const url = URL_SERVICES + '/vehiculo';
     return this.http.get(url);

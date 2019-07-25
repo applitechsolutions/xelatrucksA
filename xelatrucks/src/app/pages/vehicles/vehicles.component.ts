@@ -194,7 +194,11 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.icon = 'fas fa-truck-moving';
     this.type = 'Gondola: ';
     this.title = this.gondola.plate;
-    this.info = 'Gondola Seleccionada';
+    if (this.gondola._truck === null) {
+      this.info = 'Camión sin asignar';
+    } else {
+      this.info = 'Camión asignado: ' + gondola._truck.plate;
+    }
     if (this.inGas || this.inGondola) {
       this.detalles.nativeElement.click();
       this.inGas = false;

@@ -138,6 +138,11 @@
             <div class="tab-content pt-4" id="clientDetailsTabs">
                 <!-- .tab-pane -->
                 <div class="tab-pane fade show active" id="detalles" role="tabpanel" aria-labelledby="client-billing-contact-tab">
+                    <div *ngIf="!selected" class="alert alert-warning has-icon" role="alert">
+                        <div class="alert-icon">
+                            <span class="fa fa-bullhorn"></span>
+                        </div>Seleccione un vehículo para comenzar...
+                    </div>
                     <!-- .card -->
                     <div class="card">
                         <!-- .card-body -->

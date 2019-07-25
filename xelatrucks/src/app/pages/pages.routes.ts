@@ -25,6 +25,7 @@ import { MechanicsComponent } from './mechanics/mechanics.component';
 import { MechanicComponent } from './mechanics/mechanic.component';
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
+import { GtripsComponent } from './gtrips/gtrips.component';
 
 const pagesRoutes: Routes = [
     {
@@ -55,7 +56,7 @@ const pagesRoutes: Routes = [
         path: 'rxjs',
         component: RxjsComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'RxJs' } 
+        data: { titulo: 'RxJs' }
     },
     {
         path: 'profile',
@@ -88,6 +89,12 @@ const pagesRoutes: Routes = [
         component: OrderComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Crear Pedido' }
+    },
+    {
+        path: 'gtrips',
+        component: GtripsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Reporte de Cuadros' }
     },
     // TALLER
     {

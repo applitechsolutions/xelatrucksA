@@ -1,0 +1,67 @@
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .card -->
+    <div class="card card-fluid">
+        <!-- .card-header -->
+        <div class="card-header">
+            <!-- .nav-tabs -->
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active show" data-toggle="tab" href="#tab1">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab2">Ongoing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab3">Completed</a>
+                </li>
+            </ul>
+            <!-- /.nav-tabs -->
+        </div>
+        <!-- /.card-header -->
+        <!-- .card-body -->
+        <div class="card-body">
+            <!-- .form-group -->
+            <div class="form-group">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                    <!-- .btn-toolbar -->
+                    <div id="dt-buttons" class="btn-toolbar"></div>
+                    <!-- /.btn-toolbar -->
+                    <!-- .input-group -->
+                    <div class="input-group has-clearable">
+                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
+                    </div>
+                    <!-- /.input-group -->
+                </div>
+                <!-- /.input-group -->
+            </div>
+            <!-- /.form-group -->
+            <!-- .table -->
+            <table id="myTable" class="table">
+                <!-- thead -->
+                <thead>
+                    <tr>
+                        <th>nombre</th>
+                    </tr>
+                </thead>
+                <!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                    <!-- create empty row to passing html validator -->
+                    <tr *ngFor="let user of users">
+                        <td>{{ user.name }}</td>
+                    </tr>
+                </tbody>
+                <!-- /tbody -->
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.page-section -->

@@ -15,8 +15,8 @@ export class PartsComponent implements OnInit {
 
   repuestos: Storage[] = [];
   idC: string;
-
   constructor(public dtService: DatatablesService, public partService: PartService, private chRef: ChangeDetectorRef) { }
+
 
   ngOnInit() {
     this.cargarRepuestos();

@@ -24,6 +24,14 @@ export class SidebarService {
         { titulo: 'Listar Pedidos', url: '/orders' },
         { titulo: 'Crear Pedido', url: '/order/new' }
       ]
+    },
+    {
+      titulo: 'Reporte Cuadros',
+      icono: 'menu-icon fas fa-file-invoice',
+      submenu: [
+        { titulo: 'Listar Pedidos', url: '/gtrips' },
+        { titulo: 'Crear Pedido', url: '/order/new' }
+      ]
     }
   ];
 

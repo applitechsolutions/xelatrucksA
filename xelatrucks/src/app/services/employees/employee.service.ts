@@ -14,6 +14,19 @@ export class EmployeeService {
 
   constructor(public http: HttpClient, public userService: UserService) { }
 
+  cargarEmpleados() {
+    const url = URL_SERVICES + '/empleado';
+
+    return this.http.get(url);
+  }
+
+  cargarEmpleado( id: string ) {
+    let url = URL_SERVICES + '/empleado/' + id;
+    url += '?token=' + this.userService.token;
+
+    return this.http.get(url);
+  }
+
   crearEmpleado( empleado: Employee ) {
 
     let url = URL_SERVICES + '/empleado';

@@ -38,12 +38,12 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
         txt: 'Admistrador'
       },
       {
-        job: 'DIGITADOR',
-        txt: 'Digitador'
+        job: 'PLANILLA',
+        txt: 'Planilla'
       },
       {
-        job: 'MECANICO',
-        txt: 'Mecánico'
+        job: 'CD',
+        txt: 'Centro de Distribución'
       }
     ];
 

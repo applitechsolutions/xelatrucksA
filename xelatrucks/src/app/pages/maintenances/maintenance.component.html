@@ -145,10 +145,10 @@
                             <div class="card">
                                 <!-- .card-header -->
                                 <div class="card-header">
-                                    <h5 *ngIf="mantenimiento._user !== null">Vehículo en mantenimiento</h5>
-                                    <p *ngIf="mantenimiento._user !== null" class="text-muted"> Aquí puede consultar el estado del vehículo dentro del taller. </p>
-                                    <h5 *ngIf="mantenimiento._user === null">Vehiculo disponible</h5>
-                                    <p *ngIf="mantenimiento._user === null" class="text-muted"> Aqui puede ingresar el vehículo al taller para un nuevo mantenimiento. </p>
+                                    <h5 *ngIf="mantenimiento._user !== null && selected">Vehículo en mantenimiento</h5>
+                                    <p *ngIf="mantenimiento._user !== null && selected" class="text-muted"> Aquí puede consultar el estado del vehículo dentro del taller. </p>
+                                    <h5 *ngIf="mantenimiento._user === null && selected">Vehiculo disponible</h5>
+                                    <p *ngIf="mantenimiento._user === null && selected" class="text-muted"> Aqui puede ingresar el vehículo al taller para un nuevo mantenimiento. </p>
                                     <!-- .steps -->
                                     <div class="steps steps-" role="tablist">
                                         <ul>
@@ -217,7 +217,7 @@
                                                         </table>
                                                     </div>
                                                     <!-- /.table-responsive -->
-                                                    <button type="button" class="btn btn-success btn-lg btn-block">Comen </button>
+                                                    <button type="button" class="btn btn-success btn-lg btn-block"><i class="fas fa-tools"></i> Click para iniciar con el mantenimiento</button>
                                                 </div>
                                                 <!-- .form-group -->
                                                 <hr class="mt-5">
@@ -234,23 +234,19 @@
                                         <div id="test-l-2" class="content dstepper-none fade">
                                             <!-- fieldset -->
                                             <fieldset>
-                                                <legend>Personal Information</legend>
+                                                <legend>Infomación sobre el mantenimiento actual</legend>
                                                 <!-- .row -->
                                                 <div class="row">
                                                     <!-- grid column -->
                                                     <div class="col-md-6 mb-4">
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="firstName" class="form-control" name="firstName" value="Beni" data-parsley-group="fieldset02" required=""> <label for="firstName">First name</label>
-                                                        </div>
-                                                        <div class="invalid-feedback"> Valid first name is required. </div>
+                                                        <label for="tf6">Detalles de revisión</label>
+                                                        <textarea class="form-control" id="tf6" rows="5"></textarea>
                                                     </div>
                                                     <!-- /grid column -->
                                                     <!-- grid column -->
                                                     <div class="col-md-6 mb-4">
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="lastName" class="form-control" name="lastName" value="Arisandi" data-parsley-group="fieldset02" required=""> <label for="lastName">Last name</label>
-                                                        </div>
-                                                        <div class="invalid-feedback"> Valid last name is required. </div>
+                                                        <label for="tf6">Detalles de reparación</label>
+                                                        <textarea class="form-control" id="tf6" rows="5"></textarea>
                                                     </div>
                                                     <!-- /grid column -->
                                                 </div>

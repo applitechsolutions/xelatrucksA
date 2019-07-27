@@ -18,6 +18,14 @@ export class SidebarService {
 
   menuViajes: any = [
     {
+      titulo: 'Empleados',
+      icono: 'menu-icon fas fa-user-tie',
+      submenu: [
+        { titulo: 'Listar Empleados', url: '/employees' },
+        { titulo: 'Crear Empleado', url: '/employee/new' }
+      ]
+    },
+    {
       titulo: 'Pedidos',
       icono: 'menu-icon fas fa-file-invoice',
       submenu: [
@@ -29,8 +37,7 @@ export class SidebarService {
       titulo: 'Reporte Cuadros',
       icono: 'menu-icon fas fa-file-invoice',
       submenu: [
-        { titulo: 'Listar Pedidos', url: '/gtrips' },
-        { titulo: 'Crear Pedido', url: '/order/new' }
+        { titulo: 'Listar Reportes', url: '/gtrips' }
       ]
     }
   ];

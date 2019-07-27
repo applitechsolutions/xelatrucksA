@@ -39,6 +39,8 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
 import { GtripsComponent } from './gtrips/gtrips.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeComponent } from './employees/employee.component';
 
 
 @NgModule({
@@ -66,7 +68,9 @@ import { GtripsComponent } from './gtrips/gtrips.component';
         MechanicComponent,
         MaintenancesComponent,
         MaintenanceComponent,
-        GtripsComponent
+        GtripsComponent,
+        EmployeesComponent,
+        EmployeeComponent
     ],
     exports: [
         DashboardComponent,

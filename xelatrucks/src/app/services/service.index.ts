@@ -2,6 +2,9 @@ export { DatatablesService } from './datatables/datatables.service';
 export { LoginGuardGuard } from './guards/login-guard.guard';
 export { VerificaTokenGuard } from './guards/verifica-token.guard';
 export { UserService } from './users/user.service';
+// VIAJES
+export { EmployeeService } from './employees/employee.service';
+
 // TALLER
 export { PartService } from './parts/part.service';
 export { MechanicService } from './mechanics/mechanic.service';

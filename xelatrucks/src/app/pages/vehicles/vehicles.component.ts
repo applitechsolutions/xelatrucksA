@@ -125,7 +125,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    // this.dtService.init_tables();
+
     this.cargarVehiculos();
     this.cargarGondolas();
 

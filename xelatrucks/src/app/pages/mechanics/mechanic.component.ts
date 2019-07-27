@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MechanicService } from '../../services/service.index';
 import { Mechanic } from '../../models/mech.model';
-import swal from 'sweetalert';
 import { Router, ActivatedRoute } from '@angular/router';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-mechanic',

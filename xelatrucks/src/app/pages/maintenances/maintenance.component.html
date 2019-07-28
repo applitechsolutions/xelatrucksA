@@ -120,13 +120,13 @@
                 <!-- .nav-tabs -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a #detalles class="nav-link active show" data-toggle="tab" href="#maintenance" (click)="inGondola = false; inGas = false;"> Mantenimiento Actual</a>
+                        <a #detalles class="nav-link active show" data-toggle="tab" href="#maintenance"> Mantenimiento Actual</a>
                     </li>
                     <li *ngIf="selected" class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#terminados" (click)="inGondola = false; inGas = false;"> Mantenimientos Terminados</a>
+                        <a class="nav-link" data-toggle="tab" href="#terminados"> Mantenimientos Terminados</a>
                     </li>
                     <li *ngIf="selected" class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#aprobados" (click)="inGondola = false; inGas = true;">Mantenimientos Aprobados</a>
+                        <a class="nav-link" data-toggle="tab" href="#aprobados">Mantenimientos Aprobados</a>
                     </li>
                 </ul>
                 <!-- /.nav-tabs -->

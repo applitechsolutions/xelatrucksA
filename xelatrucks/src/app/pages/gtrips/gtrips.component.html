@@ -7,10 +7,10 @@
             <!-- .nav-tabs -->
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active show" data-toggle="tab" href="#tab1">All</a>
+                    <a class="nav-link" data-toggle="tab" href="#tabNuevoRC">Nuevo Reporte Cuadros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#tab2">Ongoing</a>
+                    <a class="nav-link active show" data-toggle="tab" href="#tab1"><i class="fas fa-clipboard-list"></i> Listado Reporte Cuadros</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#tab3">Completed</a>
@@ -19,48 +19,116 @@
             <!-- /.nav-tabs -->
         </div>
         <!-- /.card-header -->
-        <!-- .card-body -->
-        <div class="card-body">
-            <!-- .form-group -->
-            <div class="form-group">
-                <!-- .input-group -->
-                <div class="input-group input-group-alt">
-                    <!-- .btn-toolbar -->
-                    <div id="dt-buttons" class="btn-toolbar"></div>
-                    <!-- /.btn-toolbar -->
-                    <!-- .input-group -->
-                    <div class="input-group has-clearable">
-                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
-                    </div>
-                    <!-- /.input-group -->
+        <!-- .tab-content -->
+        <div class="tab-content" id="TabViajes">
+            <!-- .tab-pane -->
+            <div class="tab-pane fade show active" id="tabNuevoRC" role="tabpanel" aria-labelledby="tab">
+                <!-- .labels -->
+                <div id="labels" class="col-12">
+                    <!-- .form -->
+                    <form>
+                        <!-- .card-body -->
+                        <div class="card-body">
+                            <!-- .fieldset -->
+                            <fieldset>
+                                <legend>Encabezado de compra</legend>
+                                <div class="row">
+                                    <!-- .form-group -->
+                                    <div class="form-group col-2">
+                                        <label id="typeL">Empleado <span class="badge badge-danger">Obligatorio</span></label> <select #selectP formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
+                                            <option value=""> Seleccione un proveedor </option>
+                                            <!-- <option *ngFor="let provider of providers" [value]="provider._id"> {{ provider.name }}
+                                            </option> -->
+                                        </select>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-1">
+                                        <label>Crear Empleado</label><br>
+                                        <button [routerLink]="[ '/autoProvider', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                                    </div>
+                                    <!-- /.form-group -->
+                                </div>
+                                <div class="row">
+                                    <!-- .form-group -->
+                                    <div class="form-group col-4">
+                                        <label for="noBill">No. de factura </label> <input formControlName="noBill" name="noBill" type="text" class="form-control" id="noBill" placeholder="Ingrese el número de factura">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-4">
+                                        <label for="serie">Serie </label> <input formControlName="serie" name="serie" type="text" class="form-control" id="serie" placeholder="Ingrese el número de serie de la factura">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-4">
+                                        <label for="noDoc">No. de documento </label> <input formControlName="noDoc" name="noDoc" type="text" class="form-control" id="noDoc" placeholder="Ingrese un número de documento">
+                                    </div>
+                                    <!-- /.form-group -->
+                                </div>
+                                <hr>
+                                <!-- /.d-flex -->
+                                <button class="btn btn-primary" type="submit" id="btnUser"><i class="fa fa-save"></i> Guardar</button>
+                                <button [routerLink]="[ '/buySpares' ]" type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                            </fieldset>
+                            <!-- /.fieldset -->
+                        </div>
+                        <!-- /.card-body -->
+                    </form>
+                    <!-- /.form -->
                 </div>
-                <!-- /.input-group -->
+                <!-- /.labels -->
             </div>
-            <!-- /.form-group -->
-            <!-- .table -->
-            <table id="myTable" class="table">
-                <!-- thead -->
-                <thead>
-                    <tr>
-                        <th>nombre</th>
-                    </tr>
-                </thead>
-                <!-- /thead -->
-                <!-- tbody -->
-                <tbody>
-                    <!-- create empty row to passing html validator -->
-                    <tr *ngFor="let user of users">
-                        <td>{{ user.name }}</td>
-                    </tr>
-                </tbody>
-                <!-- /tbody -->
-            </table>
-            <!-- /.table -->
+            <!-- /.tab-pane -->
+            <!-- .tab-pane -->
+            <div class="tab-pane" id="tab1" role="tabpanel" aria-labelledby="tab">
+                <!-- .card-body -->
+                <div class="card-body">
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <!-- .input-group -->
+                        <div class="input-group input-group-alt">
+                            <!-- .btn-toolbar -->
+                            <div id="dt-buttons" class="btn-toolbar"></div>
+                            <!-- /.btn-toolbar -->
+                            <!-- .input-group -->
+                            <div class="input-group has-clearable">
+                                <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                                </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
+                            </div>
+                            <!-- /.input-group -->
+                        </div>
+                        <!-- /.input-group -->
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .table -->
+                    <table id="myTable" class="table">
+                        <!-- thead -->
+                        <thead>
+                            <tr>
+                                <th>nombre</th>
+                            </tr>
+                        </thead>
+                        <!-- /thead -->
+                        <!-- tbody -->
+                        <tbody>
+                            <!-- create empty row to passing html validator -->
+                            <tr *ngFor="let user of users">
+                                <td>{{ user.name }}</td>
+                            </tr>
+                        </tbody>
+                        <!-- /tbody -->
+                    </table>
+                    <!-- /.table -->
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.tab-pane -->
         </div>
-        <!-- /.card-body -->
+        <!-- /.tab-content -->
+
     </div>
     <!-- /.card -->
 </div>

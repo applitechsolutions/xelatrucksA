@@ -27,6 +27,8 @@ import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
 import { GtripsComponent } from './gtrips/gtrips.component';
 import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeComponent } from './employees/employee.component';
 
 const pagesRoutes: Routes = [
     {
@@ -79,6 +81,18 @@ const pagesRoutes: Routes = [
         data: { titulo: 'Crear Usuario' }
     },
     // TRANSPORTES
+    {
+        path: 'employees',
+        component: EmployeesComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Mantenimiento de Empleados' }
+    },
+    {
+        path: 'employee/:id',
+        component: EmployeeComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Crear Empleado' }
+    },
     {
         path: 'orders',
         component: OrdersComponent,

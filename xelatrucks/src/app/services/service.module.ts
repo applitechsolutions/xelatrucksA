@@ -16,7 +16,8 @@ import {
   MechanicService,
   VehicleService,
   GondolaService,
-  MaintenanceService
+  MaintenanceService,
+  EmployeeService
 } from './service.index';
 
 @NgModule({
@@ -39,6 +40,7 @@ import {
     VehicleService,
     GondolaService,
     MaintenanceService,
+    EmployeeService,
     VerificaTokenGuard
   ]
 })

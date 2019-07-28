@@ -9,7 +9,6 @@ import { Part } from '../../models/part.model';
 import { Router } from '@angular/router';
 import { BuySpare } from '../../models/buySpare.model';
 import { DatatablesService } from '../../services/datatables/datatables.service';
-import { DatePipe, formatDate } from '@angular/common';
 import * as moment from 'moment/moment';
 import { AutoProvider } from '../../models/autoProvider.model';
 

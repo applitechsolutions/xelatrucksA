@@ -38,13 +38,13 @@
                             "src/assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js",
                             "src/assets/vendor/parsleyjs/parsley.min.js",
                             "src/assets/vendor/bs-stepper/js/bs-stepper.min.js",
-                            "src/assets/javascript/theme.js",
                             "src/assets/vendor/datatables/jquery.dataTables.min.js",
                             "src/assets/vendor/datatables/extensions/buttons/dataTables.buttons.min.js",
                             "src/assets/vendor/datatables/extensions/buttons/buttons.bootstrap4.min.js",
                             "src/assets/vendor/datatables/extensions/buttons/buttons.html5.min.js",
                             "src/assets/vendor/datatables/extensions/buttons/buttons.print.min.js",
-                            "src/assets/javascript/pages/dataTables.bootstrap.js"
+                            "src/assets/javascript/pages/dataTables.bootstrap.js",
+                            "src/assets/javascript/theme.js"
                         ],
                         "es5BrowserSupport": true
                     },

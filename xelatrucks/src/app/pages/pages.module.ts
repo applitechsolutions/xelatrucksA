@@ -40,6 +40,8 @@ import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
 import { GtripsComponent } from './gtrips/gtrips.component';
 import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeComponent } from './employees/employee.component';
 
 
 @NgModule({
@@ -69,6 +71,8 @@ import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances
         MaintenanceComponent,
         GtripsComponent,
         TypeMaintenancesComponent
+        EmployeesComponent,
+        EmployeeComponent
     ],
     exports: [
         DashboardComponent,

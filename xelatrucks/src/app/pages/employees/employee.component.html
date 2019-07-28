@@ -1,0 +1,91 @@
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .card-deck-xl -->
+    <!-- form -->
+    <form ngNativeValidate [formGroup]="formE" (ngSubmit)="crearEmpleado()">
+        <div class="card-deck-xl">
+            <!-- .card -->
+            <div class="card card-fluid">
+                <!-- .card-body -->
+                <div class="card-body">
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label id="job">Trabajo <span class="badge badge-danger">Obligatorio</span></label>
+                        <select #selectJ formControlName="job" name="job" class="form-control select2" id="selDefault" style="width:100%!important;">
+                            <option value=""> Seleccione un trabajo </option>
+                            <option *ngFor="let job of jobs" [value]="job.job"> {{ job.txt }} </option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="noEntry">No. de Entrada </label> <input formControlName="noEntry" name="noEntry" type="text" class="form-control" id="noEntry" placeholder="Ingrese el número de entrada del empleado">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="account">Cuenta </label> <input formControlName="account" name="account" type="text" class="form-control" id="account" placeholder="Ingrese el número de cuenta del empleado">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="name">Nombre </label> <input formControlName="name" name="name" type="text" class="form-control" id="name" placeholder="Ingrese el nombre del empleado">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label class="control-label" for="flatpickr01">Fecha de Entrada</label> <input formControlName="date" name="date" id="flatpickr" type="text" class="form-control">
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- .card -->
+            <div class="card card-fluid">
+                <!-- .card-body -->
+                <div class="card-body">
+
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="pay">Pago</label>
+                        <div class="input-group">
+                            <label class="input-group-prepend" for="pi9"><span class="badge">Q</span></label>
+                            <input formControlName="pay" name="pay" type="number" min="0.00" step="0.01" class="form-control" id="pay" placeholder="Ingrese el pago del empleado">
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="dpi">Dpi </label> <input formControlName="dpi" name="dpi" type="text" class="form-control" id="dpi" placeholder="Ingrese el dpi del empleado">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="address">Dirección </label> <input formControlName="address" name="address" type="text" class="form-control" id="address" placeholder="Ingrese la dirección del empleado">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="mobile">Teléfono </label> <input formControlName="mobile" name="mobile" type="text" class="form-control" id="mobile" placeholder="Ingrese el teléfono del empleado">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="igss">IGSS </label> <input formControlName="igss" name="igss" type="text" class="form-control" id="igss" placeholder="Ingrese el número de IGSS del empleado">
+                    </div>
+                    <!-- /.form-group -->
+                    <hr>
+                    <!-- /.d-flex -->
+                    <button class="btn btn-primary fa-pull-right" type="submit" id="btnEmp"><i class="fa fa-save"></i> Guardar</button>
+                    <button [routerLink]="[ '/employees' ]" type="button" class="btn btn-light fa-pull-right" data-dismiss="modal">Cancelar</button>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </form>
+    <!-- /.form -->
+    <!-- /.card-deck-xl -->
+</div>
+<!-- /.page-section -->

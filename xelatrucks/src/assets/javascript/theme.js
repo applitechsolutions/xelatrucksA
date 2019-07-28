@@ -15,8 +15,6 @@ function init_plugins() {
 
     function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-
-
     var Theme =
         /*#__PURE__*/
         function() {
@@ -56,10 +54,12 @@ function init_plugins() {
                 };
                 this.skins = ['default', 'dark']; // current skin
 
-                this.skin = localStorage.getItem('skin') || 'default'; // initialized
+                this.skin = localStorage.getItem('skin') || 'default'; // get auto initialize variable
+
+                this.autoInit = localStorage.getItem('autoInit') || true; // initialized
 
                 $(document).ready(function() {
-                    _this.init();
+                    if (_this.autoInit) _this.init();
                 });
             }
 
@@ -119,6 +119,7 @@ function init_plugins() {
                         this.sortable();
                         this.nestable();
                         this.plyr();
+                        this.bootstrapSelect();
                         this.select2();
                         this.atwho();
                         this.tribute();
@@ -129,11 +130,15 @@ function init_plugins() {
                         this.summernote();
                         this.quill();
                         this.simplemde();
-                        this.maskInput(); // handle events – how our components should react on events?
+                        this.maskInput();
+                        this.headroom();
+                        this.zxcvbn();
+                        this.aos(); // handle events – how our components should react on events?
                         // =============================================================
 
                         this.eventProps();
-                        this.watchMQ(); // utilities
+                        this.watchMQ();
+                        this.watchIE(); // utilities
                         // =============================================================
 
                         this.browserFlagging();
@@ -165,8 +170,13 @@ function init_plugins() {
                 key: "placeholderShown",
                 value: function placeholderShown() {
                         $(document).on('focus blur keyup change', '.form-label-group > input', function() {
+                            var _this2 = this;
+
                             this.classList[this.value ? 'remove' : 'add']('placeholder-shown');
-                        }); // fire .placeholder-shown for IE
+                            setTimeout(function() {
+                                console.log(_this2.autofill);
+                            }, 2000);
+                        }); // toggle .placeholder-shown onload
 
                         $('.form-label-group > input').trigger('change');
                     }
@@ -508,7 +518,7 @@ function init_plugins() {
             }, {
                 key: "invertGrays",
                 value: function invertGrays() {
-                        var _this2 = this;
+                        var _this3 = this;
 
                         var self = this;
                         var gray = this.getColors('gray'); // get gray colors in array that reserve it
@@ -516,7 +526,7 @@ function init_plugins() {
                         var reverseGray = this.objToArray(gray).reverse();
                         var x = 0;
                         $.each(gray, function(i, v) {
-                            _this2.colors.gray[i] = reverseGray[x];
+                            _this3.colors.gray[i] = reverseGray[x];
                             x++;
                         });
                     } // Theme Layout
@@ -558,7 +568,7 @@ function init_plugins() {
             }, {
                 key: "showAside",
                 value: function showAside() {
-                        var _this3 = this;
+                        var _this4 = this;
 
                         // show aside-backdrop
                         var backdrop = this.showAsideBackdrop(); // add .show class to aside
@@ -567,7 +577,7 @@ function init_plugins() {
 
                         $('[data-toggle="aside"]').addClass('active');
                         backdrop.one('click', function() {
-                            _this3.hideAside();
+                            _this4.hideAside();
                         });
                     }
                     /**
@@ -591,14 +601,14 @@ function init_plugins() {
             }, {
                 key: "aside",
                 value: function aside() {
-                        var _this4 = this;
+                        var _this5 = this;
 
                         var $trigger = $('[data-toggle="aside"]');
                         $trigger.on('click', function() {
                             var isShown = $('.app-aside').hasClass('show');
                             $trigger.toggleClass('active', !isShown);
-                            if (isShown) _this4.hideAside();
-                            else _this4.showAside();
+                            if (isShown) _this5.hideAside();
+                            else _this5.showAside();
                         });
                     }
                     /**
@@ -1173,6 +1183,30 @@ function init_plugins() {
                         };
                     }
                     /**
+                     * Handle bootstrap select initialization
+                     * See https://developer.snapappointments.com/bootstrap-select
+                     */
+
+            }, {
+                key: "bootstrapSelect",
+                value: function bootstrapSelect() {
+                        if ($.fn.selectpicker) {
+                            // use fontawesome as default icon
+                            $.fn.selectpicker.Constructor.DEFAULTS.style = '';
+                            $.fn.selectpicker.Constructor.DEFAULTS.styleBase = 'custom-select';
+                            $.fn.selectpicker.Constructor.DEFAULTS.iconBase = 'fa';
+                            $.fn.selectpicker.Constructor.DEFAULTS.tickIcon = 'fa-check font-size-sm mt-2';
+                            $('[data-toggle="selectpicker"]').each(function() {
+                                var selector = this; // initialize
+
+                                $(selector).selectpicker() // add dropdown menu arrow
+                                    .on('loaded.bs.select', function(e) {
+                                        $(e.target).nextAll('.dropdown-menu').prepend('<div class="dropdown-arrow" />');
+                                    });
+                            });
+                        }
+                    }
+                    /**
                      * Handle select2 initialization
                      * See https://select2.org/configuration/data-attributes
                      * to use select2 with data-* attributes
@@ -1275,6 +1309,7 @@ function init_plugins() {
                                 var options = $(selector).data();
                                 options.plugins = [];
                                 options.disable = options.disables || [];
+                                options.defaultDate = options.defaultDates || null; // flatpickr plugins
 
                                 if (options.confirmdate) {
                                     options.plugins.push(new confirmDatePlugin({
@@ -1287,7 +1322,14 @@ function init_plugins() {
                                 }
 
                                 if (options.monthselect) {
-                                    options.plugins.push(new monthSelect({}));
+                                    options.plugins.push(new monthSelectPlugin({
+                                        shorthand: true,
+                                        //defaults to false
+                                        dateFormat: 'm/y',
+                                        //defaults to 'F Y'
+                                        altFormat: 'F Y' //defaults to 'F Y'
+
+                                    }));
                                 }
 
                                 if (options.rangeplugin) {
@@ -1504,6 +1546,75 @@ function init_plugins() {
                                 vanillaTextMask.maskInput(options);
                             });
                         }
+                    }
+                    /*
+                     * Handle headroom.js
+                     */
+
+            }, {
+                key: "headroom",
+                value: function headroom() {
+                        if (window.Headroom) {
+                            $('[data-toggle="headroom"]').each(function() {
+                                var options = $(this).data();
+                                var headroom = new Headroom(this, options); // initialise
+
+                                headroom.init();
+                            });
+                        }
+                    }
+                    /*
+                     * Handle zxcvbn (password strength meter)
+                     */
+
+            }, {
+                key: "zxcvbn",
+                value: function(_zxcvbn) {
+                        function zxcvbn() {
+                            return _zxcvbn.apply(this, arguments);
+                        }
+
+                        zxcvbn.toString = function() {
+                            return _zxcvbn.toString();
+                        };
+
+                        return zxcvbn;
+                    }(function() {
+                        if (window.zxcvbn) {
+                            $('.form-strength-meter').each(function() {
+                                var input = this;
+                                var indicator = $(this).data('indicator');
+                                var feedback = $(this).data('indicatorFeedback');
+                                var strength = ['bg-red', 'bg-orange', 'bg-yellow', 'bg-teal', 'bg-indigo'];
+                                $(input).on('keyup', function() {
+                                    var val = input.value;
+                                    var result = zxcvbn(val);
+                                    var indicatorWidth = "".concat((result.score + 1) / strength.length * 100, "%"); // Update the password strength meter
+
+                                    if (val !== '') {
+                                        $(indicator).removeClass("d-none ".concat(strength.join(' '))).addClass("".concat(strength[result.score])).css('width', indicatorWidth);
+                                        $(feedback).html("<strong>".concat(result.feedback.warning, "</strong> ").concat(result.feedback.suggestions));
+                                    } else {
+                                        $(indicator).addClass('d-none');
+                                        $(feedback).html('');
+                                    }
+                                });
+                            });
+                        }
+                    })
+                    /*
+                     * Handle AOS
+                     */
+
+            }, {
+                key: "aos",
+                value: function aos() {
+                        if (window.AOS) {
+                            AOS.init({
+                                duration: 1000,
+                                once: true
+                            });
+                        }
                     } // Events
                     // =============================================================
 
@@ -1527,12 +1638,12 @@ function init_plugins() {
             }, {
                 key: "watchMQ",
                 value: function watchMQ() {
-                        var _this5 = this;
+                        var _this6 = this;
 
                         $(window).on('resize', function() {
                             // force close aside on toggle screen up
-                            if (_this5.isToggleScreenUp() && $('.app-aside').hasClass('has-open') && !$('.app').hasClass('has-fullwidth')) {
-                                _this5.closeAside();
+                            if (_this6.isToggleScreenUp() && $('.app-aside').hasClass('has-open') && !$('.app').hasClass('has-fullwidth')) {
+                                _this6.closeAside();
                             } // disable transition temporarily
 
 
@@ -1541,6 +1652,20 @@ function init_plugins() {
                                 $('.app-aside, .page-sidebar').removeClass('notransition');
                             }, 1);
                         });
+                    }
+                    /**
+                     * Handle IE 11 lack render
+                     */
+
+            }, {
+                key: "watchIE",
+                value: function watchIE() {
+                        if (this.isIE()) {
+                            $('.metric').each(function() {
+                                var height = $(this).height();
+                                $(this).height("".concat(height, "px"));
+                            });
+                        }
                     } // Utilities
                     // =============================================================
 
@@ -1945,7 +2070,8 @@ function init_datatables() {
                             },
                             {
                                 extend: 'pdf',
-                                text: 'PDF'
+                                text: 'PDF',
+                                download: 'open'
                             },
                             {
                                 extend: 'csv',

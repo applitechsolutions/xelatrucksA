@@ -39,6 +39,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
 import { GtripsComponent } from './gtrips/gtrips.component';
+import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { GtripsComponent } from './gtrips/gtrips.component';
         MechanicComponent,
         MaintenancesComponent,
         MaintenanceComponent,
-        GtripsComponent
+        GtripsComponent,
+        TypeMaintenancesComponent
     ],
     exports: [
         DashboardComponent,

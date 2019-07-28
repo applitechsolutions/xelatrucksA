@@ -26,6 +26,7 @@ import { MechanicComponent } from './mechanics/mechanic.component';
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
 import { GtripsComponent } from './gtrips/gtrips.component';
+import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances.component';
 
 const pagesRoutes: Routes = [
     {
@@ -168,6 +169,12 @@ const pagesRoutes: Routes = [
         component: MaintenanceComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Crear Mantenimiento' }
+    },
+    {
+        path: 'typeMaintenances',
+        component: TypeMaintenancesComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Tipos de Mantenimientos' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
 ];

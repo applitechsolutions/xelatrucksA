@@ -217,7 +217,7 @@
                                                         </table>
                                                     </div>
                                                     <!-- /.table-responsive -->
-                                                    <button type="button" class="btn btn-success btn-lg btn-block"><i class="fas fa-tools"></i> Click para iniciar con el mantenimiento</button>
+                                                    <button type="button" class="btn btn-success btn-lg btn-block"><i class="fas fa-tools"></i> Iniciar con el mantenimiento</button>
                                                 </div>
                                                 <!-- .form-group -->
                                                 <hr class="mt-5">
@@ -240,62 +240,87 @@
                                                     <!-- grid column -->
                                                     <div class="col-md-6 mb-4">
                                                         <label for="tf6">Detalles de revisión</label>
-                                                        <textarea class="form-control" id="tf6" rows="5"></textarea>
+                                                        <textarea class="form-control" id="tf6" rows="7"></textarea>
                                                     </div>
                                                     <!-- /grid column -->
                                                     <!-- grid column -->
                                                     <div class="col-md-6 mb-4">
                                                         <label for="tf6">Detalles de reparación</label>
-                                                        <textarea class="form-control" id="tf6" rows="5"></textarea>
+                                                        <textarea class="form-control" id="tf6" rows="7"></textarea>
                                                     </div>
                                                     <!-- /grid column -->
                                                 </div>
                                                 <!-- /.row -->
-                                                <!-- .form-group -->
-                                                <div class="form-group mb-4">
-                                                    <div class="form-label-group">
-                                                        <input type="text" id="address" class="form-control" name="address" value="5888 Mya Causeway" data-parsley-group="fieldset02" placeholder="Address" required=""> <label for="address">Address</label>
-                                                    </div>
-                                                    <div class="invalid-feedback"> Please enter your shipping address. </div>
-                                                </div>
-                                                <!-- /.form-group -->
-                                                <!-- .form-group -->
-                                                <div class="form-group mb-4">
-                                                    <div class="form-label-group">
-                                                        <input type="text" id="address2" class="form-control" name="address2" value="Apartment 185" placeholder="Apt. or suite"> <label for="address2">Apartment or suite <span class="badge badge-secondary"><em>Optional</em></span></label>
-                                                    </div>
-                                                </div>
-                                                <!-- /.form-group -->
-                                                <!-- .row -->
-                                                <div class="row">
-                                                    <!-- grid column -->
-                                                    <div class="col-md-3 mb-4">
-                                                        <div class="form-label-group">
-                                                            <input type="text" id="zip" class="form-control" name="zip" value="97729" data-parsley-group="fieldset02" required=""> <label for="zip">Zip</label>
+                                                <div class="card mt-4">
+                                                    <!-- .card-body -->
+                                                    <div class="card-body">
+                                                        <h2 class="card-title"> Reparación del vehículo </h2>
+                                                        <p class="text-muted"> Aquí puede agregar los repuesto utilizados. </p>
+                                                        <!-- .table-responsive -->
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover" style="min-width: 678px">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th> Repuesto </th>
+                                                                        <th> Cantidad </th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="align-middle"> Alexane Collins </td>
+                                                                        <td class="align-middle"> fhauck@gmail.com </td>
+                                                                        <td class="align-middle text-right">
+                                                                            <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                        <div class="invalid-feedback"> Zip code required. </div>
+                                                        <!-- /.table-responsive -->
                                                     </div>
-                                                    <!-- /grid column -->
-                                                    <!-- grid column -->
-                                                    <div class="col-md-5 mb-4">
-                                                        <select id="country" class="custom-select custom-select-lg d-block w-100" name="country" data-parsley-group="fieldset02" required="">
-                                                    <option value=""> Choose... </option>
-                                                    <option selected> United States </option>
-                                                  </select>
-                                                        <div class="invalid-feedback"> Please select a valid country. </div>
+                                                    <!-- /.card-body -->
+                                                    <!-- .card-footer -->
+                                                    <div class="card-footer">
+                                                        <a href="#clientContactNewModal" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
                                                     </div>
-                                                    <!-- /grid column -->
-                                                    <!-- grid column -->
-                                                    <div class="col-md-4 mb-4">
-                                                        <select id="state" class="custom-select custom-select-lg d-block w-100" name="state" data-parsley-group="fieldset02" required="">
-                                                    <option value=""> Choose... </option>
-                                                    <option selected> California </option>
-                                                  </select>
-                                                        <div class="invalid-feedback"> Please provide a valid state. </div>
-                                                    </div>
-                                                    <!-- /grid column -->
+                                                    <!-- /.card-footer -->
                                                 </div>
-                                                <!-- /.row -->
+                                                <div class="card mt-4">
+                                                    <!-- .card-body -->
+                                                    <div class="card-body">
+                                                        <h2 class="card-title"> Reparación de la gondola </h2>
+                                                        <p class="text-muted"> Aquí puede agregar los repuesto utilizados. </p>
+                                                        <!-- .table-responsive -->
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover" style="min-width: 678px">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th> Repuesto </th>
+                                                                        <th> Cantidad </th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="align-middle"> Alexane Collins </td>
+                                                                        <td class="align-middle"> fhauck@gmail.com </td>
+                                                                        <td class="align-middle text-right">
+                                                                            <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- /.table-responsive -->
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                    <!-- .card-footer -->
+                                                    <div class="card-footer">
+                                                        <a href="#clientContactNewModal" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
+                                                    </div>
+                                                    <!-- /.card-footer -->
+                                                </div>
                                                 <hr class="mt-5">
                                                 <div class="d-flex">
                                                     <button type="button" class="prev btn btn-secondary">Anterior</button> <button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset02">Siguiente</button>

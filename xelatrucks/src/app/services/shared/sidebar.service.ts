@@ -49,7 +49,8 @@ export class SidebarService {
       icono: 'menu-icon fas fa-tools',
       submenu: [
         { titulo: 'Listar Mantenimientos', url: '/maintenances' },
-        { titulo: 'Crear Mantenimiento', url: '/maintenance/new' }
+        { titulo: 'Crear Mantenimiento', url: '/maintenance/new' },
+        { titulo: 'Tipos', url: '/typeMaintenances'}
       ]
     },
     {

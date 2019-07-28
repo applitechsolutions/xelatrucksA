@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   constructor( public router: Router, public usuarioService: UserService ) { }
 
   ngOnInit() {
-    particlesJS.load('auth-header', '../../assets/javascript/pages/particles.json');
+    particlesJS.load('auth-header', '../../../assets/javascript/pages/particles.json');
     init_plugins();
     this.googleInit();
 

@@ -70,7 +70,7 @@ import { EmployeeComponent } from './employees/employee.component';
         MaintenancesComponent,
         MaintenanceComponent,
         GtripsComponent,
-        TypeMaintenancesComponent
+        TypeMaintenancesComponent,
         EmployeesComponent,
         EmployeeComponent
     ],

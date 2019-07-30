@@ -37,23 +37,11 @@
                         <a routerLink="/dashboard" routerLinkActive="active" class="menu-link"><span class="menu-icon fas fa-home"></span><span class="menu-text">Dashboard</span></a>
                     </li>
                     <!-- /.menu-item -->
-                    <!-- .menu-item -->
-                    <li *ngFor="let menu of _sidebar.menu" class="menu-item has-child pointer" routerLinkActive="has-active">
-                        <a class="menu-link"><span [class]="menu.icono"></span> <span class="menu-text">{{menu.titulo}}</span> <span class="badge badge-subtle badge-success">{{menu.submenu.length}}</span></a>
-                        <!-- child menu -->
-                        <ul class="menu">
-                            <li *ngFor="let submenu of menu.submenu" class="menu-item" routerLinkActive="has-active">
-                                <a [routerLink]="[submenu.url]" class="menu-link">{{submenu.titulo}}</a>
-                            </li>
-                        </ul>
-                        <!-- /child menu -->
-                    </li>
-                    <!-- /.menu-item -->
                     <!-- .menu-header -->
-                    <li class="menu-header">Transportes </li>
+                    <li *ngIf="_sidebar.menuTransporte.length > 0" class="menu-header">Transportes </li>
                     <!-- /.menu-header -->
                     <!-- .menu-item -->
-                    <li *ngFor="let menu of _sidebar.menuViajes" class="menu-item has-child pointer" routerLinkActive="has-active">
+                    <li *ngFor="let menu of _sidebar.menuTransporte" class="menu-item has-child pointer" routerLinkActive="has-active">
                         <a class="menu-link"><span [class]="menu.icono"></span> <span class="menu-text">{{menu.titulo}}</span> <span class="badge badge-subtle badge-success">{{menu.submenu.length}}</span></a>
                         <!-- child menu -->
                         <ul class="menu">
@@ -65,10 +53,55 @@
                     </li>
                     <!-- /.menu-item -->
                     <!-- .menu-header -->
-                    <li class="menu-header">Taller </li>
+                    <li *ngIf="_sidebar.menuTaller.length > 0" class="menu-header">Taller </li>
                     <!-- /.menu-header -->
                     <!-- .menu-item -->
                     <li *ngFor="let menu of _sidebar.menuTaller" class="menu-item has-child pointer" routerLinkActive="has-active">
+                        <a class="menu-link"><span [class]="menu.icono"></span> <span class="menu-text">{{menu.titulo}}</span> <span class="badge badge-subtle badge-success">{{menu.submenu.length}}</span></a>
+                        <!-- child menu -->
+                        <ul class="menu">
+                            <li *ngFor="let submenu of menu.submenu" class="menu-item" routerLinkActive="has-active">
+                                <a [routerLink]="[submenu.url]" class="menu-link">{{submenu.titulo}}</a>
+                            </li>
+                        </ul>
+                        <!-- /child menu -->
+                    </li>
+                    <!-- /.menu-item -->
+                    <!-- .menu-header -->
+                    <li *ngIf="_sidebar.menuDistribucion.length > 0" class="menu-header">Centro de Distribución </li>
+                    <!-- /.menu-header -->
+                    <!-- .menu-item -->
+                    <li *ngFor="let menu of _sidebar.menuDistribucion" class="menu-item has-child pointer" routerLinkActive="has-active">
+                        <a class="menu-link"><span [class]="menu.icono"></span> <span class="menu-text">{{menu.titulo}}</span> <span class="badge badge-subtle badge-success">{{menu.submenu.length}}</span></a>
+                        <!-- child menu -->
+                        <ul class="menu">
+                            <li *ngFor="let submenu of menu.submenu" class="menu-item" routerLinkActive="has-active">
+                                <a [routerLink]="[submenu.url]" class="menu-link">{{submenu.titulo}}</a>
+                            </li>
+                        </ul>
+                        <!-- /child menu -->
+                    </li>
+                    <!-- /.menu-item -->
+                    <!-- .menu-header -->
+                    <li *ngIf="_sidebar.menuContabilidad.length > 0" class="menu-header">Contabilidad </li>
+                    <!-- /.menu-header -->
+                    <!-- .menu-item -->
+                    <li *ngFor="let menu of _sidebar.menuContabilidad" class="menu-item has-child pointer" routerLinkActive="has-active">
+                        <a class="menu-link"><span [class]="menu.icono"></span> <span class="menu-text">{{menu.titulo}}</span> <span class="badge badge-subtle badge-success">{{menu.submenu.length}}</span></a>
+                        <!-- child menu -->
+                        <ul class="menu">
+                            <li *ngFor="let submenu of menu.submenu" class="menu-item" routerLinkActive="has-active">
+                                <a [routerLink]="[submenu.url]" class="menu-link">{{submenu.titulo}}</a>
+                            </li>
+                        </ul>
+                        <!-- /child menu -->
+                    </li>
+                    <!-- /.menu-item -->
+                    <!-- .menu-header -->
+                    <li *ngIf="_sidebar.menu.length > 0" class="menu-header">Administración </li>
+                    <!-- /.menu-header -->
+                    <!-- .menu-item -->
+                    <li *ngFor="let menu of _sidebar.menu" class="menu-item has-child pointer" routerLinkActive="has-active">
                         <a class="menu-link"><span [class]="menu.icono"></span> <span class="menu-text">{{menu.titulo}}</span> <span class="badge badge-subtle badge-success">{{menu.submenu.length}}</span></a>
                         <!-- child menu -->
                         <ul class="menu">

@@ -21,6 +21,7 @@ export class SidebarComponent implements OnInit {
     } else {
       this.role = 'Operativo';
     }
+    this._sidebar.cargarMenu();
   }
 
 }

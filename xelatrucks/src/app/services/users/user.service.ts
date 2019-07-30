@@ -15,6 +15,11 @@ export class UserService {
 
   usuario: User;
   token: string;
+  menuTaller: any[] = [];
+  menuTransporte: any[] = [];
+  menuDistribucion: any[] = [];
+  menuContabilidad: any[] = [];
+  menuAdmin: any[] = [];
 
   constructor(
     public http: HttpClient,
@@ -33,9 +38,9 @@ export class UserService {
     map( (resp: any) => {
       this.token = resp.token;
       localStorage.setItem('token', this.token );
-      
+
       console.log('TOKEN RENOVADO!!! XD');
-      
+
       return true;
     }), catchError((err, caught) => {
       this.Router.navigate(['/login']);
@@ -53,29 +58,59 @@ export class UserService {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token');
       this.usuario = JSON.parse(localStorage.getItem('usuario'));
+      this.menuTaller = JSON.parse(localStorage.getItem('menuTaller'));
+      this.menuTransporte = JSON.parse(localStorage.getItem('menuTransporte'));
+      this.menuDistribucion = JSON.parse(localStorage.getItem('menuDistribucion'));
+      this.menuContabilidad = JSON.parse(localStorage.getItem('menuContabilidad'));
+      this.menuAdmin = JSON.parse(localStorage.getItem('menuAdmin'));
     } else {
       this.token = '';
       this.usuario = null;
+      this.menuTaller = [];
+      this.menuTransporte = [];
+      this.menuDistribucion = [];
+      this.menuContabilidad = [];
+      this.menuAdmin = [];
     }
 
   }
-
-  guardarStorage( id: string, token: string, usuario: User) {
+  // tslint:disable-next-line: max-line-length
+  guardarStorage( id: string, token: string, usuario: User, menuTaller: any, menuTransporte: any, menuDistribucion: any, menuContabilidad: any, menuAdmin: any) {
 
     localStorage.setItem('id', id);
     localStorage.setItem('token', token );
     localStorage.setItem('usuario', JSON.stringify(usuario));
+    localStorage.setItem('menuTaller', JSON.stringify(menuTaller));
+    localStorage.setItem('menuTransporte', JSON.stringify(menuTransporte));
+    localStorage.setItem('menuDistribucion', JSON.stringify(menuDistribucion));
+    localStorage.setItem('menuContabilidad', JSON.stringify(menuContabilidad));
+    localStorage.setItem('menuAdmin', JSON.stringify(menuAdmin));
 
     this.usuario = usuario;
     this.token = token;
+    this.menuTaller = menuTaller;
+    this.menuTransporte = menuTransporte;
+    this.menuDistribucion = menuDistribucion;
+    this.menuContabilidad = menuContabilidad;
+    this.menuAdmin = menuAdmin;
   }
 
   logout() {
     this.usuario = null;
     this.token = '';
+    this.menuTaller = [];
+    this.menuTransporte = [];
+    this.menuDistribucion = [];
+    this.menuContabilidad = [];
+    this.menuAdmin = [];
 
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('menuTaller');
+    localStorage.removeItem('menuTransporte');
+    localStorage.removeItem('menuDistribucion');
+    localStorage.removeItem('menuContabilidad');
+    localStorage.removeItem('menuAdmin');
     this.Router.navigate(['/login']);
   }
 
@@ -85,7 +120,8 @@ export class UserService {
     return this.http.post(url, {token} )
       .pipe(
         map( (resp: any) => {
-          this.guardarStorage(resp.id, resp.token, resp.usuario);
+        // tslint:disable-next-line: max-line-length
+          this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menuTaller, resp.menuTransporte, resp.menuDistribucion, resp.menuContabilidad, resp.menuAdmin);
           return true;
         }),
         catchError((err, caught) => {
@@ -106,7 +142,8 @@ export class UserService {
     const url = URL_SERVICES + '/login';
     return this.http.post(url, usuario)
       .pipe( map( (resp: any) => {
-        this.guardarStorage(resp.id, resp.token, resp.usuario);
+        // tslint:disable-next-line: max-line-length
+        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menuTaller, resp.menuTransporte, resp.menuDistribucion, resp.menuContabilidad, resp.menuAdmin);
 
         return true;
       }),
@@ -142,7 +179,8 @@ export class UserService {
 
       if (usuario._id === this.usuario._id) {
         const usuarioDB: User = resp.usuario;
-        this.guardarStorage(usuarioDB._id, this.token, usuarioDB);
+        // tslint:disable-next-line: max-line-length
+        this.guardarStorage(usuarioDB._id, this.token, usuarioDB, this.menuTaller, this.menuTransporte, this.menuDistribucion, this.menuContabilidad, this.menuAdmin);
       }
 
       swal('Usuario actualizado', usuario.name + ' ' + usuario.lastName, 'success');
@@ -180,8 +218,8 @@ export class UserService {
       console.log(resp);
       this.usuario.img = resp.usuario.img;
       swal('Foto actualizada', this.usuario.name + ' ' + this.usuario.lastName, 'success');
-
-      this.guardarStorage( id, this.token, this.usuario );
+      // tslint:disable-next-line: max-line-length
+      this.guardarStorage( id, this.token, this.usuario, this.menuTaller, this.menuTransporte, this.menuDistribucion, this.menuContabilidad, this.menuAdmin);
     })
     .catch( resp => {
       console.log(resp);

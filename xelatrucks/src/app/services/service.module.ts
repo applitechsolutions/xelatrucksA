@@ -17,6 +17,7 @@ import {
   VehicleService,
   GondolaService,
   MaintenanceService,
+  TypeMaintenanceService,
   EmployeeService
 } from './service.index';
 
@@ -41,6 +42,7 @@ import {
     GondolaService,
     MaintenanceService,
     EmployeeService,
+    TypeMaintenanceService,
     VerificaTokenGuard
   ]
 })

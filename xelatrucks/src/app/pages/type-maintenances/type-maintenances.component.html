@@ -4,21 +4,24 @@
         <div class="card card-fluid">
             <!-- .card-body -->
             <div class="card-body">
-                <h4 class="card-title"> Crear nuevo </h4>
-                <h6 class="card-subtitle mb-4"> Aqui puedes crear un nuevo tipo de mantenimiento. </h6>
+                <h4 class="card-title"> Nuevo Ingreso </h4>
+                <h6 class="card-subtitle mb-4"> Aquí puedes crear o editar un tipo de mantenimiento. </h6>
                 <!-- form -->
-                <form>
+                <form ngNativeValidate [formGroup]="forma" (ngSubmit)="crearTipo()">
                     <!-- .row -->
                     <div class="row mb-3">
-                        <label for="name" class="col-lg-3 text-lg-right">Nombre <span class="badge badge-danger">Obligatorio</span></label>
+                        <label for="name" class="col-lg-3">Nombre <span class="badge badge-danger">Obligatorio</span></label>
                         <div class="col-lg-12 col-xl-12">
-                            <input type="text" id="name" name="name" class="form-control" placeholder="Ingrese un nombre" required>
+                            <input formControlName="name" type="text" id="name" name="name" class="form-control" placeholder="Ingrese un nombre" autofocus required>
                         </div>
                     </div>
                     <!-- /.row -->
                     <button class="btn btn-primary " type="submit " id="btnPart"><i class="fa fa-save "></i> Guardar</button>
                 </form>
                 <!-- /form -->
+                <hr>
+                <div *ngIf="editando" class="alert alert-danger alert-dismissible fade show">
+                    <button type="button" class="close" data-dismiss="alert">×</button> <strong>Editando!</strong> Por favor guarde los cambios para poder ingresar un nuevo tipo </div>
             </div>
             <!-- /.card-body -->
         </div>
@@ -39,47 +42,20 @@
                             <!-- thead -->
                             <thead class="thead-light">
                                 <tr>
-                                    <th style="min-width:200px"> Product </th>
-                                    <th> Variants </th>
-                                    <th> Prices </th>
+                                    <th style="min-width:200px"> Nombre </th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <!-- /thead -->
                             <!-- tbody -->
                             <tbody>
                                 <!-- tr -->
-                                <tr>
-                                    <td> Wine - Chateau Bonnet </td>
-                                    <td> 113 </td>
-                                    <td> $22.38 </td>
-                                </tr>
-                                <!-- /tr -->
-                                <!-- tr -->
-                                <tr>
-                                    <td> Cookie - Oatmeal </td>
-                                    <td> 216 </td>
-                                    <td> $21.90 </td>
-                                </tr>
-                                <!-- /tr -->
-                                <!-- tr -->
-                                <tr>
-                                    <td> True - Vue Containers </td>
-                                    <td> 191 </td>
-                                    <td> $24.96 </td>
-                                </tr>
-                                <!-- /tr -->
-                                <!-- tr -->
-                                <tr>
-                                    <td> Nut - Pumpkin Seeds </td>
-                                    <td> 329 </td>
-                                    <td> $32.21 </td>
-                                </tr>
-                                <!-- /tr -->
-                                <!-- tr -->
-                                <tr>
-                                    <td> Artichoke - Bottom, Canned </td>
-                                    <td> 375 </td>
-                                    <td> $27.75 </td>
+                                <tr *ngFor="let type of typeMaintenances">
+                                    <td> {{ type.name }}</td>
+                                    <td>
+                                        <a (click)="cargarTipo( type._id )" class="btn btn-sm btn-icon btn-secondary" alt="Editar"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Edit</span></a>
+                                        <a (click)="borrarTipo( type )" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt"></i><span class="sr-only ">Remove</span></a>
+                                    </td>
                                 </tr>
                                 <!-- /tr -->
                             </tbody>

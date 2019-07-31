@@ -62,7 +62,6 @@ export class UserComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // $('.select2').select2();
 
     this.forma = new FormGroup({
       nombre: new FormControl(null, Validators.required),

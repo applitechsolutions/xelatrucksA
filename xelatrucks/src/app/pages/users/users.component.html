@@ -50,7 +50,7 @@
                             <td>{{ usuario.lastName}}</td>
                             <td>{{ usuario.email }}</td>
                             <td>
-                                <select (change)="actualizarRol( usuario )" [(ngModel)]="usuario.role" name="role" id="role" class="form-control custom-select">
+                                <select (change)="actualizarRol( usuario )" [(ngModel)]="usuario.role" name="role" id="role" class="custom-select">
                                     <option value="ADMIN_ROLE">Administrador</option>
                                     <option value="USER_ROLE">Operativo</option>
                                 </select>
@@ -120,7 +120,7 @@
             <div class="modal-body">
                 <h5> Asignar áreas de trabajo: </h5>
                 <div class="form-group">
-                    <label class="col-form-label" for="selDefault">Área</label> <select [(ngModel)]="area._id" class="form-control custom-select" id="selDefault">
+                    <label class="col-form-label" for="selDefault">Área</label> <select [(ngModel)]="area._id" class="custom-select" id="selDefault">
                       <option value=""> Seleccione un área </option>
                       <option *ngFor="let area of areas" [value]="area._id" > {{ area.name }} </option>
                     </select>

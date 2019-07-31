@@ -11,7 +11,7 @@ export class Maintenance {
         public _user: User,
         public _vehicle: Vehicle,
         public _gondola: Gondola,
-        public dateStart: Date,
+        public dateStart?: Date,
         public dateEnd?: Date,
         public _mech?: Mechanic[],
         public detailsV?: DetailsSpare[],

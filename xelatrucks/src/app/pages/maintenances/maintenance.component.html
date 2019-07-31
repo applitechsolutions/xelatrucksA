@@ -145,10 +145,6 @@
                             <div class="card">
                                 <!-- .card-header -->
                                 <div class="card-header">
-                                    <h5 *ngIf="mantenimiento._user !== null && selected">Vehículo en mantenimiento</h5>
-                                    <p *ngIf="mantenimiento._user !== null && selected" class="text-muted"> Aquí puede consultar el estado del vehículo dentro del taller. </p>
-                                    <h5 *ngIf="mantenimiento._user === null && selected">Vehiculo disponible</h5>
-                                    <p *ngIf="mantenimiento._user === null && selected" class="text-muted"> Aqui puede ingresar el vehículo al taller para un nuevo mantenimiento. </p>
                                     <!-- .steps -->
                                     <div class="steps steps-" role="tablist">
                                         <ul>
@@ -158,9 +154,6 @@
                                             <li class="step" data-target="#test-l-2">
                                                 <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="fas fa-calendar-week"></i></span> <span class="d-none d-sm-inline">Detalles del mantenimiento</span></a>
                                             </li>
-                                            <!-- <li class="step" data-target="#test-l-3">
-                                                <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="oi oi-credit-card"></i></span> <span class="d-none d-sm-inline">Payment</span></a>
-                                            </li> -->
                                             <li class="step" data-target="#test-l-4">
                                                 <a href="#" class="step-trigger" tabindex="-1"><span class="step-indicator step-indicator-icon"><i class="fas fa-sign-out-alt"></i></span> <span class="d-none d-sm-inline">Salida </span></a>
                                             </li>
@@ -176,6 +169,23 @@
                                         <div id="test-l-1" class="content dstepper-none fade">
                                             <!-- fieldset -->
                                             <fieldset>
+                                                <h6 *ngIf="mantenimiento._user !== null && selected">Vehículo en mantenimiento</h6>
+                                                <p *ngIf="mantenimiento._user !== null && selected" class="text-muted"> Aquí puede consultar el estado del vehículo dentro del taller. </p>
+                                                <h6 *ngIf="mantenimiento._user === null && selected">Vehiculo disponible</h6>
+                                                <p *ngIf="mantenimiento._user === null && selected" class="text-muted"> Aqui puede ingresar el vehículo al taller para un nuevo mantenimiento. </p>
+                                                <div *ngIf="mantenimiento._user !== null && selected" class="list-group-item list-group-item-action">
+                                                    <div class="list-group-item-figure">
+                                                        <div class="user-avatar user-avatar-lg">
+                                                            <img [src]="lastUser.img | imagen" alt="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="list-group-item-body">
+                                                        <h3 class="list-group-item-title"> Inicio: {{ dateStart }} </h3>
+                                                        <h4 class="list-group-item-subtitle"> Usuario: {{ lastUser.name }} {{ lastUser.lastName }} </h4>
+                                                        <p class="list-group-item-text text-truncate"> Últimas modificaciones </p>
+                                                    </div>
+                                                </div>
+                                                <hr>
                                                 <div *ngIf="!selected" class="alert alert-warning has-icon" role="alert">
                                                     <div class="alert-icon">
                                                         <span class="fa fa-bullhorn"></span>
@@ -206,7 +216,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let mech of mantenimiento._mech">
+                                                                <tr *ngFor="let mech of mechanics">
                                                                     <td class="align-middle"> {{ mech.code }} </td>
                                                                     <td class="align-middle"> {{ mech.name }} </td>
                                                                     <td class="align-middle">
@@ -217,13 +227,13 @@
                                                         </table>
                                                     </div>
                                                     <!-- /.table-responsive -->
-                                                    <button type="button" class="btn btn-success btn-lg btn-block"><i class="fas fa-tools"></i> Iniciar con el mantenimiento</button>
                                                 </div>
                                                 <!-- .form-group -->
                                                 <hr class="mt-5">
                                                 <!-- .d-flex -->
                                                 <div class="d-flex">
-                                                    <p> Por favor siga los siguientes pasos para realizar un mantenimiento. </p><button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset01">Siguiente</button>
+                                                    <p> Por favor siga los siguientes pasos para realizar un mantenimiento. </p>
+                                                    <button (click)="crearMantenimiento();" type="button" class="next btn btn-success ml-auto" data-validate="fieldset01" [disabled]="!selected"><label *ngIf="mantenimiento._user !== null && selected">Siguiente</label> <label *ngIf="mantenimiento._user === null"><i class="fas fa-tools"></i> Iniciar</label></button>
                                                 </div>
                                                 <!-- /.d-flex -->
                                             </fieldset>
@@ -234,92 +244,104 @@
                                         <div id="test-l-2" class="content dstepper-none fade">
                                             <!-- fieldset -->
                                             <fieldset>
-                                                <legend>Infomación sobre el mantenimiento actual</legend>
-                                                <!-- .row -->
-                                                <div class="row">
-                                                    <!-- grid column -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <label for="tf6">Detalles de revisión</label>
-                                                        <textarea class="form-control" id="tf6" rows="7"></textarea>
-                                                    </div>
-                                                    <!-- /grid column -->
-                                                    <!-- grid column -->
-                                                    <div class="col-md-6 mb-4">
-                                                        <label for="tf6">Detalles de reparación</label>
-                                                        <textarea class="form-control" id="tf6" rows="7"></textarea>
-                                                    </div>
-                                                    <!-- /grid column -->
+                                                <div *ngIf="!selected" class="alert alert-warning has-icon" role="alert">
+                                                    <div class="alert-icon">
+                                                        <span class="fa fa-bullhorn"></span>
+                                                    </div>Seleccione un vehículo para comenzar...
                                                 </div>
-                                                <!-- /.row -->
-                                                <div class="card mt-4">
-                                                    <!-- .card-body -->
-                                                    <div class="card-body">
-                                                        <h2 class="card-title"> Reparación del vehículo </h2>
-                                                        <p class="text-muted"> Aquí puede agregar los repuesto utilizados. </p>
-                                                        <!-- .table-responsive -->
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" style="min-width: 678px">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th> Repuesto </th>
-                                                                        <th> Cantidad </th>
-                                                                        <th></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td class="align-middle"> Alexane Collins </td>
-                                                                        <td class="align-middle"> fhauck@gmail.com </td>
-                                                                        <td class="align-middle text-right">
-                                                                            <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <!-- /.table-responsive -->
-                                                    </div>
-                                                    <!-- /.card-body -->
-                                                    <!-- .card-footer -->
-                                                    <div class="card-footer">
-                                                        <a href="#clientContactNewModal" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
-                                                    </div>
-                                                    <!-- /.card-footer -->
+                                                <div *ngIf="mantenimiento._user === null && selected" class="alert alert-danger has-icon" role="alert">
+                                                    <div class="alert-icon">
+                                                        <span class="fa fa-bullhorn"></span>
+                                                    </div>Por favor inicie un nuevo mantenimiento...
                                                 </div>
-                                                <div class="card mt-4">
-                                                    <!-- .card-body -->
-                                                    <div class="card-body">
-                                                        <h2 class="card-title"> Reparación de la gondola </h2>
-                                                        <p class="text-muted"> Aquí puede agregar los repuesto utilizados. </p>
-                                                        <!-- .table-responsive -->
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover" style="min-width: 678px">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th> Repuesto </th>
-                                                                        <th> Cantidad </th>
-                                                                        <th></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td class="align-middle"> Alexane Collins </td>
-                                                                        <td class="align-middle"> fhauck@gmail.com </td>
-                                                                        <td class="align-middle text-right">
-                                                                            <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                <div *ngIf="mantenimiento._user !== null && selected">
+                                                    <legend>Infomación sobre el mantenimiento actual</legend>
+                                                    <!-- .row -->
+                                                    <div class="row">
+                                                        <!-- grid column -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <label for="tf6">Detalles de revisión</label>
+                                                            <textarea class="form-control" id="tf6" rows="7" data-parsley-group="agreement" required></textarea>
                                                         </div>
-                                                        <!-- /.table-responsive -->
+                                                        <!-- /grid column -->
+                                                        <!-- grid column -->
+                                                        <div class="col-md-6 mb-4">
+                                                            <label for="tf6">Detalles de reparación</label>
+                                                            <textarea class="form-control" id="tf6" rows="7" data-parsley-group="agreement" required></textarea>
+                                                        </div>
+                                                        <!-- /grid column -->
                                                     </div>
-                                                    <!-- /.card-body -->
-                                                    <!-- .card-footer -->
-                                                    <div class="card-footer">
-                                                        <a href="#clientContactNewModal" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
+                                                    <!-- /.row -->
+                                                    <div class="card mt-4">
+                                                        <!-- .card-body -->
+                                                        <div class="card-body">
+                                                            <h2 class="card-title"> Reparación del vehículo </h2>
+                                                            <p class="text-muted"> Aquí puede agregar los repuesto utilizados. </p>
+                                                            <!-- .table-responsive -->
+                                                            <div class="table-responsive">
+                                                                <table class="table table-hover" style="min-width: 678px">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th> Repuesto </th>
+                                                                            <th> Cantidad </th>
+                                                                            <th></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="align-middle"> Alexane Collins </td>
+                                                                            <td class="align-middle"> fhauck@gmail.com </td>
+                                                                            <td class="align-middle text-right">
+                                                                                <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!-- /.table-responsive -->
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        <!-- .card-footer -->
+                                                        <div class="card-footer">
+                                                            <a href="#clientContactNewModal" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
+                                                        </div>
+                                                        <!-- /.card-footer -->
                                                     </div>
-                                                    <!-- /.card-footer -->
+                                                    <div class="card mt-4">
+                                                        <!-- .card-body -->
+                                                        <div class="card-body">
+                                                            <h2 class="card-title"> Reparación de la gondola </h2>
+                                                            <p class="text-muted"> Aquí puede agregar los repuesto utilizados. </p>
+                                                            <!-- .table-responsive -->
+                                                            <div class="table-responsive">
+                                                                <table class="table table-hover" style="min-width: 678px">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th> Repuesto </th>
+                                                                            <th> Cantidad </th>
+                                                                            <th></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td class="align-middle"> Alexane Collins </td>
+                                                                            <td class="align-middle"> fhauck@gmail.com </td>
+                                                                            <td class="align-middle text-right">
+                                                                                <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <!-- /.table-responsive -->
+                                                        </div>
+                                                        <!-- /.card-body -->
+                                                        <!-- .card-footer -->
+                                                        <div class="card-footer">
+                                                            <a href="#clientContactNewModal" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
+                                                        </div>
+                                                        <!-- /.card-footer -->
+                                                    </div>
                                                 </div>
                                                 <hr class="mt-5">
                                                 <div class="d-flex">
@@ -330,141 +352,39 @@
                                         </div>
                                         <!-- /.content -->
                                         <!-- .content -->
-                                        <div id="test-l-3" class="content dstepper-none fade">
-                                            <!-- fieldset -->
-                                            <fieldset>
-                                                <legend>Payment Information</legend>
-                                                <!-- .custom-control -->
-                                                <div class="custom-control custom-radio mb-4">
-                                                    <input type="radio" id="pmd1" class="custom-control-input" name="paymentMethod" value="creditcard" data-parsley-group="fieldset03" required=""> <label class="custom-control-label" for="pmd1">Credit card</label>
-                                                    <!-- .custom-control-hint -->
-                                                    <div class="custom-control-hint">
-                                                        <!-- .row -->
-                                                        <div class="row">
-                                                            <!-- form col -->
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <div class="form-label-group">
-                                                                        <input type="text" id="pm1" name="ccholder" class="form-control" data-parsley-group="creditcard" placeholder="Name on card" required=""> <label for="pm1">Card holder</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- /form col -->
-                                                            <!-- form col -->
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <div class="form-label-group">
-                                                                        <input type="text" name="ccnumber" class="form-control" id="pm2" data-mask="cc" data-parsley-group="creditcard" placeholder="4242 4242 4242 4242" required=""> <label for="pm2">Card number</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- /form col -->
-                                                        </div>
-                                                        <!-- /.row -->
-                                                        <!-- .row -->
-                                                        <div class="row">
-                                                            <!-- form col -->
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <div class="form-label-group">
-                                                                        <input type="text" id="pm3" name="ccexpdate" class="form-control" data-mask="expdatecc" data-parsley-group="creditcard" placeholder="MM/YY" required=""> <label for="pm3">Exp. date</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- /form col -->
-                                                            <!-- form col -->
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <div class="form-label-group">
-                                                                        <input type="text" id="pm4" name="cccvc" class="form-control" data-mask="cvc" data-parsley-group="creditcard" placeholder="XXX" required=""> <label for="pm4">CVC</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- /form col -->
-                                                            <!-- form col -->
-                                                            <div class="col-md-6">
-                                                                <!-- you can change attribute type to type="submit" on your real project -->
-                                                                <button type="button" id="savecc" class="btn btn-lg btn-primary btn-block">Save</button>
-                                                            </div>
-                                                            <!-- /form col -->
-                                                        </div>
-                                                        <!-- /.row -->
-                                                    </div>
-                                                    <!-- /.custom-control-hint -->
-                                                </div>
-                                                <!-- /.custom-control -->
-                                                <!-- .custom-control -->
-                                                <div class="custom-control custom-radio mb-4">
-                                                    <input type="radio" id="pmd2" class="custom-control-input" name="paymentMethod" value="paypal" checked> <label class="custom-control-label" for="pmd2">Paypal</label>
-                                                    <!-- .custom-control-hint -->
-                                                    <div class="custom-control-hint">
-                                                        <div class="row">
-                                                            <div class="col-md-10 col-lg-8">
-                                                                <div class="form-group">
-                                                                    <div class="input-group h-auto">
-                                                                        <div class="form-label-group">
-                                                                            <input type="text" name="paypalid" class="form-control" value="paypal@looper.com" readonly> <label>Personal account</label>
-                                                                        </div>
-                                                                        <div class="input-group-append ml-auto">
-                                                                            <span class="input-group-text text-success"><strong>Connected</strong></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div><button class="btn btn-danger" type="button">Disconnect</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- /.custom-control-hint -->
-                                                </div>
-                                                <!-- /.custom-control -->
-                                                <!-- .custom-control -->
-                                                <div class="custom-control custom-radio mb-4">
-                                                    <input type="radio" id="pmd3" class="custom-control-input" name="paymentMethod" value="stripe"> <label class="custom-control-label" for="pmd3">Stripe</label>
-                                                    <!-- .custom-control-hint -->
-                                                    <div class="custom-control-hint">
-                                                        <button class="btn btn-primary" type="button">Connect with <strong><em>Stripe</em></strong></button>
-                                                    </div>
-                                                    <!-- /.custom-control-hint -->
-                                                </div>
-                                                <!-- /.custom-control -->
-                                                <hr class="mt-5">
-                                                <div class="d-flex">
-                                                    <button type="button" class="prev btn btn-secondary">Previous</button> <button type="button" class="next btn btn-primary ml-auto" data-validate="fieldset03">Siguiente</button>
-                                                </div>
-                                            </fieldset>
-                                            <!-- /fieldset -->
-                                        </div>
-                                        <!-- /.content -->
-                                        <!-- .content -->
                                         <div id="test-l-4" class="content dstepper-none fade">
                                             <!-- fieldset -->
                                             <fieldset>
-                                                <legend>Terms Agreement</legend>
-                                                <!-- .card -->
-                                                <div class="card bg-light">
-                                                    <div class="card-body overflow-auto" style="height: 260px">
-                                                        <p> Ad vero quidem sit magni, sed eum laudantium, alias, consequuntur commodi eveniet nesciunt debitis esse sint temporibus id magnam accusamus perferendis laborum? Nobis ducimus minus blanditiis voluptates
-                                                            et, eligendi laborum. Ea suscipit, aperiam libero id dicta quia architecto iusto tenetur, dignissimos veritatis adipisci et! Recusandae impedit repudiandae, quam sunt repellat quia iusto tempora
-                                                            temporibus alias deleniti, nulla? Laborum expedita optio quam quasi, esse magni sit tempore! </p>
-                                                        <p> Dicta asperiores ea voluptatum nihil quasi, officia tempora voluptates. Quidem reprehenderit nesciunt culpa, architecto iure, neque itaque suscipit, iusto, porro ipsum consequatur! </p>
-                                                        <p> Ad vero quidem sit magni, sed eum laudantium, alias, consequuntur commodi eveniet nesciunt debitis esse sint temporibus id magnam accusamus perferendis laborum? Nobis ducimus minus blanditiis voluptates
-                                                            et, eligendi laborum. Ea suscipit, aperiam libero id dicta quia architecto iusto tenetur, dignissimos veritatis adipisci et! Recusandae impedit repudiandae, quam sunt repellat quia iusto tempora
-                                                            temporibus alias deleniti, nulla? Laborum expedita optio quam quasi, esse magni sit tempore! </p>
-                                                        <p> Dicta asperiores ea voluptatum nihil quasi, officia tempora voluptates. Quidem reprehenderit nesciunt culpa, architecto iure, neque itaque suscipit, iusto, porro ipsum consequatur! </p>
-                                                    </div>
+                                                <div *ngIf="!selected" class="alert alert-warning has-icon" role="alert">
+                                                    <div class="alert-icon">
+                                                        <span class="fa fa-bullhorn"></span>
+                                                    </div>Seleccione un vehículo para comenzar...
                                                 </div>
-                                                <!-- /.card -->
-                                                <!-- .form-group -->
-                                                <div class="form-group">
-                                                    <!-- .custom-control -->
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" id="agreement" name="agreement" class="custom-control-input" data-parsley-group="agreement" required=""> <label class="custom-control-label" for="agreement">Agree to terms and conditions</label>
-                                                    </div>
-                                                    <!-- /.custom-control -->
+                                                <div *ngIf="mantenimiento._user === null && selected" class="alert alert-danger has-icon" role="alert">
+                                                    <div class="alert-icon">
+                                                        <span class="fa fa-bullhorn"></span>
+                                                    </div>Por favor inicie un nuevo mantenimiento...
                                                 </div>
-                                                <!-- /.form-group -->
+                                                <div *ngIf="mantenimiento._user !== null && selected">
+                                                    <legend>Finalizar Mantenimiento</legend>
+                                                    <!-- .form-group -->
+                                                    <div class="form-group">
+                                                        <label id="typeT">Tipo de mantenimiento </label>
+                                                        <select #selectT name="tipo" class="form-control select2" id="tipo" style="width:100%!important;" data-parsley-group="agreement" required>
+                                                        <option value=""> Seleccione un tipo de mantenimiento </option>
+                                                        <option *ngFor="let type of typeMaintenances" [value]="type._id"> {{ type.name }}
+                                                        </option>
+                                                    </select>
+                                                    </div>
+                                                    <!-- /.form-group -->
+                                                    <div class="alert alert-primary has-icon" role="alert">
+                                                        <div class="alert-icon">
+                                                            <span class="oi oi-info"></span>
+                                                        </div> Al finalizar el mantenimiento indica que el vehículo egresa del taller y vuelve a estar disponible... </div>
+                                                </div>
                                                 <hr class="mt-5">
                                                 <div class="d-flex">
-                                                    <button type="button" class="prev btn btn-secondary">Previous</button> <button type="submit" class="submit btn btn-primary ml-auto" data-validate="agreement">Submit</button>
+                                                    <button type="button" class="prev btn btn-secondary">Anterior</button> <button type="submit" class="submit btn btn-danger ml-auto" data-validate="agreement" [disabled]="mantenimiento._user === null || !selected"><i class="fas fa-tools"></i> Finalizar</button>
                                                 </div>
                                             </fieldset>
                                             <!-- /fieldset -->
@@ -484,9 +404,9 @@
                             <div style="position: fixed; top: 4.5rem; right: 1rem; z-index: 1050">
                                 <!-- .toast -->
                                 <div id="submitfeedback" class="toast bg-dark border-dark text-light fade hide" data-delay="3000" role="alert" aria-live="assertive" aria-atomic="true">
-                                    <div class="toast-header bg-primary text-white"> See your browser console </div>
+                                    <div class="toast-header bg-primary text-white"> Mantenimiento Terminado </div>
                                     <div class="toast-body">
-                                        <strong>Congrats!</strong> You see the submit feedback. </div>
+                                        <strong>éxito!</strong> El mantenimiento ha sido registrado con éxito. </div>
                                 </div>
                                 <!-- /.toast -->
                             </div>

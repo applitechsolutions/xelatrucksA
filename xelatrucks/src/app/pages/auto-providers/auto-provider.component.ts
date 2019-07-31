@@ -23,7 +23,6 @@ export class AutoProviderComponent implements OnInit {
     activatedRoute.params.subscribe( params => {
 
       const id = params.id;
-
       if (id !== 'new') {
         this.cargarProveedor(id);
       }
@@ -56,7 +55,7 @@ export class AutoProviderComponent implements OnInit {
         this.forma.get('account2').setValue(resp.account2);
         this.forma.get('details').setValue(resp.details);
       });
-}
+  }
 
   crearProveedor() {
       console.log(this.forma.invalid);

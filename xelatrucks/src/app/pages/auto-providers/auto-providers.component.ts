@@ -5,7 +5,6 @@ import { AutoProvider } from '../../models/autoProvider.model';
 
 declare var swal: any;
 
-
 @Component({
   selector: 'app-auto-providers',
   templateUrl: './auto-providers.component.html',

@@ -16,7 +16,7 @@ export { AutoProviderService } from './autoProviders/auto-provider.service';
 export { BuySpareService } from './buySpares/buy-spare.service';
 export { PitService } from './pits/pit.service';
 export { MaintenanceService } from './maintenances/maintenance.service';
-
+export { TypeMaintenanceService } from './typeMaintenances/type-maintenance.service';
 
 export { SubirArchivoService } from './subirArchivo/subir-archivo.service';
 export { SharedService } from './shared/shared.service';

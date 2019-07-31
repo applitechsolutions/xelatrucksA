@@ -4,6 +4,7 @@ export { VerificaTokenGuard } from './guards/verifica-token.guard';
 export { UserService } from './users/user.service';
 // VIAJES
 export { EmployeeService } from './employees/employee.service';
+export { TripService } from './trips/trip.service';
 
 // TALLER
 export { PartService } from './parts/part.service';

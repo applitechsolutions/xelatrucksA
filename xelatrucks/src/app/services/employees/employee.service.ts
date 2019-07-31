@@ -32,7 +32,20 @@ export class EmployeeService {
     let url = URL_SERVICES + '/empleado';
 
     if (empleado._id) {
-      return;
+      url += '/' + empleado._id;
+      url += '?token=' + this.userService.token;
+      return this.http.put(url, empleado)
+        .pipe(
+          map( (res: any) => {
+            const emplDB = res.empleado;
+            swal('Empleado Actualizado', emplDB.name, 'success');
+            return res.empleado;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError( err );
+          })
+        );
     } else {
       url += '?token=' + this.userService.token;
       return this.http.post(url, empleado)
@@ -49,6 +62,27 @@ export class EmployeeService {
         );
     }
 
+  }
+
+  borrarEmpleado( empleado: Employee ) {
+
+    let url = URL_SERVICES + '/empleado/delete';
+    url += '/' + empleado._id;
+    url += '?token=' + this.userService.token;
+
+    return this.http.put(url, empleado)
+      .pipe(
+        map( (res: any) => {
+          const empDB = res.empleado;
+          swal('Empleado borrado', empDB.name, 'success');
+          return res;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
+        })
+      );
   }
 
 }

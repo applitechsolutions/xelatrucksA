@@ -4,6 +4,7 @@ import { EmployeeService } from '../../services/service.index';
 import { DatatablesService } from '../../services/datatables/datatables.service';
 
 declare function init_datatables();
+declare var swal: any;
 
 @Component({
   selector: 'app-employees',
@@ -31,6 +32,40 @@ export class EmployeesComponent implements OnInit {
         this.chRef.detectChanges();
         init_datatables();
       });
+  }
+  cargarEmpleados2() {
+    this.empService.cargarEmpleados()
+      .subscribe( (res: any) => {
+        this.employees = res.empleados;
+        this.dtService.destroy_table();
+        this.chRef.detectChanges();
+        init_datatables();
+      });
+  }
+
+  borrarEmpleado( empleado: Employee ) {
+
+    console.log(empleado);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar a ' + empleado.name,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+        empleado.state = true;
+
+        this.empService.borrarEmpleado( empleado )
+          .subscribe( borrado => {
+            console.log(borrado);
+            this.cargarEmpleados2();
+          });
+      }
+
+    });
   }
 
 }

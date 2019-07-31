@@ -2058,6 +2058,13 @@ function init_datatables() {
                 key: "table",
                 value: function table() {
                     return $('#myTable').DataTable({
+                        "drawCallback": function(settings) {
+                            var api = this.api();
+
+                            // Output the data for the visible rows to the browser's console
+                            console.log(api.rows({ page: 'current' }).data());
+                        },
+                        destroy: true,
                         dom: "<'text-muted'Bi>\n        <'table-responsive'tr>\n        <'mt-4'p>",
                         buttons: [{
                                 extend: 'copyHtml5',

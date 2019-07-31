@@ -75,8 +75,6 @@ export class MechanicService {
 
   borrarMecanico( mech: Mechanic ) {
 
-    console.log(mech);
-
     let url = URL_SERVICES + '/mecanico/delete';
     url += '/' + mech._id;
     url += '?token=' + this.userService.token;

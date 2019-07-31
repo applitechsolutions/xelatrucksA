@@ -7,10 +7,10 @@
             <!-- .nav-tabs -->
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#tabNuevoRC">Nuevo Reporte Cuadros</a>
+                    <a class="nav-link active show" data-toggle="tab" href="#tabNuevoRC"><i class="fas fa-folder-plus"></i> Nuevo Reporte Cuadros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active show" data-toggle="tab" href="#tab1"><i class="fas fa-clipboard-list"></i> Listado Reporte Cuadros</a>
+                    <a class="nav-link" data-toggle="tab" href="#tab1"><i class="fas fa-clipboard-list"></i> Listado Reporte Cuadros</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#tab3">Completed</a>
@@ -35,7 +35,22 @@
                                 <div class="row">
                                     <!-- .form-group -->
                                     <div class="form-group col-2">
-                                        <label id="typeL">Empleado <span class="badge badge-danger">Obligatorio</span></label> <select #selectP formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
+                                        <label id="typeL">Empleado <span class="badge badge-danger">Obligatorio</span></label> <select #selectP name="employee" class="form-control select2" style="width:100%!important;">
+                                            <option value=""> Seleccione un empleado </option>
+                                            <option *ngFor="let empleado of employees" [value]="empleado._id"> {{ empleado.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-1">
+                                        <label>Crear Empleado</label><br>
+                                        <button [routerLink]="[ '/employee', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-2">
+                                        <label id="typeL">Tipo <span class="badge badge-danger">Obligatorio</span></label> <select #selectP name="type" class="form-control select2" style="width:100%!important;">
                                             <option value=""> Seleccione un proveedor </option>
                                             <!-- <option *ngFor="let provider of providers" [value]="provider._id"> {{ provider.name }}
                                             </option> -->
@@ -44,25 +59,64 @@
                                     <!-- /.form-group -->
                                     <!-- .form-group -->
                                     <div class="form-group col-1">
-                                        <label>Crear Empleado</label><br>
+                                        <label>Crear Tipo</label><br>
+                                        <a href="#addType" data-toggle="modal" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-2">
+                                        <label id="typeL">Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select #selectP name="employee" class="form-control select2" style="width:100%!important;">
+                                            <option value=""> Seleccione un vehículo </option>
+                                            <option *ngFor="let vehicle of vehicles" [value]="vehicle._id"> {{ vehicle.plate }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-1">
+                                        <label>Crear Vehículo</label><br>
+                                        <button [routerLink]="[ '/vehicle', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-2">
+                                        <label id="typeL">Material <span class="badge badge-danger">Obligatorio</span></label> <select #selectP name="employee" class="form-control select2" style="width:100%!important;">
+                                            <option value=""> Seleccione un proveedor </option>
+                                            <!-- <option *ngFor="let provider of providers" [value]="provider._id"> {{ provider.name }}
+                                            </option> -->
+                                        </select>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-1">
+                                        <label>Crear Material</label><br>
                                         <button [routerLink]="[ '/autoProvider', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
                                     </div>
                                     <!-- /.form-group -->
                                 </div>
                                 <div class="row">
                                     <!-- .form-group -->
-                                    <div class="form-group col-4">
-                                        <label for="noBill">No. de factura </label> <input formControlName="noBill" name="noBill" type="text" class="form-control" id="noBill" placeholder="Ingrese el número de factura">
+                                    <div class="form-group col-3">
+                                        <label class="control-label" for="flatpickr">DateTime</label> <input id="flatpickr" type="text" class="form-control">
                                     </div>
                                     <!-- /.form-group -->
                                     <!-- .form-group -->
-                                    <div class="form-group col-4">
-                                        <label for="serie">Serie </label> <input formControlName="serie" name="serie" type="text" class="form-control" id="serie" placeholder="Ingrese el número de serie de la factura">
+                                    <div class="form-group col-3">
+                                        <label class="control-label" for="flatpickr02">Hora de Entrada</label> <input id="flatpickr02" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d-m-Y H:i">
                                     </div>
                                     <!-- /.form-group -->
                                     <!-- .form-group -->
-                                    <div class="form-group col-4">
-                                        <label for="noDoc">No. de documento </label> <input formControlName="noDoc" name="noDoc" type="text" class="form-control" id="noDoc" placeholder="Ingrese un número de documento">
+                                    <div class="form-group col-3">
+                                        <label class="control-label" for="flatpickr02">Hora de Salida</label> <input id="flatpickr02" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d-m-Y H:i">
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <!-- .form-group -->
+                                    <div class="form-group col-3">
+                                        <label for="pay">Viajes</label>
+                                        <div class="input-group">
+                                            <label class="input-group-prepend" for="pi9"><span class="badge"><i class="fas fa-snowplow"></i></span></label>
+                                            <input formControlName="trips" name="trips" type="number" min="0" step="1" class="form-control" id="trips" placeholder="Ingrese el total de viajes">
+                                        </div>
                                     </div>
                                     <!-- /.form-group -->
                                 </div>
@@ -115,8 +169,8 @@
                         <!-- tbody -->
                         <tbody>
                             <!-- create empty row to passing html validator -->
-                            <tr *ngFor="let user of users">
-                                <td>{{ user.name }}</td>
+                            <tr>
+                                <td></td>
                             </tr>
                         </tbody>
                         <!-- /tbody -->
@@ -133,3 +187,45 @@
     <!-- /.card -->
 </div>
 <!-- /.page-section -->
+<!-- .modalRIM -->
+<div class="modal fade" id="addType" tabindex="-1" role="dialog" aria-labelledby="NewTypeModalLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 class="modal-title"> Crear un nuevo tipo de viaje </h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+                <form>
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="name">Viaje </label> <input name="name" type="text" class="form-control" id="name" placeholder="Ingrese el nombre del viaje">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="pay">Kilómetros</label>
+                        <div class="input-group">
+                            <label class="input-group-prepend" for="km"><span class="badge">Km</span></label>
+                            <input name="km" type="number" min="0.00" step="0.01" class="form-control" id="pay" placeholder="Ingrese los kilómetros del viaje">
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .modal-footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMR type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                    </div>
+                    <!-- /.modal-footer -->
+                </form>
+            </div>
+            <!-- /.modal-body -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modalRIM -->

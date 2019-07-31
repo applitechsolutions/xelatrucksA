@@ -61,7 +61,7 @@
                         <td> {{ employee.igss }} </td>
                         <td class="align-middle text-right">
                             <a [routerLink]="[ '/employee', employee._id ]" class=" btn btn-sm btn-icon btn-secondary " alt="Editar "><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
-                            <a class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
+                            <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="borrarEmpleado( employee )"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
                         </td>
                     </tr>
                 </tbody>

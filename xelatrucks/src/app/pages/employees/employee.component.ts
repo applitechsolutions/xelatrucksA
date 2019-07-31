@@ -25,7 +25,15 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     public empService: EmployeeService,
     public dtService: DatatablesService,
     public activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    activatedRoute.params.subscribe( params => {
+
+      const id = params.id;
+      if (id !== 'new') {
+        this.cargarEmpleado( id );
+      }
+    });
+  }
 
   ngOnInit() {
 
@@ -66,6 +74,25 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     $('.select2').on('change', (e) => this.formE.value.job = $(e.target).val());
     const today = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_datePicker(today);
+  }
+
+  cargarEmpleado( id: string ) {
+    this.empService.cargarEmpleado(id)
+      .subscribe( (res: any) => {
+        this.employee = res.empleado;
+        const fecha = this.dtService.fromJsonDate(this.employee.datestart);
+        $('.select2').val(this.employee.job).trigger('change');
+        this.formE.get('noEntry').setValue(this.employee.entry);
+        this.formE.get('account').setValue(this.employee.account);
+        this.formE.get('name').setValue(this.employee.name);
+        this.formE.get('date').setValue(fecha);
+        this.dtService.init_datePicker(fecha);
+        this.formE.get('pay').setValue(this.employee.pay);
+        this.formE.get('dpi').setValue(this.employee.dpi);
+        this.formE.get('address').setValue(this.employee.address);
+        this.formE.get('mobile').setValue(this.employee.mobile);
+        this.formE.get('igss').setValue(this.employee.igss);
+      });
   }
 
   crearEmpleado() {

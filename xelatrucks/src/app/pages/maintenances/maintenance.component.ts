@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Vehicle } from '../../models/vehicle.model';
 import { Gondola } from '../../models/gondola.model';
 import { GondolaService, VehicleService, UserService, MechanicService, MaintenanceService } from '../../services/service.index';
@@ -10,6 +10,9 @@ import { Mechanic } from '../../models/mech.model';
 import { Maintenance } from '../../models/maintenance.model';
 import { TypeMaintenance } from '../../models/typeMaintenance.model';
 import { TypeMaintenanceService } from '../../services/typeMaintenances/type-maintenance.service';
+import { DetailsSpare } from 'src/app/models/detailsSpare.model';
+import { BuySpareService } from '../../services/buySpares/buy-spare.service';
+import { PartService } from '../../services/parts/part.service';
 
 declare var swal: any;
 declare function init_step();
@@ -59,20 +62,36 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
   // Objeto de Gondola
   gondola: Gondola = { plate: '' };
 
+  // Objetos para repuestos
+  storages: Storage[] = [];
+  detailsV: DetailsSpare[] = [];
+  detailsG: DetailsSpare[] = [];
+  detail: DetailsSpare = {
+    _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
+    quantity: null,
+    cost: null
+  };
+  tempPart: string = '';
+  idCellar: string;
+
   constructor(
     public gondolaS: GondolaService,
     public vehicleS: VehicleService,
     public userS: UserService,
     public mechS: MechanicService,
     public typeS: TypeMaintenanceService,
-    public maintenanceS: MaintenanceService
+    public maintenanceS: MaintenanceService,
+    public partS: PartService,
+    public buySpareS: BuySpareService
   ) { }
 
   // Inicializar Mantenimiento
   mantenimiento: Maintenance = {
     _user: null,
     _vehicle: null,
-    _gondola: null
+    _gondola: null,
+    detailsRev: '',
+    detailsRep: ''
   };
 
   ngOnInit() {
@@ -81,12 +100,28 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     this.cargarTipos();
     this.cargarMecanicos();
     this.usuario = this.userS.usuario;
+    this.getStorages();
   }
 
   ngAfterViewInit(): void {
     init_step();
     $('.select2').select2();
   }
+
+  /* #region  REPUESTOS */
+  getStorages() {
+    this.partS.cargarRepuestos()
+      .subscribe((resp: any) => {
+        resp.repuestos
+          .map((res: any) => {
+            this.storages = res.storage;
+            this.idCellar = res._id;
+            // console.log(this.storages.map( (resp: any) => resp._autopart ));
+          });
+      });
+  }
+
+  /* #endregion */
 
   /* #region  MANTENIMIENTOS */
   cargarTipos() {
@@ -108,7 +143,6 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       swal('Oops...', 'Por favor selecciona un mecánico', 'warning');
       return;
     }
-    console.log(this.mechanics);
     if (this.mechanics.find(e => e._id === this.selectM.nativeElement.value)) {
       swal('Oops...', 'El mecánico ha sido agregado', 'warning');
       return;
@@ -120,13 +154,23 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
         state: mech.state,
         _id: mech._id
       });
+      if (this.mantenimiento._id !== null) {
+        this.mantenimiento._user = this.userS.usuario;
+        this.mantenimiento._mech = this.mechanics;
+        this.maintenanceS.crearMantenimiento(this.mantenimiento)
+          .subscribe((resp: any) => {
+            this.mantenimiento = resp.mantenimiento;
+            this.mechanics = this.mantenimiento._mech;
+            this.lastUser = this.mantenimiento._user;
+            this.dateStart = this.mantenimiento.dateStart.toString();
+          });
+      }
     }
 
   }
 
   deleteMech(id: string) {
     console.log('BORRANDO...');
-    console.log(this.mechanics);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
     const index = this.mechanics.findIndex(item => item._id === id);
 
@@ -143,7 +187,28 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           const row = this.mechanics.find(e => e._id === id);
           // ELIMINAMOS EL DETALLE en base al index encontrado
           this.mechanics.splice(index, 1);
+          if (this.mantenimiento._id !== null) {
+            this.mantenimiento._user = this.userS.usuario;
+            this.mantenimiento._mech = this.mechanics;
+            this.maintenanceS.crearMantenimiento(this.mantenimiento)
+              .subscribe((resp: any) => {
+                this.mantenimiento = resp.mantenimiento;
+                this.mechanics = this.mantenimiento._mech;
+                this.lastUser = this.mantenimiento._user;
+                this.dateStart = this.mantenimiento.dateStart.toString();
+              });
+          }
         }
+      });
+  }
+
+  updateMantenimiento() {
+    this.maintenanceS.crearMantenimiento(this.mantenimiento)
+      .subscribe((resp: any) => {
+        this.mantenimiento = resp.mantenimiento;
+        this.mechanics = this.mantenimiento._mech;
+        this.lastUser = this.mantenimiento._user;
+        this.dateStart = this.mantenimiento.dateStart.toString();
       });
   }
 
@@ -152,17 +217,18 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     if (this.mantenimiento._user !== null) {
       return;
     }
-    // const fecha = new Date();
-    // console.log(fecha);
+    const fecha = new Date();
     this.mantenimiento._user = this.userS.usuario;
     this.mantenimiento._mech = this.mechanics;
-    // this.mantenimiento.dateStart = fecha;
+    this.mantenimiento.dateStart = fecha;
 
     this.maintenanceS.crearMantenimiento(this.mantenimiento)
-    .subscribe( (resp: any) => {
-      console.log(resp);
-      this.mantenimiento = resp.mantenimiento;
-    });
+      .subscribe((resp: any) => {
+        this.mantenimiento = resp.mantenimiento;
+        this.mechanics = this.mantenimiento._mech;
+        this.lastUser = this.mantenimiento._user;
+        this.dateStart = this.mantenimiento.dateStart.toString();
+      });
   }
   /* #endregion */
 
@@ -176,20 +242,35 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
 
   seleccionarGondola(gondola: Gondola) {
     this.loading = true;
-    this.vehicle._id = null;
     this.maintenanceS.cargarActiveG(gondola._id)
       .subscribe((resp: any) => {
-        if (resp.length === 0) {
+        if (resp.mantenimiento === null) {
           this.mantenimiento = {
             _user: null,
-            _vehicle: this.vehicle,
-            _gondola: gondola
+            _vehicle: {
+              no: 0,
+              cp: '_',
+              type: '',
+              _make: { _id: '', name: '_' },
+              plate: '_',
+              model: 0,
+              state: false,
+              km: 0.00,
+              mts: 0.00,
+              _id: null
+            },
+            _gondola: gondola,
+            _id: null
           };
           this.mechanics = [];
+          this.lastUser = { name: '', email: '', password: '', role: '', state: false };
+          this.dateStart = null;
         } else {
           this.mantenimiento = resp.mantenimiento;
+          this.mechanics = this.mantenimiento._mech;
+          this.lastUser = this.mantenimiento._user;
+          this.dateStart = this.mantenimiento.dateStart.toString();
         }
-        console.log(this.mantenimiento);
       });
     this.gondola = gondola;
     this.selected = true;
@@ -217,27 +298,23 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
 
   seleccionarVehicle(vehicle: Vehicle) {
     this.loading = true;
-    this.gondola._id = null;
     this.maintenanceS.cargarActiveV(vehicle._id)
-      .subscribe( (resp: any) => {
-        if (resp.mantenimiento.length === 0) {
+      .subscribe((resp: any) => {
+        if (resp.mantenimiento === null) {
           this.mantenimiento = {
             _user: null,
             _vehicle: vehicle,
-            _gondola: this.gondola
+            _gondola: { plate: '', _id: null },
+            _id: null
           };
           this.mechanics = [];
+          this.lastUser = { name: '', email: '', password: '', role: '', state: false };
+          this.dateStart = null;
         } else {
           this.mantenimiento = resp.mantenimiento;
-          resp.mantenimiento
-          .map( (res: any) => {
-            this.mechanics = res._mech;
-            this.lastUser = res._user;
-            // this.dateStart = moment(res.dateStart).format('DD/MM/YYYY hh:mm');
-            this.dateStart = res.dateStart;
-          });
-          console.log(this.mantenimiento._id);
-          
+          this.mechanics = this.mantenimiento._mech;
+          this.lastUser = this.mantenimiento._user;
+          this.dateStart = this.mantenimiento.dateStart.toString();
         }
       });
     this.vehicle = vehicle;

@@ -180,7 +180,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="list-group-item-body">
-                                                        <h3 class="list-group-item-title"> Inicio: {{dateStart | date:'dd/MM/yyyy à HH:mm'}} </h3>
+                                                        <h3 class="list-group-item-title"> Inicio: {{dateStart | date:'dd/MM/yyyy HH:mm'}} </h3>
                                                         <h4 class="list-group-item-subtitle"> Usuario: {{ lastUser.name }} {{ lastUser.lastName }} </h4>
                                                         <p class="list-group-item-text text-truncate"> Últimas modificaciones </p>
                                                     </div>
@@ -255,24 +255,35 @@
                                                     </div>Por favor inicie un nuevo mantenimiento...
                                                 </div>
                                                 <div *ngIf="mantenimiento._user !== null && selected">
-                                                    <legend>Infomación sobre el mantenimiento actual</legend>
-                                                    <!-- .row -->
-                                                    <div class="row">
-                                                        <!-- grid column -->
-                                                        <div class="col-md-6 mb-4">
-                                                            <label for="tf6">Detalles de revisión</label>
-                                                            <textarea class="form-control" id="tf6" rows="7" data-parsley-group="agreement" required></textarea>
+                                                    <legend class="card-title">Infomación sobre el mantenimiento actual </legend>
+                                                    <div class="card">
+                                                        <!-- .card-body -->
+                                                        <div class="card-body">
+                                                            <!-- .row -->
+                                                            <div class="row">
+                                                                <!-- grid column -->
+                                                                <div class="col-md-6 mb-4">
+                                                                    <label for="tf6">Detalles de revisión</label>
+                                                                    <textarea [(ngModel)]="mantenimiento.detailsRev" name="detailsRev" class="form-control" id="tf6" rows="7" data-parsley-group="agreement" required></textarea>
+                                                                </div>
+                                                                <!-- /grid column -->
+                                                                <!-- grid column -->
+                                                                <div class="col-md-6 mb-4">
+                                                                    <label for="tf6">Detalles de reparación</label>
+                                                                    <textarea [(ngModel)]="mantenimiento.detailsRep" name="detailsRep" class="form-control" id="tf6" rows="7" data-parsley-group="agreement" required></textarea>
+                                                                </div>
+                                                                <!-- /grid column -->
+                                                            </div>
+                                                            <!-- /.row -->
                                                         </div>
-                                                        <!-- /grid column -->
-                                                        <!-- grid column -->
-                                                        <div class="col-md-6 mb-4">
-                                                            <label for="tf6">Detalles de reparación</label>
-                                                            <textarea class="form-control" id="tf6" rows="7" data-parsley-group="agreement" required></textarea>
+                                                        <!-- /.card-body -->
+                                                        <!-- .card-footer -->
+                                                        <div class="card-footer">
+                                                            <a (click)="updateMantenimiento()" href="#" class="card-footer-item" data-toggle="modal"><i class="fas fa-edit"></i> Guardar Infomación</a>
                                                         </div>
-                                                        <!-- /grid column -->
+                                                        <!-- /.card-footer -->
                                                     </div>
-                                                    <!-- /.row -->
-                                                    <div class="card mt-4">
+                                                    <div *ngIf="!isGondola" class="card mt-4">
                                                         <!-- .card-body -->
                                                         <div class="card-body">
                                                             <h2 class="card-title"> Reparación del vehículo </h2>
@@ -288,11 +299,11 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <td class="align-middle"> Alexane Collins </td>
-                                                                            <td class="align-middle"> fhauck@gmail.com </td>
-                                                                            <td class="align-middle text-right">
-                                                                                <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
+                                                                        <tr *ngFor="let det of detailsV">
+                                                                            <td class="align-middle"> {{ det._part.code + ' ' + det._part.desc }} </td>
+                                                                            <td class="align-middle"> {{ det.quantity }} </td>
+                                                                            <td class="align-middle">
+                                                                                <button (click)='quitarDetalleV( det._part._id )' type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -303,11 +314,11 @@
                                                         <!-- /.card-body -->
                                                         <!-- .card-footer -->
                                                         <div class="card-footer">
-                                                            <a href="#clientContactNewModal" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
+                                                            <a href="#addDetailV" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
                                                         </div>
                                                         <!-- /.card-footer -->
                                                     </div>
-                                                    <div class="card mt-4">
+                                                    <div *ngIf="isGondola || isTruckG" class="card mt-4">
                                                         <!-- .card-body -->
                                                         <div class="card-body">
                                                             <h2 class="card-title"> Reparación de la gondola </h2>
@@ -323,11 +334,11 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
-                                                                            <td class="align-middle"> Alexane Collins </td>
-                                                                            <td class="align-middle"> fhauck@gmail.com </td>
-                                                                            <td class="align-middle text-right">
-                                                                                <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
+                                                                        <tr *ngFor="let det of detailsG">
+                                                                            <td class="align-middle"> {{ det._part.code + ' ' + det._part.desc }} </td>
+                                                                            <td class="align-middle"> {{ det.quantity }} </td>
+                                                                            <td class="align-middle">
+                                                                                <button (click)='quitarDetalleG( det._part._id )' type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -338,7 +349,7 @@
                                                         <!-- /.card-body -->
                                                         <!-- .card-footer -->
                                                         <div class="card-footer">
-                                                            <a href="#clientContactNewModal" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
+                                                            <a href="#addDetailG" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar repuesto</a>
                                                         </div>
                                                         <!-- /.card-footer -->
                                                     </div>
@@ -439,3 +450,104 @@
     <!-- Keep in mind that modals should be placed outsite of page sidebar -->
 </div>
 <!-- /.page -->
+
+<!-- Modal Drawer Right -->
+<div class="modal modal-drawer fade" id="addDetailV" role="dialog" aria-labelledby="addDetail" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-drawer-right" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 id="exampleModalDrawerRightLabel" class="modal-title"> Vehículo </h5>
+                <h6 id="exampleModalDrawerRightLabel" class="modal-title text-muted"> Catálogo de repuestos </h6>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <form action="#">
+                <div class="modal-body">
+                    <br>
+                    <p>Aquí puede seleccionar los repuestos disponibles para agregar al mantenimiento</p><br>
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label id="typeL">Repuesto <span class="badge badge-danger">Obligatorio</span></label>
+                        <select #selectR name="part" class="form-control select2" style="width:100%!important;">
+                            <option value=""> Seleccione un repuesto </option>
+                            <option *ngFor="let storage of storages" [selected]="storage._autopart._id === tempPart" [value]="storage._autopart._id"> {{ storage._autopart.code + ' ' + storage._autopart.desc }}
+                            </option>
+                            </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group"><label for="no">Cantidad <span class="badge badge-danger">Obligatorio</span></label><input class="form-control" [(ngModel)]="detail.quantity" id="quantity" name="quantity" placeholder="Ingrese una cantidad" type="number" ng-reflect-name="quantity"
+                            required></div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <!-- <div class="form-group"><label for="cost">Costo <span class="badge badge-danger">Obligatorio</span></label><input class="form-control" [(ngModel)]="detail.cost" id="cost" name="cost" placeholder="Ingrese el costo" type="number" required></div> -->
+                    <!-- /.form-group -->
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-cart-plus"></i> Agregar</button>
+                    <br>
+                </div>
+                <!-- /.modal-body -->
+                <!-- .modal-footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                </div>
+                <!-- /.modal-footer -->
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- Modal Drawer Right -->
+<div class="modal modal-drawer fade" id="addDetailG" role="dialog" aria-labelledby="addDetail" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-drawer-right" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 id="exampleModalDrawerRightLabel" class="modal-title"> Gondola </h5>
+                <h6 id="exampleModalDrawerRightLabel" class="modal-title text-muted"> Catálogo de repuestos </h6>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <form action="#">
+                <div class="modal-body">
+                    <br>
+                    <p>Aquí puede seleccionar los repuestos disponibles para agregar al mantenimiento</p><br>
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label id="typeL">Repuesto <span class="badge badge-danger">Obligatorio</span></label>
+                        <select #selectR name="part" class="form-control select2" style="width:100%!important;">
+                                <option value=""> Seleccione un repuesto </option>
+                                <option *ngFor="let storage of storages" [selected]="storage._autopart._id === tempPart" [value]="storage._autopart._id"> {{ storage._autopart.code + ' ' + storage._autopart.desc }}
+                                </option>
+                                </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group"><label for="no">Cantidad <span class="badge badge-danger">Obligatorio</span></label><input class="form-control" [(ngModel)]="detail.quantity" id="quantity" name="quantity" placeholder="Ingrese una cantidad" type="number" ng-reflect-name="quantity"
+                            required></div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <!-- <div class="form-group"><label for="cost">Costo <span class="badge badge-danger">Obligatorio</span></label><input class="form-control" [(ngModel)]="detail.cost" id="cost" name="cost" placeholder="Ingrese el costo" type="number" required></div> -->
+                    <!-- /.form-group -->
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-cart-plus"></i> Agregar</button>
+                    <br>
+                </div>
+                <!-- /.modal-body -->
+                <!-- .modal-footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                </div>
+                <!-- /.modal-footer -->
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

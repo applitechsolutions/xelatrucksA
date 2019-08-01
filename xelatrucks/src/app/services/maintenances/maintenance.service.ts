@@ -5,7 +5,8 @@ import { URL_SERVICES } from 'src/app/config/config';
 import { map, catchError } from 'rxjs/operators';
 import { Maintenance } from '../../models/maintenance.model';
 import { throwError } from 'rxjs/internal/observable/throwError';
-import swal from 'sweetalert';
+
+declare var swal: any;
 
 @Injectable({
   providedIn: 'root'
@@ -41,9 +42,17 @@ export class MaintenanceService {
 
     if (mantenimiento._id) {
       url += '/' + mantenimiento._id + '?token=' + this.userS.token;
+      console.log('EDIT');
 
       return this.http.put(url, mantenimiento)
         .pipe( map( (resp: any) => {
+          swal({
+            title: '¡Mantenimiento actualizado!',
+            text: 'Cambios guardados correctamente',
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
           return resp;
         }),
         catchError((err, caught) => {
@@ -54,7 +63,7 @@ export class MaintenanceService {
 
     } else {
       url += '?token=' + this.userS.token;
-
+      console.log('SAVE');
       return this.http.post(url, mantenimiento)
         .pipe( map( (resp: any) => {
           swal('Mantenimiento creado', 'Vehículo ingresado al taller', 'success');

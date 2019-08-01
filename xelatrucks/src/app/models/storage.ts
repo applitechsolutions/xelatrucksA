@@ -4,7 +4,8 @@ export class Storage {
 
     constructor(
         public _autopart: Part,
-        public stock: number
+        public stock: number,
+        public cost: number,
     ) {}
 
 }

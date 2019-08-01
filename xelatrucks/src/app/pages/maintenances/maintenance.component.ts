@@ -295,7 +295,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
         this.mantenimiento.detailsG = this.detailsG;
         this.updateMantenimiento();
         // ELIMINAMOS EL DETALLE en base al index encontrado
-        this.detailsV.splice(index, 1);
+        this.detailsG.splice(index, 1);
 
       }
     });
@@ -406,6 +406,43 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
         this.dateStart = this.mantenimiento.dateStart.toString();
         this.detailsV = this.mantenimiento.detailsV;
         this.detailsG = this.mantenimiento.detailsG;
+      });
+  }
+
+  finalizarMantenimiento() {
+
+    if (this.selectT.nativeElement.value === '') {
+      swal('Oops...', 'Por favor selecciona un tipo de mantenimiento', 'warning');
+      return;
+    }
+    const fecha = new Date();
+    this.mantenimiento.typeMaintenance = this.selectT.nativeElement.value;
+    this.mantenimiento.dateEnd = fecha;
+    this.mantenimiento.state = true;
+
+    this.maintenanceS.finishMantenimiento(this.mantenimiento)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.mantenimiento = {
+          _user: null,
+          _vehicle: {
+            no: 0,
+            cp: '_',
+            type: '',
+            _make: { _id: '', name: '_' },
+            plate: '_',
+            model: 0,
+            state: false,
+            km: 0.00,
+            mts: 0.00,
+            _id: null
+          },
+          _gondola: { plate: '', _id: null },
+          _id: null
+        };
+        this.mechanics = [];
+        this.lastUser = { name: '', email: '', password: '', role: '', state: false };
+        this.dateStart = null;
       });
   }
   /* #endregion */

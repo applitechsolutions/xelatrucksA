@@ -36,6 +36,24 @@ export class MaintenanceService {
       }));
   }
 
+  finishMantenimiento( mantenimiento: Maintenance ) {
+
+    let url = URL_SERVICES + '/mantenimiento';
+
+    url += '/finish/' + mantenimiento._id + '?token=' + this.userS.token;
+    console.log('FINISH');
+    return this.http.put(url, mantenimiento)
+      .pipe( map( (resp: any) => {
+        swal('Mantenimiento finalizado', 'Vehículo egresado del taller', 'success');
+        return resp;
+      }),
+      catchError((err, caught) => {
+        console.log(err);
+        swal(err.error.mensaje, err.error.errors.message , 'error');
+        return throwError( err );
+      }));
+  }
+
   cargarTerminados() {
     const url = URL_SERVICES + '/mantenimiento/terminados';
 

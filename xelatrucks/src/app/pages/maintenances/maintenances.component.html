@@ -37,13 +37,15 @@
                             <h6 *ngFor="let mech of manten._mech">{{ mech.name }}</h6>
                         </td>
                         <td>
-                            <h6> {{ manten._vehicle.type }} {{ manten._vehicle.plate }}</h6>
+                            <h6 *ngIf="manten._vehicle === null"> N/A </h6>
+                            <h6 *ngIf="manten._vehicle !== null"> {{ manten._vehicle.type }} {{ manten._vehicle.plate }}</h6>
                         </td>
                         <td>
                             Q. {{ manten.totalV | number : '1.2-2' }}
                         </td>
                         <td>
-                            <h6> {{ manten._gondola.plate }}</h6>
+                            <h6 *ngIf="manten._gondola === null"> N/A </h6>
+                            <h6 *ngIf="manten._gondola !== null"> {{ manten._gondola.plate }}</h6>
                         </td>
                         <td>
                             Q. {{ manten.totalG | number : '1.2-2' }}
@@ -55,8 +57,8 @@
                             <h6> {{ manten.detailsRep }} </h6>
                         </td>
                         <td class="align-middle text-right">
-                            <a href="#" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#details"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
-                            <a href="#" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#details"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
+                            <a href="#" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsV"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
+                            <a href="#" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsG"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
                         </td>
                     </tr>
                 </tbody>
@@ -85,14 +87,14 @@
 <!-- /.page-section -->
 
 <!-- Large modal -->
-<div id="details" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Detalles" aria-hidden="true">
+<div id="detailsV" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Detalles" aria-hidden="true">
     <!-- .modal-dialog -->
     <div class="modal-dialog modal-lg" role="document">
         <!-- .modal-content -->
         <div class="modal-content">
             <!-- .modal-header -->
             <div class="modal-header">
-                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de compra </h5>
+                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de Vehículo </h5>
             </div>
             <!-- /.modal-header -->
             <!-- .modal-body -->
@@ -108,7 +110,64 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let detail of details">
+                        <tr *ngFor="let detail of detailsV">
+                            <td>
+                                <h6>{{ detail._part.code + ' ' + detail._part.desc }}</h6>
+                            </td>
+                            <td> {{ detail.quantity }} </td>
+                            <td>Q {{ detail.cost | number : '1.2-2' }} </td>
+                            <td>Q {{ detail.quantity * detail.cost | number : '1.2-2' }} </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th> Repuesto </th>
+                            <th> Cantidad </th>
+                            <th> Costo </th>
+                            <th> SubTotal </th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <!-- /.table -->
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-light">Cerrar</button>
+            </div>
+            <!-- /.modal-footer -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- Large modal -->
+<div id="detailsG" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Detalles" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-lg" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de Góndola </h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+                <!-- .table -->
+                <table id="table2" class="table dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th> Repuesto </th>
+                            <th> Cantidad </th>
+                            <th> Costo </th>
+                            <th> SubTotal </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let detail of detailsG">
                             <td>
                                 <h6>{{ detail._part.code + ' ' + detail._part.desc }}</h6>
                             </td>

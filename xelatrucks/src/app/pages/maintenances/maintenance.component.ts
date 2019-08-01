@@ -72,8 +72,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
   mantenimiento: Maintenance = {
     _user: null,
     _vehicle: null,
-    _gondola: null,
-    dateStart: new Date()
+    _gondola: null
   };
 
   ngOnInit() {
@@ -153,11 +152,11 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     if (this.mantenimiento._user !== null) {
       return;
     }
-    const fecha = new Date();
-    console.log(fecha);
+    // const fecha = new Date();
+    // console.log(fecha);
     this.mantenimiento._user = this.userS.usuario;
     this.mantenimiento._mech = this.mechanics;
-    this.mantenimiento.dateStart = fecha;
+    // this.mantenimiento.dateStart = fecha;
 
     this.maintenanceS.crearMantenimiento(this.mantenimiento)
     .subscribe( (resp: any) => {
@@ -184,8 +183,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           this.mantenimiento = {
             _user: null,
             _vehicle: this.vehicle,
-            _gondola: gondola,
-            dateStart: null
+            _gondola: gondola
           };
           this.mechanics = [];
         } else {
@@ -226,8 +224,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           this.mantenimiento = {
             _user: null,
             _vehicle: vehicle,
-            _gondola: this.gondola,
-            dateStart: new Date()
+            _gondola: this.gondola
           };
           this.mechanics = [];
         } else {
@@ -236,7 +233,8 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           .map( (res: any) => {
             this.mechanics = res._mech;
             this.lastUser = res._user;
-            this.dateStart = moment(res.dateStart).format('DD/MM/YYYY hh:mm');
+            // this.dateStart = moment(res.dateStart).format('DD/MM/YYYY hh:mm');
+            this.dateStart = res.dateStart;
           });
           console.log(this.mantenimiento._id);
           

@@ -180,7 +180,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="list-group-item-body">
-                                                        <h3 class="list-group-item-title"> Inicio: {{ dateStart }} </h3>
+                                                        <h3 class="list-group-item-title"> Inicio: {{dateStart | date:'dd/MM/yyyy à HH:mm'}} </h3>
                                                         <h4 class="list-group-item-subtitle"> Usuario: {{ lastUser.name }} {{ lastUser.lastName }} </h4>
                                                         <p class="list-group-item-text text-truncate"> Últimas modificaciones </p>
                                                     </div>
@@ -196,7 +196,7 @@
                                                     <!-- .form-group -->
                                                     <div class="form-group">
                                                         <label id="typeL">Mecánico </label>
-                                                        <select #selectM name="mech" class="form-control select2" style="width:100%!important;">
+                                                        <select #selectM name="mech" class="custom-select" style="width:100%!important;">
                                                             <option value=""> Seleccione un mecánico </option>
                                                             <option *ngFor="let mech of mecanicos" [value]="mech._id"> {{ mech.code + ' ' + mech.name }}
                                                             </option>

@@ -24,6 +24,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
   @ViewChild('closeP') modalClose: ElementRef;
   @ViewChild('selectR') selectR: ElementRef;
   @ViewChild('selectP') selectP: ElementRef;
+  @ViewChild('date') date: ElementRef;
 
   forma: FormGroup;
   formaR: FormGroup;
@@ -53,7 +54,6 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.forma = new FormGroup({
-      date: new FormControl(null, Validators.required),
       provider: new FormControl(''),
       noBill: new FormControl(null),
       serie: new FormControl(null),
@@ -69,6 +69,8 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
 
     this.getProviders();
     this.getStorages();
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtS.init_datePicker(today);
   }
 
   getProviders() {
@@ -187,7 +189,8 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
   crearCompra() {
 
     // SELECT VALIDATORS
-    this.forma.value.provider = this.selectP.nativeElement.value;
+    this.forma.get('provider').setValue(this.selectP.nativeElement.value);
+    const fecha = moment(this.date.nativeElement.value, 'DD/MM/YYYY').toDate();
 
     console.log(this.forma.value);
     console.log('ESTAMOS EN CREAR COMPRA');
@@ -198,7 +201,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
     }
 
     if (this.forma.invalid) {
-      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      swal('Oops...', 'Algunos campos son obligatorios invalid', 'warning');
       return;
     }
 
@@ -211,7 +214,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
 
     const buySpare = new BuySpare (
        provider,
-       moment(this.forma.value.date, 'DD/MM/YYYY').toDate(),
+       fecha.toString(),
        this.forma.value.total,
        false,
        this.forma.value.noBill,

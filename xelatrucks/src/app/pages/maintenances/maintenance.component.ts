@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Vehicle } from '../../models/vehicle.model';
 import { Gondola } from '../../models/gondola.model';
 import { GondolaService, VehicleService, UserService, MechanicService, MaintenanceService } from '../../services/service.index';
@@ -10,6 +10,9 @@ import { Mechanic } from '../../models/mech.model';
 import { Maintenance } from '../../models/maintenance.model';
 import { TypeMaintenance } from '../../models/typeMaintenance.model';
 import { TypeMaintenanceService } from '../../services/typeMaintenances/type-maintenance.service';
+import { DetailsSpare } from 'src/app/models/detailsSpare.model';
+import { BuySpareService } from '../../services/buySpares/buy-spare.service';
+import { PartService } from '../../services/parts/part.service';
 
 declare var swal: any;
 declare function init_step();
@@ -22,6 +25,8 @@ declare function init_step();
 export class MaintenanceComponent implements OnInit, AfterViewInit {
   @ViewChild('selectM') selectM: ElementRef;
   @ViewChild('selectT') selectT: ElementRef;
+  @ViewChild('selectRV') selectRV: ElementRef;
+  @ViewChild('selectRG') selectRG: ElementRef;
   public loading = false;
   select2: any;
 
@@ -59,20 +64,38 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
   // Objeto de Gondola
   gondola: Gondola = { plate: '' };
 
+  // Objetos para repuestos
+  storages: Storage[] = [];
+  detailsV: DetailsSpare[] = [];
+  detailsG: DetailsSpare[] = [];
+  detail: DetailsSpare = {
+    _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
+    quantity: null,
+    cost: null
+  };
+  tempPart: string = '';
+  idCellar: string = '';
+  totalV: number = 0;
+  totalG: number = 0;
+
   constructor(
     public gondolaS: GondolaService,
     public vehicleS: VehicleService,
     public userS: UserService,
     public mechS: MechanicService,
     public typeS: TypeMaintenanceService,
-    public maintenanceS: MaintenanceService
+    public maintenanceS: MaintenanceService,
+    public partS: PartService,
+    public buySpareS: BuySpareService
   ) { }
 
   // Inicializar Mantenimiento
   mantenimiento: Maintenance = {
     _user: null,
     _vehicle: null,
-    _gondola: null
+    _gondola: null,
+    detailsRev: '',
+    detailsRep: ''
   };
 
   ngOnInit() {
@@ -81,12 +104,204 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     this.cargarTipos();
     this.cargarMecanicos();
     this.usuario = this.userS.usuario;
+    this.getStorages();
   }
 
   ngAfterViewInit(): void {
     init_step();
     $('.select2').select2();
   }
+
+  /* #region  REPUESTOS */
+  getStorages() {
+    this.partS.cargarRepuestos()
+      .subscribe((resp: any) => {
+        resp.repuestos
+          .map((res: any) => {
+            this.storages = res.storage;
+            this.idCellar = res._id;
+            console.log(this.storages);
+            $('.select2').select2();
+            // console.log(this.storages.map( (resp: any) => resp._autopart ));
+          });
+      });
+  }
+
+  addDetailsV() {
+    if (this.selectRV.nativeElement.value === '' || this.detail.quantity === null) {
+      swal('Oops...', 'Por favor ingrese los campos obligatorios', 'warning');
+      return;
+    }
+    const part = this.storages.find(e => e._autopart._id === this.selectRV.nativeElement.value);
+    if (this.detail.quantity > part.stock) {
+      swal('Oops...', 'No hay existencias', 'warning');
+      return;
+    }
+    if (this.detailsV.find(e => e._part._id === this.selectRV.nativeElement.value)) {
+      const row = this.detailsV.find(e => e._part._id === this.selectRV.nativeElement.value);
+      const index = this.detailsV.findIndex(e => e._part._id === this.selectRV.nativeElement.value);
+      // RESTAR EL SUBTOTAL AL TOTAL DEL RESGISTRO YA EXISTENTE
+      this.mantenimiento.totalV = this.mantenimiento.totalV - (this.detail.quantity * this.detail.cost);
+      // ACTUALIZO EL STOCK PARA NO RESTARLE DOS VECES LA MISMA CANTIDAD
+      this.detail._part = row._part;
+      this.partS.stockSale(this.detail)
+      .subscribe( (resp: any) => {
+        this.getStorages();
+      });
+      // RECALCULO LA CANTIDAD Y EL SUBTOTAL
+      this.detail.quantity = row.quantity + this.detail.quantity;
+      // REMPLAZAMOS EL REPUESTO en base al index encontrado
+      this.detailsV.splice(index, 1, this.detail);
+    } else {
+      this.detail._part = part._autopart;
+      this.detail.cost = part.cost;
+      this.detailsV.push({
+      _part: this.detail._part,
+      quantity: this.detail.quantity,
+      cost: this.detail.cost
+      });
+      this.partS.stockSale(this.detail)
+      .subscribe( (resp: any) => {
+        console.log('STOCK OK');
+        this.getStorages();
+      });
+    }
+    // SUMAR AL TOTAL
+    console.log(this.detail.cost);
+    this.mantenimiento.totalV = this.mantenimiento.totalV + (this.detail.quantity * this.detail.cost);
+    console.log(this.mantenimiento.totalV);
+    this.mantenimiento._user = this.userS.usuario;
+    this.mantenimiento.detailsV = this.detailsV;
+    this.updateMantenimiento();
+    this.detail = {
+    _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
+     quantity: null,
+     cost: null
+   };
+  }
+
+  addDetailsG() {
+    if (this.selectRG.nativeElement.value === '' || this.detail.quantity === null) {
+      swal('Oops...', 'Por favor ingrese los campos obligatorios', 'warning');
+      return;
+    }
+    const part = this.storages.find(e => e._autopart._id === this.selectRG.nativeElement.value);
+    if (this.detail.quantity > part.stock) {
+      swal('Oops...', 'No hay existencias', 'warning');
+      return;
+    }
+    if (this.detailsG.find(e => e._part._id === this.selectRG.nativeElement.value)) {
+      const row = this.detailsG.find(e => e._part._id === this.selectRG.nativeElement.value);
+      const index = this.detailsG.findIndex(e => e._part._id === this.selectRG.nativeElement.value);
+      // RESTAR EL SUBTOTAL AL TOTAL DEL RESGISTRO YA EXISTENTE
+      this.mantenimiento.totalG = this.mantenimiento.totalG - (this.detail.quantity * this.detail.cost);
+      // ACTUALIZO EL STOCK PARA NO RESTARLE DOS VECES LA MISMA CANTIDAD
+      this.detail._part = row._part;
+      this.partS.stockSale(this.detail)
+      .subscribe( (resp: any) => {
+        this.getStorages();
+      });
+      // RECALCULO LA CANTIDAD Y EL SUBTOTAL
+      this.detail.quantity = row.quantity + this.detail.quantity;
+      // REMPLAZAMOS EL REPUESTO en base al index encontrado
+      this.detailsG.splice(index, 1, this.detail);
+    } else {
+      this.detail._part = part._autopart;
+      this.detail.cost = part.cost;
+      this.detailsG.push({
+      _part: this.detail._part,
+      quantity: this.detail.quantity,
+      cost: this.detail.cost
+      });
+      this.partS.stockSale(this.detail)
+      .subscribe( (resp: any) => {
+        console.log('STOCK OK');
+        this.getStorages();
+      });
+    }
+    // SUMAR AL TOTAL
+    console.log(this.detail.cost);
+    this.mantenimiento.totalG = this.mantenimiento.totalG + (this.detail.quantity * this.detail.cost);
+    console.log(this.mantenimiento.totalG);
+    this.mantenimiento._user = this.userS.usuario;
+    this.mantenimiento.detailsG = this.detailsG;
+    this.updateMantenimiento();
+    this.detail = {
+    _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
+     quantity: null,
+     cost: null
+   };
+  }
+
+  deleteDetailV( id: string ) {
+    console.log('BORRANDO...');
+    console.log(this.detailsV);
+    // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+    const index = this.detailsV.findIndex(item => item._part._id === id);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar un registro del detalle, esto afectará el registro del mantenimiento',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+        // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
+        const row = this.detailsV.find(e => e._part._id === id);
+        this.partS.stockPurchase(row)
+        .subscribe( (resp: any) => {
+          console.log('STOCK OK');
+          this.getStorages();
+        });
+        // ACTUALIZAMOS el total
+        this.mantenimiento.totalV = this.mantenimiento.totalV - (row.quantity * row.cost);
+        this.mantenimiento._user = this.userS.usuario;
+        this.mantenimiento.detailsV = this.detailsV;
+        this.updateMantenimiento();
+        // ELIMINAMOS EL DETALLE en base al index encontrado
+        this.detailsV.splice(index, 1);
+
+      }
+    });
+  }
+
+  deleteDetailG( id: string ) {
+    console.log('BORRANDO...');
+    console.log(this.detailsG);
+    // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+    const index = this.detailsG.findIndex(item => item._part._id === id);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar un registro del detalle, esto afectará el registro del mantenimiento',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+        // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
+        const row = this.detailsG.find(e => e._part._id === id);
+        this.partS.stockPurchase(row)
+        .subscribe( (resp: any) => {
+          console.log('STOCK OK');
+          this.getStorages();
+        });
+        // ACTUALIZAMOS el total
+        this.mantenimiento.totalG = this.mantenimiento.totalG - (row.quantity * row.cost);
+        this.mantenimiento._user = this.userS.usuario;
+        this.mantenimiento.detailsG = this.detailsG;
+        this.updateMantenimiento();
+        // ELIMINAMOS EL DETALLE en base al index encontrado
+        this.detailsV.splice(index, 1);
+
+      }
+    });
+  }
+
+  /* #endregion */
 
   /* #region  MANTENIMIENTOS */
   cargarTipos() {
@@ -108,7 +323,6 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       swal('Oops...', 'Por favor selecciona un mecánico', 'warning');
       return;
     }
-    console.log(this.mechanics);
     if (this.mechanics.find(e => e._id === this.selectM.nativeElement.value)) {
       swal('Oops...', 'El mecánico ha sido agregado', 'warning');
       return;
@@ -120,13 +334,17 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
         state: mech.state,
         _id: mech._id
       });
+      if (this.mantenimiento._id !== null) {
+        this.mantenimiento._user = this.userS.usuario;
+        this.mantenimiento._mech = this.mechanics;
+        this.updateMantenimiento();
+      }
     }
 
   }
 
   deleteMech(id: string) {
     console.log('BORRANDO...');
-    console.log(this.mechanics);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
     const index = this.mechanics.findIndex(item => item._id === id);
 
@@ -143,7 +361,28 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           const row = this.mechanics.find(e => e._id === id);
           // ELIMINAMOS EL DETALLE en base al index encontrado
           this.mechanics.splice(index, 1);
+          if (this.mantenimiento._id !== null) {
+            this.mantenimiento._user = this.userS.usuario;
+            this.mantenimiento._mech = this.mechanics;
+            this.maintenanceS.crearMantenimiento(this.mantenimiento)
+              .subscribe((resp: any) => {
+                this.mantenimiento = resp.mantenimiento;
+                this.mechanics = this.mantenimiento._mech;
+                this.lastUser = this.mantenimiento._user;
+                this.dateStart = this.mantenimiento.dateStart.toString();
+              });
+          }
         }
+      });
+  }
+
+  updateMantenimiento() {
+    this.maintenanceS.crearMantenimiento(this.mantenimiento)
+      .subscribe((resp: any) => {
+        this.mantenimiento = resp.mantenimiento;
+        this.mechanics = this.mantenimiento._mech;
+        this.lastUser = this.mantenimiento._user;
+        this.dateStart = this.mantenimiento.dateStart.toString();
       });
   }
 
@@ -152,17 +391,22 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     if (this.mantenimiento._user !== null) {
       return;
     }
-    // const fecha = new Date();
-    // console.log(fecha);
+    const fecha = new Date();
     this.mantenimiento._user = this.userS.usuario;
     this.mantenimiento._mech = this.mechanics;
-    // this.mantenimiento.dateStart = fecha;
+    this.mantenimiento.dateStart = fecha;
+    this.mantenimiento.totalV = 0.00;
+    this.mantenimiento.totalG = 0.00;
 
     this.maintenanceS.crearMantenimiento(this.mantenimiento)
-    .subscribe( (resp: any) => {
-      console.log(resp);
-      this.mantenimiento = resp.mantenimiento;
-    });
+      .subscribe((resp: any) => {
+        this.mantenimiento = resp.mantenimiento;
+        this.mechanics = this.mantenimiento._mech;
+        this.lastUser = this.mantenimiento._user;
+        this.dateStart = this.mantenimiento.dateStart.toString();
+        this.detailsV = this.mantenimiento.detailsV;
+        this.detailsG = this.mantenimiento.detailsG;
+      });
   }
   /* #endregion */
 
@@ -176,20 +420,37 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
 
   seleccionarGondola(gondola: Gondola) {
     this.loading = true;
-    this.vehicle._id = null;
     this.maintenanceS.cargarActiveG(gondola._id)
       .subscribe((resp: any) => {
-        if (resp.length === 0) {
+        if (resp.mantenimiento === null) {
           this.mantenimiento = {
             _user: null,
-            _vehicle: this.vehicle,
-            _gondola: gondola
+            _vehicle: {
+              no: 0,
+              cp: '_',
+              type: '',
+              _make: { _id: '', name: '_' },
+              plate: '_',
+              model: 0,
+              state: false,
+              km: 0.00,
+              mts: 0.00,
+              _id: null
+            },
+            _gondola: gondola,
+            _id: null
           };
           this.mechanics = [];
+          this.lastUser = { name: '', email: '', password: '', role: '', state: false };
+          this.dateStart = null;
         } else {
           this.mantenimiento = resp.mantenimiento;
+          this.mechanics = this.mantenimiento._mech;
+          this.lastUser = this.mantenimiento._user;
+          this.dateStart = this.mantenimiento.dateStart.toString();
+          this.detailsV = this.mantenimiento.detailsV;
+          this.detailsG = this.mantenimiento.detailsG;
         }
-        console.log(this.mantenimiento);
       });
     this.gondola = gondola;
     this.selected = true;
@@ -217,27 +478,25 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
 
   seleccionarVehicle(vehicle: Vehicle) {
     this.loading = true;
-    this.gondola._id = null;
     this.maintenanceS.cargarActiveV(vehicle._id)
-      .subscribe( (resp: any) => {
-        if (resp.mantenimiento.length === 0) {
+      .subscribe((resp: any) => {
+        if (resp.mantenimiento === null) {
           this.mantenimiento = {
             _user: null,
             _vehicle: vehicle,
-            _gondola: this.gondola
+            _gondola: { plate: '', _id: null },
+            _id: null
           };
           this.mechanics = [];
+          this.lastUser = { name: '', email: '', password: '', role: '', state: false };
+          this.dateStart = null;
         } else {
           this.mantenimiento = resp.mantenimiento;
-          resp.mantenimiento
-          .map( (res: any) => {
-            this.mechanics = res._mech;
-            this.lastUser = res._user;
-            // this.dateStart = moment(res.dateStart).format('DD/MM/YYYY hh:mm');
-            this.dateStart = res.dateStart;
-          });
-          console.log(this.mantenimiento._id);
-          
+          this.mechanics = this.mantenimiento._mech;
+          this.lastUser = this.mantenimiento._user;
+          this.dateStart = this.mantenimiento.dateStart.toString();
+          this.detailsV = this.mantenimiento.detailsV;
+          this.detailsG = this.mantenimiento.detailsG;
         }
       });
     this.vehicle = vehicle;

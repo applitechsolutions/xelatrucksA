@@ -15,6 +15,8 @@
                         <th> Descripción </th>
                         <th> Existencia Mínima</th>
                         <th> Existencia Actual</th>
+                        <th> Costo </th>
+                        <th> Subtotal </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -30,6 +32,8 @@
                         <td>
                             <h5>{{ repuesto.stock }}</h5>
                         </td>
+                        <td class="align-middle">Q {{ repuesto.cost | number : '1.2-2' }}</td>
+                        <td class="aling-middle">Q {{ repuesto.stock * repuesto.cost | number : '1.2-2' }}</td>
                         <td class="align-middle text-right">
                             <a [routerLink]="[ '/part', repuesto._autopart._id ]" class=" btn btn-sm btn-icon btn-secondary " alt="Editar "><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
                             <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="borrarRepuesto( repuesto )"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
@@ -42,6 +46,8 @@
                         <th> Descripción </th>
                         <th> Existencia Mínima</th>
                         <th> Existencia </th>
+                        <th> Costo </th>
+                        <th> Subtotal </th>
                         <th></th>
                     </tr>
                 </tfoot>

@@ -47,7 +47,8 @@ export class PartsComponent implements OnInit {
       if (repuestos._autopart !== repuesto._autopart) {
         newRepuestos.push({
           _id: repuestos._autopart._id,
-          stock: repuestos.stock
+          stock: repuestos.stock,
+          cost: repuestos.cost
         });
       }
     });

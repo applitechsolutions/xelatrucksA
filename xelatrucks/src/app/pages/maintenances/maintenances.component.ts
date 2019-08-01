@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MaintenanceService } from '../../services/service.index';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { MaintenanceService, DatatablesService } from '../../services/service.index';
 import { Maintenance } from 'src/app/models/maintenance.model';
 import { DetailsSpare } from '../../models/detailsSpare.model';
 
@@ -15,7 +15,9 @@ export class MaintenancesComponent implements OnInit {
   detailsG: DetailsSpare[] = [];
 
   constructor(
-    public mainService: MaintenanceService
+    public mainService: MaintenanceService,
+    public dtS: DatatablesService,
+    private chRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -28,6 +30,24 @@ export class MaintenancesComponent implements OnInit {
         this.detailsG = res.mantenimientos.detailsG;
 
       });
+  }
+
+  verDetallesV( maintenance: Maintenance ) {
+    this.dtS.destroy_table2();
+
+    this.detailsV = maintenance.detailsV;
+
+    this.chRef.detectChanges();
+    this.dtS.init_tables2();
+  }
+
+  verDetallesG( maintenance: Maintenance ) {
+    this.dtS.destroy_table2();
+
+    this.detailsG = maintenance.detailsG;
+
+    this.chRef.detectChanges();
+    this.dtS.init_tables2();
   }
 
 }

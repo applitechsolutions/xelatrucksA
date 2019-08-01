@@ -335,6 +335,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.cargarRims();
     this.cargarHistorialPits(vehicle._id, false);
     this.vehicle = vehicle;
+    console.log(this.vehicle);
     this.selected = true;
     this.pits = vehicle.pits;
     this.basics = vehicle.basics;

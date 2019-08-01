@@ -129,6 +129,12 @@ export class DatatablesService {
     });
   }
 
+  init_datePicker2() {
+    flatpickr('#flatpickr02', {
+      locale: Spanish
+    });
+  }
+
   fromJsonDate(jDate): string {
 
     const bDate: Date = new Date(jDate);

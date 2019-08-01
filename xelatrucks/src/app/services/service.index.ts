@@ -5,6 +5,7 @@ export { UserService } from './users/user.service';
 // VIAJES
 export { EmployeeService } from './employees/employee.service';
 export { TripService } from './trips/trip.service';
+export { MaterialService } from './materials/material.service';
 
 // TALLER
 export { PartService } from './parts/part.service';
@@ -21,3 +22,4 @@ export { TypeMaintenanceService } from './typeMaintenances/type-maintenance.serv
 export { SubirArchivoService } from './subirArchivo/subir-archivo.service';
 export { SharedService } from './shared/shared.service';
 export { SidebarService } from './shared/sidebar.service';
+

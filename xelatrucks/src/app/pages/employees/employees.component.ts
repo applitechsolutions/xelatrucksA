@@ -30,16 +30,7 @@ export class EmployeesComponent implements OnInit {
       .subscribe( (res: any) => {
         this.employees = res.empleados;
         this.chRef.detectChanges();
-        init_datatables();
-      });
-  }
-  cargarEmpleados2() {
-    this.empService.cargarEmpleados()
-      .subscribe( (res: any) => {
-        this.employees = res.empleados;
-        this.dtService.destroy_table();
-        this.chRef.detectChanges();
-        init_datatables();
+        this.dtService.init_tables();
       });
   }
 
@@ -60,8 +51,8 @@ export class EmployeesComponent implements OnInit {
 
         this.empService.borrarEmpleado( empleado )
           .subscribe( borrado => {
-            console.log(borrado);
-            this.cargarEmpleados2();
+            this.dtService.destroy_table();
+            this.cargarEmpleados();
           });
       }
 

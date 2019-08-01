@@ -54,6 +54,12 @@ export class MaintenanceService {
       }));
   }
 
+  cargarTerminados() {
+    const url = URL_SERVICES + '/mantenimiento/terminados';
+
+    return this.http.get(url);
+  }
+
   crearMantenimiento( mantenimiento: Maintenance ) {
 
     let url = URL_SERVICES + '/mantenimiento';

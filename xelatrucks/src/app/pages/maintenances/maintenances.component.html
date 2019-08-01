@@ -1,1 +1,142 @@
-<h1> maintenances works</h1>
+<!-- floating action -->
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/maintenance', 'new']"><span class="fa fa-plus"></span></button>
+<!-- /floating action -->
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .card -->
+    <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+            <!-- .table -->
+            <table id="table1" class="table dt-responsive nowrap w-100">
+                <thead>
+                    <tr>
+                        <th> Fecha de Inicio </th>
+                        <th> Fecha final </th>
+                        <th> Usuario </th>
+                        <th> Mecánico </th>
+                        <th> Vehículo </th>
+                        <th> Total de Vehículo </th>
+                        <th> Góndola </th>
+                        <th> Total de Góndola </th>
+                        <th> Detalle de Revisión </th>
+                        <th> Detalle de Reparación </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let manten of maintenances">
+                        <td>
+                            <h6>{{ manten.dateStart | date: 'dd/MM/yyyy' }}</h6>
+                        </td>
+                        <td>
+                            <h6>{{ manten.dateEnd | date: 'dd/MM/yyyy' }}</h6>
+                        </td>
+                        <td> {{ manten._user.name }} </td>
+                        <td>
+                            <h6 *ngFor="let mech of manten._mech">{{ mech.name }}</h6>
+                        </td>
+                        <td>
+                            <h6> {{ manten._vehicle.type }} {{ manten._vehicle.plate }}</h6>
+                        </td>
+                        <td>
+                            Q. {{ manten.totalV | number : '1.2-2' }}
+                        </td>
+                        <td>
+                            <h6> {{ manten._gondola.plate }}</h6>
+                        </td>
+                        <td>
+                            Q. {{ manten.totalG | number : '1.2-2' }}
+                        </td>
+                        <td>
+                            <h6> {{ manten.detailsRev }} </h6>
+                        </td>
+                        <td>
+                            <h6> {{ manten.detailsRep }} </h6>
+                        </td>
+                        <td class="align-middle text-right">
+                            <a href="#" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#details"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
+                            <a href="#" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#details"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th> Fecha de Inicio </th>
+                        <th> Fecha final </th>
+                        <th> Usuario </th>
+                        <th> Mecánico </th>
+                        <th> Vehículo </th>
+                        <th> Total de Vehículo </th>
+                        <th> Góndola </th>
+                        <th> Total de Góndola </th>
+                        <th> Detalle de Revisión </th>
+                        <th> Detalle de Reparación </th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.page-section -->
+
+<!-- Large modal -->
+<div id="details" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Detalles" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-lg" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de compra </h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+                <!-- .table -->
+                <table id="table2" class="table dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th> Repuesto </th>
+                            <th> Cantidad </th>
+                            <th> Costo </th>
+                            <th> SubTotal </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let detail of details">
+                            <td>
+                                <h6>{{ detail._part.code + ' ' + detail._part.desc }}</h6>
+                            </td>
+                            <td> {{ detail.quantity }} </td>
+                            <td>Q {{ detail.cost | number : '1.2-2' }} </td>
+                            <td>Q {{ detail.quantity * detail.cost | number : '1.2-2' }} </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th> Repuesto </th>
+                            <th> Cantidad </th>
+                            <th> Costo </th>
+                            <th> SubTotal </th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <!-- /.table -->
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-light">Cerrar</button>
+            </div>
+            <!-- /.modal-footer -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

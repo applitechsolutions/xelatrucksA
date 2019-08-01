@@ -3,7 +3,6 @@ import { Vehicle } from './vehicle.model';
 import { Gondola } from './gondola.model';
 import { Mechanic } from './mech.model';
 import { DetailsSpare } from './detailsSpare.model';
-import { TypeMaintenance } from './typeMaintenance.model';
 
 export class Maintenance {
 
@@ -20,7 +19,7 @@ export class Maintenance {
         public totalG?: number,
         public detailsRev?: string,
         public detailsRep?: string,
-        public typeMaintenance?: TypeMaintenance,
+        public typeMaintenance?: string,
         public state?: boolean,
         public _id?: string,
     ) {}

@@ -125,9 +125,6 @@
                     <li *ngIf="selected" class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#terminados"> Mantenimientos Terminados</a>
                     </li>
-                    <li *ngIf="selected" class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#aprobados">Mantenimientos Aprobados</a>
-                    </li>
                 </ul>
                 <!-- /.nav-tabs -->
             </div>
@@ -381,7 +378,7 @@
                                                     <!-- .form-group -->
                                                     <div class="form-group">
                                                         <label id="typeT">Tipo de mantenimiento </label>
-                                                        <select #selectT name="tipo" class="form-control select2" id="tipo" style="width:100%!important;" data-parsley-group="agreement" required>
+                                                        <select #selectT name="tipo" class="custom-select" style="width:100%!important;" required>
                                                         <option value=""> Seleccione un tipo de mantenimiento </option>
                                                         <option *ngFor="let type of typeMaintenances" [value]="type._id"> {{ type.name }}
                                                         </option>
@@ -395,7 +392,7 @@
                                                 </div>
                                                 <hr class="mt-5">
                                                 <div class="d-flex">
-                                                    <button type="button" class="prev btn btn-secondary">Anterior</button> <button type="submit" class="submit btn btn-danger ml-auto" data-validate="agreement" [disabled]="mantenimiento._user === null || !selected"><i class="fas fa-tools"></i> Finalizar</button>
+                                                    <button type="button" class="prev btn btn-secondary">Anterior</button> <button (click)="finalizarMantenimiento()" type="submit" class="submit btn btn-danger ml-auto" [disabled]="mantenimiento._user === null || !selected"><i class="fas fa-tools"></i> Finalizar</button>
                                                 </div>
                                             </fieldset>
                                             <!-- /fieldset -->
@@ -430,11 +427,7 @@
                 <!-- .tab-pane -->
                 <div class="tab-pane fade" id="terminados" role="tabpanel" aria-labelledby="client-billing-contact-tab">
                     <h6>Mantenimientos terminados</h6>
-                </div>
-                <!-- /.tab-pane -->
-                <!-- .tab-pane -->
-                <div class="tab-pane fade" id="aprobados" role="tabpanel" aria-labelledby="client-billing-contact-tab">
-                    <h6>Mantenimientos Aprobados</h6>
+                    <h6 class=" text-muted"> Próximamente…</h6>
                 </div>
                 <!-- /.tab-pane -->
                 <ng-template #customLoadingTemplate>

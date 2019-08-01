@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { UserService } from '../users/user.service';
 import { AutoCellar } from '../../models/autoCellar';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import { DetailsSpare } from '../../models/detailsSpare.model';
 
 declare var swal: any;
 
@@ -37,6 +38,46 @@ export class PartService {
         })
       );
   }
+
+      // ACTUALIZAR STOCK PURCHASE
+
+      stockPurchase( storage: DetailsSpare ) {
+
+        let url = URL_SERVICES + '/repuesto/purchase/';
+        url += '?token=' + this.userS.token;
+
+        return this.http.put(url, storage)
+          .pipe(
+            map( (resp: any) => {
+              return resp;
+            }),
+            catchError((err, caught) => {
+              console.log(err);
+              swal(err.error.mensaje, err.error.errors.message , 'error');
+              return throwError( err );
+            })
+          );
+      }
+
+    // ACTUALIZAR STOCK SALE
+
+    stockSale( storage: DetailsSpare ) {
+
+      let url = URL_SERVICES + '/repuesto/sale/';
+      url += '?token=' + this.userS.token;
+
+      return this.http.put(url, storage)
+        .pipe(
+          map( (resp: any) => {
+            return resp;
+          }),
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message , 'error');
+            return throwError( err );
+          })
+        );
+    }
 
   crearRepuesto( part: Part ) {
 

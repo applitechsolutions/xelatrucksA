@@ -25,6 +25,8 @@ declare function init_step();
 export class MaintenanceComponent implements OnInit, AfterViewInit {
   @ViewChild('selectM') selectM: ElementRef;
   @ViewChild('selectT') selectT: ElementRef;
+  @ViewChild('selectRV') selectRV: ElementRef;
+  @ViewChild('selectRG') selectRG: ElementRef;
   public loading = false;
   select2: any;
 
@@ -72,7 +74,9 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     cost: null
   };
   tempPart: string = '';
-  idCellar: string;
+  idCellar: string = '';
+  totalV: number = 0;
+  totalG: number = 0;
 
   constructor(
     public gondolaS: GondolaService,
@@ -116,9 +120,185 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           .map((res: any) => {
             this.storages = res.storage;
             this.idCellar = res._id;
+            console.log(this.storages);
+            $('.select2').select2();
             // console.log(this.storages.map( (resp: any) => resp._autopart ));
           });
       });
+  }
+
+  addDetailsV() {
+    if (this.selectRV.nativeElement.value === '' || this.detail.quantity === null) {
+      swal('Oops...', 'Por favor ingrese los campos obligatorios', 'warning');
+      return;
+    }
+    const part = this.storages.find(e => e._autopart._id === this.selectRV.nativeElement.value);
+    if (this.detail.quantity > part.stock) {
+      swal('Oops...', 'No hay existencias', 'warning');
+      return;
+    }
+    if (this.detailsV.find(e => e._part._id === this.selectRV.nativeElement.value)) {
+      const row = this.detailsV.find(e => e._part._id === this.selectRV.nativeElement.value);
+      const index = this.detailsV.findIndex(e => e._part._id === this.selectRV.nativeElement.value);
+      // RESTAR EL SUBTOTAL AL TOTAL DEL RESGISTRO YA EXISTENTE
+      this.mantenimiento.totalV = this.mantenimiento.totalV - (this.detail.quantity * this.detail.cost);
+      // ACTUALIZO EL STOCK PARA NO RESTARLE DOS VECES LA MISMA CANTIDAD
+      this.detail._part = row._part;
+      this.partS.stockSale(this.detail)
+      .subscribe( (resp: any) => {
+        this.getStorages();
+      });
+      // RECALCULO LA CANTIDAD Y EL SUBTOTAL
+      this.detail.quantity = row.quantity + this.detail.quantity;
+      // REMPLAZAMOS EL REPUESTO en base al index encontrado
+      this.detailsV.splice(index, 1, this.detail);
+    } else {
+      this.detail._part = part._autopart;
+      this.detail.cost = part.cost;
+      this.detailsV.push({
+      _part: this.detail._part,
+      quantity: this.detail.quantity,
+      cost: this.detail.cost
+      });
+      this.partS.stockSale(this.detail)
+      .subscribe( (resp: any) => {
+        console.log('STOCK OK');
+        this.getStorages();
+      });
+    }
+    // SUMAR AL TOTAL
+    console.log(this.detail.cost);
+    this.mantenimiento.totalV = this.mantenimiento.totalV + (this.detail.quantity * this.detail.cost);
+    console.log(this.mantenimiento.totalV);
+    this.mantenimiento._user = this.userS.usuario;
+    this.mantenimiento.detailsV = this.detailsV;
+    this.updateMantenimiento();
+    this.detail = {
+    _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
+     quantity: null,
+     cost: null
+   };
+  }
+
+  addDetailsG() {
+    if (this.selectRG.nativeElement.value === '' || this.detail.quantity === null) {
+      swal('Oops...', 'Por favor ingrese los campos obligatorios', 'warning');
+      return;
+    }
+    const part = this.storages.find(e => e._autopart._id === this.selectRG.nativeElement.value);
+    if (this.detail.quantity > part.stock) {
+      swal('Oops...', 'No hay existencias', 'warning');
+      return;
+    }
+    if (this.detailsG.find(e => e._part._id === this.selectRG.nativeElement.value)) {
+      const row = this.detailsG.find(e => e._part._id === this.selectRG.nativeElement.value);
+      const index = this.detailsG.findIndex(e => e._part._id === this.selectRG.nativeElement.value);
+      // RESTAR EL SUBTOTAL AL TOTAL DEL RESGISTRO YA EXISTENTE
+      this.mantenimiento.totalG = this.mantenimiento.totalG - (this.detail.quantity * this.detail.cost);
+      // ACTUALIZO EL STOCK PARA NO RESTARLE DOS VECES LA MISMA CANTIDAD
+      this.detail._part = row._part;
+      this.partS.stockSale(this.detail)
+      .subscribe( (resp: any) => {
+        this.getStorages();
+      });
+      // RECALCULO LA CANTIDAD Y EL SUBTOTAL
+      this.detail.quantity = row.quantity + this.detail.quantity;
+      // REMPLAZAMOS EL REPUESTO en base al index encontrado
+      this.detailsG.splice(index, 1, this.detail);
+    } else {
+      this.detail._part = part._autopart;
+      this.detail.cost = part.cost;
+      this.detailsG.push({
+      _part: this.detail._part,
+      quantity: this.detail.quantity,
+      cost: this.detail.cost
+      });
+      this.partS.stockSale(this.detail)
+      .subscribe( (resp: any) => {
+        console.log('STOCK OK');
+        this.getStorages();
+      });
+    }
+    // SUMAR AL TOTAL
+    console.log(this.detail.cost);
+    this.mantenimiento.totalG = this.mantenimiento.totalG + (this.detail.quantity * this.detail.cost);
+    console.log(this.mantenimiento.totalG);
+    this.mantenimiento._user = this.userS.usuario;
+    this.mantenimiento.detailsG = this.detailsG;
+    this.updateMantenimiento();
+    this.detail = {
+    _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
+     quantity: null,
+     cost: null
+   };
+  }
+
+  deleteDetailV( id: string ) {
+    console.log('BORRANDO...');
+    console.log(this.detailsV);
+    // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+    const index = this.detailsV.findIndex(item => item._part._id === id);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar un registro del detalle, esto afectará el registro del mantenimiento',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+        // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
+        const row = this.detailsV.find(e => e._part._id === id);
+        this.partS.stockPurchase(row)
+        .subscribe( (resp: any) => {
+          console.log('STOCK OK');
+          this.getStorages();
+        });
+        // ACTUALIZAMOS el total
+        this.mantenimiento.totalV = this.mantenimiento.totalV - (row.quantity * row.cost);
+        this.mantenimiento._user = this.userS.usuario;
+        this.mantenimiento.detailsV = this.detailsV;
+        this.updateMantenimiento();
+        // ELIMINAMOS EL DETALLE en base al index encontrado
+        this.detailsV.splice(index, 1);
+
+      }
+    });
+  }
+
+  deleteDetailG( id: string ) {
+    console.log('BORRANDO...');
+    console.log(this.detailsG);
+    // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
+    const index = this.detailsG.findIndex(item => item._part._id === id);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar un registro del detalle, esto afectará el registro del mantenimiento',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+        // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
+        const row = this.detailsG.find(e => e._part._id === id);
+        this.partS.stockPurchase(row)
+        .subscribe( (resp: any) => {
+          console.log('STOCK OK');
+          this.getStorages();
+        });
+        // ACTUALIZAMOS el total
+        this.mantenimiento.totalG = this.mantenimiento.totalG - (row.quantity * row.cost);
+        this.mantenimiento._user = this.userS.usuario;
+        this.mantenimiento.detailsG = this.detailsG;
+        this.updateMantenimiento();
+        // ELIMINAMOS EL DETALLE en base al index encontrado
+        this.detailsV.splice(index, 1);
+
+      }
+    });
   }
 
   /* #endregion */
@@ -157,13 +337,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       if (this.mantenimiento._id !== null) {
         this.mantenimiento._user = this.userS.usuario;
         this.mantenimiento._mech = this.mechanics;
-        this.maintenanceS.crearMantenimiento(this.mantenimiento)
-          .subscribe((resp: any) => {
-            this.mantenimiento = resp.mantenimiento;
-            this.mechanics = this.mantenimiento._mech;
-            this.lastUser = this.mantenimiento._user;
-            this.dateStart = this.mantenimiento.dateStart.toString();
-          });
+        this.updateMantenimiento();
       }
     }
 
@@ -221,6 +395,8 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     this.mantenimiento._user = this.userS.usuario;
     this.mantenimiento._mech = this.mechanics;
     this.mantenimiento.dateStart = fecha;
+    this.mantenimiento.totalV = 0.00;
+    this.mantenimiento.totalG = 0.00;
 
     this.maintenanceS.crearMantenimiento(this.mantenimiento)
       .subscribe((resp: any) => {
@@ -228,6 +404,8 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
         this.mechanics = this.mantenimiento._mech;
         this.lastUser = this.mantenimiento._user;
         this.dateStart = this.mantenimiento.dateStart.toString();
+        this.detailsV = this.mantenimiento.detailsV;
+        this.detailsG = this.mantenimiento.detailsG;
       });
   }
   /* #endregion */
@@ -270,6 +448,8 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           this.mechanics = this.mantenimiento._mech;
           this.lastUser = this.mantenimiento._user;
           this.dateStart = this.mantenimiento.dateStart.toString();
+          this.detailsV = this.mantenimiento.detailsV;
+          this.detailsG = this.mantenimiento.detailsG;
         }
       });
     this.gondola = gondola;
@@ -315,6 +495,8 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           this.mechanics = this.mantenimiento._mech;
           this.lastUser = this.mantenimiento._user;
           this.dateStart = this.mantenimiento.dateStart.toString();
+          this.detailsV = this.mantenimiento.detailsV;
+          this.detailsG = this.mantenimiento.detailsG;
         }
       });
     this.vehicle = vehicle;

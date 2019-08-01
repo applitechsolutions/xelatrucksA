@@ -303,7 +303,7 @@
                                                                             <td class="align-middle"> {{ det._part.code + ' ' + det._part.desc }} </td>
                                                                             <td class="align-middle"> {{ det.quantity }} </td>
                                                                             <td class="align-middle">
-                                                                                <button (click)='quitarDetalleV( det._part._id )' type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
+                                                                                <button (click)='deleteDetailV( det._part._id )' type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -338,7 +338,7 @@
                                                                             <td class="align-middle"> {{ det._part.code + ' ' + det._part.desc }} </td>
                                                                             <td class="align-middle"> {{ det.quantity }} </td>
                                                                             <td class="align-middle">
-                                                                                <button (click)='quitarDetalleG( det._part._id )' type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
+                                                                                <button (click)='deleteDetailG( det._part._id )' type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -471,9 +471,9 @@
                     <!-- .form-group -->
                     <div class="form-group">
                         <label id="typeL">Repuesto <span class="badge badge-danger">Obligatorio</span></label>
-                        <select #selectR name="part" class="form-control select2" style="width:100%!important;">
+                        <select #selectRV name="part" class="form-control select2" style="width:100%!important;">
                             <option value=""> Seleccione un repuesto </option>
-                            <option *ngFor="let storage of storages" [selected]="storage._autopart._id === tempPart" [value]="storage._autopart._id"> {{ storage._autopart.code + ' ' + storage._autopart.desc }}
+                            <option *ngFor="let storage of storages" [value]="storage._autopart._id"> {{  ' (Existencia: ' + storage.stock + ') ' + storage._autopart.desc + ' ' + storage._autopart.code }}
                             </option>
                             </select>
                     </div>
@@ -482,10 +482,7 @@
                     <div class="form-group"><label for="no">Cantidad <span class="badge badge-danger">Obligatorio</span></label><input class="form-control" [(ngModel)]="detail.quantity" id="quantity" name="quantity" placeholder="Ingrese una cantidad" type="number" ng-reflect-name="quantity"
                             required></div>
                     <!-- /.form-group -->
-                    <!-- .form-group -->
-                    <!-- <div class="form-group"><label for="cost">Costo <span class="badge badge-danger">Obligatorio</span></label><input class="form-control" [(ngModel)]="detail.cost" id="cost" name="cost" placeholder="Ingrese el costo" type="number" required></div> -->
-                    <!-- /.form-group -->
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-cart-plus"></i> Agregar</button>
+                    <button (click)="addDetailsV()" class="btn btn-primary" type="submit"><i class="fa fa-cart-plus"></i> Agregar</button>
                     <br>
                 </div>
                 <!-- /.modal-body -->
@@ -521,11 +518,11 @@
                     <!-- .form-group -->
                     <div class="form-group">
                         <label id="typeL">Repuesto <span class="badge badge-danger">Obligatorio</span></label>
-                        <select #selectR name="part" class="form-control select2" style="width:100%!important;">
-                                <option value=""> Seleccione un repuesto </option>
-                                <option *ngFor="let storage of storages" [selected]="storage._autopart._id === tempPart" [value]="storage._autopart._id"> {{ storage._autopart.code + ' ' + storage._autopart.desc }}
-                                </option>
-                                </select>
+                        <select #selectRG name="part" class="form-control select2" style="width:100%!important;">
+                            <option value=""> Seleccione un repuesto </option>
+                            <option *ngFor="let storage of storages" [value]="storage._autopart._id"> {{  ' (Existencia: ' + storage.stock + ') ' + storage._autopart.desc + ' ' + storage._autopart.code }}
+                            </option>
+                        </select>
                     </div>
                     <!-- /.form-group -->
                     <!-- .form-group -->
@@ -535,7 +532,7 @@
                     <!-- .form-group -->
                     <!-- <div class="form-group"><label for="cost">Costo <span class="badge badge-danger">Obligatorio</span></label><input class="form-control" [(ngModel)]="detail.cost" id="cost" name="cost" placeholder="Ingrese el costo" type="number" required></div> -->
                     <!-- /.form-group -->
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-cart-plus"></i> Agregar</button>
+                    <button (click)="addDetailsG()" class="btn btn-primary" type="submit"><i class="fa fa-cart-plus"></i> Agregar</button>
                     <br>
                 </div>
                 <!-- /.modal-body -->

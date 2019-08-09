@@ -23,154 +23,184 @@
         <div class="tab-content" id="TabViajes">
             <!-- .tab-pane -->
             <div class="tab-pane fade show active" id="tabNuevoRC" role="tabpanel" aria-labelledby="tab">
-                <!-- .labels -->
-                <div id="labels" class="col-12">
-                    <!-- .form -->
-                    <form ngNativeValidate [formGroup]="formGT" (ngSubmit)="crearViajeVerde()">
-                        <!-- .card-body -->
-                        <div class="card-body">
-                            <!-- .fieldset -->
-                            <fieldset>
-                                <legend>Nuevo Reporte Cuadros</legend>
-                                <div class="row">
-                                    <!-- .form-group -->
-                                    <div class="form-group col-2">
-                                        <label id="typeL">Empleado <span class="badge badge-danger">Obligatorio</span></label> <select #selectE formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
-                                            <option value=""> Seleccione un empleado </option>
-                                            <option *ngFor="let empleado of employees" [value]="empleado._id"> {{ empleado.name }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-1">
-                                        <label>Crear Empleado</label><br>
-                                        <button [routerLink]="[ '/employee', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-2">
-                                        <label id="typeL">Tipo <span class="badge badge-danger">Obligatorio</span></label> <select #selectT formControlName="type" name="type" class="form-control select2" style="width:100%!important;">
-                                            <option value=""> Seleccione un tipo de viaje </option>
-                                            <option *ngFor="let type of types" [selected]="type._id === tempType"  [value]="type._id"> {{ type.name }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-1">
-                                        <label>Crear Tipo</label><br>
-                                        <a href="#addType" data-toggle="modal" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-2">
-                                        <label id="typeL">Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select #selectV formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
-                                            <option value=""> Seleccione un vehículo </option>
-                                            <option *ngFor="let vehicle of vehicles" [value]="vehicle._id"> {{ vehicle.plate }} {{ vehicle.type }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-1">
-                                        <label>Crear Vehículo</label><br>
-                                        <button [routerLink]="[ '/vehicle', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-2">
-                                        <label id="typeL">Material <span class="badge badge-danger">Obligatorio</span></label> <select #selectM formControlName="material" name="material" class="form-control select2" style="width:100%!important;">
-                                            <option value=""> Seleccione un proveedor </option>
-                                            <option *ngFor="let material of materials" [selected]="material._id === tempMat"  [value]="material._id"> {{ material.code }} {{ material.name }} </option>
-                                        </select>
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-1">
-                                        <label>Crear Material</label><br>
-                                        <a href="#addMaterial" data-toggle="modal" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
-                                    </div>
-                                    <!-- /.form-group -->
-                                </div>
-                                <div class="row">
-                                    <!-- .form-group -->
-                                    <div class="form-group col-3">
-                                        <label class="control-label" for="flatpickr">Fecha</label> <input id="flatpickr" formControlName="date" name="date" type="text" class="form-control">
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-3">
-                                        <label class="control-label" for="flatpickr02">Hora de Entrada</label> <input id="flatpickr02" formControlName="checkIN" name="checkIN" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true"
-                                            data-date-format="d/m/Y H:i">
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-3">
-                                        <label class="control-label" for="flatpickr02">Hora de Salida</label> <input id="flatpickr02" formControlName="checkOUT" name="checkOUT" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true"
-                                            data-date-format="d/m/Y H:i">
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <!-- .form-group -->
-                                    <div class="form-group col-3">
-                                        <label for="pay">Viajes</label>
-                                        <div class="input-group">
-                                            <label class="input-group-prepend" for="pi9"><span class="badge"><i class="fas fa-snowplow"></i></span></label>
-                                            <input formControlName="trips" name="trips" type="number" min="0" step="1" class="form-control" id="trips" placeholder="Ingrese el total de viajes">
+                <div class="row">
+                    <!-- .labels -->
+                    <div id="labels" class="col-8">
+                        <!-- .form -->
+                        <form ngNativeValidate [formGroup]="formGT" (ngSubmit)="crearViajeVerde()">
+                            <!-- .card-body -->
+                            <div class="card-body">
+                                <!-- .fieldset -->
+                                <fieldset>
+                                    <legend>Nuevo Reporte Cuadros</legend>
+                                    <div class="row">
+                                        <!-- .form-group -->
+                                        <div class="form-group col-4">
+                                            <label id="typeL">Empleado <span class="badge badge-danger">Obligatorio</span></label> <select #selectE formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
+                                                <option value=""> Seleccione un empleado </option>
+                                                <option *ngFor="let empleado of employees" [value]="empleado._id"> {{ empleado.name }}
+                                                </option>
+                                            </select>
                                         </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-2">
+                                            <label>Crear Empleado</label><br>
+                                            <button [routerLink]="[ '/employee', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-4">
+                                            <label id="typeL">Tipo <span class="badge badge-danger">Obligatorio</span></label> <select #selectT formControlName="type" name="type" class="form-control select2" style="width:100%!important;">
+                                                <option value=""> Seleccione un tipo de viaje </option>
+                                                <option *ngFor="let type of types" [selected]="type._id === tempType"  [value]="type._id"> {{ type.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-2">
+                                            <label>Crear Tipo</label><br>
+                                            <a href="#addType" data-toggle="modal" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
+                                        </div>
+                                        <!-- /.form-group -->
                                     </div>
-                                    <!-- /.form-group -->
-                                </div>
-                                <div class="row">
-                                    <!-- .form-group -->
-                                    <div class="form-group offset-3 col-6">
-                                        <label for="tf6">Detalles</label>
-                                        <textarea formControlName="details" name="details" class="form-control" id="tf6" rows="3"></textarea>
+                                    <div class="row">
+                                        <!-- .form-group -->
+                                        <div class="form-group col-4">
+                                            <label id="typeL">Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select #selectV formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
+                                                <option value=""> Seleccione un vehículo </option>
+                                                <option *ngFor="let vehicle of vehicles" [value]="vehicle._id"> {{ vehicle.plate }} {{ vehicle.type }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-2">
+                                            <label>Crear Vehículo</label><br>
+                                            <button [routerLink]="[ '/vehicle', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-4">
+                                            <label id="typeL">Material <span class="badge badge-danger">Obligatorio</span></label> <select #selectM formControlName="material" name="material" class="form-control select2" style="width:100%!important;">
+                                                <option value=""> Seleccione un proveedor </option>
+                                                <option *ngFor="let material of materials" [selected]="material._id === tempMat"  [value]="material._id"> {{ material.code }} {{ material.name }} </option>
+                                            </select>
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-2">
+                                            <label>Crear Material</label><br>
+                                            <a href="#addMaterial" data-toggle="modal" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
+                                        </div>
+                                        <!-- /.form-group -->
                                     </div>
-                                    <!-- /.form-group -->
-                                </div>
-                                <hr>
-                                <!-- /.d-flex -->
-                                <button class="btn btn-primary" type="submit" id="btnUser"><i class="fa fa-save"></i> Guardar</button>
-                                <button [routerLink]="[ '/buySpares' ]" type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                            </fieldset>
-                            <!-- /.fieldset -->
-                        </div>
-                        <!-- /.card-body -->
-                    </form>
-                    <!-- /.form -->
-                    <hr>
-                    <!-- .card -->
-                    <div class="card mb-2">
-                        <!-- .card-body -->
-                        <div class="card-body">
-                            <!-- grid row -->
-                            <div *ngFor="let gtrip of todayGT" class="row align-items-center">
-                                <!-- grid column -->
-                                <div class="col-auto">
-                                    <a href="#" class="user-avatar user-avatar-sm"><i class="fas fa-list-alt"></i> <span class="avatar-badge online" title="online"></span></a>
-                                </div>
-                                <!-- /grid column -->
-                                <!-- grid column -->
-                                <div class="col">
-                                    <h3 class="card-title">
-                                        <a href="#"> {{ gtrip._vehicle.type }} {{ gtrip._vehicle.plate }} </a> <small class="text-muted"><strong>Número de viajes realizados: {{ gtrip.trips }}</strong></small>
-                                    </h3>
-                                    <h6 class="card-subtitle text-muted">Material movido: {{ gtrip._material.name }} </h6>
-                                </div>
-                                <!-- /grid column -->
+                                    <div class="row">
+                                        <!-- .form-group -->
+                                        <div class="form-group col-3">
+                                            <label class="control-label" for="flatpickr">Fecha</label> <input id="flatpickr" formControlName="date" name="date" type="text" class="form-control">
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-3">
+                                            <label class="control-label" for="flatpickr02">Hora de Entrada</label> <input id="flatpickr02" formControlName="checkIN" name="checkIN" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true"
+                                                data-date-format="d/m/Y H:i">
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-3">
+                                            <label class="control-label" for="flatpickr02">Hora de Salida</label> <input id="flatpickr02" formControlName="checkOUT" name="checkOUT" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true"
+                                                data-date-format="d/m/Y H:i">
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-3">
+                                            <label for="pay">Viajes</label>
+                                            <div class="input-group">
+                                                <label class="input-group-prepend" for="pi9"><span class="badge"><i class="fas fa-snowplow"></i></span></label>
+                                                <input formControlName="trips" name="trips" type="number" min="0" step="1" class="form-control" id="trips" placeholder="Ingrese el total de viajes">
+                                            </div>
+                                        </div>
+                                        <!-- /.form-group -->
+                                    </div>
+                                    <div class="row">
+                                        <!-- .form-group -->
+                                        <div class="form-group col-6">
+                                            <label for="tf6">Detalles</label>
+                                            <textarea formControlName="details" name="details" class="form-control" id="tf6" rows="3"></textarea>
+                                        </div>
+                                        <!-- /.form-group -->
+                                    </div>
+                                    <hr>
+                                    <!-- /.d-flex -->
+                                    <button class="btn btn-primary" type="submit" id="btnUser"><i class="fa fa-save"></i> Guardar</button>
+                                    <button [routerLink]="[ '/buySpares' ]" type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                </fieldset>
+                                <!-- /.fieldset -->
                             </div>
-                            <!-- /grid row -->
-                        </div>
-                        <!-- /.card-body -->
+                            <!-- /.card-body -->
+                        </form>
+                        <!-- /.form -->
+
                     </div>
-                    <!-- /.card -->
+                    <!-- /.labels -->
+                    <div id="labels" class="col-4">
+                        <div class="card-header">
+                            <h3 class="card-title">Reportes Ingresados Hoy</h3>
+                        </div>
+                        <!-- .card -->
+                        <div class="card mb-2">
+                            <!-- .card-body -->
+                            <div class="card-body">
+                                <!-- grid row -->
+                                <div *ngFor="let gtrip of todayGT" class="row align-items-center">
+                                    <!-- grid column -->
+                                    <div class="col-auto">
+                                        <a href="#" class="user-avatar user-avatar-md"><i class="fas fa-list-alt"></i> <span class="avatar-badge" title="online"></span></a>
+                                    </div>
+                                    <!-- /grid column -->
+                                    <!-- grid column -->
+                                    <div class="col">
+                                        <h3 class="card-title">
+                                            <a href="#"> {{ gtrip._vehicle.type }} {{ gtrip._vehicle.plate }} </a> <small class="text-muted"><strong>Número de viajes realizados: {{ gtrip.trips }}</strong></small>
+                                        </h3>
+                                        <h6 class="card-subtitle text-muted">Material movido: {{ gtrip._material.name }} </h6>
+                                    </div>
+                                    <!-- /grid column -->
+                                    <!-- /grid column -->
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-icon btn-secondary mr-1" data-toggle="tooltip" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    <!-- /grid column -->
+                                </div>
+                                <!-- /grid row -->
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
                 </div>
-                <!-- /.labels -->
             </div>
             <!-- /.tab-pane -->
             <!-- .tab-pane -->
             <div class="tab-pane" id="tab1" role="tabpanel" aria-labelledby="tab">
+                <!-- .card-header -->
+                <div class="card-header d-flex">
+                    <!-- .form-group -->
+                    <div class="form-group offset-3 col-2">
+                        <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group col-2">
+                        <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
+                    </div>
+                    <!-- /.form-group -->
+                    <button type="button" (click)="buscarReporteCuadros()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+                <!-- /.card-header -->
+                <br>
                 <!-- .card-body -->
                 <div class="card-body">
                     <!-- .form-group -->
@@ -193,24 +223,41 @@
                     </div>
                     <!-- /.form-group -->
                     <!-- .table -->
-                    <table id="myTable" class="table">
+                    <table id="myTable" class="table" #customLoadingTemplate>
                         <!-- thead -->
                         <thead>
                             <tr>
-                                <th>nombre</th>
+                                <th>Vehículo</th>
+                                <th>Viaje</th>
+                                <th>Empleado</th>
+                                <th>Material</th>
+                                <th>Fecha</th>
+                                <th>Hora Entrada</th>
+                                <th>Hora Salida</th>
+                                <th>Viajes</th>
                             </tr>
                         </thead>
                         <!-- /thead -->
                         <!-- tbody -->
                         <tbody>
                             <!-- create empty row to passing html validator -->
-                            <tr>
-                                <td></td>
+                            <tr *ngFor="let gt of greenTrips">
+                                <td> {{ gt._vehicle.plate }} {{ gt._vehicle.type }} </td>
+                                <td> {{ gt._type.name }} </td>
+                                <td> {{ gt._employee.name }} </td>
+                                <td> {{ gt._material.code }} {{ gt._material.name }} </td>
+                                <td> {{ dtService.fromJsonDate(gt.date) }} </td>
+                                <td> {{ dtService.fromJsonHour(gt.checkIN )}} </td>
+                                <td> {{ dtService.fromJsonHour(gt.checkOUT) }} </td>
+                                <td> {{ gt.trips }} </td>
                             </tr>
                         </tbody>
                         <!-- /tbody -->
                     </table>
                     <!-- /.table -->
+                    <ng-template #customLoadingTemplate>
+                    </ng-template>
+                    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
                 </div>
                 <!-- /.card-body -->
             </div>

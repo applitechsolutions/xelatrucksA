@@ -7,74 +7,161 @@
     <div class="card card-fluid">
         <!-- .card-body -->
         <div class="card-body">
+            <!-- .form-group -->
+            <div class="form-group">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                    <!-- .input-group-prepend -->
+                    <div class="input-group-prepend">
+                        <select id="filterBy" class="custom-select">
+                                                      <option value='' selected> Filtrar por </option>
+                                                      <option value="0"> Vehículo </option>
+                                                      <option value="1"> Revisión </option>
+                                                      <option value="2"> Reparación </option>
+                                                      <option value="3"> Involucrados </option>
+                                                      <option value="4"> Total Vehículo </option>
+                                                      <option value="5"> Total Gondola </option>
+                                                    </select>
+                    </div>
+                    <!-- /.input-group-prepend -->
+                    <!-- .input-group -->
+                    <div class="input-group has-clearable">
+                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+                    </div>
+                    <!-- /.input-group -->
+                </div>
+                <!-- /.input-group -->
+            </div>
+            <!-- /.form-group -->
             <!-- .table -->
-            <table id="table1" class="table dt-responsive nowrap w-100">
+            <table id="myTable" class="table">
                 <thead>
                     <tr>
-                        <th> Fecha de Inicio </th>
-                        <th> Fecha final </th>
-                        <th> Usuario </th>
-                        <th> Mecánico </th>
-                        <th> Vehículo </th>
-                        <th> Total de Vehículo </th>
-                        <th> Góndola </th>
-                        <th> Total de Góndola </th>
-                        <th> Detalle de Revisión </th>
-                        <th> Detalle de Reparación </th>
                         <th></th>
+                        <th> Detalles de Revisión </th>
+                        <th> Detalles de Reparación </th>
+                        <th> Involucrados </th>
+                        <th> Total Vehículo </th>
+                        <th> Total Gondola </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let manten of maintenances">
-                        <td>
-                            <h6>{{ manten.dateStart | date: 'dd/MM/yyyy' }}</h6>
+                        <td class="align-middle text-truncate">
+                            <div class="media align-items-center">
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'camion'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-yellow"> <i class="fas fa-truck"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'camion'" class="media-body">
+                                    <label>Camión <br> {{ manten._vehicle.plate }}</label>
+                                    <small class="d-block text-muted">Entrada {{ manten.dateStart | date:'dd/MM/yyyy HH:mm' }}</small><small class="d-block text-muted">Salida {{ manten.dateEnd | date:'dd/MM/yyyy HH:mm' }}</small>
+                                </div>
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'camionG'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-orange"> <i class="fas fa-truck-moving"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <!-- .list-group-item-body -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'camionG'" class="media-body">
+                                    <label>Camión <br> {{ manten._vehicle.plate }}</label><br>
+                                    <small class="d-block text-muted" *ngIf="manten._gondola !== null">Gondola {{ manten._gondola.plate }}</small>
+                                    <small class="d-block text-muted">Entrada {{ manten.dateStart | date:'dd/MM/yyyy HH:mm' }}</small><small class="d-block text-muted">Salida {{ manten.dateEnd | date:'dd/MM/yyyy HH:mm' }}</small>
+                                </div>
+                                <!-- /.list-group-item-body -->
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'vehiculo'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-blue"> <i class="fas fa-truck-pickup"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <!-- .list-group-item-body -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'vehiculo'" class="media-body">
+                                    <label>Vehículo <br> {{ manten._vehicle.plate }}</label>
+                                    <small class="d-block text-muted">Camión {{ manten.dateStart | date:'dd/MM/yyyy HH:mm' }}</small><small class="d-block text-muted">Salida {{ manten.dateEnd | date:'dd/MM/yyyy HH:mm' }}</small>
+                                </div>
+                                <!-- /.list-group-item-body -->
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'riego'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-green"> <i class="fas fa-truck-monster"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <!-- .list-group-item-body -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'riego'" class="media-body">
+                                    <label>Camión para riego <br> {{ manten._vehicle.plate }}</label>
+                                    <small class="d-block text-muted">Entrada {{ manten.dateStart | date:'dd/MM/yyyy HH:mm' }}</small><small class="d-block text-muted">Salida {{ manten.dateEnd | date:'dd/MM/yyyy HH:mm' }}</small>
+                                </div>
+                                <!-- /.list-group-item-body -->
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'stock'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-pink"> <i class="fas fa-snowplow"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <!-- .list-group-item-body -->
+                                <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'stock'" class="media-body">
+                                    <label>Excavadora <br> {{ manten._vehicle.plate }}</label>
+                                    <small class="d-block text-muted">Entrada {{ manten.dateStart | date:'dd/MM/yyyy HH:mm' }}</small><small class="d-block text-muted">Salida {{ manten.dateEnd | date:'dd/MM/yyyy HH:mm' }}</small>
+                                </div>
+                                <!-- /.list-group-item-body -->
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="manten._gondola !== null && manten._vehicle === null" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-red"> <i class="fas fa-truck-moving"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <!-- .list-group-item-body -->
+                                <div *ngIf="manten._gondola !== null && manten._vehicle === null" class="media-body">
+                                    <label>Gondola <br> {{ manten._gondola.plate }}</label>
+                                    <small class="d-block text-muted">Entrada {{ manten.dateStart | date:'dd/MM/yyyy HH:mm' }}</small><small class="d-block text-muted">Salida {{ manten.dateEnd | date:'dd/MM/yyyy HH:mm' }}</small>
+                                </div>
+                                <!-- /.list-group-item-body -->
+                            </div>
+                        </td>
+                        <td tyle="word-wrap: break-word">
+                            <label>{{ manten.detailsRev }}</label>
+                        </td>
+                        <td tyle="word-wrap: break-word">
+                            {{ manten.detailsRep }}
                         </td>
                         <td>
-                            <h6>{{ manten.dateEnd | date: 'dd/MM/yyyy' }}</h6>
-                        </td>
-                        <td> {{ manten._user.name }} </td>
-                        <td>
-                            <h6 *ngFor="let mech of manten._mech">{{ mech.name }}</h6>
-                        </td>
-                        <td>
-                            <h6 *ngIf="manten._vehicle === null"> N/A </h6>
-                            <h6 *ngIf="manten._vehicle !== null"> {{ manten._vehicle.type }} {{ manten._vehicle.plate }}</h6>
-                        </td>
-                        <td>
-                            Q. {{ manten.totalV | number : '1.2-2' }}
-                        </td>
-                        <td>
-                            <h6 *ngIf="manten._gondola === null"> N/A </h6>
-                            <h6 *ngIf="manten._gondola !== null"> {{ manten._gondola.plate }}</h6>
+                            <div class="list-group-item list-group-item-action">
+                                <div class="list-group-item-figure">
+                                    <div class="user-avatar user-avatar-lg">
+                                        <img [src]="manten._user.img | imagen" alt="">
+                                    </div>
+                                </div>
+                                <div class="list-group-item-body">
+                                    <h4 class="list-group-item-subtitle"> {{ manten._user.name + ' ' + manten._user.lastName }} </h4>
+                                    <u *ngFor="let mech of manten._mech">
+                                        <li class="list-group-item-text text-truncate">{{ mech.name }}</li>
+                                    </u>
+                                </div>
+                            </div>
                         </td>
                         <td>
-                            Q. {{ manten.totalG | number : '1.2-2' }}
+                            <h6 *ngIf="manten._vehicle === null"> - </h6>
+                            <label *ngIf="manten._vehicle !== null">Q.{{ manten.totalV | number : '1.2-2' }}</label>
+                            <br>
+                            <a *ngIf="manten._vehicle !== null" href="#" (click)="verDetallesV(manten)" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsV"><i class="fas fa-cogs"></i> <span class="sr-only">Detalles</span></a>
                         </td>
                         <td>
-                            <h6> {{ manten.detailsRev }} </h6>
-                        </td>
-                        <td>
-                            <h6> {{ manten.detailsRep }} </h6>
-                        </td>
-                        <td class="align-middle text-right">
-                            <a href="#" (click)="verDetallesV(manten)" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsV"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
-                            <a href="#" (click)="verDetallesG(manten)" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsG"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
+                            <h6 *ngIf="manten._gondola === null"> - </h6>
+                            <label *ngIf="manten._gondola !== null">Q.{{ manten.totalG | number : '1.2-2' }}</label>
+                            <br>
+                            <a *ngIf="manten._gondola !== null" href="#" (click)="verDetallesG(manten)" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsG"><i class="fas fa-cogs"></i> <span class="sr-only">Detalles</span></a>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th> Fecha de Inicio </th>
-                        <th> Fecha final </th>
-                        <th> Usuario </th>
-                        <th> Mecánico </th>
-                        <th> Vehículo </th>
-                        <th> Total de Vehículo </th>
-                        <th> Góndola </th>
-                        <th> Total de Góndola </th>
-                        <th> Detalle de Revisión </th>
-                        <th> Detalle de Reparación </th>
                         <th></th>
+                        <th> Detalles de Revisión </th>
+                        <th> Detalles de Reparación </th>
+                        <th> Involucrados </th>
+                        <th> Total Vehículo </th>
+                        <th> Total Gondola </th>
                     </tr>
                 </tfoot>
             </table>
@@ -94,13 +181,13 @@
         <div class="modal-content">
             <!-- .modal-header -->
             <div class="modal-header">
-                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de Vehículo </h5>
+                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de VehÃ­culo </h5>
             </div>
             <!-- /.modal-header -->
             <!-- .modal-body -->
             <div class="modal-body">
                 <!-- .table -->
-                <table id="table2" class="table dt-responsive nowrap w-100">
+                <table id="table1" class="table dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th> Repuesto </th>
@@ -151,7 +238,7 @@
         <div class="modal-content">
             <!-- .modal-header -->
             <div class="modal-header">
-                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de Góndola </h5>
+                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de GÃ³ndola </h5>
             </div>
             <!-- /.modal-header -->
             <!-- .modal-body -->

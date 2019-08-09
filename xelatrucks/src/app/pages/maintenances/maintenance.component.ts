@@ -398,6 +398,10 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     this.mantenimiento.totalV = 0.00;
     this.mantenimiento.totalG = 0.00;
 
+    if (this.isTruckG) {
+      this.mantenimiento._gondola = this.vehicle._gondola;
+    }
+
     this.maintenanceS.crearMantenimiento(this.mantenimiento)
       .subscribe((resp: any) => {
         this.mantenimiento = resp.mantenimiento;

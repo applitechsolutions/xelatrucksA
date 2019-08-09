@@ -25,7 +25,6 @@ export class DatatablesService {
 
   destroy_table() {
     $('#table1').dataTable().fnDestroy();
-    // $('#myTable').DataTable().draw(false);
   }
 
   destroy_table2() {

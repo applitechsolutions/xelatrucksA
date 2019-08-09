@@ -40,6 +40,15 @@ export class TripService {
 
   }
 
+  cargarGreenTrips( fecha1: Date, fecha2: Date) {
+
+    let url = URL_SERVICES + '/viajeV/reports';
+    url += '?fecha1=' + fecha1;
+    url += '&fecha2=' + fecha2;
+
+    return this.http.get(url);
+  }
+
   cargarTypes() {
 
     const url = URL_SERVICES + '/tviajes';

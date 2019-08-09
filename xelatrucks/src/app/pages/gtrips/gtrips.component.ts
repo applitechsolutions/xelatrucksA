@@ -11,6 +11,7 @@ import '../../../assets/vendor/select2/js/select2.js';
 import { GreenTrip } from '../../models/greenTrip.model';
 
 declare var swal: any;
+declare function init_datatables();
 
 @Component({
   selector: 'app-gtrips',
@@ -18,6 +19,10 @@ declare var swal: any;
   styles: []
 })
 export class GtripsComponent implements OnInit, AfterViewInit {
+
+  loading: boolean = false;
+  @ViewChild('date1') date1: ElementRef;
+  @ViewChild('date2') date2: ElementRef;
 
   @ViewChild('closeMTy') closeMty: ElementRef;
   @ViewChild('closeMMt') closeMMt: ElementRef;
@@ -28,6 +33,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
 
   formGT: FormGroup;
   greenTrip: GreenTrip = { _employee: null, _type: null, _vehicle: null, _material: null };
+  greenTrips: GreenTrip[] = [];
   todayGT: GreenTrip[] = [];
 
   employees: Employee[] = [];
@@ -49,7 +55,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     public vehicleService: VehicleService,
     public tripService: TripService,
     public matService: MaterialService,
-    public dtService: DatatablesService
+    public dtService: DatatablesService,
+    private chRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -91,7 +98,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     $('.select2').select2();
   }
 
-  /* #region  Viaje Verde */
+  /* #region  CREAR Reporte Cuadros */
+
   crearViajeVerde() {
 
     this.formGT.value.employee = this.selectE.nativeElement.value;
@@ -161,7 +169,6 @@ export class GtripsComponent implements OnInit, AfterViewInit {
         });
       });
   }
-  /* #endregion */
 
   cargarEmpleados() {
     this.empService.cargarEmpleados()
@@ -271,5 +278,39 @@ export class GtripsComponent implements OnInit, AfterViewInit {
       });
 
   }
+
+  /* #endregion */
+
+
+  /* #region  LISTAR Reporte Cuadros */
+
+  buscarReporteCuadros() {
+    this.loading = true;
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
+
+    this.tripService.cargarGreenTrips( fecha1, fecha2 )
+      .subscribe((res: any) => {
+
+        this.greenTrips = res.viajesV;
+        this.loading = false;
+
+        this.chRef.detectChanges();
+        init_datatables();
+
+      });
+
+    // this.vehicleS.cargarGasolines(id, fecha1, fecha2).subscribe(resp => {
+    //   console.log(resp);
+    //   this.gasolines = resp;
+    //   this.calcularTotalesG();
+    //   this.fecha1Consulta = this.date1.nativeElement.value;
+    //   this.fecha2Consulta = this.date2.nativeElement.value;
+    //   this.loading = false;
+    // });
+  }
+  /* #endregion */
+
+
 
 }

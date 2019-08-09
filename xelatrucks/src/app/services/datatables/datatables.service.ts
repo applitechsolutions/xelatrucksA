@@ -140,6 +140,15 @@ export class DatatablesService {
     const bDate: Date = new Date(jDate);
     const formattedDate = moment(bDate).format('DD/MM/YYYY');
     return formattedDate.toString().substring(0, 10);  // Ignore time
+
+  }
+
+  fromJsonHour(jDate): string {
+
+    const bDate: Date = new Date(jDate);
+    const formattedDate = moment(bDate).format('HH:mm');
+    return formattedDate.toString();  // Ignore time
+
   }
 
 }

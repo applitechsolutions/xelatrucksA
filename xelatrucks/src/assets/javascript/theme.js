@@ -2017,6 +2017,10 @@ function init_step() {
     new stepsDemo();
 }
 
+function destroy_datatables() {
+    $('#myTable').DataTable().destroy();
+}
+
 function init_datatables() {
     "use strict";
 
@@ -2057,6 +2061,7 @@ function init_datatables() {
             }, {
                 key: "table",
                 value: function table() {
+
                     return $('#myTable').DataTable({
                         dom: "<'text-muted'Bi>\n        <'table-responsive'tr>\n        <'mt-4'p>",
                         buttons: [{

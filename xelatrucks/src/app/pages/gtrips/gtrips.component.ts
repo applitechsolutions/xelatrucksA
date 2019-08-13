@@ -12,6 +12,7 @@ import { GreenTrip } from '../../models/greenTrip.model';
 
 declare var swal: any;
 declare function init_datatables();
+declare function destroy_datatables();
 
 @Component({
   selector: 'app-gtrips',
@@ -315,10 +316,13 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
     this.tripService.cargarGreenTrips( fecha1, fecha2 )
-      .subscribe((res: any) => {
+    .subscribe((res: any) => {
+        destroy_datatables();
 
         this.greenTrips = res.viajesV;
         this.loading = false;
+        console.log(this.greenTrips);
+
         this.chRef.detectChanges();
 
       });

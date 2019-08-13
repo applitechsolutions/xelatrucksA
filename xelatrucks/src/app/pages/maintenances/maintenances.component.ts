@@ -1,9 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { MaintenanceService, DatatablesService } from '../../services/service.index';
 import { Maintenance } from 'src/app/models/maintenance.model';
 import { DetailsSpare } from '../../models/detailsSpare.model';
+import * as moment from 'moment/moment';
 
 declare function init_datatables();
+declare function destroy_datatables();
 @Component({
   selector: 'app-maintenances',
   templateUrl: './maintenances.component.html',
@@ -11,6 +13,9 @@ declare function init_datatables();
 })
 export class MaintenancesComponent implements OnInit {
 
+  loading: boolean = false;
+  @ViewChild('date1') date1: ElementRef;
+  @ViewChild('date2') date2: ElementRef;
   maintenances: Maintenance[] = [];
   detailsV: DetailsSpare[] = [];
   detailsG: DetailsSpare[] = [];
@@ -22,8 +27,18 @@ export class MaintenancesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.mainService.cargarTerminados()
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtS.init_datePicker(today);
+  }
+
+  searchTerminados() {
+    this.loading = true;
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
+
+    this.mainService.cargarTerminados(fecha1, fecha2)
       .subscribe( (res: any) => {
+        destroy_datatables();
 
         console.log(res);
         this.maintenances = res.mantenimientos;
@@ -31,6 +46,7 @@ export class MaintenancesComponent implements OnInit {
         this.detailsG = res.mantenimientos.detailsG;
         this.chRef.detectChanges();
         init_datatables();
+        this.loading = false;
       });
   }
 

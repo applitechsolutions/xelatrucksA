@@ -203,21 +203,36 @@
                 <br>
                 <!-- .card-body -->
                 <div class="card-body">
+                    <!-- .btn-toolbar -->
+                    <div id="dt-buttons" class="btn-toolbar"></div>
+                    <!-- /.btn-toolbar -->
                     <!-- .form-group -->
                     <div class="form-group">
                         <!-- .input-group -->
                         <div class="input-group input-group-alt">
-                            <!-- .btn-toolbar -->
-                            <div id="dt-buttons" class="btn-toolbar"></div>
-                            <!-- /.btn-toolbar -->
                             <!-- .input-group -->
                             <div class="input-group has-clearable">
                                 <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                                </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
+                                </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
                             </div>
                             <!-- /.input-group -->
+                            <!-- .input-group-prepend -->
+                            <div class="input-group-prepend">
+                                <select id="filterBy" class="custom-select">
+                                    <option value='' selected> Filtros </option>
+                                    <option value="0"> Vehículo </option>
+                                    <option value="1"> Viaje </option>
+                                    <option value="2"> Empleado </option>
+                                    <option value="3"> Material </option>
+                                    <option value="4"> Fecha </option>
+                                    <option value="5"> Hora Entrada </option>
+                                    <option value="6"> Hora Salida </option>
+                                    <option value="7"> Viajes </option>
+                                </select>
+                            </div>
+                            <!-- /.input-group-prepend -->
                         </div>
                         <!-- /.input-group -->
                     </div>

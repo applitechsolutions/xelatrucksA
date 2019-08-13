@@ -54,8 +54,8 @@ export class MaintenanceService {
       }));
   }
 
-  cargarTerminados() {
-    const url = URL_SERVICES + '/mantenimiento/terminados';
+  cargarTerminados(fecha1: Date, fecha2: Date ) {
+    const url = URL_SERVICES + '/mantenimiento/terminados?fecha1=' + fecha1 + '&fecha2=' + fecha2;
 
     return this.http.get(url);
   }

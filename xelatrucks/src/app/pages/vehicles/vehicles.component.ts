@@ -415,7 +415,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   }
   /* #endregion */
 
-
   /* #region  BASICS */
   addBasic() {
     if (this.basic._id) {
@@ -519,7 +518,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       });
   }
   /* #endregion */
-
 
   /* #region  PITS */
   cargarRims() {
@@ -760,7 +758,6 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       });
   }
   /* #endregion */
-
 
   /* #region  GASOLINE */
   searchG() {

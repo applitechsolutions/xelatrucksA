@@ -49,6 +49,14 @@ export class TripService {
     return this.http.get(url);
   }
 
+  borrarGreenTrip( trip: GreenTrip ) {
+    let url = URL_SERVICES + '/viajeV';
+    url += '/' + trip._id;
+    url += '?token=' + this.userService.token;
+
+    return this.http.delete(url);
+  }
+
   cargarTypes() {
 
     const url = URL_SERVICES + '/tviajes';

@@ -7,23 +7,26 @@
     <div class="card card-fluid">
         <!-- .card-body -->
         <div class="card-body">
+            <div class="row">
+                <!-- .form-group -->
+                <div class="form-group col-3">
+                    <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
+                </div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group col-3">
+                    <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
+                </div>
+                <!-- /.form-group -->
+                <button type="button" (click)="searchTerminados()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+            </div>
+            <!-- .btn-toolbar -->
+            <div id="dt-buttons" class="btn-toolbar"></div>
+            <!-- /.btn-toolbar -->
             <!-- .form-group -->
             <div class="form-group">
                 <!-- .input-group -->
                 <div class="input-group input-group-alt">
-                    <!-- .input-group-prepend -->
-                    <div class="input-group-prepend">
-                        <select id="filterBy" class="custom-select">
-                                                      <option value='' selected> Filtrar por </option>
-                                                      <option value="0"> Vehículo </option>
-                                                      <option value="1"> Revisión </option>
-                                                      <option value="2"> Reparación </option>
-                                                      <option value="3"> Involucrados </option>
-                                                      <option value="4"> Total Vehículo </option>
-                                                      <option value="5"> Total Gondola </option>
-                                                    </select>
-                    </div>
-                    <!-- /.input-group-prepend -->
                     <!-- .input-group -->
                     <div class="input-group has-clearable">
                         <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
@@ -32,6 +35,19 @@
                         </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
                     </div>
                     <!-- /.input-group -->
+                    <!-- .input-group-prepend -->
+                    <div class="input-group-prepend">
+                        <select id="filterBy" class="custom-select">
+                            <option value='' selected> Filtros </option>
+                            <option value="0"> Vehículo </option>
+                            <option value="1"> Revisión </option>
+                            <option value="2"> Reparación </option>
+                            <option value="3"> Involucrados </option>
+                            <option value="4"> Total Vehículo </option>
+                            <option value="5"> Total Gondola </option>
+                        </select>
+                    </div>
+                    <!-- /.input-group-prepend -->
                 </div>
                 <!-- /.input-group -->
             </div>
@@ -128,7 +144,7 @@
                         <td>
                             <div class="list-group-item list-group-item-action">
                                 <div class="list-group-item-figure">
-                                    <div class="user-avatar user-avatar-lg">
+                                    <div class="user-avatar user-avatar-md">
                                         <img [src]="manten._user.img | imagen" alt="">
                                     </div>
                                 </div>
@@ -144,13 +160,13 @@
                             <h6 *ngIf="manten._vehicle === null"> - </h6>
                             <label *ngIf="manten._vehicle !== null">Q.{{ manten.totalV | number : '1.2-2' }}</label>
                             <br>
-                            <a *ngIf="manten._vehicle !== null" href="#" (click)="verDetallesV(manten)" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsV"><i class="fas fa-cogs"></i> <span class="sr-only">Detalles</span></a>
+                            <a *ngIf="manten._vehicle !== null" href="#" (click)="verDetallesV(manten)" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsV"><i class="fas fa-cogs"></i> <span class="sr-only"></span></a>
                         </td>
                         <td>
                             <h6 *ngIf="manten._gondola === null"> - </h6>
                             <label *ngIf="manten._gondola !== null">Q.{{ manten.totalG | number : '1.2-2' }}</label>
                             <br>
-                            <a *ngIf="manten._gondola !== null" href="#" (click)="verDetallesG(manten)" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsG"><i class="fas fa-cogs"></i> <span class="sr-only">Detalles</span></a>
+                            <a *ngIf="manten._gondola !== null" href="#" (click)="verDetallesG(manten)" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#detailsG" alt="puto"><i class="fas fa-cogs"></i> <span class="sr-only"></span></a>
                         </td>
                     </tr>
                 </tbody>
@@ -165,7 +181,10 @@
                     </tr>
                 </tfoot>
             </table>
+            <ng-template #customLoadingTemplate>
+            </ng-template>
             <!-- /.table -->
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
         </div>
         <!-- /.card-body -->
     </div>
@@ -181,7 +200,7 @@
         <div class="modal-content">
             <!-- .modal-header -->
             <div class="modal-header">
-                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de VehÃ­culo </h5>
+                <h5 id="myLargeModalLabel" class="modal-title"> Repuestos de Vehí­culo </h5>
             </div>
             <!-- /.modal-header -->
             <!-- .modal-body -->
@@ -238,7 +257,7 @@
         <div class="modal-content">
             <!-- .modal-header -->
             <div class="modal-header">
-                <h5 id="myLargeModalLabel" class="modal-title"> Detalle de GÃ³ndola </h5>
+                <h5 id="myLargeModalLabel" class="modal-title"> Repuestos de Gondola </h5>
             </div>
             <!-- /.modal-header -->
             <!-- .modal-body -->

@@ -166,7 +166,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
           checkIN: res.viajeV.checkIN,
           checkOUT: res.viajeV.checkOUT,
           trips: res.viajeV.trips,
-          details: res.viajeV.details
+          details: res.viajeV.details,
+          _id: res.viajeV._id
         });
       });
   }
@@ -185,12 +186,18 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     .then( borrar => {
       if (borrar) {
 
-        
-        // this.empService.borrarEmpleado( empleado )
-        //   .subscribe( borrado => {
-        //     this.dtService.destroy_table();
-        //     this.cargarEmpleados();
-        //   });
+        this.tripService.borrarGreenTrip( trip )
+          .subscribe( (borrado: any) => {
+            const index = this.todayGT.findIndex(item => item._id === borrado._id);
+            this.todayGT.splice(index, 1);
+            swal({
+              title: 'Exito!',
+              text: 'Viaje borrado correctamente',
+              icon: 'success',
+              button: false,
+              timer: 1000
+            });
+          });
       }
 
     });
@@ -318,23 +325,12 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     this.tripService.cargarGreenTrips( fecha1, fecha2 )
     .subscribe((res: any) => {
         destroy_datatables();
-
         this.greenTrips = res.viajesV;
         this.loading = false;
-        console.log(this.greenTrips);
-
         this.chRef.detectChanges();
+        init_datatables();
 
       });
-
-    // this.vehicleS.cargarGasolines(id, fecha1, fecha2).subscribe(resp => {
-    //   console.log(resp);
-    //   this.gasolines = resp;
-    //   this.calcularTotalesG();
-    //   this.fecha1Consulta = this.date1.nativeElement.value;
-    //   this.fecha2Consulta = this.date2.nativeElement.value;
-    //   this.loading = false;
-    // });
   }
   /* #endregion */
 

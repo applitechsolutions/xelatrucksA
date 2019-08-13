@@ -22,12 +22,29 @@
                         </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
                     </div>
                     <!-- /.input-group -->
+                    <!-- .input-group-prepend -->
+                    <div class="input-group-prepend">
+                        <select id="filterBy" class="custom-select">
+                                <option value='' selected> Filtros </option>
+                                <option value="0"> Puesto </option>
+                                <option value="1"> No. Entrada </option>
+                                <option value="2"> No. de Cuenta </option>
+                                <option value="3"> Nombre </option>
+                                <option value="4"> Fecha de Entrada </option>
+                                <option value="5"> Pago </option>
+                                <option value="6"> Dpi </option>
+                                <option value="7"> Dirección </option>
+                                <option value="8"> Teléfono </option>
+                                <option value="9"> Igss </option>
+                            </select>
+                    </div>
+                    <!-- /.input-group-prepend -->
                 </div>
                 <!-- /.input-group -->
             </div>
             <!-- /.form-group -->
             <!-- .table -->
-            <table id="table1" class="table">
+            <table id="myTable" class="table">
                 <!-- thead -->
                 <thead>
                     <tr>

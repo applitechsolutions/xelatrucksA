@@ -27,14 +27,13 @@ export class MaintenancesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const today = moment(new Date()).format('DD/MM/YYYY');
-    this.dtS.init_datePicker(today);
+    this.dtS.init_datePicker2();
   }
 
   searchTerminados() {
     this.loading = true;
-    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
-    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
 
     this.mainService.cargarTerminados(fecha1, fecha2)
       .subscribe( (res: any) => {

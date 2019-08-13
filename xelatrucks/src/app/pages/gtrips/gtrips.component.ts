@@ -170,6 +170,31 @@ export class GtripsComponent implements OnInit, AfterViewInit {
       });
   }
 
+  borrarGreenTrip( trip: GreenTrip ) {
+
+    console.log(trip);
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar el viaje del camión ' + trip._vehicle.plate,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+    .then( borrar => {
+      if (borrar) {
+
+        
+        // this.empService.borrarEmpleado( empleado )
+        //   .subscribe( borrado => {
+        //     this.dtService.destroy_table();
+        //     this.cargarEmpleados();
+        //   });
+      }
+
+    });
+  }
+
   cargarEmpleados() {
     this.empService.cargarEmpleados()
       .subscribe((res: any) => this.employees = res.empleados);
@@ -294,9 +319,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
 
         this.greenTrips = res.viajesV;
         this.loading = false;
-
         this.chRef.detectChanges();
-        init_datatables();
 
       });
 

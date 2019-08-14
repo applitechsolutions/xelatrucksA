@@ -18,6 +18,7 @@ import '../../assets/vendor/particles.js/particles.min.js';
 })
 export class LoginComponent implements OnInit {
 
+  loading: boolean = false;
   load: any;
   email: string;
   recuerdame: boolean;
@@ -68,11 +69,15 @@ export class LoginComponent implements OnInit {
     if (forma.invalid) {
       return;
     }
+    this.loading = true;
 
     const usuario = new User(null, forma.value.email, forma.value.password);
 
     this.usuarioService.login(usuario, forma.value.recuerdame)
-      .subscribe( correcto => this.router.navigate(['/dashboard']));
+      .subscribe( correcto => {
+        this.router.navigate(['/dashboard']);
+        this.loading = false;
+      });
 
   }
 

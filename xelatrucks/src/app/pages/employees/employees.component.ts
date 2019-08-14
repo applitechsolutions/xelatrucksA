@@ -4,6 +4,7 @@ import { EmployeeService } from '../../services/service.index';
 import { DatatablesService } from '../../services/datatables/datatables.service';
 
 declare function init_datatables();
+declare function destroy_datatables();
 declare var swal: any;
 
 @Component({
@@ -28,9 +29,10 @@ export class EmployeesComponent implements OnInit {
   cargarEmpleados() {
     this.empService.cargarEmpleados()
       .subscribe( (res: any) => {
+        destroy_datatables();
         this.employees = res.empleados;
         this.chRef.detectChanges();
-        this.dtService.init_tables();
+        init_datatables();
       });
   }
 

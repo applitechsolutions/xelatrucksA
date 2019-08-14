@@ -187,14 +187,15 @@
             <div class="tab-pane" id="tab1" role="tabpanel" aria-labelledby="tab">
                 <!-- .card-header -->
                 <div class="card-header d-flex">
+
                     <!-- .form-group -->
                     <div class="form-group offset-3 col-2">
-                        <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
+                        <input #date1 id="flatpickr02" name="date1" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/Y H:i">
                     </div>
                     <!-- /.form-group -->
                     <!-- .form-group -->
                     <div class="form-group col-2">
-                        <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
+                        <input #date2 id="flatpickr02" name="date2" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/y H:i">
                     </div>
                     <!-- /.form-group -->
                     <button type="button" (click)="buscarReporteCuadros()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>

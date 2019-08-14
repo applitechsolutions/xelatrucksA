@@ -319,8 +319,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
 
   buscarReporteCuadros() {
     this.loading = true;
-    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
-    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
 
     this.tripService.cargarGreenTrips( fecha1, fecha2 )
     .subscribe((res: any) => {

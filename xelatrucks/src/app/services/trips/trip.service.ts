@@ -19,7 +19,7 @@ export class TripService {
     public userService: UserService
   ) { }
 
-  crearGreenTrip( greenTrip: GreenTrip ) {
+  crearGreenTrip(greenTrip: GreenTrip) {
     let url = URL_SERVICES + '/viajeV';
 
     if (greenTrip._id) {
@@ -27,20 +27,20 @@ export class TripService {
     } else {
       url += '?token=' + this.userService.token;
       return this.http.post(url, greenTrip)
-      .pipe(
-        map( (res: any) => {
-          return res;
-        }),
-        catchError((err, caught) => {
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
-        })
-      );
+        .pipe(
+          map((res: any) => {
+            return res;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          })
+        );
     }
 
   }
 
-  cargarGreenTrips( fecha1: Date, fecha2: Date) {
+  cargarGreenTrips(fecha1: Date, fecha2: Date) {
 
     let url = URL_SERVICES + '/viajeV/reports';
     url += '?fecha1=' + fecha1;
@@ -49,13 +49,15 @@ export class TripService {
     return this.http.get(url);
   }
 
-  borrarGreenTrip( trip: GreenTrip ) {
+  borrarGreenTrip(trip: GreenTrip) {
     let url = URL_SERVICES + '/viajeV';
     url += '/' + trip._id;
     url += '?token=' + this.userService.token;
 
-    return this.http.delete(url);
+    return this.http.request('delete', url, { body: trip });
   }
+
+  /* #region  TIPOS DE VIAJES */
 
   cargarTypes() {
 
@@ -64,7 +66,12 @@ export class TripService {
     return this.http.get(url);
   }
 
-  crearTypes( type: Type ) {
+  cargarType( id: string ) {
+    const url = URL_SERVICES + '/tviajes/' + id;
+    return this.http.get(url);
+  }
+
+  crearTypes(type: Type) {
 
     let url = URL_SERVICES + '/tviajes';
 
@@ -74,16 +81,18 @@ export class TripService {
       url += '?token=' + this.userService.token;
       return this.http.post(url, type)
         .pipe(
-          map( (res: any) => {
+          map((res: any) => {
             return res;
           }),
           catchError((err, caught) => {
-            swal(err.error.mensaje, err.error.errors.message , 'error');
-            return throwError( err );
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
           })
         );
     }
 
   }
+
+  /* #endregion */
 
 }

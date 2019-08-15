@@ -3,6 +3,8 @@ import { DatatablesService } from '../../services/datatables/datatables.service'
 import { AutoProviderService } from '../../services/autoProviders/auto-provider.service';
 import { AutoProvider } from '../../models/autoProvider.model';
 
+declare function init_datatables();
+declare function destroy_datatables();
 declare var swal: any;
 
 @Component({
@@ -30,8 +32,7 @@ export class AutoProvidersComponent implements OnInit {
         this.autoProviders = resp.proveedores;
 
         this.chRef.detectChanges();
-
-        this.dtS.init_tables();
+        init_datatables();
       });
   }
 
@@ -48,8 +49,7 @@ export class AutoProvidersComponent implements OnInit {
       if (borrar) {
         this.autoProviderS.borrarProveedor( autoProvider._id )
           .subscribe( (borrado: any) => {
-            this.dtS.destroy_table();
-
+            destroy_datatables();
             this.cargarProveedores();
           });
       }

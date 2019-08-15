@@ -70,8 +70,11 @@
                                         <div class="form-group col-4">
                                             <label id="typeL">Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select #selectV formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
                                                 <option value=""> Seleccione un vehículo </option>
-                                                <option *ngFor="let vehicle of vehicles" [value]="vehicle._id"> {{ vehicle.plate }} {{ vehicle.type }}
-                                                </option>
+                                                <ng-container *ngFor="let vehicle of vehicles">
+                                                    <option *ngIf="vehicle.type === 'camion' || vehicle.type === 'camionG'" [value]="vehicle._id"> {{ vehicle.plate }} {{ vehicle.type }}
+                                                    </option>
+                                                </ng-container>
+                                                
                                             </select>
                                         </div>
                                         <!-- /.form-group -->

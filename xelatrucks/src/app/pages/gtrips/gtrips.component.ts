@@ -39,6 +39,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
 
   employees: Employee[] = [];
   vehicles: Vehicle[] = [];
+  vehicle: Vehicle;
 
   types: Type[] = [];
   type: Type = {};
@@ -104,9 +105,13 @@ export class GtripsComponent implements OnInit, AfterViewInit {
   crearViajeVerde() {
 
     this.formGT.value.employee = this.selectE.nativeElement.value;
-    this.formGT.value.type = this.selectT.nativeElement.value;
-    this.formGT.value.vehicle = this.selectV.nativeElement.value;
     this.formGT.value.material = this.selectM.nativeElement.value;
+
+    let type: Type;
+
+    this.vehicle = this.vehicles.find(v => v._id === this.selectV.nativeElement.value);
+    type = this.types.find(ty => ty._id === this.selectT.nativeElement.value);
+
     console.log(this.formGT.value);
     console.log(this.formGT.valid);
 
@@ -120,8 +125,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     if (this.greenTrip._id) {
       greenT = new GreenTrip(
         this.formGT.value.employee,
-        this.formGT.value.type,
-        this.formGT.value.vehicle,
+        type,
+        this.vehicle,
         this.formGT.value.material,
         moment(this.formGT.value.date, 'DD/MM/YYYY').toDate(),
         moment(this.formGT.value.checkIN, 'DD/MM/YYYY').toDate(),
@@ -133,8 +138,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     } else {
       greenT = new GreenTrip(
         this.formGT.value.employee,
-        this.formGT.value.type,
-        this.formGT.value.vehicle,
+        type,
+        this.vehicle,
         this.formGT.value.material,
         moment(this.formGT.value.date, 'DD/MM/YYYY').toDate(),
         moment(this.formGT.value.checkIN, 'DD/MM/YYYY hh:mm').toDate(),

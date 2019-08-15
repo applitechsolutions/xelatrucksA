@@ -1,7 +1,7 @@
 import { Vehicle } from './vehicle.model';
 import { Employee } from './employee.model';
-import { Type } from '@angular/compiler/src/core';
 import { Material } from './material.model';
+import { Type } from './type.model';
 
 export class GreenTrip {
 

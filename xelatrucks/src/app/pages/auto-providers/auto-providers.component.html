@@ -7,8 +7,40 @@
     <div class="card card-fluid">
         <!-- .card-body -->
         <div class="card-body">
+            <!-- .form-group -->
+            <div class="form-group">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                    <!-- .btn-toolbar -->
+                    <div id="dt-buttons" class="btn-toolbar"></div>
+                    <!-- /.btn-toolbar -->
+                    <!-- .input-group -->
+                    <div class="input-group has-clearable">
+                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
+                    </div>
+                    <!-- /.input-group -->
+                    <!-- .input-group-prepend -->
+                    <div class="input-group-prepend">
+                        <select id="filterBy" class="custom-select">
+                            <option value='' selected> Filtros </option>
+                            <option value="0"> Nombre </option>
+                            <option value="1"> Dirección </option>
+                            <option value="2"> Teléfonos </option>
+                            <option value="3"> Email </option>
+                            <option value="4"> Cuentas Bancarias </option>
+                            <option value="5"> Detalles </option>
+                        </select>
+                    </div>
+                    <!-- /.input-group-prepend -->
+                </div>
+                <!-- /.input-group -->
+            </div>
+            <!-- /.form-group -->
             <!-- .table -->
-            <table id="table1" class="table dt-responsive nowrap w-100">
+            <table id="myTable" class="table">
                 <thead>
                     <tr>
                         <th> Nombre </th>
@@ -45,17 +77,6 @@
                         </td>
                     </tr>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <th> Nombre </th>
-                        <th> Dirección </th>
-                        <th> Teléfonos </th>
-                        <th> Email </th>
-                        <th> Cuentas Bancarias </th>
-                        <th> Detalles </th>
-                        <th></th>
-                    </tr>
-                </tfoot>
             </table>
             <!-- /.table -->
         </div>

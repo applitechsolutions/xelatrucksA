@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Mechanic } from '../../models/mech.model';
 import { DatatablesService, MechanicService } from '../../services/service.index';
 
+declare function init_datatables();
+declare function destroy_datatables();
 declare var swal: any;
 
 @Component({
@@ -23,9 +25,9 @@ export class MechanicsComponent implements OnInit {
     this.mechService.cargarMecanicos()
       .subscribe( (res: any) => {
         this.mechs = res.mecanicos;
-        this.dtService.destroy_table();
+        destroy_datatables();
         this.chRef.detectChanges();
-        this.dtService.init_tables();
+        init_datatables();
       });
   }
 

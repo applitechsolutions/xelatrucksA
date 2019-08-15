@@ -86,7 +86,7 @@
                                 <!-- /.list-group-item-figure -->
                                 <!-- .list-group-item-body -->
                                 <div *ngIf="manten._vehicle !== null && manten._vehicle.type === 'camionG'" class="media-body">
-                                    <label>Camión <br> {{ manten._vehicle.plate }}</label><br>
+                                    <label>Camión Gondola <br> {{ manten._vehicle.plate }}</label><br>
                                     <small class="d-block text-muted" *ngIf="manten._gondola !== null">Gondola {{ manten._gondola.plate }}</small>
                                     <small class="d-block text-muted">Entrada {{ manten.dateStart | date:'dd/MM/yyyy HH:mm' }}</small><small class="d-block text-muted">Salida {{ manten.dateEnd | date:'dd/MM/yyyy HH:mm' }}</small>
                                 </div>

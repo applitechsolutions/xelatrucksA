@@ -2103,7 +2103,24 @@ function init_datatables() {
                         },
                         autoWidth: false,
                         deferRender: true,
-                        order: [0, 'asc']
+                        order: []
+                            // FUNCION PARA SUMAR Y PONERLO EN EL FOOTER DE LA TABLA
+                            // footerCallback: function(row, data, start, end, display) {
+                            //     var api = this.api();
+                            //     api.columns('.sum', {
+                            //         page: 'current'
+                            //     }).every(function() {
+                            //         var sum = this
+                            //             .data()
+                            //             .reduce(function(a, b) {
+                            //                 var x = parseFloat(a) || 0;
+                            //                 var y = parseFloat(b) || 0;
+                            //                 return x + y;
+                            //             }, 0);
+                            //         console.log(sum); //alert(sum);
+                            //         $(this.footer()).html(sum);
+                            //     });
+                            // }
                     });
                 }
             }, {

@@ -1,0 +1,291 @@
+<!-- floating action -->
+<button type="button" class="btn btn-success btn-floated" data-toggle="modal" data-target="#addGas"><span class="fa fa-plus"></span></button>
+<!-- /floating action -->
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .card -->
+    <div class="card card-fluid">
+        <div class=" card-header d-flex">
+            <!-- .form-group -->
+            <div class="form-group col-3">
+                <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+                <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
+            </div>
+            <!-- /.form-group -->
+            <!-- .form-group -->
+            <div class="form-group col-3">
+                <label class="control-label" for="flatpickr02">Fecha final</label>
+                <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
+            </div>
+            <!-- /.form-group -->
+            <button type="button" [ngStyle]="{'margin-top': '29px'}" (click)="searchG()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+            <button type="button" (click)="resetModal()" data-toggle="modal" data-target="#addGas" class="btn btn-outline-primary ml-auto">Generar Reporte <i class="fas fa-print"></i></button>
+        </div>
+        <!-- .card-body -->
+        <div class="card-body">
+            <div class="row">
+
+            </div>
+            <!-- .section-block -->
+            <div class="section-block">
+                <!-- metric row -->
+                <div class="metric-row">
+                    <!-- metric column -->
+                    <div class="col">
+                        <!-- .metric -->
+                        <div class="metric metric-bordered">
+                            <h2 class="metric-label"> Total Gastado </h2>
+                            <p class="metric-value h1">
+                                <sup>Q</sup> <span class="value">{{ totalGas | number : '1.2-2' }}</span>
+                            </p>
+                        </div>
+                        <!-- /.metric -->
+                    </div>
+                    <!-- /metric column -->
+                    <!-- metric column -->
+                    <div class="col">
+                        <!-- .metric -->
+                        <div class="metric metric-bordered">
+                            <h2 class="metric-label"> Galones </h2>
+                            <p class="metric-value h1">
+                                <sup>#</sup> <span class="value">{{ totalGal | number : '1.0' }}</span>
+                            </p>
+                        </div>
+                        <!-- /.metric -->
+                    </div>
+                    <!-- /metric column -->
+                    <!-- metric column -->
+                    <div class="col">
+                        <!-- .metric -->
+                        <div class="metric metric-bordered">
+                            <h2 class="metric-label"> Cupones </h2>
+                            <p class="metric-value h1">
+                                <sup>#</sup> <span class="value">{{ this.gasolines.length }}</span>
+                            </p>
+                        </div>
+                        <!-- /.metric -->
+                    </div>
+                    <!-- /metric column -->
+                    <!-- metric column -->
+                    <div class="col">
+                        <!-- .metric -->
+                        <div class="metric metric-bordered">
+                            <h2 class="metric-label"> Fechas consultadas </h2>
+                            <p class="metric-value h4">
+                                <span class="value">{{ this.fecha1Consulta + ' - ' + this.fecha2Consulta }}</span>
+                            </p>
+                        </div>
+                        <!-- /.metric -->
+                    </div>
+                    <!-- /metric column -->
+                </div>
+                <!-- /metric row -->
+            </div>
+            <!-- /.section-block -->
+            <!-- .btn-toolbar -->
+            <div id="dt-buttons" class="btn-toolbar"></div>
+            <!-- /.btn-toolbar -->
+            <!-- .form-group -->
+            <div class="form-group">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                    <!-- .input-group -->
+                    <div class="input-group has-clearable">
+                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+                    </div>
+                    <!-- /.input-group -->
+                    <!-- .input-group-prepend -->
+                    <div class="input-group-prepend">
+                        <select id="filterBy" class="custom-select">
+                            <option value='' selected> Filtros </option>
+                            <option value="0"> Vehículo </option>
+                            <option value="1"> Fecha </option>
+                            <option value="2"> Código </option>
+                            <option value="3"> Galones </option>
+                            <option value="4"> Total </option>
+                        </select>
+                    </div>
+                    <!-- /.input-group-prepend -->
+                </div>
+                <!-- /.input-group -->
+            </div>
+            <!-- /.form-group -->
+            <!-- .table -->
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th> Vehículo </th>
+                        <th> Fecha </th>
+                        <th> Código </th>
+                        <th class="sum"> Galones </th>
+                        <th> Total </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let gasoline of gasolines">
+                        <td class="align-middle text-truncate">
+                            <div class="media align-items-center">
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="gasoline.type==='camion'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-yellow"> <i class="fas fa-truck"></i></div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <div *ngIf="gasoline.type==='camion'" class="media-body">
+                                    <label>Camión <br> {{ gasoline.plate }}</label>
+                                </div>
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="gasoline.type==='camionG'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-orange"> <i class="fas fa-truck-moving"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <!-- .list-group-item-body -->
+                                <div *ngIf="gasoline.type==='camionG'" class="media-body">
+                                    <label>Camión Gondola <br> {{ gasoline.plate }}</label>
+                                </div>
+                                <!-- /.list-group-item-body -->
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="gasoline.type==='vehiculo'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-blue"> <i class="fas fa-truck-pickup"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <!-- .list-group-item-body -->
+                                <div *ngIf="gasoline.type==='vehiculo'" class="media-body">
+                                    <label>Vehículo <br> {{ gasoline.plate }}</label>
+                                </div>
+                                <!-- /.list-group-item-body -->
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="gasoline.type==='riego'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-green"> <i class="fas fa-truck-monster"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <!-- .list-group-item-body -->
+                                <div *ngIf="gasoline.type==='riego'" class="media-body">
+                                    <label>Camión para riego <br> {{ gasoline.plate }}</label>
+                                </div>
+                                <!-- /.list-group-item-body -->
+                                <!-- .list-group-item-figure -->
+                                <div *ngIf="gasoline.type==='stock'" class="list-group-item-figure">
+                                    <div class="tile tile-circle bg-pink"> <i class="fas fa-snowplow"></i> </div>
+                                </div>
+                                <!-- /.list-group-item-figure -->
+                                <!-- .list-group-item-body -->
+                                <div *ngIf="gasoline.type==='stock'" class="media-body">
+                                    <label>Excavadora <br> {{ gasoline.plate }}</label>
+                                </div>
+                                <!-- /.list-group-item-body -->
+                            </div>
+                        </td>
+                        <td class="align-middle">
+                            {{ dtService.fromJsonDate(gasoline.date) }}
+                        </td>
+                        <td class="align-middle">{{ gasoline.code }}</td>
+                        <td class="align-middle"> {{ gasoline.gallons }} </td>
+                        <td class="align-middle">Q {{ gasoline.total | number : '1.2-2' }} </td>
+                        <td class="align-middle text-right">
+                            <button (click)="editarGas( gasoline._id, gasoline.idVehicle )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                            <button (click)="deleteGas( gasoline._id, gasoline.idVehicle )" type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th> Vehículo </th>
+                        <th> Fecha </th>
+                        <th> Código </th>
+                        <th> Galones </th>
+                        <th> Total </th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+            <ng-template #customLoadingTemplate>
+            </ng-template>
+            <!-- /.table -->
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.page-section -->
+
+<!-- .modalGASOLINE -->
+<div class="modal fade" id="addGas" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-gas-pump"></i> Ingresar cupón </h5>
+            </div>
+            <!-- /.modal-header -->
+            <form ngNativeValidate [formGroup]="formGas" (ngSubmit)="addGas()" action="#">
+                <!-- .modal-body -->
+                <div class="modal-body">
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label class="control-label">Vehículo</label>
+                        <select #selectV name="vehicle" class="form-control select2" id="vehicle" style="width:100%!important;">
+                                <option value=""> Seleccione un vehículo </option>
+                                <option *ngFor="let vehicle of vehicles" [value]="vehicle._id"> {{ vehicle.plate }} {{ vehicle.type }}
+                                </option>
+                            </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="row">
+                        <!-- .form-group -->
+                        <div class="form-group col-6">
+                            <div class="form-group">
+                                <label for="codeG">Código del Cupón</label>
+                                <input #codeG formControlName="code" type="text" class="form-control" name="codeG">
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group col-6">
+                            <label class="control-label" for="flatpickr">Fecha del Cúpon</label> <input #dateG name="dateG" id="flatpickr" type="text" class="form-control" required>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div class="row">
+                        <!-- .form-group -->
+                        <div class="form-group col-6">
+                            <label for="gallons">Galones</label>
+                            <!-- .input-group -->
+                            <div class="input-group">
+                                <label class="input-group-prepend" for="gallons"><span class="badge"></span></label> <input formControlName="gallons" name="gallons" type="number" step="0.01" min="0" class="form-control" id="gallons
+                                   " placeholder="Ingrese una cantidad" required>
+                            </div>
+                            <!-- /.input-group -->
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group col-6">
+                            <label for="pi9">Total</label>
+                            <!-- .input-group -->
+                            <div class="input-group">
+                                <label class="input-group-prepend" for="total"><span class="badge">Q</span></label> <input formControlName="total" name="total" type="number" step="0.01" min="0" class="form-control" id="total">
+                            </div>
+                            <!-- /.input-group -->
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                </div>
+                <!-- /.modal-body -->
+                <!-- .modal-footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMG type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                </div>
+                <!-- /.modal-footer -->
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modalGASOLINE -->

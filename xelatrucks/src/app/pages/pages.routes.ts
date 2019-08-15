@@ -29,6 +29,7 @@ import { GtripsComponent } from './gtrips/gtrips.component';
 import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee.component';
+import { GasolinesComponent } from './gasolines/gasolines.component';
 
 const pagesRoutes: Routes = [
     {
@@ -189,6 +190,12 @@ const pagesRoutes: Routes = [
         component: TypeMaintenancesComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Tipos de Mantenimientos' }
+    },
+    {
+        path: 'gasolines',
+        component: GasolinesComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Cupones de combustible' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
 ];

@@ -42,6 +42,7 @@ import { GtripsComponent } from './gtrips/gtrips.component';
 import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee.component';
+import { GasolinesComponent } from './gasolines/gasolines.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { EmployeeComponent } from './employees/employee.component';
         GtripsComponent,
         TypeMaintenancesComponent,
         EmployeesComponent,
-        EmployeeComponent
+        EmployeeComponent,
+        GasolinesComponent
     ],
     exports: [
         DashboardComponent,

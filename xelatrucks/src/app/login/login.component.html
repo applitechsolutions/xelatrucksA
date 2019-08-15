@@ -42,6 +42,10 @@
             </div>
         </div>
         <!-- /.list-group-item-figure -->
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <!-- /.table -->
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
     </form>
     <!-- /.auth-form -->
     <!-- copyright -->

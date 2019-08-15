@@ -6,13 +6,13 @@ import * as moment from 'moment/moment';
 
 declare function init_datatables();
 declare function destroy_datatables();
+declare var swal: any;
 @Component({
   selector: 'app-maintenances',
   templateUrl: './maintenances.component.html',
   styles: []
 })
 export class MaintenancesComponent implements OnInit {
-
   loading: boolean = false;
   @ViewChild('date1') date1: ElementRef;
   @ViewChild('date2') date2: ElementRef;
@@ -31,6 +31,10 @@ export class MaintenancesComponent implements OnInit {
   }
 
   searchTerminados() {
+    if (this.date1.nativeElement.value === '' || this.date2.nativeElement.value === '') {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      return;
+    }
     this.loading = true;
     const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
     const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();

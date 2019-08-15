@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { PagesComponent } from './pages/pages.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { PagesComponent } from './pages/pages.component';
     HttpClientModule,
     APP_ROUTES,
     FormsModule,
-    SharedModule
+    SharedModule,
+    NgxLoadingModule.forRoot({})
   ],
   providers: [],
   bootstrap: [AppComponent]

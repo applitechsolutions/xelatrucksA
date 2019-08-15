@@ -7,7 +7,8 @@ import { Rim } from '../../models/rim.model';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { Gas } from '../../models/gas.model';
-import swal from 'sweetalert';
+
+declare var swal: any;
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,13 @@ export class VehicleService {
       return this.http.put(url, gasoline )
         .pipe( map( (resp: any) => {
             const vehicleDB = resp.vehiculo;
-            swal('Vechículo Actualizado', 'Placa #' + vehicleDB.plate , 'success');
+            swal({
+              title: '¡Vechículo Actualizado!',
+              text: 'Placa #' + vehicleDB.plate,
+              icon: 'success',
+              button: false,
+              timer: 1000
+            });
             return resp;
           }),
           catchError((err, caught) => {
@@ -76,7 +83,13 @@ export class VehicleService {
         return this.http.post(url, gasoline)
           .pipe( map( (resp: any) => {
             const vehicleDB = resp.vehiculo;
-            swal('Vechículo creado', 'Placa #' + vehicleDB.plate , 'success');
+            swal({
+              title: '¡Vechículo Actualizado!',
+              text: 'Placa #' + vehicleDB.plate,
+              icon: 'success',
+              button: false,
+              timer: 1000
+            });
             return resp;
           }),
           catchError((err, caught) => {
@@ -85,6 +98,13 @@ export class VehicleService {
             return throwError( err );
           }));
     }
+  }
+
+  cargarGasolinesAll( fecha1: Date, fecha2: Date ) {
+    const url = URL_SERVICES + '/vehiculo/gasolines/all?fecha1=' + fecha1 + '&fecha2=' + fecha2;
+
+    return this.http.get(url)
+      .pipe( map( (resp: any) =>  resp.gasoline));
   }
 
   cargarGasolines( id: string, fecha1: Date, fecha2: Date ) {

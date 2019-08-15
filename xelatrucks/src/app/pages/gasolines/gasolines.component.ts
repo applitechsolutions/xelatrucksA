@@ -10,6 +10,7 @@ import { Vehicle } from '../../models/vehicle.model';
 
 declare function init_datatables();
 declare function destroy_datatables();
+declare function init_reports();
 declare var swal: any;
 
 @Component({
@@ -61,6 +62,7 @@ export class GasolinesComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     $('.select2').select2();
+    init_reports();
   }
 
   searchG() {

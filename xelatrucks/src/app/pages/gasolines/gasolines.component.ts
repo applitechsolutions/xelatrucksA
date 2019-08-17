@@ -7,6 +7,8 @@ import { Gas } from '../../models/gas.model';
 import { DatatablesService } from '../../services/datatables/datatables.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Vehicle } from '../../models/vehicle.model';
+import { UserService } from '../../services/users/user.service';
+import { User } from '../../models/user.model';
 
 declare function init_datatables();
 declare function destroy_datatables();
@@ -39,11 +41,14 @@ export class GasolinesComponent implements OnInit, AfterViewInit {
   totalGal: number = 0.00;
   fecha1Consulta: string = '';
   fecha2Consulta: string = '';
+  usuario: User;
+  today: Date;
 
   constructor(
     public vehicleS: VehicleService,
     public dtService: DatatablesService,
-    private chRef: ChangeDetectorRef
+    private chRef: ChangeDetectorRef,
+    private userS: UserService
   ) { }
 
   ngOnInit() {
@@ -58,10 +63,16 @@ export class GasolinesComponent implements OnInit, AfterViewInit {
       total: new FormControl(null, Validators.required),
       code: new FormControl(null)
     });
+    this.usuario = this.userS.usuario;
   }
 
   ngAfterViewInit() {
     $('.select2').select2();
+  }
+
+  createReport() {
+    this.today = new Date();
+    this.chRef.detectChanges();
     init_reports();
   }
 

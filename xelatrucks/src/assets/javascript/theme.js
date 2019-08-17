@@ -2187,6 +2187,7 @@ function init_reports() {
             function InvoiceDemo() {
                 _classCallCheck(this, InvoiceDemo);
 
+                this.reset();
                 this.init();
             }
 
@@ -2195,6 +2196,12 @@ function init_reports() {
                 value: function init() {
                     // event handlers
                     this.saveToPDF();
+                }
+            }, {
+                key: "reset",
+                value: function reset() {
+                    var element = document.getElementById('invoice');
+                    element.reset();
                 }
             }, {
                 key: "saveToPDF",

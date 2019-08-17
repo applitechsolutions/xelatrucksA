@@ -19,7 +19,7 @@
             </div>
             <!-- /.form-group -->
             <button type="button" [ngStyle]="{'margin-top': '29px'}" (click)="searchG()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
-            <button type="button" data-toggle="modal" data-target="#modalReport" class="btn btn-outline-primary ml-auto">Generar Reporte <i class="fas fa-print"></i></button>
+            <button type="button" (click)="createReport()" data-toggle="modal" data-target="#modalReport" class="btn btn-outline-primary ml-auto">Generar Reporte <i class="fas fa-print"></i></button>
         </div>
         <!-- .card-body -->
         <div class="card-body">
@@ -221,7 +221,7 @@
         <div class="modal-content">
             <!-- .modal-header -->
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-gas-pump"></i> Ingresar cupón </h5>
+                <h5 class="modal-title"><i class="fas fa-gas-pump"></i> Reporte de combustible </h5>
             </div>
             <!-- /.modal-header -->
             <!-- .modal-body -->
@@ -235,8 +235,7 @@
                             <div class="dropdown">
                                 <button type="button" class="btn btn-lg btn-secondary rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-caret-down"></span></button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-arrow mr-1"></div><button type="button" id="download-pdf" class="dropdown-item">Download PDF</button> <button type="button" class="dropdown-item">Share...</button>
-                                    <div class="dropdown-divider"></div><button type="button" class="dropdown-item">Mark as paid</button>
+                                    <div class="dropdown-arrow mr-1"></div><button type="button" id="download-pdf" class="dropdown-item">Descargar PDF</button>
                                 </div>
                             </div>
                         </div>
@@ -250,7 +249,7 @@
                                     <!-- .col -->
                                     <div class="col d-flex">
                                         <h2 class="invoice-brand align-self-center">
-                                            <img src="assets/images/brand-logo.png" width="124" alt=""> <span class="sr-only">Invoice Brand</span>
+                                            <img src="assets/images/logo-min.png" width="270" alt=""> <span class="sr-only">Reporte la Viña S.A</span>
                                         </h2>
                                     </div>
                                     <!-- /.col -->
@@ -259,19 +258,13 @@
                                         <table class="table table-borderless table-sm">
                                             <tbody>
                                                 <tr>
+                                                    <td>
+                                                        <small>Usuario</small><br>
+                                                        <h5> {{ usuario.name + ' ' + usuario.lastName }} </h5>
+                                                    </td>
                                                     <td colspan="2">
-                                                        <small>Amount (USD)</small>
-                                                        <h5> $3.096,00 </h5>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <small>Invoice No</small><br>
-                                                        <h5> INV-65D9E592 </h5>
-                                                    </td>
-                                                    <td>
-                                                        <small>Due Date</small><br>
-                                                        <h5> Jan 18, 2019 </h5>
+                                                        <small>Fecha</small><br>
+                                                        <h5> {{ today | date:"dd/MM/yyyy HH:mm"}} </h5>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -284,82 +277,41 @@
                             <!-- /.invoice-header -->
                             <!-- .invoice-body -->
                             <div class="invoice-body">
-                                <!-- grid row -->
-                                <div class="row">
-                                    <!-- .col -->
-                                    <div class="col">
-                                        <!-- .invoice-sender -->
-                                        <div class="invoice-sender">
-                                            <dl>
-                                                <dt> From: </dt>
-                                                <dd> Stilearning </dd>
-                                                <dd> 983 Kunde Glens, Pourosmouth<br> AK 68019-8335 </dd>
-                                            </dl>
-                                        </div>
-                                        <!-- /.invoice-recipient -->
-                                    </div>
-                                    <!-- /.col -->
-                                    <!-- .col -->
-                                    <div class="col">
-                                        <!-- .invoice-recipient -->
-                                        <div class="invoice-recipient">
-                                            <dl>
-                                                <dt> Billed To: </dt>
-                                                <dd> Ron-tech </dd>
-                                                <dd> 3272 Mills Valleys Suite 412, Port Willis<br> NV 69859 </dd>
-                                            </dl>
-                                        </div>
-                                        <!-- /.invoice-recipient -->
-                                    </div>
-                                    <!-- /.col -->
-                                </div>
-                                <!-- /grid row -->
                                 <table class="table table-sm">
                                     <caption class="invoice-title">
-                                        <span>Invoice</span><br>
-                                        <span class="text-primary">Looper Admin Theme Custom Design</span>
+                                        <span>Reporte</span><br>
+                                        <span class="text-primary">Consumo de combustible {{ fecha1Consulta + ' - ' +  fecha2Consulta}} </span>
                                     </caption>
                                     <thead>
                                         <tr>
-                                            <th style="min-width: 375px"> Description </th>
-                                            <th class="text-right"> Qty </th>
-                                            <th> Price </th>
-                                            <th class="text-right"> Amount (USD) </th>
+                                            <th><strong>Vehículo</strong></th>
+                                            <th> Fecha </th>
+                                            <th> Código </th>
+                                            <th class="text-right"> Galones </th>
+                                            <th class="text-right"> Total (Q) </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td> Create mobile app </td>
-                                            <td class="text-right"> 1 </td>
-                                            <td> $3.000,00 </td>
-                                            <td class="text-right"> $3.000,00 </td>
-                                        </tr>
-                                        <tr>
-                                            <td> Looper Admin Theme (Standard License) </td>
-                                            <td class="text-right"> 4 </td>
-                                            <td> $49,00 </td>
-                                            <td class="text-right"> $196,00 </td>
+                                        <tr *ngFor="let gasoline of gasolines">
+                                            <td>
+                                                <p>{{ gasoline.plate }}</p>
+                                            </td>
+                                            <td> {{ dtService.fromJsonDate(gasoline.date) }} </td>
+                                            <td> {{ gasoline.code }} </td>
+                                            <td class="text-right"> {{ gasoline.gallons }} </td>
+                                            <td class="text-right"> Q{{ gasoline.total | number : '1.2-2' }} </td>
                                         </tr>
                                         <!-- fake border -->
                                         <tr>
-                                            <td colspan="4"></td>
+                                            <td colspan="5"></td>
                                         </tr>
                                     </tbody>
                                     <tfoot class="table-borderless">
                                         <tr>
                                             <th colspan="2"></th>
                                             <th> Total </th>
-                                            <th class="text-right"> $3.196,00 </th>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="2"></th>
-                                            <th> Coupon </th>
-                                            <th class="text-right"> $100,00 </th>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="2"></th>
-                                            <th> Due </th>
-                                            <th class="text-right"> $3.096,00 </th>
+                                            <th class="text-right"> {{ totalGal | number : '1.2-2' }} </th>
+                                            <th class="text-right"> Q{{ totalGas | number : '1.2-2' }} </th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -367,8 +319,8 @@
                             <!-- /.invoice-body -->
                             <!-- .invoice-footer -->
                             <div class="invoice-footer">
-                                <p>
-                                    <strong>Thanks for buying or notes</strong>. Please click button with caret down icon above to generate and download this invoice in pdf format. </p>
+                                <p><strong>Copyright &copy; APPLITECH SOFTWARE SOLUTIONS.
+                                </strong> Todos Los Derechos Reservados.</p>
                             </div>
                             <!-- /.invoice-footer -->
                         </div>

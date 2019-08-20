@@ -2208,7 +2208,6 @@ function init_reports() {
                     var $element = $(element);
                     var $wrapper = $element.parent();
                     var filename = $element.data('id');
-                    filename += Math.random();
                     var $img = $('<img />');
                     console.log(element);
                     worker.from(element).toImg().then(function() {
@@ -2216,6 +2215,7 @@ function init_reports() {
                         $img.prop('alt', filename).prop('src', worker.prop.img.src).addClass('invoice-img').css('max-width', "".concat($element.outerWidth(), "px"));
                         $wrapper.append($img);
                     });
+                    $("#download-pdf").prop("onclick", null).off("click");
                     $('#download-pdf').on('click', function(e) {
                         e.preventDefault();
                         worker.from(element).toPdf().save(filename);

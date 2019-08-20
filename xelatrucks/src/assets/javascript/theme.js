@@ -2187,7 +2187,10 @@ function init_reports() {
             function InvoiceDemo() {
                 _classCallCheck(this, InvoiceDemo);
 
-                this.reset();
+                $("#benito img:last-child").remove();
+                var element = document.getElementById('invoice');
+                var $element = $(element);
+                $element.css('display', '');
                 this.init();
             }
 
@@ -2198,12 +2201,6 @@ function init_reports() {
                     this.saveToPDF();
                 }
             }, {
-                key: "reset",
-                value: function reset() {
-                    var element = document.getElementById('invoice');
-                    element.reset();
-                }
-            }, {
                 key: "saveToPDF",
                 value: function saveToPDF() {
                     var worker = html2pdf();
@@ -2212,6 +2209,7 @@ function init_reports() {
                     var $wrapper = $element.parent();
                     var filename = $element.data('id');
                     var $img = $('<img />');
+                    console.log(element);
                     worker.from(element).toImg().then(function() {
                         $element.css('display', 'none');
                         $img.prop('alt', filename).prop('src', worker.prop.img.src).addClass('invoice-img').css('max-width', "".concat($element.outerWidth(), "px"));

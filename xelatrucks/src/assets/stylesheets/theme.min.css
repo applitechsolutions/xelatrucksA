@@ -9986,8 +9986,8 @@ a.text-dark:hover {
 
 @media print {
     *,
-    :after,
-    :before {
+     :after,
+     :before {
         text-shadow: none!important;
         box-shadow: none!important
     }
@@ -24059,12 +24059,10 @@ a.metric:hover {
 }
 
 .invoice-header {
-    margin-bottom: 3rem
+    margin-bottom: 1rem
 }
 
-.invoice-body>.table {
-    margin-top: 3rem
-}
+.invoice-body>.table {}
 
 .invoice-title {
     color: #363642;

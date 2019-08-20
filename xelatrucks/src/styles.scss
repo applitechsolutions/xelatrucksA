@@ -6,3 +6,17 @@
 .bordes {
     border-radius: 0.25rem;
 }
+
+table.print-friendly tr td,
+table.print-friendly tr th {
+    page-break-inside: avoid;
+}
+
+table {
+    page-break-inside: auto;
+}
+
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}

@@ -44,6 +44,9 @@ export class GasolinesComponent implements OnInit, AfterViewInit {
   usuario: User;
   today: Date;
 
+
+  init: boolean = true;
+
   constructor(
     public vehicleS: VehicleService,
     public dtService: DatatablesService,

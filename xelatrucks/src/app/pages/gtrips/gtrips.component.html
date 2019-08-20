@@ -12,9 +12,6 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#tab1"><i class="fas fa-clipboard-list"></i> Listado Reporte Cuadros</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#tab3">Completed</a>
-                </li>
             </ul>
             <!-- /.nav-tabs -->
         </div>
@@ -35,7 +32,18 @@
                                     <legend>Nuevo Reporte Cuadros</legend>
                                     <div class="row">
                                         <!-- .form-group -->
-                                        <div class="form-group col-4">
+                                        <div class="form-group col-6">
+                                            <label id="typeL">Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select #selectV formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
+                                            <option value=""> Seleccione un vehículo </option>
+                                                <ng-container *ngFor="let vehicle of vehicles">
+                                                    <option *ngIf="vehicle.type === 'camion'" [value]="vehicle._id"> {{ vehicle.plate + ' (Camión)' }}</option>
+                                                    <option *ngIf="vehicle.type === 'camionG'" [value]="vehicle._id"> {{ vehicle.plate + ' (Camión Gondola)' }}</option>
+                                                </ng-container>
+                        \                   </select>
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <!-- .form-group -->
+                                        <div class="form-group col-6">
                                             <label id="typeL">Empleado <span class="badge badge-danger">Obligatorio</span></label> <select #selectE formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
                                                 <option value=""> Seleccione un empleado </option>
                                                 <option *ngFor="let empleado of employees" [value]="empleado._id"> {{ empleado.name }}
@@ -43,19 +51,15 @@
                                             </select>
                                         </div>
                                         <!-- /.form-group -->
-                                        <!-- .form-group -->
-                                        <div class="form-group col-2">
-                                            <label>Crear Empleado</label><br>
-                                            <button [routerLink]="[ '/employee', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
-                                        </div>
-                                        <!-- /.form-group -->
+                                    </div>
+                                    <div class="row">
                                         <!-- .form-group -->
                                         <div class="form-group col-4">
                                             <label id="typeL">Tipo <span class="badge badge-danger">Obligatorio</span></label> <select #selectT formControlName="type" name="type" class="form-control select2" style="width:100%!important;">
-                                                <option value=""> Seleccione un tipo de viaje </option>
-                                                <option *ngFor="let type of types" [selected]="type._id === tempType"  [value]="type._id"> {{ type.name }}
+                                            <option value=""> Seleccione un tipo de viaje </option>
+                                                <option *ngFor="let type of types" [selected]="type._id === tempType"  [value]="type._id"> {{ type.name + ' ' + '('+ type.km + ' km)' }}
                                                 </option>
-                                            </select>
+                                        </select>
                                         </div>
                                         <!-- /.form-group -->
                                         <!-- .form-group -->
@@ -64,30 +68,10 @@
                                             <a href="#addType" data-toggle="modal" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
                                         </div>
                                         <!-- /.form-group -->
-                                    </div>
-                                    <div class="row">
-                                        <!-- .form-group -->
-                                        <div class="form-group col-4">
-                                            <label id="typeL">Vehículo <span class="badge badge-danger">Obligatorio</span></label> <select #selectV formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
-                                                <option value=""> Seleccione un vehículo </option>
-                                                <ng-container *ngFor="let vehicle of vehicles">
-                                                    <option *ngIf="vehicle.type === 'camion' || vehicle.type === 'camionG'" [value]="vehicle._id"> {{ vehicle.plate }} {{ vehicle.type }}
-                                                    </option>
-                                                </ng-container>
-                                                
-                                            </select>
-                                        </div>
-                                        <!-- /.form-group -->
-                                        <!-- .form-group -->
-                                        <div class="form-group col-2">
-                                            <label>Crear Vehículo</label><br>
-                                            <button [routerLink]="[ '/vehicle', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
-                                        </div>
-                                        <!-- /.form-group -->
                                         <!-- .form-group -->
                                         <div class="form-group col-4">
                                             <label id="typeL">Material <span class="badge badge-danger">Obligatorio</span></label> <select #selectM formControlName="material" name="material" class="form-control select2" style="width:100%!important;">
-                                                <option value=""> Seleccione un proveedor </option>
+                                                <option value=""> Seleccione un material </option>
                                                 <option *ngFor="let material of materials" [selected]="material._id === tempMat"  [value]="material._id"> {{ material.code }} {{ material.name }} </option>
                                             </select>
                                         </div>
@@ -102,19 +86,19 @@
                                     <div class="row">
                                         <!-- .form-group -->
                                         <div class="form-group col-3">
-                                            <label class="control-label" for="flatpickr">Fecha</label> <input id="flatpickr" formControlName="date" name="date" type="text" class="form-control">
+                                            <label class="control-label" for="flatpickr">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input id="flatpickr" formControlName="date" name="date" type="text" class="form-control" required>
                                         </div>
                                         <!-- /.form-group -->
                                         <!-- .form-group -->
                                         <div class="form-group col-3">
-                                            <label class="control-label" for="flatpickr02">Hora de Entrada</label> <input id="flatpickr02" formControlName="checkIN" name="checkIN" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true"
-                                                data-date-format="d/m/Y H:i">
+                                            <label class="control-label" for="flatpickr02">Hora de Entrada <span class="badge badge-danger">Obligatorio</span></label> <input id="flatpickr02" formControlName="checkIN" name="checkIN" type="text" class="form-control"
+                                                data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/Y H:i" required>
                                         </div>
                                         <!-- /.form-group -->
                                         <!-- .form-group -->
                                         <div class="form-group col-3">
-                                            <label class="control-label" for="flatpickr02">Hora de Salida</label> <input id="flatpickr02" formControlName="checkOUT" name="checkOUT" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true"
-                                                data-date-format="d/m/Y H:i">
+                                            <label class="control-label" for="flatpickr02">Hora de Salida <span class="badge badge-danger">Obligatorio</span></label> <input id="flatpickr02" formControlName="checkOUT" name="checkOUT" type="text" class="form-control"
+                                                data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/Y H:i" required>
                                         </div>
                                         <!-- /.form-group -->
                                         <!-- .form-group -->

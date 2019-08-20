@@ -115,7 +115,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     console.log(this.formGT.value);
     console.log(this.formGT.valid);
 
-    if (this.formGT.invalid) {
+    // tslint:disable-next-line: max-line-length
+    if (this.formGT.invalid || this.selectV.nativeElement.value === '' || this.selectT.nativeElement.value === '' || this.selectE.nativeElement.value === '' || this.selectM.nativeElement.value === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }

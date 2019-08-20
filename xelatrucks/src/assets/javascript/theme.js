@@ -2208,6 +2208,7 @@ function init_reports() {
                     var $element = $(element);
                     var $wrapper = $element.parent();
                     var filename = $element.data('id');
+                    filename += Math.random();
                     var $img = $('<img />');
                     console.log(element);
                     worker.from(element).toImg().then(function() {

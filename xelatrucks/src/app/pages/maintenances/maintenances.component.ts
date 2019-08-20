@@ -43,7 +43,7 @@ export class MaintenancesComponent implements OnInit {
       .subscribe( (res: any) => {
         destroy_datatables();
 
-        console.log(res);
+        // console.log(res);
         this.maintenances = res.mantenimientos;
         this.detailsV = res.mantenimientos.detailsV;
         this.detailsG = res.mantenimientos.detailsG;

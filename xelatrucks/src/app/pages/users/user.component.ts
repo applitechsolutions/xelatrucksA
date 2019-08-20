@@ -115,8 +115,8 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   crearUsuario() {
 
-    console.log(this.forma.valid);
-    console.log(this.forma.value);
+    // console.log(this.forma.valid);
+    // console.log(this.forma.value);
 
     if (this.forma.invalid) {
       return;

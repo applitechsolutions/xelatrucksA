@@ -152,8 +152,8 @@ export class UsersComponent implements OnInit {
     this.areaS.cargarUserAreas(user)
       .subscribe( (resp: any) => {
         this.userAreas = resp;
-        console.log(this.userAreas);
-        console.log(this.userAreas.map( (resp: any) => resp._area ));
+        // console.log(this.userAreas);
+        // console.log(this.userAreas.map( (resp: any) => resp._area ));
       });
   }
 
@@ -174,7 +174,7 @@ export class UsersComponent implements OnInit {
           }
       }
     }
-    console.log(this.userAreas);
+    // console.log(this.userAreas);
   }
 
   deleteArea(idArea: string) {

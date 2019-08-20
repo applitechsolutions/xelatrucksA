@@ -27,8 +27,8 @@ export class BuySparesComponent implements OnInit {
     this.bsS.cargarCompras()
       .subscribe( (resp: any) => {
         this.buySpares = resp.compras;
-        console.log(resp);
-        console.log(this.buySpares);
+        // console.log(resp);
+        // console.log(this.buySpares);
 
         this.chRef.detectChanges();
         this.dtS.init_tables();
@@ -39,7 +39,7 @@ export class BuySparesComponent implements OnInit {
     this.dtS.destroy_table2();
 
     this.details = buySpare.details;
-    console.log(this.details);
+    // console.log(this.details);
 
     this.chRef.detectChanges();
     this.dtS.init_tables2();

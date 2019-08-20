@@ -17,7 +17,7 @@ export class VerificaTokenGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    console.log('VERIFICA TOKEN GUARD');
+    // console.log('VERIFICA TOKEN GUARD');
 
     const token = this.userS.token;
     const payload = JSON.parse( atob( token.split('.')[1]) );

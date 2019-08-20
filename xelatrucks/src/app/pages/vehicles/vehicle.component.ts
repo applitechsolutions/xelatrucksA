@@ -118,8 +118,8 @@ export class VehicleComponent implements OnInit, AfterViewInit {
   }
 
   crearMarca() {
-    console.log(this.formaMarca.valid);
-    console.log(this.formaMarca.value);
+    // console.log(this.formaMarca.valid);
+    // console.log(this.formaMarca.value);
 
     if (this.formaMarca.invalid) {
       return;
@@ -131,7 +131,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
 
     this.makeS.crearMarca( make )
         .subscribe( (resp: any) => {
-          console.log( resp );
+          // console.log( resp );
           const marcaDB = resp.marca;
           this.forma.value.make = marcaDB._id;
           this.tempMake = marcaDB._id;
@@ -141,8 +141,8 @@ export class VehicleComponent implements OnInit, AfterViewInit {
   }
 
   crearVehiculo() {
-    console.log(this.selectT.nativeElement.value);
-    console.log(this.selectM.nativeElement.value);
+    // console.log(this.selectT.nativeElement.value);
+    // console.log(this.selectM.nativeElement.value);
 
     const make: Make = {
       _id: this.selectM.nativeElement.value,
@@ -152,7 +152,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
     // SELECT VALIDATORS
     this.forma.value.type = this.selectT.nativeElement.value;
 
-    console.log(this.forma.value);
+    // console.log(this.forma.value);
 
     if (this.forma.value.type === '' || make._id === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
@@ -165,7 +165,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
     }
 
     if (this.idVehicle === '') {
-      console.log('nuevo');
+      // console.log('nuevo');
 
       const vehiculo = new Vehicle (
         this.forma.value.type,
@@ -181,7 +181,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
       );
       this.vehicleS.crearVehiculo(vehiculo)
       .subscribe( resp => {
-        console.log(resp);
+        // console.log(resp);
         this.router.navigate(['/vehicles']);
       });
     } else {
@@ -203,7 +203,7 @@ export class VehicleComponent implements OnInit, AfterViewInit {
 
       this.vehicleS.crearVehiculo(vehiculo)
       .subscribe( resp => {
-        console.log(resp);
+        // console.log(resp);
         this.router.navigate(['/vehicles']);
       });
     }

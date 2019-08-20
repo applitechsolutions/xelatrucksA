@@ -104,7 +104,7 @@ export class GondolaService {
 
     let url = URL_SERVICES + '/gondola/';
 
-    console.log( gondola );
+    // console.log( gondola );
 
     if (gondola._truck._id !== null) {
       url += 'asignar/' + gondola._id;

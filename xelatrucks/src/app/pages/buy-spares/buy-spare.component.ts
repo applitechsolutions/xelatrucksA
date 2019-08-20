@@ -92,9 +92,9 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
   }
 
   crearRepuesto() {
-    console.log(this.formaR.value.role);
+    // console.log(this.formaR.value.role);
 
-    console.log(this.formaR.value);
+    // console.log(this.formaR.value);
 
     if (this.formaR.invalid) {
       return;
@@ -109,7 +109,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
 
     this.partS.crearRepuesto(part)
       .subscribe( resp => {
-        console.log( resp );
+        // console.log( resp );
         const repuestoDB = resp.repuesto;
         this.tempPart = repuestoDB._id;
         this.getStorages();
@@ -160,8 +160,8 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
   }
 
   quitarDetalle( id: string ) {
-    console.log('BORRANDO...');
-    console.log(this.details);
+    // console.log('BORRANDO...');
+    // console.log(this.details);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
     const index = this.details.findIndex(item => item._part._id === id);
 
@@ -192,8 +192,8 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
     this.forma.get('provider').setValue(this.selectP.nativeElement.value);
     const fecha = moment(this.date.nativeElement.value, 'DD/MM/YYYY').toDate();
 
-    console.log(this.forma.value);
-    console.log('ESTAMOS EN CREAR COMPRA');
+    // console.log(this.forma.value);
+    // console.log('ESTAMOS EN CREAR COMPRA');
 
     if (this.forma.value.provider === '' || this.forma.value.total === 0) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
@@ -225,7 +225,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
 
     this.buySpareS.crearCompra( buySpare )
     .subscribe( resp => {
-      console.log(resp);
+      // console.log(resp);
       this.router.navigate(['/buySpares']);
     });
   }

@@ -38,7 +38,7 @@ export class EmployeesComponent implements OnInit {
 
   borrarEmpleado( empleado: Employee ) {
 
-    console.log(empleado);
+    // console.log(empleado);
 
     swal({
       title: '¿Está seguro?',

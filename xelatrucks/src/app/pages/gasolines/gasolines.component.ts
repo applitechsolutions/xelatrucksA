@@ -86,7 +86,7 @@ export class GasolinesComponent implements OnInit, AfterViewInit {
     this.vehicleS.cargarGasolinesAll(fecha1, fecha2).subscribe(resp => {
       destroy_datatables();
       this.gasolines = resp;
-      console.log(this.gasolines);
+      // console.log(this.gasolines);
       this.calcularTotalesG();
       this.fecha1Consulta = this.date1.nativeElement.value;
       this.fecha2Consulta = this.date2.nativeElement.value;
@@ -102,7 +102,7 @@ export class GasolinesComponent implements OnInit, AfterViewInit {
     const fecha = moment(this.dateG.nativeElement.value, 'DD/MM/YYYY').toDate();
 
     if (this.idGas !== '') {
-      console.log('EDITANDO...');
+      // ('EDITANDO...');
       const gasoline = new Gas(
         fecha.toString(),
         this.formGas.value.gallons,
@@ -134,7 +134,7 @@ export class GasolinesComponent implements OnInit, AfterViewInit {
       }
       this.idGas = '';
     } else {
-      console.log('GUARDANDO...');
+      // console.log('GUARDANDO...');
 
       const gasoline = new Gas(
         fecha.toString(),
@@ -174,7 +174,7 @@ export class GasolinesComponent implements OnInit, AfterViewInit {
   }
 
   deleteGas(id: string, idVehicle: string) {
-    console.log('BORRANDO...');
+    // console.log('BORRANDO...');
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
     const index = this.gasolines.findIndex(item => item._id === id);
     const status: Gas = this.gasolines.find(s => s._id === id);

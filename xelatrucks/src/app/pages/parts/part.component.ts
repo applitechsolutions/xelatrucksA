@@ -48,9 +48,9 @@ export class PartComponent implements OnInit {
 
   crearRepuesto() {
 
-    console.log(this.forma.value.role);
+    // console.log(this.forma.value.role);
 
-    console.log(this.forma.value);
+    // console.log(this.forma.value);
 
     if (this.forma.invalid) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
@@ -80,7 +80,7 @@ export class PartComponent implements OnInit {
 
     this.partS.crearRepuesto(part)
       .subscribe( resp => {
-        console.log( resp );
+        // console.log( resp );
         this.router.navigate(['/parts']);
       });
 

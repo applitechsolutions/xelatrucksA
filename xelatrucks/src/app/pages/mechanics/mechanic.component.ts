@@ -49,7 +49,7 @@ export class MechanicComponent implements OnInit {
 
   crearMech() {
 
-    console.log(this.formaMech.value);
+    // console.log(this.formaMech.value);
 
     if (this.formaMech.invalid) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');

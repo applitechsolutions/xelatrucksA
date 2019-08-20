@@ -112,8 +112,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     this.vehicle = this.vehicles.find(v => v._id === this.selectV.nativeElement.value);
     type = this.types.find(ty => ty._id === this.selectT.nativeElement.value);
 
-    console.log(this.formGT.value);
-    console.log(this.formGT.valid);
+    // console.log(this.formGT.value);
+    // console.log(this.formGT.valid);
 
     // tslint:disable-next-line: max-line-length
     if (this.formGT.invalid || this.selectV.nativeElement.value === '' || this.selectT.nativeElement.value === '' || this.selectE.nativeElement.value === '' || this.selectM.nativeElement.value === '') {
@@ -180,7 +180,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
 
   borrarGreenTrip( trip: GreenTrip ) {
 
-    console.log(trip);
+    // console.log(trip);
 
     swal({
       title: '¿Está seguro?',
@@ -230,8 +230,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
   }
 
   crearTipoViaje() {
-    console.log(this.formTy.value);
-    console.log(this.formTy.valid);
+    // console.log(this.formTy.value);
+    // console.log(this.formTy.valid);
 
     if (this.formTy.invalid) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
@@ -256,7 +256,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
 
     this.tripService.crearTypes(type)
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         swal({
           title: 'Exito!',
           text: 'Viaje creado correctamente' + res.viaje.name,
@@ -273,8 +273,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
   }
 
   crearMaterial() {
-    console.log(this.formMat.value);
-    console.log(this.formMat.valid);
+    // console.log(this.formMat.value);
+    // console.log(this.formMat.valid);
 
     if (this.formMat.invalid) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');

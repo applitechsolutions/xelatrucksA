@@ -20,7 +20,7 @@ export class ProgressComponent implements OnInit {
   }
 
   public loadScript() {
-    console.log('Preparando para cargar...');
+   // console.log('Preparando para cargar...');
     const node = document.createElement('script');
     node.src = this.url;
     node.type = 'text/javascript';

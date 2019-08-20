@@ -41,7 +41,7 @@ export class MaintenanceService {
     let url = URL_SERVICES + '/mantenimiento';
 
     url += '/finish/' + mantenimiento._id + '?token=' + this.userS.token;
-    console.log('FINISH');
+    // console.log('FINISH');
     return this.http.put(url, mantenimiento)
       .pipe( map( (resp: any) => {
         swal('Mantenimiento finalizado', 'Vehículo egresado del taller', 'success');
@@ -66,7 +66,7 @@ export class MaintenanceService {
 
     if (mantenimiento._id) {
       url += '/' + mantenimiento._id + '?token=' + this.userS.token;
-      console.log('EDIT');
+      // console.log('EDIT');
 
       return this.http.put(url, mantenimiento)
         .pipe( map( (resp: any) => {
@@ -87,7 +87,7 @@ export class MaintenanceService {
 
     } else {
       url += '?token=' + this.userS.token;
-      console.log('SAVE');
+      // console.log('SAVE');
       return this.http.post(url, mantenimiento)
         .pipe( map( (resp: any) => {
           swal('Mantenimiento creado', 'Vehículo ingresado al taller', 'success');

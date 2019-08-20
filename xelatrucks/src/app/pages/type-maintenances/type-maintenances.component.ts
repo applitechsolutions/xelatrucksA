@@ -44,8 +44,8 @@ export class TypeMaintenancesComponent implements OnInit {
   }
 
   crearTipo() {
-      console.log(this.forma.invalid);
-      console.log(this.forma.value);
+      // console.log(this.forma.invalid);
+      // console.log(this.forma.value);
 
       if (this.forma.invalid) {
         swal('Oops...', 'Algunos campos son obligatorios', 'warning');
@@ -60,7 +60,7 @@ export class TypeMaintenancesComponent implements OnInit {
 
         this.typeS.crearTipo( typeMaintenance )
           .subscribe( resp => {
-            console.log(resp);
+            // console.log(resp);
             this.cargarTipos();
           });
       } else {
@@ -72,7 +72,7 @@ export class TypeMaintenancesComponent implements OnInit {
 
         this.typeS.crearTipo( typeMaintenance )
           .subscribe( resp => {
-            console.log(resp);
+            // console.log(resp);
             this.cargarTipos();
             this.idTypeMaintenance = '';
             this.editando = false;

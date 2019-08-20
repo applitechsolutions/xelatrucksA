@@ -44,7 +44,7 @@ export class AreaService {
 
   crearUserArea( areas: Area[], user: string ) {
 
-    console.log(areas);
+    // console.log(areas);
 
     const url = URL_SERVICES + '/userarea/' + user + '?token=' + this.userS.token;
 

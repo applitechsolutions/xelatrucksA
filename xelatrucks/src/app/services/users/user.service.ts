@@ -26,7 +26,7 @@ export class UserService {
     public Router: Router,
     public SubirAS: SubirArchivoService
     ) {
-    console.log('Servicio de usuario listo');
+    // console.log('Servicio de usuario listo');
     this.cargarStorage();
   }
 
@@ -39,7 +39,7 @@ export class UserService {
       this.token = resp.token;
       localStorage.setItem('token', this.token );
 
-      console.log('TOKEN RENOVADO!!! XD');
+      // console.log('TOKEN RENOVADO!!! XD');
 
       return true;
     }), catchError((err, caught) => {
@@ -215,14 +215,14 @@ export class UserService {
 
     this.SubirAS.subirArchivo( file, 'users', id)
     .then( (resp: any) => {
-      console.log(resp);
+      // console.log(resp);
       this.usuario.img = resp.usuario.img;
       swal('Foto actualizada', this.usuario.name + ' ' + this.usuario.lastName, 'success');
       // tslint:disable-next-line: max-line-length
       this.guardarStorage( id, this.token, this.usuario, this.menuTaller, this.menuTransporte, this.menuDistribucion, this.menuContabilidad, this.menuAdmin);
     })
-    .catch( resp => {
-      console.log(resp);
+    .catch( err => {
+      console.log(err);
     });
   }
 

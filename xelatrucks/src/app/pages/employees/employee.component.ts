@@ -96,8 +96,8 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   }
 
   crearEmpleado() {
-    console.log(this.formE.value);
-    console.log(this.formE.valid);
+    // console.log(this.formE.value);
+    // console.log(this.formE.valid);
     this.formE.value.job = this.selectJ.nativeElement.value;
 
     if (this.formE.invalid) {
@@ -137,7 +137,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
       );
     }
 
-    console.log(employee);
+    // console.log(employee);
 
     this.empService.crearEmpleado(employee)
       .subscribe( () => this.router.navigate(['/employees']));

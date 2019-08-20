@@ -58,8 +58,8 @@ export class AutoProviderComponent implements OnInit {
   }
 
   crearProveedor() {
-      console.log(this.forma.invalid);
-      console.log(this.forma.value);
+      // console.log(this.forma.invalid);
+      // console.log(this.forma.value);
 
       if (this.forma.invalid) {
         swal('Oops...', 'Algunos campos son obligatorios', 'warning');
@@ -81,7 +81,7 @@ export class AutoProviderComponent implements OnInit {
 
         this.autoProviderS.crearProveedor( autoProvieer )
           .subscribe( resp => {
-            console.log(resp);
+            // console.log(resp);
             this.router.navigate(['/autoProviders']);
           });
       } else {
@@ -100,7 +100,7 @@ export class AutoProviderComponent implements OnInit {
 
         this.autoProviderS.crearProveedor( autoProvieer )
           .subscribe( resp => {
-            console.log(resp);
+            // console.log(resp);
             this.router.navigate(['/autoProviders']);
           });
       }

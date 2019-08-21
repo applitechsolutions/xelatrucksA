@@ -214,8 +214,8 @@
                                     <option value="2"> Empleado </option>
                                     <option value="3"> Material </option>
                                     <option value="4"> Fecha </option>
-                                    <option value="5"> Hora Entrada </option>
-                                    <option value="6"> Hora Salida </option>
+                                    <option value="5"> Horarios </option>
+                                    <option value="6"> Detalles </option>
                                     <option value="7"> Viajes </option>
                                 </select>
                             </div>
@@ -234,8 +234,8 @@
                                 <th>Empleado</th>
                                 <th>Material</th>
                                 <th>Fecha</th>
-                                <th>Hora Entrada</th>
-                                <th>Hora Salida</th>
+                                <th>Horarios</th>
+                                <th>Detalles</th>
                                 <th>Viajes</th>
                             </tr>
                         </thead>
@@ -249,8 +249,8 @@
                                 <td> {{ gt._employee.name }} </td>
                                 <td> {{ gt._material.code }} {{ gt._material.name }} </td>
                                 <td> {{ dtService.fromJsonDate(gt.date) }} </td>
-                                <td> {{ dtService.fromJsonHour(gt.checkIN )}} </td>
-                                <td> {{ dtService.fromJsonHour(gt.checkOUT) }} </td>
+                                <td> {{ 'Entrada: ' + dtService.fromJsonHour(gt.checkIN )}} <br> {{ 'Salida: ' + dtService.fromJsonHour(gt.checkOUT) }} </td>
+                                <td> {{ gt.details }} </td>
                                 <td> {{ gt.trips }} </td>
                             </tr>
                         </tbody>

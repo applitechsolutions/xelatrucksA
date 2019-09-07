@@ -1,0 +1,112 @@
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .card -->
+    <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+            <!-- .form -->
+            <form ngNativeValidate [formGroup]="formGB">
+                <!-- .fieldset -->
+                <fieldset>
+                    <legend>Campos</legend>
+                    <div class="row">
+                        <!-- .form-group -->
+                        <div class="form-group col-3">
+                            <label id="typeL">Cliente <span class="badge badge-danger">Obligatorio</span></label> <select #selectC formControlName="customer" name="customer" class="form-control select2" style="width:100%!important;">
+                                <option value=""> Seleccione un cliente </option>
+                                <!-- <option *ngFor="let empleado of employees" [value]="empleado._id"> {{ empleado.name }} </option> -->
+                            </select>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group col-3">
+                            <label for="lbl2">No. de Factura <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="noBill" name="noBill" type="text" class="form-control" id="lbl2" placeholder="Ingrese el número de factura"
+                                required="">
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group col-3">
+                            <label for="lbl3">Serie <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="serie" name="serie" type="text" class="form-control" id="lbl2" placeholder="Ingrese la serie" required="">
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group col-3">
+                            <label class="control-label" for="flatpickr">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input id="flatpickr" formControlName="date" name="date" type="text" class="form-control" required>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group col-3">
+                            <label for="lbl2">Orden de Compra <span class="badge badge-secondary"><em>Opcional</em></span></label> <input type="text" class="form-control" id="lbl2" placeholder="Ingrese la orden de compra" required="">
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group col-3">
+                            <label for="lbl2">Aceptación de Compra <span class="badge badge-secondary"><em>Opcional</em></span></label> <input type="text" class="form-control" id="lbl2" placeholder="Ingrese la orden de aceptación" required="">
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- .card-header -->
+                    <div class="card-header d-flex">
+                        <h3 class="card-title offset-3">Generar Detalle </h3>
+                        <!-- .form-group -->
+                        <div class="form-group col-2">
+                            <input #date1 id="flatpickr02" name="date1" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/Y H:i" required>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group col-2">
+                            <input #date2 id="flatpickr02" name="date2" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/y H:i" required>
+                        </div>
+                        <!-- /.form-group -->
+                        <button type="button" (click)="generarPreDetalle()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                    </div>
+                    <!-- /.card-header -->
+                </fieldset>
+                <!-- /.fieldset -->
+                <br>
+                <!-- .card-title -->
+                <h3 class="card-title">Detalle </h3>
+                <!-- /.card-title -->
+                <!-- .list-group -->
+                <div class="list-group list-group-flush list-group-divider">
+                    <!-- .list-group-item -->
+                    <div class="list-group-item" *ngFor="let detail of details">
+                        <div class="list-group-item-figure">
+                            <a href="page-team.html" class="user-avatar user-avatar-md"><img src="assets/images/avatars/team4.jpg" alt=""></a>
+                        </div>
+                        <div class="list-group-item-body">
+                            <div class="d-sm-flex justify-content-sm-between align-items-sm-center">
+                                <div class="team">
+                                    <h4 class="list-group-item-title">
+                                        <a href="page-team.html">{{ detail._type.name }}</a>
+                                    </h4>
+                                    <p class="list-group-item-text"> {{ detail.trips }} </p>
+                                </div>
+                                <ul class="list-inline text-muted mb-0">
+                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title="Members" data-placement="bottom">
+                                        <i class="fas fa-users text-teal"></i> 8 </li>
+                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title="Clients" data-placement="bottom">
+                                        <i class="fas fa-user-tie text-pink"></i> 3 </li>
+                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title="Projects" data-placement="bottom">
+                                        <i class="fa fa-bookmark text-yellow"></i> 4 </li>
+                                    <li class="list-inline-item" data-toggle="tooltip" title="Private">
+                                        <i class="fa fa-lock"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="list-group-item-figure">
+                            <a href="#" class="btn btn-sm btn-icon btn-secondary stop-propagation"><i class="fas fa-ellipsis-h"></i></a>
+                        </div>
+                    </div>
+                    <!-- /.list-group-item -->
+                </div>
+                <!-- /.list-group -->
+            </form>
+            <!-- /.form -->
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.page-section -->

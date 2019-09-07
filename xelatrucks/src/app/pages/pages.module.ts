@@ -45,6 +45,8 @@ import { EmployeeComponent } from './employees/employee.component';
 import { GasolinesComponent } from './gasolines/gasolines.component';
 import { CpcustomersComponent } from './cpcustomers/cpcustomers.component';
 import { CustomersComponent } from './customers/customers.component';
+import { GbillsComponent } from './gbills/gbills.component';
+import { GbillComponent } from './gbills/gbill.component';
 
 
 @NgModule({
@@ -79,6 +81,8 @@ import { CustomersComponent } from './customers/customers.component';
         GasolinesComponent,
         CpcustomersComponent,
         CustomersComponent
+        GbillsComponent,
+        GbillComponent
     ],
     exports: [
         DashboardComponent,

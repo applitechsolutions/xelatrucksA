@@ -32,6 +32,8 @@ import { EmployeeComponent } from './employees/employee.component';
 import { GasolinesComponent } from './gasolines/gasolines.component';
 import { CpcustomersComponent } from './cpcustomers/cpcustomers.component';
 import { CustomersComponent } from './customers/customers.component';
+import { GbillsComponent } from './gbills/gbills.component';
+import { GbillComponent } from './gbills/gbill.component';
 
 const pagesRoutes: Routes = [
     {
@@ -119,6 +121,18 @@ const pagesRoutes: Routes = [
         component: CpcustomersComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Mantenimiento de Clientes' }
+    },
+    {
+        path: 'gbills',
+        component: GbillsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Facturas de Reporte de Cuadros'}
+    },
+    {
+        path: 'gbill/:id',
+        component: GbillComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Nueva Factura'}
     },
     // TALLER
     {

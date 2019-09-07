@@ -30,6 +30,8 @@ import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee.component';
 import { GasolinesComponent } from './gasolines/gasolines.component';
+import { GbillsComponent } from './gbills/gbills.component';
+import { GbillComponent } from './gbills/gbill.component';
 
 const pagesRoutes: Routes = [
     {
@@ -111,6 +113,18 @@ const pagesRoutes: Routes = [
         component: GtripsComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Reporte de Cuadros' }
+    },
+    {
+        path: 'gbills',
+        component: GbillsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Facturas de Reporte de Cuadros'}
+    },
+    {
+        path: 'gbill/:id',
+        component: GbillComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Nueva Factura'}
     },
     // TALLER
     {

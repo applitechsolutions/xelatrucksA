@@ -43,6 +43,8 @@ import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee.component';
 import { GasolinesComponent } from './gasolines/gasolines.component';
+import { GbillsComponent } from './gbills/gbills.component';
+import { GbillComponent } from './gbills/gbill.component';
 
 
 @NgModule({
@@ -74,7 +76,9 @@ import { GasolinesComponent } from './gasolines/gasolines.component';
         TypeMaintenancesComponent,
         EmployeesComponent,
         EmployeeComponent,
-        GasolinesComponent
+        GasolinesComponent,
+        GbillsComponent,
+        GbillComponent
     ],
     exports: [
         DashboardComponent,

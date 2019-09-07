@@ -80,7 +80,7 @@ import { GbillComponent } from './gbills/gbill.component';
         EmployeeComponent,
         GasolinesComponent,
         CpcustomersComponent,
-        CustomersComponent
+        CustomersComponent,
         GbillsComponent,
         GbillComponent
     ],

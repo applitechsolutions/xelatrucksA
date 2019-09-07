@@ -43,6 +43,8 @@ import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee.component';
 import { GasolinesComponent } from './gasolines/gasolines.component';
+import { CpcustomersComponent } from './cpcustomers/cpcustomers.component';
+import { CustomersComponent } from './customers/customers.component';
 
 
 @NgModule({
@@ -74,7 +76,9 @@ import { GasolinesComponent } from './gasolines/gasolines.component';
         TypeMaintenancesComponent,
         EmployeesComponent,
         EmployeeComponent,
-        GasolinesComponent
+        GasolinesComponent,
+        CpcustomersComponent,
+        CustomersComponent
     ],
     exports: [
         DashboardComponent,

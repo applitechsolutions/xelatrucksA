@@ -30,6 +30,8 @@ import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee.component';
 import { GasolinesComponent } from './gasolines/gasolines.component';
+import { CpcustomersComponent } from './cpcustomers/cpcustomers.component';
+import { CustomersComponent } from './customers/customers.component';
 
 const pagesRoutes: Routes = [
     {
@@ -111,6 +113,12 @@ const pagesRoutes: Routes = [
         component: GtripsComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Reporte de Cuadros' }
+    },
+    {
+        path: 'CPcustomers',
+        component: CpcustomersComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Mantenimiento de Clientes' }
     },
     // TALLER
     {
@@ -196,6 +204,13 @@ const pagesRoutes: Routes = [
         component: GasolinesComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Cupones de combustible' }
+    },
+    // CENTRO DE DISTRIBUCION
+    {
+        path: 'customers',
+        component: CustomersComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Mantenimiento de Clientes' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
 ];

@@ -87,8 +87,7 @@ export class AutoProviderService {
           console.log(err);
           swal(err.error.mensaje, err.error.errors.message , 'error');
           return throwError( err );
-        })
-      );
+        }));
 
   }
 }

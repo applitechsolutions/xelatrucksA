@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { DatatablesService, GbillService } from '../../services/service.index';
 import { DetailBill } from '../../models/gdetail.model';
 import { PreDetailBill } from '../../models/gpredetail.model';
@@ -32,6 +32,15 @@ export class GbillComponent implements OnInit, AfterViewInit {
     const today = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_datePicker(today);
     this.dtService.init_datePicker2();
+
+    this.formGB = new FormGroup({
+      customer: new FormControl(''),
+      noBill: new FormControl(''),
+      serie: new FormControl(''),
+      date: new FormControl(null),
+      oc: new FormControl(''),
+      ac: new FormControl('')
+    });
   }
 
   ngAfterViewInit() {

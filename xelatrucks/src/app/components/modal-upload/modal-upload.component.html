@@ -37,6 +37,10 @@
                     <!-- /.media-body -->
                 </div>
                 <!-- /.media -->
+                <ng-template #customLoadingTemplate>
+                </ng-template>
+                <!-- /.table -->
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
             </div>
             <!-- /.modal-body -->
             <!-- .modal-footer -->

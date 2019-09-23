@@ -1,6 +1,8 @@
-export { DatatablesService } from './datatables/datatables.service';
+// GUARDS
 export { LoginGuardGuard } from './guards/login-guard.guard';
 export { VerificaTokenGuard } from './guards/verifica-token.guard';
+export { AdminGuard } from './guards/admin.guard';
+export { DatatablesService } from './datatables/datatables.service';
 export { UserService } from './users/user.service';
 // VIAJES
 export { EmployeeService } from './employees/employee.service';

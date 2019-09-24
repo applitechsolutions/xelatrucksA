@@ -1,9 +1,9 @@
-import { RouterModule, Routes, Router } from '@angular/router';
+import { RouterModule, Routes} from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
 import { PagesComponent } from './pages/pages.component';
-import { LoginGuardGuard, VerificaTokenGuard } from './services/service.index';
+import { LoginGuardGuard } from './services/service.index';
 
 
 const appRoutes: Routes = [

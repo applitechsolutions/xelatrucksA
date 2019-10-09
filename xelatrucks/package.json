@@ -38,6 +38,7 @@
     "ng2-charts": "^2.2.3",
     "ngx-loading": "^3.0.1",
     "pdfmake": "^0.1.56",
+    "perfect-scrollbar": "^1.4.0",
     "popper": "^1.0.1",
     "popper.js": "^1.15.0",
     "rxjs": "~6.5.1",

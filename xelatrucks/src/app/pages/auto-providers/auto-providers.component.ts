@@ -17,7 +17,6 @@ export class AutoProvidersComponent implements OnInit {
   autoProviders: AutoProvider[] = [];
 
   constructor(
-    public dtS: DatatablesService,
     public autoProviderS: AutoProviderService,
     private chRef: ChangeDetectorRef
   ) { }

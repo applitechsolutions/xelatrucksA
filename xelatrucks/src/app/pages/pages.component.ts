@@ -9,10 +9,13 @@ declare function init_plugins();
 })
 export class PagesComponent implements OnInit {
 
+  CurYear: number;
+
   constructor() { }
 
   ngOnInit() {
     init_plugins();
+    this.CurYear = new Date().getFullYear();
   }
 
 }

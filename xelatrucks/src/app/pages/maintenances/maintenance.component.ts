@@ -1,18 +1,24 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import {
+  GondolaService,
+  VehicleService,
+  UserService,
+  MechanicService,
+  MaintenanceService,
+  TypeMaintenanceService,
+  BuySpareService,
+  PartService
+} from '../../services/service.index';
 import { Vehicle } from '../../models/vehicle.model';
 import { Gondola } from '../../models/gondola.model';
-import { GondolaService, VehicleService, UserService, MechanicService, MaintenanceService } from '../../services/service.index';
-import * as $ from 'jquery';
-import * as moment from 'moment/moment';
-import '../../../assets/vendor/select2/js/select2.js';
 import { User } from 'src/app/models/user.model';
 import { Mechanic } from '../../models/mech.model';
 import { Maintenance } from '../../models/maintenance.model';
 import { TypeMaintenance } from '../../models/typeMaintenance.model';
-import { TypeMaintenanceService } from '../../services/typeMaintenances/type-maintenance.service';
 import { DetailsSpare } from 'src/app/models/detailsSpare.model';
-import { BuySpareService } from '../../services/buySpares/buy-spare.service';
-import { PartService } from '../../services/parts/part.service';
+import * as $ from 'jquery';
+import '../../../assets/vendor/select2/js/select2.js';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 declare var swal: any;
 declare function init_step();
@@ -23,10 +29,12 @@ declare function init_step();
   styles: []
 })
 export class MaintenanceComponent implements OnInit, AfterViewInit {
+
   @ViewChild('selectM') selectM: ElementRef;
   @ViewChild('selectT') selectT: ElementRef;
   @ViewChild('selectRV') selectRV: ElementRef;
   @ViewChild('selectRG') selectRG: ElementRef;
+  @ViewChild('scroll') scroll: ElementRef;
   public loading = false;
   select2: any;
 
@@ -456,6 +464,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     this.gondolaS.cargarGondolas()
       .subscribe((resp: any) => {
         this.gondolas = resp.gondolas;
+        const ps = new PerfectScrollbar(this.scroll.nativeElement);
       });
   }
 

@@ -4,9 +4,9 @@ import { UserService } from '../users/user.service';
 import { URL_SERVICES } from '../../config/config';
 import { map, catchError } from 'rxjs/operators';
 import { Customer } from 'src/app/models/customer.model';
-import swal from 'sweetalert';
 import { throwError } from 'rxjs/internal/observable/throwError';
 
+declare var swal: any;
 @Injectable({
   providedIn: 'root'
 })
@@ -41,7 +41,13 @@ export class CustomerService {
       .pipe(
         map( (resp: any) => {
           const clienteDB = resp.cliente;
-          swal('Cliente Actualizado', clienteDB.name, 'success');
+          swal({
+            title: '¡Cliente Actualizado!',
+            text: clienteDB.name,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
           return resp;
         }),
         catchError((err, caught) => {
@@ -55,7 +61,13 @@ export class CustomerService {
       return this.http.post(url, customer)
         .pipe( map( (resp: any) => {
           const clienteDB = resp.cliente;
-          swal('Cliente creado', clienteDB.name,'success');
+          swal({
+            title: '¡Cliente Creado!',
+            text: clienteDB.name,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
           return resp;
         }),
         catchError((err, caught) => {
@@ -75,7 +87,13 @@ export class CustomerService {
       .pipe(
         map( (resp: any) => {
           const clienteDB = resp.cliente;
-          swal('CLiente borrado', clienteDB.name, 'success');
+          swal({
+            title: '¡Cliente borrado!',
+            text: clienteDB.name,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
           return resp;
         }),
         catchError((err, caught) => {

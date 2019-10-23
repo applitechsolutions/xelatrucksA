@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
 import { Graficas1Component } from './graficas1/graficas1.component';
@@ -8,7 +7,6 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user.component';
-import { LoginGuardGuard } from '../services/guards/login-guard.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
 import { VehicleComponent } from './vehicles/vehicle.component';
@@ -34,6 +32,7 @@ import { CpcustomersComponent } from './cpcustomers/cpcustomers.component';
 import { CustomersComponent } from './customers/customers.component';
 import { GbillsComponent } from './gbills/gbills.component';
 import { GbillComponent } from './gbills/gbill.component';
+import { AdminGuard } from '../services/service.index';
 
 const pagesRoutes: Routes = [
     {
@@ -76,7 +75,7 @@ const pagesRoutes: Routes = [
     {
         path: 'usuarios',
         component: UsersComponent,
-        canActivate: [VerificaTokenGuard],
+        canActivate: [VerificaTokenGuard, AdminGuard],
         data: { titulo: 'Mantenimiento de Usuarios' }
     },
     {

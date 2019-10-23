@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
-import * as $ from 'jquery';
-import * as moment from 'moment/moment';
-import '../../../assets/vendor/select2/js/select2.js';
 import { DatatablesService, VehicleService, PitService, GondolaService } from '../../services/service.index';
 import { Vehicle } from '../../models/vehicle.model';
 import { Basics } from '../../models/basics.model';
@@ -10,6 +7,10 @@ import { Pits } from '../../models/pits.model';
 import { Rim } from '../../models/rim.model';
 import { Gas } from '../../models/gas.model';
 import { Gondola } from '../../models/gondola.model';
+import * as $ from 'jquery';
+import * as moment from 'moment/moment';
+import '../../../assets/vendor/select2/js/select2.js';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 declare var swal: any;
 declare function inputNumber();
@@ -20,6 +21,8 @@ declare function inputNumber();
   styles: []
 })
 export class VehiclesComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('scroll') scroll: ElementRef;
 
   select2: any;
   public loading = false;
@@ -174,6 +177,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     this.gondolaS.cargarGondolas()
       .subscribe((resp: any) => {
         this.gondolas = resp.gondolas;
+        const ps = new PerfectScrollbar(this.scroll.nativeElement);
       });
   }
 

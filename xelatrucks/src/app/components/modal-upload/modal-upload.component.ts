@@ -12,22 +12,22 @@ export class ModalUploadComponent implements OnInit {
 
   imagenSubir: File;
   imagenTemp: string | ArrayBuffer;
+  loading = false;
 
   constructor(
     public subirArchivoS: SubirArchivoService,
-    public modalUpdoadS: ModalUploadService
+    public modalUploadS: ModalUploadService
   ) {
 
    }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   cerrarModal() {
     this.imagenSubir = null;
     this.imagenTemp = null;
 
-    this.modalUpdoadS.ocultarModal();
+    this.modalUploadS.ocultarModal();
     const element: HTMLElement = document.getElementById('close') as HTMLElement;
     element.click();
   }
@@ -52,13 +52,15 @@ export class ModalUploadComponent implements OnInit {
   }
 
   subirImagen() {
-    this.subirArchivoS.subirArchivo( this.imagenSubir, this.modalUpdoadS.tipo, this.modalUpdoadS.id )
+    this.loading = true;
+    this.subirArchivoS.subirArchivo( this.imagenSubir, this.modalUploadS.tipo, this.modalUploadS.id )
     .then( resp => {
-
-      this.modalUpdoadS.notificacion.emit( resp );
+      this.loading = false;
+      this.modalUploadS.notificacion.emit( resp );
       this.cerrarModal();
     })
     .catch( err => {
+      this.loading = false;
       console.log( err );
     });
   }

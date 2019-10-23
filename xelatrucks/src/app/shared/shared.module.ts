@@ -12,12 +12,14 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
     imports: [
         RouterModule,
         CommonModule,
-        PipesModule
+        PipesModule,
+        NgxLoadingModule.forRoot({})
     ],
     declarations: [
         HeaderComponent,

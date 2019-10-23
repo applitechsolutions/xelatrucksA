@@ -1,8 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { DatatablesService, GbillService } from '../../services/service.index';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DatatablesService, GbillService, CPcustomerService } from '../../services/service.index';
+import { GreenBill } from '../../models/gbill.model';
 import { DetailBill } from '../../models/gdetail.model';
 import { PreDetailBill } from '../../models/gpredetail.model';
+import { CPCustomer } from '../../models/CPcustomer.model';
 import swal from 'sweetalert';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
@@ -17,15 +20,25 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
   @ViewChild('date1') date1: ElementRef;
   @ViewChild('date2') date2: ElementRef;
+  @ViewChild('selectC') selectC: ElementRef;
 
   formGB: FormGroup;
 
+  greenbil: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };
   preDetail: PreDetailBill[] = [];
   details: DetailBill[] = [];
+  total: number = 0;
+  totalmts: number = 0;
+  loading: boolean = false;
+
+  cpcustomers: CPCustomer[] = [];
 
   constructor(
+    public router: Router,
     public gbillService: GbillService,
-    public dtService: DatatablesService
+    public cpService: CPcustomerService,
+    public dtService: DatatablesService,
+    private chRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -33,11 +46,13 @@ export class GbillComponent implements OnInit, AfterViewInit {
     this.dtService.init_datePicker(today);
     this.dtService.init_datePicker2();
 
+    this.cargarCPClientes();
+
     this.formGB = new FormGroup({
       customer: new FormControl(''),
-      noBill: new FormControl(''),
-      serie: new FormControl(''),
-      date: new FormControl(null),
+      noBill: new FormControl('', Validators.required),
+      serie: new FormControl('', Validators.required),
+      date: new FormControl(null, Validators.required),
       oc: new FormControl(''),
       ac: new FormControl('')
     });
@@ -47,20 +62,25 @@ export class GbillComponent implements OnInit, AfterViewInit {
     $('.select2').select2();
   }
 
+  /* #region  FACTURA REPORTE CUADROS */
+
   generarPreDetalle() {
 
     const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
     const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
 
-    if ( fecha1 > fecha2 ) {
+    if (fecha1 > fecha2) {
       swal('Oops...', 'El rango de fechas no es válido', 'warning');
       return;
     }
-
+    this.loading = true;
     this.gbillService.cargarPreDetalle(fecha1, fecha2)
       .subscribe((res: any) => {
+        this.total = 0;
+        this.totalmts = 0;
+        this.details = [];
         this.preDetail = res.preDetail;
-        console.log(this.preDetail);
+        this.loading = false;
         this.preDetail.forEach((item) => {
           switch (item.prod) {
             case 'Centro de Distribucion':
@@ -76,7 +96,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
                 _type: { name: item.prod, _id: item._id },
                 mts: item.totalmts,
                 trips: item.trips,
-                cost: this.desalojo(item.totalmts)
+                cost: this.cantera(item.totalmts)
               });
               break;
             case 'Desalojo':
@@ -92,15 +112,58 @@ export class GbillComponent implements OnInit, AfterViewInit {
                 _type: { name: item.prod, _id: item._id },
                 mts: item.totalmts,
                 trips: item.trips,
-                cost: this.desalojo(item.totalmts)
+                cost: this.descapote(item.totalmts)
               });
               break;
             default:
               break;
           }
         });
+        this.total = this.details.reduce((sum, elem) => sum + elem.cost, 0);
+        this.totalmts = this.details.reduce((sum, element) => sum + element.mts, 0);
       });
   }
+
+  crearFacturaVerde() {
+
+    this.formGB.value.customer = this.selectC.nativeElement.value;
+
+    if (this.formGB.invalid || this.selectC.nativeElement.value === '') {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      return;
+    }
+
+    let greenbill;
+
+    if (this.greenbil._id) {
+      return;
+    } else {
+      greenbill = new GreenBill(
+        this.formGB.value.customer,
+        this.formGB.value.noBill,
+        this.formGB.value.serie,
+        moment(this.formGB.value.date, 'DD/MM/YYYY').toDate(),
+        this.total,
+        false,
+        false,
+        this.formGB.value.oc,
+        this.formGB.value.ac,
+        this.details
+      );
+    }
+
+    this.gbillService.crearFacturaVerde( greenbill )
+      .subscribe( () => this.router.navigate(['/gbills']) );
+  }
+
+  cargarCPClientes() {
+    this.cpService.cargarClientes()
+      .subscribe( (res: any) => {
+        this.cpcustomers = res.clientes;
+      });
+  }
+
+  /* #endregion */
 
 
 
@@ -178,7 +241,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
     }
   }
 
-  descapote( mts: number ) {
+  descapote(mts: number) {
     let tarifa: number = 0;
     let mtscont: number = mts;
 

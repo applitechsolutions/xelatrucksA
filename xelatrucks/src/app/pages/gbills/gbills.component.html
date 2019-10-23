@@ -1,3 +1,187 @@
-<p>
-  gbills works!
-</p>
+<!-- floating action -->
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/maintenance', 'new']"><span class="fa fa-plus"></span></button>
+<!-- /floating action -->
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .card -->
+    <div class="card card-fluid">
+        <!-- .card-body -->
+        <div class="card-body">
+            <div class="row">
+                <!-- .form-group -->
+                <div class="form-group col-3">
+                    <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+                    <input #date1 name="date1" id="flatpickr02" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/Y H:i" required>
+                </div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group col-3">
+                    <label class="control-label" for="flatpickr02">Fecha final</label>
+                    <input #date2 name="date2" id="flatpickr02" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/Y H:i" required>
+                </div>
+                <!-- /.form-group -->
+                <button type="button" [ngStyle]="{'margin-top': '29px'}" (click)="buscarFacturas()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+            </div>
+            <!-- .btn-toolbar -->
+            <div id="dt-buttons" class="btn-toolbar"></div>
+            <!-- /.btn-toolbar -->
+            <!-- .form-group -->
+            <div class="form-group">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                    <!-- .input-group -->
+                    <div class="input-group has-clearable">
+                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+                    </div>
+                    <!-- /.input-group -->
+                    <!-- .input-group-prepend -->
+                    <div class="input-group-prepend">
+                        <select id="filterBy" class="custom-select">
+                            <option value='' selected> Filtros </option>
+                            <option value="0"> No. de Factura </option>
+                            <option value="1"> No. de Serie </option>
+                            <option value="2"> Cliente </option>
+                            <option value="3"> Fecha </option>
+                            <option value="4"> Orden de Compra </option>
+                            <option value="5"> Aceptación de Compra </option>
+                            <option value="5"> Estado </option>
+                            <option value="5"> Total </option>
+                        </select>
+                    </div>
+                    <!-- /.input-group-prepend -->
+                </div>
+                <!-- /.input-group -->
+            </div>
+            <!-- /.form-group -->
+            <!-- .table -->
+            <table id="myTable" class="table">
+                <thead>
+                    <tr>
+                        <th> No. de Factura </th>
+                        <th> No. de Serie </th>
+                        <th> Cliente </th>
+                        <th> Fecha </th>
+                        <th> Orden de Compra </th>
+                        <th> Aceptación de Compra </th>
+                        <th> Estado </th>
+                        <th> Total </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bill of bills">
+                        <td> {{ bill.noBill }} </td>
+                        <td> {{ bill.serie }} </td>
+                        <td> {{ bill._customer.name }} </td>
+                        <td> {{ dtService.fromJsonDate(bill.date) }} </td>
+                        <td>
+                            <!-- .Input-group -->
+                            <div class="input-group input-group-alt">
+                                <!-- .Input-group -->
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="orden de compra" [(ngModel)]="bill.oc">
+                                </div>
+                                <!-- /.Input-group -->
+                                <!-- .Input-group -->
+                                <div class="input-group-prepend ">
+                                    <button (click)="actualizarOC( bill ) " class="btn btn-primary " type="button ">Guardar</button>
+                                </div>
+                                <!-- /.Input-group -->
+                            </div>
+                            <!-- /.Input-group -->
+                        </td>
+                        <td>
+                            <!-- .Input-group -->
+                            <div class="input-group input-group-alt ">
+                                <!-- .Input-group -->
+                                <div class="input-group ">
+                                    <input type="text " class="form-control " placeholder="orden de compra " [(ngModel)]="bill.ac ">
+                                </div>
+                                <!-- /.Input-group -->
+                                <!-- .Input-group -->
+                                <div class="input-group-prepend ">
+                                    <button (click)="actualizarAC( bill ) " class="btn btn-primary " type="button ">Guardar</button>
+                                </div>
+                                <!-- /.Input-group -->
+                            </div>
+                            <!-- /.Input-group -->
+                        </td>
+                        <td *ngIf="!bill.paid"><span class="badge badge-danger"> Sin Pagar </span></td>
+                        <td *ngIf="bill.paid"> <span class="badge badge-success"> Pagada </span></td>
+                        <td> {{ bill.total | number : '1.2-2' }} </td>
+                        <td class="align-middle text-right">
+                            <a *ngIf="!bill.paid" class=" btn btn-sm btn-icon btn-secondary pointer" (click)="pagarFactura( bill )" alt="Editar"><i class="fas fa-hand-holding-usd"></i><span class="sr-only ">Pagar</span></a>
+                            <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="borrarFactura( bill )"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- /.table -->
+            <ng-template #customLoadingTemplate></ng-template>
+            <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate "></ngx-loading>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.page-section -->
+
+<!-- Large modal -->
+<div id="details " class="modal fade " tabindex="-1 " role="dialog " aria-labelledby="Detalles " aria-hidden="true ">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-lg " role="document ">
+        <!-- .modal-content -->
+        <div class="modal-content ">
+            <!-- .modal-header -->
+            <div class="modal-header ">
+                <h5 id="myLargeModalLabel " class="modal-title "> Viajes del reporte </h5>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body ">
+                <!-- .table -->
+                <table id="table1 " class="table dt-responsive nowrap w-100 ">
+                    <thead>
+                        <tr>
+                            <th> Producción </th>
+                            <th> Metros </th>
+                            <th> Viajes </th>
+                            <th> Costo </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngFor="let detail of detailsV ">
+                            <td>
+                                <h6>{{ detail._part.code + ' ' + detail._part.desc }}</h6>
+                            </td>
+                            <td> {{ detail.quantity }} </td>
+                            <td>Q {{ detail.cost | number : '1.2-2' }} </td>
+                            <td>Q {{ detail.quantity * detail.cost | number : '1.2-2' }} </td>
+                        </tr> -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th> Repuesto </th>
+                            <th> Cantidad </th>
+                            <th> Costo </th>
+                            <th> SubTotal </th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <!-- /.table -->
+            </div>
+            <!-- /.modal-body -->
+            <!-- .modal-footer -->
+            <div class="modal-footer ">
+                <button type="button " data-dismiss="modal " class="btn btn-light ">Cerrar</button>
+            </div>
+            <!-- /.modal-footer -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

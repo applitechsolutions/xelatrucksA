@@ -130,6 +130,12 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
     if (this.formGB.invalid || this.selectC.nativeElement.value === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      console.log(this.details);
+      return;
+    }
+
+    if (this.details.length <= 0) {
+      swal('Oops...', 'El detalle esta vacío', 'warning');
       return;
     }
 

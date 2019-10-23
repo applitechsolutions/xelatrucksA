@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../users/user.service';
 import { URL_SERVICES } from '../../config/config';
-import { Type } from '../../models/type.model';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
-import swal from 'sweetalert';
 import { GreenTrip } from 'src/app/models/greenTrip.model';
+import { Type } from '../../models/type.model';
+import swal from 'sweetalert';
 
 
 @Injectable({

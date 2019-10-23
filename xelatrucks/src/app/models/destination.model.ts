@@ -1,4 +1,4 @@
-export class Type {
+export class Destination {
 
     constructor(
         public name?: string,

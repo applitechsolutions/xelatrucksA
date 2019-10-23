@@ -21,6 +21,7 @@ import {
   EmployeeService,
   TripService,
   GbillService,
+  CPcustomerService,
   MaterialService,
   TypeMaintenanceService
 } from './service.index';
@@ -49,6 +50,7 @@ import {
     EmployeeService,
     TripService,
     GbillService,
+    CPcustomerService,
     TypeMaintenanceService,
     MaterialService,
     VerificaTokenGuard

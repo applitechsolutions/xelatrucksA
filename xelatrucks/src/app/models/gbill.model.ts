@@ -1,18 +1,18 @@
 import { CPCustomer } from './CPcustomer.model';
 import { DetailBill } from './gdetail.model';
 
-export class BuySpare {
+export class GreenBill {
 
     constructor(
         public _customer: CPCustomer,
         public noBill: string,
         public serie: string,
-        public date: string,
+        public date: Date,
         public total: number,
         public state: boolean = false,
+        public paid: boolean = false,
         public oc?: string,
         public ac?: string,
-        public noDoc?: string,
         public details?: DetailBill[],
         public _id?: string,
     ) {}

@@ -33,7 +33,8 @@ export class GbillsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dtService.init_datePicker2();
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtService.init_datePicker(today);
   }
 
   buscarFacturas() {
@@ -42,8 +43,8 @@ export class GbillsComponent implements OnInit {
       return;
     }
 
-    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
-    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
     if (fecha1 > fecha2) {
       swal('Oops...', 'El rango de fechas no es válido', 'warning');

@@ -72,7 +72,7 @@
                                         <div class="form-group col-4">
                                             <label id="typeL">Material <span class="badge badge-danger">Obligatorio</span></label> <select #selectM formControlName="material" name="material" class="form-control select2" style="width:100%!important;">
                                                 <option value=""> Seleccione un material </option>
-                                                <option *ngFor="let material of materials" [selected]="material._id === tempMat"  [value]="material._id"> {{ material.code }} {{ material.name }} </option>
+                                                <option *ngFor="let material of materials" [selected]="material._material._id === tempMat"  [value]="material._material._id"> {{ material._material.code }} {{ material._material.name }} </option>
                                             </select>
                                         </div>
                                         <!-- /.form-group -->
@@ -173,15 +173,14 @@
             <div class="tab-pane" id="tab1" role="tabpanel" aria-labelledby="tab">
                 <!-- .card-header -->
                 <div class="card-header d-flex">
-
                     <!-- .form-group -->
                     <div class="form-group offset-3 col-2">
-                        <input #date1 id="flatpickr02" name="date1" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/Y H:i">
+                        <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
                     </div>
                     <!-- /.form-group -->
                     <!-- .form-group -->
                     <div class="form-group col-2">
-                        <input #date2 id="flatpickr02" name="date2" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true" data-date-format="d/m/y H:i">
+                        <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
                     </div>
                     <!-- /.form-group -->
                     <button type="button" (click)="buscarReporteCuadros()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
@@ -321,7 +320,7 @@
         <div class="modal-content">
             <!-- .modal-header -->
             <div class="modal-header">
-                <h5 class="modal-title"> Crear un nuevo tipo de viaje </h5>
+                <h5 class="modal-title"> Crear un nuevo material </h5>
             </div>
             <!-- /.modal-header -->
             <!-- .modal-body -->
@@ -329,7 +328,7 @@
                 <form ngNativeValidate [formGroup]="formMat" (ngSubmit)="crearMaterial()">
                     <!-- .form-group -->
                     <div class="form-group">
-                        <label for="name">Código </label> <input formControlName="code" name="code" type="text" class="form-control" id="code" placeholder="Ingrese el código del material">
+                        <label for="name">Código </label> <input formControlName="code" name="code" type="text" class="form-control" id="code" placeholder="Ingrese el código del material" data-autofocus="true">
                     </div>
                     <!-- /.form-group -->
                     <!-- .form-group -->

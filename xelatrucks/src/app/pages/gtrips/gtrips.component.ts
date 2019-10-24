@@ -9,6 +9,7 @@ import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
 import { GreenTrip } from '../../models/greenTrip.model';
+import { StorageMaterial } from '../../models/storageMaterial.model';
 
 declare var swal: any;
 declare function init_datatables();
@@ -46,7 +47,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
   formTy: FormGroup;
   tempType: string = '';
 
-  materials: Material[] = [];
+  materials: StorageMaterial[] = [];
   material: Material = { code: '', name: '', minStock: 0 };
   formMat: FormGroup;
   tempMat: string = '';
@@ -226,7 +227,13 @@ export class GtripsComponent implements OnInit, AfterViewInit {
 
   cargarMateriales() {
     this.matService.cargarMateriales()
-      .subscribe((res: any) => this.materials = res.materiales);
+      .subscribe((res: any) => {
+        res.materiales
+        .map( (res: any) => {
+          this.materials = res.storage;
+        });
+        console.log(this.materials);
+      });
   }
 
   crearTipoViaje() {
@@ -325,8 +332,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
 
   buscarReporteCuadros() {
     this.loading = true;
-    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
-    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
     
 

@@ -66,8 +66,8 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
   generarPreDetalle() {
 
-    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
-    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
     if (fecha1 > fecha2) {
       swal('Oops...', 'El rango de fechas no es válido', 'warning');

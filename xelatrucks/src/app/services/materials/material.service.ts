@@ -19,7 +19,6 @@ export class MaterialService {
 
   cargarMateriales() {
     const url = URL_SERVICES + '/material';
-
     return this.http.get(url);
   }
 

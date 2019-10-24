@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Provider, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 import '../../../assets/vendor/select2/js/select2.js';
@@ -9,8 +9,8 @@ import { Part } from '../../models/part.model';
 import { Router } from '@angular/router';
 import { BuySpare } from '../../models/buySpare.model';
 import { DatatablesService } from '../../services/datatables/datatables.service';
-import * as moment from 'moment/moment';
 import { AutoProvider } from '../../models/autoProvider.model';
+import * as moment from 'moment/moment';
 
 declare var swal: any;
 declare function select2(): any;
@@ -28,7 +28,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
 
   forma: FormGroup;
   formaR: FormGroup;
-  providers: Provider[] = [];
+  providers: AutoProvider[] = [];
   storages: Storage[] = [];
   details: DetailsSpare[] = [];
   detail: DetailsSpare = {
@@ -77,6 +77,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
     this.providerS.cargarProveedores()
       .subscribe( (resp: any) => {
         this.providers = resp.proveedores;
+        console.log(this.providers);
       });
   }
 

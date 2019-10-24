@@ -107,6 +107,12 @@ export class GbillsComponent implements OnInit {
   }
 
   pagarFactura( bill: GreenBill ) {
+
+    if (bill.ac === '' || bill.oc === '') {
+      swal('Oops...', 'No puede pagar la factura sin orden de compra u orden de aceptación', 'warning');
+      return;
+    }
+
     swal({
       title: '¿Está seguro?',
       text: 'Está a punto de pagar la factuna número: ' + bill.noBill,

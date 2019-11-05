@@ -17,9 +17,10 @@ export class BuySpareService {
     public userS: UserService
   ) { }
 
-  cargarCompras() {
-    const url = URL_SERVICES + '/compraRepuesto';
-    return this.http.get(url);
+  cargarCompras( fecha1: Date, fecha2: Date ) {
+    const url = URL_SERVICES + '/compraRepuesto?fecha1=' + fecha1 + '&fecha2=' + fecha2;
+    return this.http.get(url)
+      .pipe( map( (resp: any) => resp.compras ));
   }
 
   crearCompra( buySpare: BuySpare ) {
@@ -38,22 +39,4 @@ export class BuySpareService {
         return throwError( err );
       }));
   }
-
-  // BORRAR PROVEEDOR
-
-  // borrarProveedor( id: string, autoProvider: AutoProvider ) {
-
-  //   let url = URL_SERVICES + '/autoProveedor/delete/' + id;
-  //   url += '?token=' + this.userS.token;
-
-  //   return this.http.put(url, autoProvider)
-  //     .pipe(
-  //       map( (resp: any) => {
-  //         const proveedorDB = resp.proveedor;
-  //         swal('Proveedor borrado', proveedorDB.name , 'success');
-  //         return resp;
-  //       })
-  //     );
-
-  // }
 }

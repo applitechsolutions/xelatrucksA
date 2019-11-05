@@ -5,17 +5,68 @@
 <div class="page-section">
     <!-- .card -->
     <div class="card card-fluid">
+        <div class="card-header d-flex">
+            <!-- .form-group -->
+            <div class="form-group col-3">
+                <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+                <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
+            </div>
+            <!-- /.form-group -->
+            <!-- .form-group -->
+            <div class="form-group col-3">
+                <label class="control-label" for="flatpickr02">Fecha final</label>
+                <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
+            </div>
+            <!-- /.form-group -->
+            <button type="button" [ngStyle]="{'margin-top': '29px'}" (click)="cargarCompras()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+        </div>
         <!-- .card-body -->
         <div class="card-body">
+            <!-- .btn-toolbar -->
+            <div id="dt-buttons" class="btn-toolbar ml-auto"></div>
+            <!-- /.btn-toolbar -->
+            <!-- .form-group -->
+            <div class="form-group">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                    <!-- .input-group -->
+                    <div class="input-group has-clearable">
+                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+                    </div>
+                    <!-- /.input-group -->
+                    <!-- .input-group-prepend -->
+                    <div class="input-group-prepend">
+                        <select id="filterBy" class="custom-select">
+                            <option value='' selected> Filtros </option>
+                            <option value="0"> Fecha </option>
+                            <option value="1"> Proveedor </option>
+                            <option value="2"> Factura </option>
+                            <option value="3"> Serie </option>
+                            <option value="4"> Documento </option>
+                            <option value="5"> Subtotal </option>
+                            <option value="6"> Descuento </option>
+                            <option value="7"> Total </option>
+                        </select>
+                    </div>
+                    <!-- /.input-group-prepend -->
+                </div>
+                <!-- /.input-group -->
+            </div>
+            <!-- /.form-group -->
             <!-- .table -->
-            <table id="table1" class="table dt-responsive nowrap w-100">
+            <table id="myTable" class="table">
                 <thead>
                     <tr>
                         <th> Fecha </th>
                         <th> Proveedor </th>
-                        <th> No. de factura </th>
+                        <th> Factura </th>
                         <th> Serie </th>
-                        <th> No. de documento </th>
+                        <th> Documento </th>
+                        <th> Subtotal </th>
+                        <th> Descuento </th>
                         <th> Total </th>
                         <th></th>
                     </tr>
@@ -23,20 +74,26 @@
                 <tbody>
                     <tr *ngFor="let buySpare of buySpares">
                         <td>
-                            <h6>{{ buySpare.date | date: 'dd/MM/yyyy' }}</h6>
+                            {{ buySpare.date | date: 'dd/MM/yyyy' }}
                         </td>
                         <td> {{ buySpare._provider.name }} </td>
                         <td>
-                            <h6>{{ buySpare.noBill }}</h6>
+                            {{ buySpare.noBill }}
                         </td>
                         <td>
-                            <h6>{{ buySpare.serie }}</h6>
+                            {{ buySpare.serie }}
                         </td>
                         <td>
                             {{ buySpare.noDoc }}
                         </td>
                         <td>
-                            <h6>Q {{ buySpare.total | number : '1.2-2' }}</h6>
+                            Q {{ buySpare.total | number : '1.2-2' }}
+                        </td>
+                        <td>
+                            Q {{ buySpare.discount | number : '1.2-2' }}
+                        </td>
+                        <td>
+                            Q {{ (buySpare.total - buySpare.discount) | number : '1.2-2' }}
                         </td>
                         <td class="align-middle text-right">
                             <a href="#" (click)="verDetalles(buySpare)" class=" btn btn-sm btn-icon btn-secondary" alt="Detalles" data-toggle="modal" data-target="#details"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
@@ -46,17 +103,34 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th> Fecha </th>
-                        <th> Proveedor </th>
-                        <th> No. de factura </th>
-                        <th> Serie </th>
-                        <th> No. de documento </th>
-                        <th> Total </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> Totales </th>
+                        <th>
+                            <h5>
+                                Q {{ subtotal | number : '1.2-2' }}
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>
+                                Q {{ totalDisc | number : '1.2-2' }}
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>
+                                Q {{ (subtotal - totalDisc) | number : '1.2-2' }}
+                            </h5>
+                        </th>
                         <th></th>
                     </tr>
                 </tfoot>
             </table>
+            <ng-template #customLoadingTemplate>
+            </ng-template>
             <!-- /.table -->
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
         </div>
         <!-- /.card-body -->
     </div>

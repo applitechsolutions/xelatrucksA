@@ -1,14 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { VehicleService, DatatablesService, UserService } from 'src/app/services/service.index';
+import { Gas } from '../../models/gas.model';
+import { Vehicle } from '../../models/vehicle.model';
+import { User } from '../../models/user.model';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
-import { VehicleService } from '../../services/vehicles/vehicle.service';
-import { Gas } from '../../models/gas.model';
-import { DatatablesService } from '../../services/datatables/datatables.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Vehicle } from '../../models/vehicle.model';
-import { UserService } from '../../services/users/user.service';
-import { User } from '../../models/user.model';
 
 declare function init_datatables();
 declare function destroy_datatables();

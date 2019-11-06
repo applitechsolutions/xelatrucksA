@@ -1,4 +1,3 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/56fe1ae5-f66a-4d7d-ab34-b3986dd85bc3/resourceGroups/Applitech/providers/Microsoft.Web/sites/laviña",
-    "appService.deploySubpath": "dist\\xelatrucks"
+    "appService.defaultWebAppToDeploy": "/subscriptions/56fe1ae5-f66a-4d7d-ab34-b3986dd85bc3/resourceGroups/Applitech/providers/Microsoft.Web/sites/laviña"
 }

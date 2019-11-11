@@ -23,6 +23,12 @@ export class BuySpareService {
       .pipe( map( (resp: any) => resp.compras ));
   }
 
+  cargarComprasProvider( _id: string, fecha1: Date, fecha2: Date ) {
+    const url = URL_SERVICES + '/compraRepuesto/provider?_id=' + _id + '&fecha1=' + fecha1 + '&fecha2=' + fecha2;
+    return this.http.get(url)
+      .pipe( map( (resp: any) => resp.compras ));
+  }
+
   crearCompra( buySpare: BuySpare ) {
 
     let url = URL_SERVICES + '/compraRepuesto';

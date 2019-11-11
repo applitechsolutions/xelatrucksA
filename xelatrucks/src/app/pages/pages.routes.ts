@@ -33,6 +33,7 @@ import { CustomersComponent } from './customers/customers.component';
 import { GbillsComponent } from './gbills/gbills.component';
 import { GbillComponent } from './gbills/gbill.component';
 import { AdminGuard } from '../services/service.index';
+import { ReportsComponent } from './reports/reports.component';
 
 const pagesRoutes: Routes = [
     {
@@ -83,6 +84,12 @@ const pagesRoutes: Routes = [
         component: UserComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Crear Usuario' }
+    },
+    {
+        path: 'reports',
+        component: ReportsComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Reportes' }
     },
     // TRANSPORTES
     {

@@ -21,10 +21,10 @@ declare function select2(): any;
 })
 export class BuySpareComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('closeP') modalClose: ElementRef;
-  @ViewChild('selectR') selectR: ElementRef;
-  @ViewChild('selectP') selectP: ElementRef;
-  @ViewChild('date') date: ElementRef;
+  @ViewChild('closeP', { static: false }) modalClose: ElementRef;
+  @ViewChild('selectR', { static: false }) selectR: ElementRef;
+  @ViewChild('selectP', { static: false }) selectP: ElementRef;
+  @ViewChild('date', { static: false }) date: ElementRef;
 
   forma: FormGroup;
   formaR: FormGroup;

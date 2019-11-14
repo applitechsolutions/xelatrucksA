@@ -22,11 +22,11 @@ export class GasolinesComponent implements OnInit, AfterViewInit {
 
   select2: any;
   loading: boolean = false;
-  @ViewChild('date1') date1: ElementRef;
-  @ViewChild('date2') date2: ElementRef;
-  @ViewChild('selectV') selectV: ElementRef;
-  @ViewChild('dateG') dateG: ElementRef;
-  @ViewChild('closeMG') closeMG: ElementRef;
+  @ViewChild('date1', { static: false }) date1: ElementRef;
+  @ViewChild('date2', { static: false }) date2: ElementRef;
+  @ViewChild('selectV', { static: false }) selectV: ElementRef;
+  @ViewChild('dateG', { static: false }) dateG: ElementRef;
+  @ViewChild('closeMG', { static: false }) closeMG: ElementRef;
 
   gasolines: Gas[] = [];
   vehicles: Vehicle[] = [];

@@ -21,7 +21,7 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   select2: any;
   forma: FormGroup;
-  @ViewChild('name') nameField: ElementRef;
+  @ViewChild('name', { static: false }) nameField: ElementRef;
 
   roles: any[] = [];
   areas: Area[] = [];

@@ -20,11 +20,11 @@ declare var swal: any;
 export class ReportsComponent implements OnInit, AfterViewInit {
 
   loading: boolean = false;
-  @ViewChild('dateG1') dateG1: ElementRef;
-  @ViewChild('dateG2') dateG2: ElementRef;
-  @ViewChild('dateP1') dateP1: ElementRef;
-  @ViewChild('dateP2') dateP2: ElementRef;
-  @ViewChild('selectP') selectP: ElementRef;
+  @ViewChild('dateG1', { static: false }) dateG1: ElementRef;
+  @ViewChild('dateG2', { static: false }) dateG2: ElementRef;
+  @ViewChild('dateP1', { static: false }) dateP1: ElementRef;
+  @ViewChild('dateP2', { static: false }) dateP2: ElementRef;
+  @ViewChild('selectP', { static: false }) selectP: ElementRef;
 
   gasolines: Gas[] = [];
   totalGas = 0.00;

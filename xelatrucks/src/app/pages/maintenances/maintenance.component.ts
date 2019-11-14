@@ -31,11 +31,11 @@ declare function init_step();
 })
 export class MaintenanceComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('selectM') selectM: ElementRef;
-  @ViewChild('selectT') selectT: ElementRef;
-  @ViewChild('selectRV') selectRV: ElementRef;
-  @ViewChild('selectRG') selectRG: ElementRef;
-  @ViewChild('scroll') scroll: ElementRef;
+  @ViewChild('selectM', { static: false } ) selectM: ElementRef;
+  @ViewChild('selectT', { static: false } ) selectT: ElementRef;
+  @ViewChild('selectRV', { static: false } ) selectRV: ElementRef;
+  @ViewChild('selectRG', { static: false } ) selectRG: ElementRef;
+  @ViewChild('scroll', { static: false } ) scroll: ElementRef;
   public loading = false;
   select2: any;
 

@@ -58,6 +58,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
       noBill: new FormControl(null),
       serie: new FormControl(null),
       noDoc: new FormControl(null),
+      discount: new FormControl(0, Validators.required),
       total: new FormControl(0, Validators.required)
     }, {});
 
@@ -216,6 +217,7 @@ export class BuySpareComponent implements OnInit, AfterViewInit {
     const buySpare = new BuySpare (
        provider,
        fecha.toString(),
+       this.forma.value.discount,
        this.forma.value.total,
        false,
        this.forma.value.noBill,

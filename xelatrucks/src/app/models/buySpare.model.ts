@@ -7,6 +7,7 @@ export class BuySpare {
     constructor(
         public _provider: AutoProvider,
         public date: string,
+        public discount: number,
         public total: number,
         public state: boolean = false,
         public noBill?: string,

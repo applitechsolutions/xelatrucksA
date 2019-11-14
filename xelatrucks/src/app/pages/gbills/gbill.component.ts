@@ -1,11 +1,12 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DatatablesService, GbillService, CPcustomerService } from '../../services/service.index';
+import { DatatablesService, GbillService, CPcustomerService, TripService } from '../../services/service.index';
 import { GreenBill } from '../../models/gbill.model';
 import { DetailBill } from '../../models/gdetail.model';
 import { PreDetailBill } from '../../models/gpredetail.model';
 import { CPCustomer } from '../../models/CPcustomer.model';
+import { Type } from '../../models/type.model';
 import swal from 'sweetalert';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
@@ -32,12 +33,14 @@ export class GbillComponent implements OnInit, AfterViewInit {
   loading: boolean = false;
 
   cpcustomers: CPCustomer[] = [];
+  types: Type[] = [];
 
   constructor(
     public router: Router,
     public gbillService: GbillService,
     public cpService: CPcustomerService,
     public dtService: DatatablesService,
+    public tripService: TripService,
     private chRef: ChangeDetectorRef
   ) { }
 
@@ -47,6 +50,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
     this.dtService.init_datePicker2();
 
     this.cargarCPClientes();
+    this.cargarTypeTrips();
 
     this.formGB = new FormGroup({
       customer: new FormControl(''),
@@ -64,65 +68,65 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
   /* #region  FACTURA REPORTE CUADROS */
 
-  generarPreDetalle() {
+  // generarPreDetalle() {
 
-    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
-    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
+  //   const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
+  //   const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
-    if (fecha1 > fecha2) {
-      swal('Oops...', 'El rango de fechas no es válido', 'warning');
-      return;
-    }
-    this.loading = true;
-    this.gbillService.cargarPreDetalle(fecha1, fecha2)
-      .subscribe((res: any) => {
-        this.total = 0;
-        this.totalmts = 0;
-        this.details = [];
-        this.preDetail = res.preDetail;
-        this.loading = false;
-        this.preDetail.forEach((item) => {
-          switch (item.prod) {
-            case 'Centro de Distribucion':
-              this.details.push({
-                _type: { name: item.prod, _id: item._id },
-                mts: item.totalmts,
-                trips: item.trips,
-                cost: this.desalojo(item.totalmts)
-              });
-              break;
-            case 'Cantera':
-              this.details.push({
-                _type: { name: item.prod, _id: item._id },
-                mts: item.totalmts,
-                trips: item.trips,
-                cost: this.cantera(item.totalmts)
-              });
-              break;
-            case 'Desalojo':
-              this.details.push({
-                _type: { name: item.prod, _id: item._id },
-                mts: item.totalmts,
-                trips: item.trips,
-                cost: this.desalojo(item.totalmts)
-              });
-              break;
-            case 'Descapote':
-              this.details.push({
-                _type: { name: item.prod, _id: item._id },
-                mts: item.totalmts,
-                trips: item.trips,
-                cost: this.descapote(item.totalmts)
-              });
-              break;
-            default:
-              break;
-          }
-        });
-        this.total = this.details.reduce((sum, elem) => sum + elem.cost, 0);
-        this.totalmts = this.details.reduce((sum, element) => sum + element.mts, 0);
-      });
-  }
+  //   if (fecha1 > fecha2) {
+  //     swal('Oops...', 'El rango de fechas no es válido', 'warning');
+  //     return;
+  //   }
+  //   this.loading = true;
+  //   this.gbillService.cargarPreDetalle(fecha1, fecha2)
+  //     .subscribe((res: any) => {
+  //       this.total = 0;
+  //       this.totalmts = 0;
+  //       this.details = [];
+  //       this.preDetail = res.preDetail;
+  //       this.loading = false;
+  //       this.preDetail.forEach((item) => {
+  //         switch (item.prod) {
+  //           case 'Centro de Distribucion':
+  //             this.details.push({
+  //               _type: { name: item.prod, _id: item._id },
+  //               mts: item.totalmts,
+  //               trips: item.trips,
+  //               cost: this.desalojo(item.totalmts)
+  //             });
+  //             break;
+  //           case 'Cantera':
+  //             this.details.push({
+  //               _type: { name: item.prod, _id: item._id },
+  //               mts: item.totalmts,
+  //               trips: item.trips,
+  //               cost: this.cantera(item.totalmts)
+  //             });
+  //             break;
+  //           case 'Desalojo':
+  //             this.details.push({
+  //               _type: { name: item.prod, _id: item._id },
+  //               mts: item.totalmts,
+  //               trips: item.trips,
+  //               cost: this.desalojo(item.totalmts)
+  //             });
+  //             break;
+  //           case 'Descapote':
+  //             this.details.push({
+  //               _type: { name: item.prod, _id: item._id },
+  //               mts: item.totalmts,
+  //               trips: item.trips,
+  //               cost: this.descapote(item.totalmts)
+  //             });
+  //             break;
+  //           default:
+  //             break;
+  //         }
+  //       });
+  //       this.total = this.details.reduce((sum, elem) => sum + elem.cost, 0);
+  //       this.totalmts = this.details.reduce((sum, element) => sum + element.mts, 0);
+  //     });
+  // }
 
   crearFacturaVerde() {
 
@@ -166,6 +170,13 @@ export class GbillComponent implements OnInit, AfterViewInit {
     this.cpService.cargarClientes()
       .subscribe( (res: any) => {
         this.cpcustomers = res.clientes;
+      });
+  }
+
+  cargarTypeTrips() {
+    this.tripService.cargarTypes()
+      .subscribe( (res: any) => {
+        this.types = res.viajes;
       });
   }
 

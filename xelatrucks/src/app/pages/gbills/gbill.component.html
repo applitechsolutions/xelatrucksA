@@ -1,141 +1,92 @@
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .card -->
-    <div class="card card-fluid">
-        <!-- .card-body -->
-        <div class="card-body">
-            <!-- .form -->
-            <form ngNativeValidate [formGroup]="formGB" (ngSubmit)="crearFacturaVerde()">
-                <!-- .fieldset -->
-                <fieldset>
-                    <legend>Campos</legend>
+    <!-- .section-block -->
+    <div class="section-block">
+        <h2 class="section-title"> Dialogs </h2>
+        <p class="text-muted"> Display a content in a layer above the App (like alert, helper text, etc) with Modal, Tooltips, and Popovers. </p>
+    </div>
+    <!-- /.section-block -->
+    <!-- .card-deck-xl -->
+    <div class="card-deck-xl">
+        <!-- .card -->
+        <div class="card card-fluid">
+            <div class="card-header"> Tooltips & Popovers </div>
+            <!-- .card-body -->
+            <div class="card-body">
+                <p class="text-muted"> Hover on buttons below to see tooltips. </p>
+                <!-- grid row -->
+                <div class="row">
+                    <!-- .form-group -->
+                    <div class="form-group col-4">
+                        <label id="typeL">Cliente <span class="badge badge-danger">Obligatorio</span></label> <select #selectC formControlName="customer" name="customer" class="form-control select2" style="width:100%!important;"> <option value=""> Seleccione un cliente </option>
+                                    <option *ngFor="let customer of cpcustomers" [value]="customer._id"> {{ customer.name }} </option>
+                                </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group col-4">
+                        <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group col-4">
+                        <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
+                    </div>
+                    <!-- /.form-group -->
+                    <button type="button" class="btn btn-primary offset-1 col-2"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+                <!-- /grid row -->
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <!-- .card -->
+        <div class="card card-fluid">
+            <div class="card-header"> Tooltips & Popovers </div>
+            <!-- .card-body -->
+            <div class="card-body">
+                <p class="text-muted"> Hover on buttons below to see tooltips. </p>
+                <form>
+                    <!-- grid row -->
                     <div class="row">
                         <!-- .form-group -->
-                        <div class="form-group col-3">
-                            <label id="typeL">Cliente <span class="badge badge-danger">Obligatorio</span></label> <select #selectC formControlName="customer" name="customer" class="form-control select2" style="width:100%!important;">
-                                <option value=""> Seleccione un cliente </option>
-                                <option *ngFor="let customer of cpcustomers" [value]="customer._id"> {{ customer.name }} </option>
-                            </select>
+                        <div class="form-group col-4">
+                            <label id="typeL">Cliente <span class="badge badge-danger">Obligatorio</span></label> <select #selectC formControlName="customer" name="customer" class="form-control select2" style="width:100%!important;"> <option value=""> Seleccione un cliente </option>
+                                    <option *ngFor="let customer of cpcustomers" [value]="customer._id"> {{ customer.name }} </option>
+                                </select>
                         </div>
                         <!-- /.form-group -->
                         <!-- .form-group -->
-                        <div class="form-group col-3">
-                            <label for="lbl2">No. de Factura <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="noBill" name="noBill" type="text" class="form-control" id="lbl2" placeholder="Ingrese el número de factura"
-                                required="">
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group col-3">
-                            <label for="lbl3">Serie <span class="badge badge-danger">Obligatorio</span></label> <input formControlName="serie" name="serie" type="text" class="form-control" id="lbl2" placeholder="Ingrese la serie" required="">
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group col-3">
+                        <div class="form-group col-4">
                             <label class="control-label" for="flatpickr">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input id="flatpickr" formControlName="date" name="date" type="text" class="form-control" required>
                         </div>
                         <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group col-3">
-                            <label for="lbl2">Orden de Compra <span class="badge badge-secondary"><em>Opcional</em></span></label> <input formControlName="oc" name="oc" type="text" class="form-control" id="lbl2" placeholder="Ingrese la orden de compra">
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group col-3">
-                            <label for="lbl2">Aceptación de Compra <span class="badge badge-secondary"><em>Opcional</em></span></label> <input formControlName="ac" name="ac" type="text" class="form-control" id="lbl2" placeholder="Ingrese la orden de aceptación">
-                        </div>
-                        <!-- /.form-group -->
                     </div>
-                    <!-- .card-header -->
-                    <div class="card-header d-flex">
-                        <h3 class="card-title offset-3">Generar Detalle </h3>
-                        <!-- .form-group -->
-                        <div class="form-group col-2">
-                            <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group col-2">
-                            <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
-                        </div>
-                        <!-- /.form-group -->
-                        <button type="button" (click)="generarPreDetalle()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
-                    </div>
-                    <!-- /.card-header -->
-                </fieldset>
-                <!-- /.fieldset -->
-                <br>
-                <!-- .card-title -->
-                <h3 class="card-title">Detalle </h3>
-                <!-- /.card-title -->
+                    <!-- /grid row -->
+                </form>
+
+
+            </div>
+            <!-- /.card-body -->
+            <!-- .card-body -->
+            <div class="card-body border-top">
                 <!-- .list-group -->
-                <div class="list-group list-group-flush list-group-divider" #customLoadingTemplate>
-                    <!-- .list-group-item -->
-                    <div class="list-group-item" *ngFor="let detail of details">
+                <div class="list-group list-group-divider list-group-divider mb-3">
+                    <a href="#" class="list-group-item list-group-item-action">
                         <div class="list-group-item-figure">
-                            <a href="#" class="user-avatar user-avatar-sm"><i class="fas fa-snowplow"></i></a>
-                        </div>
-                        <div class="list-group-item-body">
-                            <div class="d-sm-flex justify-content-sm-between align-items-sm-stretch">
-                                <div class="team">
-                                    <h4 class="list-group-item-title">
-                                        <a>{{ detail._type.name }}</a>
-                                    </h4>
-                                </div>
-                                <ul class="list-inline text-muted mb-0">
-                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title="Viajes" data-placement="bottom">
-                                        <h5><i class="fas fa-truck-loading text-yellow"></i> {{ detail.trips }} </h5>
-                                    </li>
-                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title="Metros" data-placement="bottom">
-                                        <h5><i class="fas fa-th text-red"></i> {{ detail.mts | number : '1.2-2' }}m </h5>
-                                    </li>
-                                    <li class="list-inline-item mr-3" data-toggle="tooltip" title="Costo" data-placement="bottom">
-                                        <h5><i class="fas fa-money-bill-wave text-green"></i> Q. {{ detail.cost | number : '1.2-2' }} </h5>
-                                    </li>
-                                </ul>
+                            <div class="tile bg-success">
+                                <span class="oi oi-chat"></span>
                             </div>
                         </div>
-                    </div>
-                    <!-- /.list-group-item -->
+                        <div class="list-group-item-body"> Dapibus ac facilisis in </div>
+                    </a>
                 </div>
                 <!-- /.list-group -->
-                <ng-template #customLoadingTemplate>
-                </ng-template>
-                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
-                <!-- metric row -->
-                <div class="metric-row">
-                    <!-- metric column -->
-                    <div class="offset-8">
-                        <!-- .metric -->
-                        <div class="metric metric-badge">
-                            <h2 class="metric-label"> Total </h2>
-                            <p class="metric-value h1">
-                                <sup>Q </sup> <span class="value">{{ total | number : '1.2-2' }}</span>
-                            </p>
-                        </div>
-                        <!-- /.metric -->
-                    </div>
-                    <!-- /metric column -->
-                    <!-- metric column -->
-                    <div class="col-2">
-                        <!-- .metric -->
-                        <div class="metric metric-badge">
-                            <h2 class="metric-label"> Total Metros </h2>
-                            <p class="metric-value h1">
-                                <sup>m </sup> <span class="value">{{ totalmts | number : '1.2-2' }}</span>
-                            </p>
-                        </div>
-                        <!-- /.metric -->
-                    </div>
-                    <!-- /metric column -->
-                </div>
-                <!-- /metric row -->
-                <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Guardar Factura</button>
-            </form>
-            <!-- /.form -->
+            </div>
+            <!-- /.card-body -->
         </div>
-        <!-- /.card-body -->
+        <!-- /.card -->
     </div>
-    <!-- /.card -->
+    <!-- /.card-deck-xl -->
 </div>
 <!-- /.page-section -->

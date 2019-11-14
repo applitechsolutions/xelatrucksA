@@ -44,41 +44,41 @@ export class TypeMaintenancesComponent implements OnInit {
   }
 
   crearTipo() {
-      // console.log(this.forma.invalid);
-      // console.log(this.forma.value);
+    // console.log(this.forma.invalid);
+    // console.log(this.forma.value);
 
-      if (this.forma.invalid) {
-        swal('Oops...', 'Algunos campos son obligatorios', 'warning');
-        return;
-      }
+    if (this.forma.invalid) {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      return;
+    }
 
-      if (this.idTypeMaintenance === '') {
-        const typeMaintenance = new TypeMaintenance(
-          this.forma.value.name,
-          false
-        );
+    if (this.idTypeMaintenance === '') {
+      const typeMaintenance = new TypeMaintenance(
+        this.forma.value.name,
+        false
+      );
 
-        this.typeS.crearTipo( typeMaintenance )
-          .subscribe( resp => {
-            // console.log(resp);
-            this.cargarTipos();
-          });
-      } else {
-        const typeMaintenance = new TypeMaintenance(
-          this.forma.value.name,
-          false,
-          this.idTypeMaintenance
-        );
+      this.typeS.crearTipo( typeMaintenance )
+        .subscribe( resp => {
+          // console.log(resp);
+          this.cargarTipos();
+        });
+    } else {
+      const typeMaintenance = new TypeMaintenance(
+        this.forma.value.name,
+        false,
+        this.idTypeMaintenance
+      );
 
-        this.typeS.crearTipo( typeMaintenance )
-          .subscribe( resp => {
-            // console.log(resp);
-            this.cargarTipos();
-            this.idTypeMaintenance = '';
-            this.editando = false;
-          });
-      }
-      this.forma.reset();
+      this.typeS.crearTipo( typeMaintenance )
+        .subscribe( resp => {
+          // console.log(resp);
+          this.cargarTipos();
+          this.idTypeMaintenance = '';
+          this.editando = false;
+        });
+    }
+    this.forma.reset();
   }
 
   borrarTipo( typeMaintenance: TypeMaintenance ) {

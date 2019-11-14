@@ -43,7 +43,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
   vehicle: Vehicle;
 
   types: Type[] = [];
-  type: Type = {};
+  
   formTy: FormGroup;
   tempType: string = '';
 
@@ -236,48 +236,48 @@ export class GtripsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  crearTipoViaje() {
-    // console.log(this.formTy.value);
-    // console.log(this.formTy.valid);
+  // crearTipoViaje() {
+  //   // console.log(this.formTy.value);
+  //   // console.log(this.formTy.valid);
 
-    if (this.formTy.invalid) {
-      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
-      return;
-    }
+  //   if (this.formTy.invalid) {
+  //     swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+  //     return;
+  //   }
 
 
-    let type;
+  //   let type;
 
-    if (this.type._id) {
-      type = new Type(
-        this.formTy.value.name,
-        this.formTy.value.km,
-        this.type._id
-      );
-    } else {
-      type = new Type(
-        this.formTy.value.name,
-        this.formTy.value.km
-      );
-    }
+  //   if (this.type._id) {
+  //     type = new Type(
+  //       this.formTy.value.name,
+  //       this.formTy.value.km,
+  //       this.type._id
+  //     );
+  //   } else {
+  //     type = new Type(
+  //       this.formTy.value.name,
+  //       this.formTy.value.km
+  //     );
+  //   }
 
-    this.tripService.crearTypes(type)
-      .subscribe((res: any) => {
-        // console.log(res);
-        swal({
-          title: 'Exito!',
-          text: 'Viaje creado correctamente' + res.viaje.name,
-          icon: 'success',
-          button: false,
-          timer: 1000
-        });
-        this.tempType = res.viaje._id;
-        this.formTy.reset();
-        this.closeMty.nativeElement.click();
-        this.cargarTypes();
-      });
+  //   this.tripService.crearTypes(type)
+  //     .subscribe((res: any) => {
+  //       // console.log(res);
+  //       swal({
+  //         title: 'Exito!',
+  //         text: 'Viaje creado correctamente' + res.viaje.name,
+  //         icon: 'success',
+  //         button: false,
+  //         timer: 1000
+  //       });
+  //       this.tempType = res.viaje._id;
+  //       this.formTy.reset();
+  //       this.closeMty.nativeElement.click();
+  //       this.cargarTypes();
+  //     });
 
-  }
+  // }
 
   crearMaterial() {
     // console.log(this.formMat.value);
@@ -335,7 +335,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
     const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
-    
+
 
     this.tripService.cargarGreenTrips( fecha1, fecha2 )
     .subscribe((res: any) => {

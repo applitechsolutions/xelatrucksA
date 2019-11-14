@@ -47,6 +47,7 @@ import { CpcustomersComponent } from './cpcustomers/cpcustomers.component';
 import { CustomersComponent } from './customers/customers.component';
 import { GbillsComponent } from './gbills/gbills.component';
 import { GbillComponent } from './gbills/gbill.component';
+import { TypeTripsComponent } from './type-trips/type-trips.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { GbillComponent } from './gbills/gbill.component';
         CpcustomersComponent,
         CustomersComponent,
         GbillsComponent,
-        GbillComponent
+        GbillComponent,
+        TypeTripsComponent
     ],
     exports: [
         DashboardComponent,

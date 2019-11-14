@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~7.2.0",
+    "@angular/animations": "^7.2.15",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",
     "@angular/core": "~7.2.0",
@@ -37,6 +37,7 @@
     "moment": "^2.24.0",
     "ng2-charts": "^2.2.3",
     "ngx-loading": "^3.0.1",
+    "ngx-toastr": "^11.2.1",
     "pdfmake": "^0.1.56",
     "perfect-scrollbar": "^1.4.0",
     "popper": "^1.0.1",

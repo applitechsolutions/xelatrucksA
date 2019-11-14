@@ -14,8 +14,8 @@ declare var swal: any;
 })
 export class MaintenancesComponent implements OnInit {
   loading: boolean = false;
-  @ViewChild('date1') date1: ElementRef;
-  @ViewChild('date2') date2: ElementRef;
+  @ViewChild('date1', {static: false}) date1: ElementRef;
+  @ViewChild('date2', {static: false}) date2: ElementRef;
   maintenances: Maintenance[] = [];
   detailsV: DetailsSpare[] = [];
   detailsG: DetailsSpare[] = [];

@@ -14,7 +14,7 @@ import * as moment from 'moment/moment';
 })
 export class EmployeeComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('selectJ') selectJ: ElementRef;
+  @ViewChild('selectJ', {static: false}) selectJ: ElementRef;
 
   formE: FormGroup;
   employee: Employee = new Employee();

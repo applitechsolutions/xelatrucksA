@@ -18,9 +18,9 @@ declare function select2(): any;
 })
 export class VehicleComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('close') modalClose: ElementRef;
-  @ViewChild('selectT') selectT: ElementRef;
-  @ViewChild('selectM') selectM: ElementRef;
+  @ViewChild('close', {static: false}) modalClose: ElementRef;
+  @ViewChild('selectT', {static: false}) selectT: ElementRef;
+  @ViewChild('selectM', {static: false}) selectM: ElementRef;
   select2: any;
 
   forma: FormGroup;

@@ -15,8 +15,8 @@ declare var swal: any;
 })
 export class GbillsComponent implements OnInit {
 
-  @ViewChild('date1') date1: ElementRef;
-  @ViewChild('date2') date2: ElementRef;
+  @ViewChild('date1', {static: false}) date1: ElementRef;
+  @ViewChild('date2', {static: false}) date2: ElementRef;
 
   loading: boolean = false;
 

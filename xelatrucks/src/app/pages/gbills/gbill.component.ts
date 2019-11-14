@@ -18,9 +18,9 @@ import '../../../assets/vendor/select2/js/select2.js';
 })
 export class GbillComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('date1') date1: ElementRef;
-  @ViewChild('date2') date2: ElementRef;
-  @ViewChild('selectC') selectC: ElementRef;
+  @ViewChild('date1', {static: false}) date1: ElementRef;
+  @ViewChild('date2', {static: false}) date2: ElementRef;
+  @ViewChild('selectC', {static: false}) selectC: ElementRef;
 
   formGB: FormGroup;
 

@@ -23,15 +23,15 @@ declare function destroy_datatables();
 export class GtripsComponent implements OnInit, AfterViewInit {
 
   loading: boolean = false;
-  @ViewChild('date1') date1: ElementRef;
-  @ViewChild('date2') date2: ElementRef;
+  @ViewChild('date1', {static: false}) date1: ElementRef;
+  @ViewChild('date2', {static: false}) date2: ElementRef;
 
-  @ViewChild('closeMTy') closeMty: ElementRef;
-  @ViewChild('closeMMt') closeMMt: ElementRef;
-  @ViewChild('selectE') selectE: ElementRef;
-  @ViewChild('selectT') selectT: ElementRef;
-  @ViewChild('selectV') selectV: ElementRef;
-  @ViewChild('selectM') selectM: ElementRef;
+  @ViewChild('closeMTy', {static: false}) closeMty: ElementRef;
+  @ViewChild('closeMMt', {static: false}) closeMMt: ElementRef;
+  @ViewChild('selectE', {static: false}) selectE: ElementRef;
+  @ViewChild('selectT', {static: false}) selectT: ElementRef;
+  @ViewChild('selectV', {static: false}) selectV: ElementRef;
+  @ViewChild('selectM', {static: false}) selectM: ElementRef;
 
   formGT: FormGroup;
   greenTrip: GreenTrip = { _employee: null, _type: null, _vehicle: null, _material: null };

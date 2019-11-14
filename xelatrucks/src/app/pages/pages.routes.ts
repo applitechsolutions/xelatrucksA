@@ -34,6 +34,7 @@ import { GbillsComponent } from './gbills/gbills.component';
 import { GbillComponent } from './gbills/gbill.component';
 import { AdminGuard } from '../services/service.index';
 import { ReportsComponent } from './reports/reports.component';
+import { RepairsComponent } from './repairs/repairs.component';
 
 const pagesRoutes: Routes = [
     {
@@ -224,6 +225,12 @@ const pagesRoutes: Routes = [
         component: GasolinesComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Cupones de combustible' }
+    },
+    {
+        path: 'repairs',
+        component: RepairsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Reparaciones y ajustes' }
     },
     // CENTRO DE DISTRIBUCION
     {

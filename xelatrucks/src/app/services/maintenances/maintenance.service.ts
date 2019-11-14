@@ -60,6 +60,47 @@ export class MaintenanceService {
     return this.http.get(url);
   }
 
+  crearAjuste( mantenimiento: Maintenance ) {
+
+    let url = URL_SERVICES + '/mantenimiento/repair';
+
+    if (mantenimiento._id) {
+      url += '/' + mantenimiento._id + '?token=' + this.userS.token;
+      // console.log('EDIT');
+
+      return this.http.put(url, mantenimiento)
+        .pipe( map( (resp: any) => {
+          swal({
+            title: '¡Mantenimiento actualizado!',
+            text: 'Cambios guardados correctamente',
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
+          return resp;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
+        }));
+
+    } else {
+      url += '?token=' + this.userS.token;
+      // console.log('SAVE');
+      return this.http.post(url, mantenimiento)
+        .pipe( map( (resp: any) => {
+          swal('Reparación creada', 'Se ingreso una reparación o ajuste diario', 'success');
+          return resp;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message , 'error');
+          return throwError( err );
+        }));
+    }
+  }
+
   crearMantenimiento( mantenimiento: Maintenance ) {
 
     let url = URL_SERVICES + '/mantenimiento';

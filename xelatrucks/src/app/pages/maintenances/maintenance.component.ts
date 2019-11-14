@@ -16,6 +16,7 @@ import { Mechanic } from '../../models/mech.model';
 import { Maintenance } from '../../models/maintenance.model';
 import { TypeMaintenance } from '../../models/typeMaintenance.model';
 import { DetailsSpare } from 'src/app/models/detailsSpare.model';
+
 import * as $ from 'jquery';
 import '../../../assets/vendor/select2/js/select2.js';
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -43,7 +44,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
   gondolas: Gondola[] = [];
   mecanicos: Mechanic[] = []; // Llenar SELECT
   typeMaintenances: TypeMaintenance[] = []; // Llenar SELECT
-  mechanics: Mechanic[] = []; // Mantenimiento
+  mechanics: Mechanic[] = []; // Mantenimiento ARREGLO
 
   // Info principal
   icon: string = 'fas fa-info-circle';

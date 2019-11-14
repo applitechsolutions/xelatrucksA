@@ -48,6 +48,7 @@ import { CustomersComponent } from './customers/customers.component';
 import { GbillsComponent } from './gbills/gbills.component';
 import { GbillComponent } from './gbills/gbill.component';
 import { ReportsComponent } from './reports/reports.component';
+import { RepairsComponent } from './repairs/repairs.component';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { ReportsComponent } from './reports/reports.component';
         CustomersComponent,
         GbillsComponent,
         GbillComponent,
-        ReportsComponent
+        ReportsComponent,
+        RepairsComponent
     ],
     exports: [
         DashboardComponent,

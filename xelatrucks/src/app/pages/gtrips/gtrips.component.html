@@ -65,7 +65,7 @@
                                         <!-- .form-group -->
                                         <div class="form-group col-2">
                                             <label>Crear Tipo</label><br>
-                                            <a href="#addType" data-toggle="modal" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
+                                            <a [routerLink]="['/typeTrips']" routerLinkActive="router-link-active" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
                                         </div>
                                         <!-- /.form-group -->
                                         <!-- .form-group -->
@@ -270,48 +270,6 @@
     <!-- /.card -->
 </div>
 <!-- /.page-section -->
-<!-- .modalTYPE -->
-<div class="modal fade" id="addType" tabindex="-1" role="dialog" aria-labelledby="NewTypeModalLabel" aria-hidden="true">
-    <!-- .modal-dialog -->
-    <div class="modal-dialog" role="document">
-        <!-- .modal-content -->
-        <div class="modal-content">
-            <!-- .modal-header -->
-            <div class="modal-header">
-                <h5 class="modal-title"> Crear un nuevo tipo de viaje </h5>
-            </div>
-            <!-- /.modal-header -->
-            <!-- .modal-body -->
-            <div class="modal-body">
-                <form ngNativeValidate [formGroup]="formTy" (ngSubmit)="crearTipoViaje()">
-                    <!-- .form-group -->
-                    <div class="form-group">
-                        <label for="name">Viaje </label> <input formControlName="name" name="name" type="text" class="form-control" id="name" placeholder="Ingrese el nombre del viaje">
-                    </div>
-                    <!-- /.form-group -->
-                    <!-- .form-group -->
-                    <div class="form-group">
-                        <label for="pay">Kilómetros</label>
-                        <div class="input-group">
-                            <label class="input-group-prepend" for="km"><span class="badge">Km</span></label>
-                            <input formControlName="km" name="km" type="number" min="0.00" step="0.01" class="form-control" id="pay" placeholder="Ingrese los kilómetros del viaje">
-                        </div>
-                    </div>
-                    <!-- /.form-group -->
-                    <!-- .modal-footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMTy type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                    </div>
-                    <!-- /.modal-footer -->
-                </form>
-            </div>
-            <!-- /.modal-body -->
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modalTYPE -->
 <!-- .modalMATERIAL -->
 <div class="modal fade" id="addMaterial" tabindex="-1" role="dialog" aria-labelledby="NewMaterialModalLabel" aria-hidden="true">
     <!-- .modal-dialog -->

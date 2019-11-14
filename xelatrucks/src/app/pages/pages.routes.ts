@@ -33,6 +33,7 @@ import { CustomersComponent } from './customers/customers.component';
 import { GbillsComponent } from './gbills/gbills.component';
 import { GbillComponent } from './gbills/gbill.component';
 import { AdminGuard } from '../services/service.index';
+import { TypeTripsComponent } from './type-trips/type-trips.component';
 import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
 
@@ -122,6 +123,12 @@ const pagesRoutes: Routes = [
         component: GtripsComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Reporte de Cuadros' }
+    },
+    {
+        path: 'typeTrips',
+        component: TypeTripsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Tipos de viajes' }
     },
     {
         path: 'CPcustomers',

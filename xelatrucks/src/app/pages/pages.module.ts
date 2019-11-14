@@ -47,6 +47,7 @@ import { CpcustomersComponent } from './cpcustomers/cpcustomers.component';
 import { CustomersComponent } from './customers/customers.component';
 import { GbillsComponent } from './gbills/gbills.component';
 import { GbillComponent } from './gbills/gbill.component';
+import { TypeTripsComponent } from './type-trips/type-trips.component';
 import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
 
@@ -85,6 +86,7 @@ import { RepairsComponent } from './repairs/repairs.component';
         CustomersComponent,
         GbillsComponent,
         GbillComponent,
+        TypeTripsComponent,
         ReportsComponent,
         RepairsComponent
     ],

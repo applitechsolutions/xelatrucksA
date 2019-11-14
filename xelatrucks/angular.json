@@ -48,7 +48,8 @@
                             "src/assets/vendor/html2pdf.js/jspdf.min.js",
                             "src/assets/vendor/html2pdf.js/html2canvas.min.js",
                             "src/assets/vendor/html2pdf.js/html2pdf.js",
-                            "src/assets/javascript/theme.js"
+                            "src/assets/javascript/theme.js",
+                            "node_modules/particles.js/particles.js"
                         ],
                         "es5BrowserSupport": true
                     },

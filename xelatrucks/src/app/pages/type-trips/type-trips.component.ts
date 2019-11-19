@@ -115,6 +115,8 @@ export class TypeTripsComponent implements OnInit {
           button: false,
           timer: 1000
         });
+        this.formTT.reset();
+        this.tariffs = [];
       });
   }
 

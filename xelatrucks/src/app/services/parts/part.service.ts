@@ -39,25 +39,22 @@ export class PartService {
       );
   }
 
-      // ACTUALIZAR STOCK PURCHASE
-
-      stockPurchase( storage: DetailsSpare ) {
-
-        let url = URL_SERVICES + '/repuesto/purchase/';
-        url += '?token=' + this.userS.token;
-
-        return this.http.put(url, storage)
-          .pipe(
-            map( (resp: any) => {
-              return resp;
-            }),
-            catchError((err, caught) => {
-              console.log(err);
-              swal(err.error.mensaje, err.error.errors.message , 'error');
-              return throwError( err );
-            })
-          );
-      }
+    // ACTUALIZAR STOCK PURCHASE
+    stockPurchase( storage: DetailsSpare ) {
+      let url = URL_SERVICES + '/repuesto/purchase/';
+      url += '?token=' + this.userS.token;
+      return this.http.put(url, storage)
+        .pipe(
+          map( (resp: any) => {
+            return resp;
+          }),
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message , 'error');
+            return throwError( err );
+          })
+        );
+    }
 
     // ACTUALIZAR STOCK SALE
 

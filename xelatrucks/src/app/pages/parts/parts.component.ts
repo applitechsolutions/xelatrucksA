@@ -31,6 +31,8 @@ export class PartsComponent implements OnInit {
           this.idC = res._id;
         });
 
+      console.log(this.repuestos);
+
       this.chRef.detectChanges();
 
       this.dtService.init_tables();

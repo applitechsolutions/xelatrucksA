@@ -26,10 +26,6 @@ export class GbillComponent implements OnInit, AfterViewInit {
   @ViewChild('selectC', { static: false }) selectC: ElementRef;
   @ViewChild('selectTT', { static: false }) selectTT: ElementRef;
   @ViewChild('extra', { static: false }) extra: ElementRef;
-  @ViewChild('date1', {static: false}) date1: ElementRef;
-  @ViewChild('date2', {static: false}) date2: ElementRef;
-  @ViewChild('selectC', {static: false}) selectC: ElementRef;
-
   formGB: FormGroup;
 
   greenbil: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };

@@ -110,11 +110,13 @@ export class TypeTripsComponent implements OnInit {
       .subscribe( (res: any) => {
         swal({
           title: 'Exito!',
-          text: 'Llanta creada correctamente' + res.code + ' ' +res.name,
+          text: 'Tipo de viaje creado correctamente' + res.code + ' ' + res.name,
           icon: 'success',
           button: false,
           timer: 1000
         });
+        this.formTT.reset();
+        this.tariffs = [];
       });
   }
 

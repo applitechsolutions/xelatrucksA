@@ -129,7 +129,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           .map((res: any) => {
             this.storages = res.storage;
             this.idCellar = res._id;
-            console.log(this.storages);
+            // console.log(this.storages);
             $('.select2').select2();
             // console.log(this.storages.map( (resp: any) => resp._autopart ));
           });
@@ -171,14 +171,14 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       });
       this.partS.stockSale(this.detail)
       .subscribe( (resp: any) => {
-        console.log('STOCK OK');
+        // console.log('STOCK OK');
         this.getStorages();
       });
     }
     // SUMAR AL TOTAL
-    console.log(this.detail.cost);
+    // console.log(this.detail.cost);
     this.mantenimiento.totalV = this.mantenimiento.totalV + (this.detail.quantity * this.detail.cost);
-    console.log(this.mantenimiento.totalV);
+    // console.log(this.mantenimiento.totalV);
     this.mantenimiento._user = this.userS.usuario;
     this.mantenimiento.detailsV = this.detailsV;
     this.updateMantenimiento();
@@ -224,14 +224,14 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       });
       this.partS.stockSale(this.detail)
       .subscribe( (resp: any) => {
-        console.log('STOCK OK');
+        // console.log('STOCK OK');
         this.getStorages();
       });
     }
     // SUMAR AL TOTAL
-    console.log(this.detail.cost);
+    // console.log(this.detail.cost);
     this.mantenimiento.totalG = this.mantenimiento.totalG + (this.detail.quantity * this.detail.cost);
-    console.log(this.mantenimiento.totalG);
+    // console.log(this.mantenimiento.totalG);
     this.mantenimiento._user = this.userS.usuario;
     this.mantenimiento.detailsG = this.detailsG;
     this.updateMantenimiento();
@@ -243,8 +243,8 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
   }
 
   deleteDetailV( id: string ) {
-    console.log('BORRANDO...');
-    console.log(this.detailsV);
+    // console.log('BORRANDO...');
+    // console.log(this.detailsV);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
     const index = this.detailsV.findIndex(item => item._part._id === id);
 
@@ -261,7 +261,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
         const row = this.detailsV.find(e => e._part._id === id);
         this.partS.stockPurchase(row)
         .subscribe( (resp: any) => {
-          console.log('STOCK OK');
+          // console.log('STOCK OK');
           this.getStorages();
         });
         // ACTUALIZAMOS el total
@@ -277,8 +277,8 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
   }
 
   deleteDetailG( id: string ) {
-    console.log('BORRANDO...');
-    console.log(this.detailsG);
+    // console.log('BORRANDO...');
+    // console.log(this.detailsG);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
     const index = this.detailsG.findIndex(item => item._part._id === id);
 
@@ -295,7 +295,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
         const row = this.detailsG.find(e => e._part._id === id);
         this.partS.stockPurchase(row)
         .subscribe( (resp: any) => {
-          console.log('STOCK OK');
+          // console.log('STOCK OK');
           this.getStorages();
         });
         // ACTUALIZAMOS el total
@@ -353,7 +353,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
   }
 
   deleteMech(id: string) {
-    console.log('BORRANDO...');
+    // console.log('BORRANDO...');
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
     const index = this.mechanics.findIndex(item => item._id === id);
 
@@ -435,7 +435,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
 
     this.maintenanceS.finishMantenimiento(this.mantenimiento)
       .subscribe((resp: any) => {
-        console.log(resp);
+        // console.log(resp);
         this.mantenimiento = {
           _user: null,
           _vehicle: {

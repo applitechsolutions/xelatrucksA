@@ -21,6 +21,7 @@ export class GbillsComponent implements OnInit {
   loading: boolean = false;
 
   bills: GreenBill[] = [];
+  nobills: GreenBill[] = [];
   details: DetailBill[] = [];
 
   oc: string;
@@ -35,6 +36,7 @@ export class GbillsComponent implements OnInit {
   ngOnInit() {
     const today = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_datePicker(today);
+    this.cargarNoPaid();
   }
 
   buscarFacturas() {
@@ -66,85 +68,21 @@ export class GbillsComponent implements OnInit {
       });
   }
 
-  actualizarOC( bill: GreenBill ) {
+  cargarNoPaid() {
 
-    if (bill.oc === '') {
-      swal('Oops...', 'No hay ningun valor ingresado', 'warning');
-      return;
-    }
+    this.loading = true;
 
-    this.gbillService.crearFacturaVerde( bill )
-      .subscribe( (res: any) => {
+    this.gbillService.cargarFacturasNoPaid()
+      .subscribe((res: any) => {
+
+        destroy_datatables();
         console.log(res);
-        swal({
-          title: 'Exito!',
-          text: 'Orden de compra actualizada correctamente',
-          icon: 'success',
-          button: false,
-          timer: 1000
-        });
+
+        this.nobills = res.facturas;
+        this.chRef.detectChanges();
+        init_datatables();
+        this.loading = false;
       });
-  }
-
-  actualizarAC( bill: GreenBill ) {
-
-    if (bill.ac === '') {
-      swal('Oops...', 'No hay ningun valor ingresado', 'warning');
-      return;
-    }
-
-    this.gbillService.crearFacturaVerde( bill )
-      .subscribe( (res: any) => {
-        console.log(res);
-        swal({
-          title: 'Exito!',
-          text: 'Orden de aceptación actualizada correctamente',
-          icon: 'success',
-          button: false,
-          timer: 1000
-        });
-      });
-  }
-
-  pagarFactura( bill: GreenBill ) {
-
-    if (bill.ac === '' || bill.oc === '') {
-      swal('Oops...', 'No puede pagar la factura sin orden de compra u orden de aceptación', 'warning');
-      return;
-    }
-
-    swal({
-      title: '¿Está seguro?',
-      text: 'Está a punto de pagar la factuna número: ' + bill.noBill,
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
-    })
-    .then( borrar => {
-      if (borrar) {
-
-        bill.paid = true;
-
-        this.gbillService.crearFacturaVerde( bill )
-          .subscribe( borrado => {
-            swal({
-              title: 'Exito!',
-              text: 'Factura pagada correctamente',
-              icon: 'success',
-              button: false,
-              timer: 1000
-            });
-          });
-        // empleado.state = true;
-
-        // this.empService.borrarEmpleado( empleado )
-        //   .subscribe( borrado => {
-        //     this.dtService.destroy_table();
-        //     this.cargarEmpleados();
-        //   });
-      }
-
-    });
   }
 
   borrarFactura( bill: GreenBill ) {

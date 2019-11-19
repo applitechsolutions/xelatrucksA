@@ -7,6 +7,8 @@ import { DetailBill } from '../../models/gdetail.model';
 import { PreDetailBill } from '../../models/gpredetail.model';
 import { CPCustomer } from '../../models/CPcustomer.model';
 import { Type } from '../../models/type.model';
+import { Tariff } from '../../models/tariff.model';
+import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
@@ -22,18 +24,20 @@ export class GbillComponent implements OnInit, AfterViewInit {
   @ViewChild('date1', { static: false }) date1: ElementRef;
   @ViewChild('date2', { static: false }) date2: ElementRef;
   @ViewChild('selectC', { static: false }) selectC: ElementRef;
+  @ViewChild('selectTT', { static: false }) selectTT: ElementRef;
+  @ViewChild('extra', { static: false }) extra: ElementRef;
 
   formGB: FormGroup;
 
   greenbil: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };
-  preDetail: PreDetailBill[] = [];
+  preDetail: PreDetailBill = {code: '', prod: '', totalmts: 0, trips: 0};
   details: DetailBill[] = [];
   total: number = 0;
-  totalmts: number = 0;
   loading: boolean = false;
 
   cpcustomers: CPCustomer[] = [];
   types: Type[] = [];
+  tarifas: Tariff[] = [];
 
   constructor(
     public router: Router,
@@ -54,11 +58,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
     this.formGB = new FormGroup({
       customer: new FormControl(''),
-      noBill: new FormControl('', Validators.required),
-      serie: new FormControl('', Validators.required),
-      date: new FormControl(null, Validators.required),
-      oc: new FormControl(''),
-      ac: new FormControl('')
+      date: new FormControl(null, Validators.required)
     });
   }
 
@@ -68,65 +68,71 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
   /* #region  FACTURA REPORTE CUADROS */
 
-  // generarPreDetalle() {
+  generarPreDetalle() {
 
-  //   const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
-  //   const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
+    this.loading = true;
 
-  //   if (fecha1 > fecha2) {
-  //     swal('Oops...', 'El rango de fechas no es válido', 'warning');
-  //     return;
-  //   }
-  //   this.loading = true;
-  //   this.gbillService.cargarPreDetalle(fecha1, fecha2)
-  //     .subscribe((res: any) => {
-  //       this.total = 0;
-  //       this.totalmts = 0;
-  //       this.details = [];
-  //       this.preDetail = res.preDetail;
-  //       this.loading = false;
-  //       this.preDetail.forEach((item) => {
-  //         switch (item.prod) {
-  //           case 'Centro de Distribucion':
-  //             this.details.push({
-  //               _type: { name: item.prod, _id: item._id },
-  //               mts: item.totalmts,
-  //               trips: item.trips,
-  //               cost: this.desalojo(item.totalmts)
-  //             });
-  //             break;
-  //           case 'Cantera':
-  //             this.details.push({
-  //               _type: { name: item.prod, _id: item._id },
-  //               mts: item.totalmts,
-  //               trips: item.trips,
-  //               cost: this.cantera(item.totalmts)
-  //             });
-  //             break;
-  //           case 'Desalojo':
-  //             this.details.push({
-  //               _type: { name: item.prod, _id: item._id },
-  //               mts: item.totalmts,
-  //               trips: item.trips,
-  //               cost: this.desalojo(item.totalmts)
-  //             });
-  //             break;
-  //           case 'Descapote':
-  //             this.details.push({
-  //               _type: { name: item.prod, _id: item._id },
-  //               mts: item.totalmts,
-  //               trips: item.trips,
-  //               cost: this.descapote(item.totalmts)
-  //             });
-  //             break;
-  //           default:
-  //             break;
-  //         }
-  //       });
-  //       this.total = this.details.reduce((sum, elem) => sum + elem.cost, 0);
-  //       this.totalmts = this.details.reduce((sum, element) => sum + element.mts, 0);
-  //     });
-  // }
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const idTipo = this.selectTT.nativeElement.value;
+    const extra = this.extra.nativeElement.value;
+    let costo;
+
+    if (fecha1 > fecha2 || idTipo === '') {
+      swal('Oops...', 'Debe llenar todos los campos o los valores no son válidos', 'warning');
+      return;
+    }
+    this.loading = true;
+    this.gbillService.cargarPreDetalle(idTipo, fecha1, fecha2)
+      .subscribe((res: any) => {
+
+        if (res.preDetail.length <= 0) {
+          swal('Oops...', 'No hay viajes en ese rango de fechas', 'warning');
+          this.details = [];
+          return;
+        }
+        this.preDetail = res.preDetail[0];
+        this.tarifas = this.preDetail.tariff;
+        this.details = [];
+        if (extra <= 0 || extra === '') {
+          this.tarifas.forEach(element => {
+            if ( this.preDetail.totalmts >= element.start && this.preDetail.totalmts <= element.end ) {
+              costo = this.preDetail.totalmts * (element.cost * 1.12);
+              this.total = costo;
+              this.details.push({
+                _type: {
+                  code: this.preDetail.code,
+                  name: this.preDetail.prod,
+                  km: 0,
+                  tariff: null,
+                  _id: this.preDetail._id
+                },
+                mts: this.preDetail.totalmts,
+                trips: this.preDetail.trips,
+                cost: costo
+              })
+            }
+          });
+        } else {
+          costo = this.preDetail.totalmts * (extra * 1.12);
+          this.total = costo;
+          this.details.push({
+            _type: {
+              code: '',
+              name: '',
+              km: 0,
+              tariff: null,
+              _id: this.preDetail._id
+            },
+            mts: this.preDetail.totalmts,
+            trips: this.preDetail.trips,
+            cost: costo
+          })
+        }
+
+        this.loading = false;
+      });
+  }
 
   crearFacturaVerde() {
 
@@ -150,14 +156,14 @@ export class GbillComponent implements OnInit, AfterViewInit {
     } else {
       greenbill = new GreenBill(
         this.formGB.value.customer,
-        this.formGB.value.noBill,
-        this.formGB.value.serie,
+        'sin asignar',
+        'sin asignar',
         moment(this.formGB.value.date, 'DD/MM/YYYY').toDate(),
         this.total,
         false,
         false,
-        this.formGB.value.oc,
-        this.formGB.value.ac,
+        '',
+        '',
         this.details
       );
     }

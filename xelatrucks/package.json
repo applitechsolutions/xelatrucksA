@@ -37,6 +37,7 @@
     "ng2-charts": "^2.2.3",
     "ngx-loading": "^8.0.0",
     "ngx-toastr": "^11.2.1",
+    "particles.js": "^2.0.0",
     "pdfmake": "^0.1.56",
     "perfect-scrollbar": "^1.4.0",
     "popper": "^1.0.1",

@@ -17,9 +17,10 @@ export class GbillService {
     public userService: UserService
   ) { }
 
-  cargarPreDetalle( fecha1: Date, fecha2: Date ) {
+  cargarPreDetalle( id: string, fecha1: Date, fecha2: Date ) {
     let url = URL_SERVICES + '/facturaV/detalles';
-    url += '?fecha1=' + fecha1;
+    url += '?id=' + id;
+    url += '&fecha1=' + fecha1;
     url += '&fecha2=' + fecha2;
 
     return this.http.get(url);
@@ -29,6 +30,13 @@ export class GbillService {
     let url = URL_SERVICES + '/facturaV';
     url += '?fecha1=' + fecha1;
     url += '&fecha2=' + fecha2;
+
+    return this.http.get(url);
+  }
+
+  cargarFacturasNoPaid() {
+    let url = URL_SERVICES + '/facturaV';
+    url += '/nopaid';
 
     return this.http.get(url);
   }

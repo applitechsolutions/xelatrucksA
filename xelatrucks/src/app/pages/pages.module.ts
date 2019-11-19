@@ -1,3 +1,5 @@
+import { NgModule } from '@angular/core';
+
 import { SharedModule } from '../shared/shared.module';
 import { PAGES_ROUTES } from './pages.routes';
 
@@ -33,7 +35,7 @@ import { BuySparesComponent } from './buy-spares/buy-spares.component';
 import { BuySpareComponent } from './buy-spares/buy-spare.component';
 import { MechanicsComponent } from './mechanics/mechanics.component';
 import { MechanicComponent } from './mechanics/mechanic.component';
-import { NgModule } from '@angular/core';
+import { NgxLoadingModule } from 'ngx-loading';
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
 import { GtripsComponent } from './gtrips/gtrips.component';
@@ -48,7 +50,6 @@ import { GbillComponent } from './gbills/gbill.component';
 import { TypeTripsComponent } from './type-trips/type-trips.component';
 import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
-import { NgxLoadingModule } from 'ngx-loading';
 
 
 @NgModule({

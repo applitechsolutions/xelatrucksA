@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { Customer } from '../../models/customer.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomerService } from '../../services/customers/customer.service';
+import { Customer } from '../../models/customer.model';
 
 declare function init_datatables();
 declare function destroy_datatables();
@@ -13,7 +13,7 @@ declare var swal: any;
 })
 export class CustomersComponent implements OnInit {
 
-  @ViewChild('closeM', { static: false }) closeM: ElementRef;
+  @ViewChild('closeM', {static: false}) closeM: ElementRef;
 
   loading: boolean = false;
   customers: Customer[] = [];

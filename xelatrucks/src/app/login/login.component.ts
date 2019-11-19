@@ -8,9 +8,6 @@ declare function init_plugins();
 declare var particlesJS: any;
 declare const gapi: any;
 
-import * as $ from 'jquery';
-import '../../assets/vendor/particles.js/particles.min.js';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

@@ -1,39 +1,47 @@
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .section-block -->
-    <div class="section-block">
-        <h2 class="section-title"> Dialogs </h2>
-        <p class="text-muted"> Display a content in a layer above the App (like alert, helper text, etc) with Modal, Tooltips, and Popovers. </p>
-    </div>
-    <!-- /.section-block -->
     <!-- .card-deck-xl -->
     <div class="card-deck-xl">
         <!-- .card -->
         <div class="card card-fluid">
-            <div class="card-header"> Tooltips & Popovers </div>
+            <div class="card-header"> Generar detalle </div>
             <!-- .card-body -->
             <div class="card-body">
-                <p class="text-muted"> Hover on buttons below to see tooltips. </p>
+                <p class="text-muted"> Seleccione el viaje y el rango de fechas para generar el detalle. </p>
                 <!-- grid row -->
                 <div class="row">
                     <!-- .form-group -->
                     <div class="form-group col-4">
-                        <label id="typeL">Cliente <span class="badge badge-danger">Obligatorio</span></label> <select #selectC formControlName="customer" name="customer" class="form-control select2" style="width:100%!important;"> <option value=""> Seleccione un cliente </option>
-                                    <option *ngFor="let customer of cpcustomers" [value]="customer._id"> {{ customer.name }} </option>
-                                </select>
+                        <label id="typeL">Tipo de Viaje</label>
+                        <select #selectTT name="typetrip" class="form-control select2" style="width:100%!important;">
+                            <option value=""> Seleccione un viaje </option>
+                            <option *ngFor="let type of types" [value]="type._id"> {{ type.name }} </option>
+                        </select>
                     </div>
                     <!-- /.form-group -->
                     <!-- .form-group -->
                     <div class="form-group col-4">
+                        <label id="typeL">Fecha inicial</label>
                         <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
                     </div>
                     <!-- /.form-group -->
                     <!-- .form-group -->
                     <div class="form-group col-4">
+                        <label id="typeL">Fecha final</label>
                         <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
                     </div>
                     <!-- /.form-group -->
-                    <button type="button" class="btn btn-primary offset-1 col-2"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+                <!-- /grid row -->
+                <!-- grid row -->
+                <div class="row">
+                    <!-- .form-group -->
+                    <div class="form-group col-4">
+                        <label for="tf2">Tarifa extraordinaria</label>
+                        <input #extra id="ext" name="ext" type="number" class="form-control" min="0" step="0.01" value="0" placeholder="Ingrese la tarifa extraordinaria del viaje" required>
+                    </div>
+                    <!-- /.form-group -->
+                    <button type="button" class="btn btn-primary" style="margin-top: 28px; margin-left: 10px;" (click)="generarPreDetalle()"><i class="fas fa-search"></i> Buscar</button>
                 </div>
                 <!-- /grid row -->
             </div>
@@ -42,11 +50,11 @@
         <!-- /.card -->
         <!-- .card -->
         <div class="card card-fluid">
-            <div class="card-header"> Tooltips & Popovers </div>
+            <div class="card-header"> Crear pre-factura </div>
             <!-- .card-body -->
             <div class="card-body">
-                <p class="text-muted"> Hover on buttons below to see tooltips. </p>
-                <form>
+                <p class="text-muted"> Seleccione el cliente y la fecha para continuar </p>
+                <form ngNativeValidate [formGroup]="formGB" (ngSubmit)="crearFacturaVerde()">
                     <!-- grid row -->
                     <div class="row">
                         <!-- .form-group -->
@@ -61,8 +69,10 @@
                             <label class="control-label" for="flatpickr">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input id="flatpickr" formControlName="date" name="date" type="text" class="form-control" required>
                         </div>
                         <!-- /.form-group -->
+                        <button type="submit" class="btn btn-primary" style="margin-top: 28px; margin-left: 10px;"><i class="fas fa-save"></i> Guardar</button>
                     </div>
                     <!-- /grid row -->
+
                 </form>
 
 
@@ -71,15 +81,26 @@
             <!-- .card-body -->
             <div class="card-body border-top">
                 <!-- .list-group -->
-                <div class="list-group list-group-divider list-group-divider mb-3">
-                    <a href="#" class="list-group-item list-group-item-action">
+                <div class="list-group list-group-flush list-group-divider">
+                    <!-- .list-group-item -->
+                    <div class="list-group-item" *ngFor="let detail of details">
                         <div class="list-group-item-figure">
-                            <div class="tile bg-success">
-                                <span class="oi oi-chat"></span>
-                            </div>
+                            <a class="tile tile-circle bg-success"><span class="fas fa-truck-monster"></span></a>
                         </div>
-                        <div class="list-group-item-body"> Dapibus ac facilisis in </div>
-                    </a>
+                        <div class="list-group-item-body">
+                            <h4 class="list-group-item-title">
+                                <a> {{ detail._type.code }} {{ detail._type.name }} </a>
+                            </h4>
+                            <p class="list-group-item-text"><strong> metros: </strong>{{ detail.mts }}</p>
+                        </div>
+                        <div class="list-group-item-figure">
+
+                            <p class="list-group-item-text gree"><i class="fas fa-money-bill-wave-alt"></i> <span class="badge badge-subtle badge-success"> Q.{{ total | number : '1.2-2' }}</span></p>
+                        </div>
+                    </div>
+                    <!-- /.list-group-item -->
+                    <ng-template #customLoadingTemplate></ng-template>
+                    <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate "></ngx-loading>
                 </div>
                 <!-- /.list-group -->
             </div>

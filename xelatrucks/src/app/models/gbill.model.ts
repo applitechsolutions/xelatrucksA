@@ -14,6 +14,7 @@ export class GreenBill {
         public oc?: string,
         public ac?: string,
         public details?: DetailBill[],
+        public tariffop?: number,
         public _id?: string,
     ) {}
 }

@@ -50,6 +50,8 @@ import { GbillComponent } from './gbills/gbill.component';
 import { TypeTripsComponent } from './type-trips/type-trips.component';
 import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
+import { WtripsComponent } from './wtrips/wtrips.component';
+import { WtripComponent } from './wtrips/wtrip.component';
 
 
 @NgModule({
@@ -88,7 +90,9 @@ import { RepairsComponent } from './repairs/repairs.component';
         GbillComponent,
         TypeTripsComponent,
         ReportsComponent,
-        RepairsComponent
+        RepairsComponent,
+        WtripsComponent,
+        WtripComponent
     ],
     exports: [
         DashboardComponent,

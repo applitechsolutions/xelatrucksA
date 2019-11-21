@@ -1,5 +1,5 @@
 <!-- floating action -->
-<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/usuario', 'new']"><span class="fa fa-plus"></span></button>
+<button [routerLink]="['/order', 'new']" routerLinkActive="router-link-active" type="button" class="btn btn-success btn-floated"><span class="fa fa-plus"></span></button>
 <!-- /floating action -->
 <!-- .page-section -->
 <div class="page-section">
@@ -7,384 +7,92 @@
     <div class="card card-fluid">
         <!-- .card-body -->
         <div class="card-body">
+            <!-- .btn-toolbar -->
+            <div id="dt-buttons" class="btn-toolbar"></div>
+            <!-- /.btn-toolbar -->
+            <!-- .form-group -->
+            <div class="form-group">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                    <!-- .input-group -->
+                    <div class="input-group has-clearable">
+                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+                    </div>
+                    <!-- /.input-group -->
+                    <!-- .input-group-prepend -->
+                    <div class="input-group-prepend">
+                        <select id="filterBy" class="custom-select">
+                            <option value='' selected> Filtros </option>
+                            <option value="0"> Fecha </option>
+                            <option value="1"> Orden </option>
+                            <option value="2"> Destino </option>
+                            <option value="3"> Material </option>
+                            <option value="4"> Total, metros </option>
+                            <option value="5"> Total, kilogramos </option>
+                        </select>
+                    </div>
+                    <!-- /.input-group-prepend -->
+                </div>
+                <!-- /.input-group -->
+            </div>
+            <!-- /.form-group -->
             <!-- .table -->
-            <table id="table1" class="table dt-responsive nowrap w-100">
+            <table id="myTable" class="table">
                 <thead>
                     <tr>
-                        <th> Name </th>
-                        <th> Position </th>
-                        <th> Office </th>
-                        <th> Extn. </th>
-                        <th> Start date </th>
-                        <th> Salary </th>
+                        <th> Fecha </th>
+                        <th> Orden </th>
+                        <th> Destino </th>
+                        <th> Material </th>
+                        <th> Total, metros </th>
+                        <th> Faltante, metros </th>
+                        <th> Total, kilogramos </th>
+                        <th> Faltante, kilogramos </th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
-                    </tr>
-                    <tr>
-                        <td>abcd</td>
-                        <td>qwer</td>
-                        <td>hgfdh</td>
-                        <td>rytyer</td>
-                        <td>123545</td>
-                        <td>9458</td>
+                        <td class="align-middle">
+                            21/11/2019
+                        </td>
+                        <td>1245</td>
+                        <td> Condominio Vista Hermosa </td>
+                        <td> PIEDRA ROJA PARA TRITURACIÓN </td>
+                        <td> 30m </td>
+                        <td> 25m </td>
+                        <td> 1000kg </td>
+                        <td> 678.23kg </td>
+                        <td class="align-middle text-right">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span class="sr-only">Acciones</span></button>
+                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
+                                    <div class="dropdown-arrow mr-n1"></div>
+                                    <button class="dropdown-item" type="button">Ingresar viaje</button>
+                                    <button class="dropdown-item" type="button">Editar</button>
+                                    <button class="dropdown-item" type="button">Anular</button>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th> Name </th>
-                        <th> Position </th>
-                        <th> Office </th>
-                        <th> Extn. </th>
-                        <th> Start date </th>
-                        <th> Salary </th>
+                        <th> Fecha </th>
+                        <th> Orden </th>
+                        <th> Destino </th>
+                        <th> Material </th>
+                        <th> Total, metros </th>
+                        <th> Faltante, metros </th>
+                        <th> Total, kilogramos </th>
+                        <th> Faltante, kilogramos </th>
+                        <th></th>
                     </tr>
                 </tfoot>
             </table>
-            <!-- /.table -->
         </div>
         <!-- /.card-body -->
     </div>

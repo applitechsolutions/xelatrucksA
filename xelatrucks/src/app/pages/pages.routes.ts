@@ -126,13 +126,13 @@ const pagesRoutes: Routes = [
         path: 'orders',
         component: OrdersComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Mantenimiento de Pedidos' }
+        data: { titulo: 'Mantenimiento de Ordenes' }
     },
     {
         path: 'order/:id',
         component: OrderComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Crear Pedido' }
+        data: { titulo: 'Crear Orden' }
     },
     {
         path: 'gtrips',

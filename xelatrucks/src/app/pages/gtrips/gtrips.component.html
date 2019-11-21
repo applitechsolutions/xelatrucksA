@@ -126,9 +126,11 @@
                                 <!-- /.fieldset -->
                             </div>
                             <!-- /.card-body -->
+                            <ng-template #customLoadingTemplate>
+                            </ng-template>
+                            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
                         </form>
                         <!-- /.form -->
-
                     </div>
                     <!-- /.labels -->
                     <div id="labels" class="col-4">

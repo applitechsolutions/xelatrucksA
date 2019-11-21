@@ -94,7 +94,7 @@ import { WtripComponent } from './wtrips/wtrip.component';
         ReportsComponent,
         RepairsComponent,
         DestinationsComponent,
-        DestinationComponent
+        DestinationComponent,
         WtripsComponent,
         WtripComponent
     ],

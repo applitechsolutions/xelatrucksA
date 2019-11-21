@@ -43,7 +43,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
   vehicle: Vehicle;
 
   types: Type[] = [];
-  
+
   formTy: FormGroup;
   tempType: string = '';
 
@@ -122,6 +122,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    this.loading = true;
     let greenT;
 
     if (this.greenTrip._id) {
@@ -176,6 +177,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
           details: res.viajeV.details,
           _id: res.viajeV._id
         });
+        this.loading = false;
       });
   }
 

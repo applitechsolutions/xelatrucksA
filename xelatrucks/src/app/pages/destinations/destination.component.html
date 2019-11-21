@@ -1,0 +1,155 @@
+<!-- .page-section -->
+<div class="page-section">
+    <div class="d-xl-none">
+        <button class="btn btn-danger btn-floated" type="button" data-toggle="sidebar"><i class="fa fa-th-list"></i></button>
+    </div>
+    <!-- grid row -->
+    <div class="row">
+        <!-- grid column -->
+        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+            <!-- .card -->
+            <div id="base-style" class="card">
+                <!-- .card-body -->
+                <div class="card-body">
+                    <!-- .form -->
+                    <form ngNativeValidate>
+                        <!-- .fieldset -->
+                        <fieldset>
+                            <legend>Campos</legend>
+                            <!-- .form-group -->
+                            <div class="form-group">
+                                <label id="role">Tipo <span class="badge badge-danger">Obligatorio</span></label><br>
+                                <select name="role" class="form-control custom-select" id="selDefault">
+                                    <option value=""> Seleccione un tipo de destino </option>
+                                    <option value="">Mixto Listo</option>
+                                    <option value="">Centro de Distribución</option>
+                                    <option value="">Puestos en obra</option>
+                                </select>
+                            </div>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group">
+                                <label for="tf1">Nombre</label> <input id="name" name="name" type="text" class="form-control" aria-describedby="tf1Help" placeholder="Ingrese el nombre del destino" required>
+                            </div>
+                            <!-- /.form-group -->
+                            <!-- .form-group -->
+                            <div class="form-group">
+                                <label for="tf2">Kilómetros</label>
+                                <input id="km" name="km" type="number" class="form-control" min="0" step="0.01" value="0" placeholder="Ingrese los Kilómetros de distancia del destino" required>
+                            </div>
+                            <!-- /.form-group -->
+                        </fieldset>
+                        <!-- /.fieldset -->
+                    </form>
+                    <!-- /.form -->
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+        <!-- grid column -->
+        <div class="col-xl-8">
+            <!-- .card -->
+            <div class="card card-fluid">
+                <!-- .card-header -->
+                <div class="card-header border-0">
+                    <div class="d-flex align-items-center">
+                        <span class="mr-auto">Tarifario</span>
+                        <button type="button" class="btn btn-light btn-icon" data-toggle="modal" data-target="#modalBoardConfig" title="Show menu"><i class="fa fa-cog fa-fw"></i></button>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <!-- .table-responsive -->
+                <div class="table-responsive">
+                    <!-- .table -->
+                    <table class="table table-striped">
+                        <!-- thead -->
+                        <thead class="thead-">
+                            <tr>
+                                <th> Rango Inicial </th>
+                                <th> Rango Final </th>
+                                <th> Precio </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <!-- /thead -->
+                        <!-- tbody -->
+                        <tbody>
+                            <!-- tr -->
+                            <!-- <tr *ngFor="let tariff of tariffs">
+                                <td> {{ tariff.start }} </td>
+                                <td> {{ tariff.end }} </td>
+                                <td> {{ tariff.cost }} </td>
+                                <td class="align-middle text-right">
+                                    <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="borrarTarifa( tariff )"><i class="fas fa-trash"></i> <span class="sr-only">Edit</span></a>
+                                </td>
+                            </tr> -->
+                            <!-- /tr -->
+                        </tbody>
+                        <!-- /tbody -->
+                    </table>
+                    <!-- /.table -->
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /grid column -->
+    </div>
+    <!-- /grid row -->
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
+</div>
+<!-- /.page-section -->
+<!-- .modalBoardConfig -->
+<div class="modal modal-drawer fade" id="modalBoardConfig" tabindex="-1" role="dialog" aria-labelledby="modalBoardConfigTitle" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-drawer-right" role="document">
+        <!-- .modal-content -->
+        <div id="modalContentLayer1" class="modal-content">
+            <!-- .modal-header -->
+            <div class="modal-header">
+                <h5 id="modalBoardConfigTitle" class="modal-title"> Nueva Tarifa </h5><button #closeM type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <!-- /.modal-header -->
+            <!-- .modal-body -->
+            <div class="modal-body">
+                <!-- .form -->
+                <form ngNativeValidate>
+                    <!-- .fieldset -->
+                    <fieldset>
+                        <legend>Ingresar campos</legend>
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="tf2">Rango Inicial</label>
+                            <input id="start" name="start" type="number" min="0" step="1" class="form-control" placeholder="Ingrese el rango inicial" data-autofocus="true" required>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="tf2">Rango Final</label>
+                            <input id="end" name="end" type="number" min="0" step="1" class="form-control" placeholder="Ingrese el rango final" required>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="tf2">Tarifa</label>
+                            <div class="input-group">
+                                <label class="input-group-prepend" for="pi9"><span class="badge"><i class="fas fa-money-bill-wave-alt"></i></span></label><input id="cost" name="cost" type="number" min="0" step="0.01" class="form-control" placeholder="Ingrese la tarifa"
+                                    required>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                        <button class="btn btn-primary" type="submit" id="btnTariff"><i class="fa fa-save"></i> Guardar</button>
+                    </fieldset>
+                    <!-- /.fieldset -->
+                </form>
+                <!-- /.form -->
+            </div>
+            <!-- /.modal-body -->
+        </div>
+        <!-- .modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modalBoardConfig -->

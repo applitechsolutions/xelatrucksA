@@ -36,6 +36,8 @@ import { AdminGuard } from '../services/service.index';
 import { TypeTripsComponent } from './type-trips/type-trips.component';
 import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
+import { DestinationsComponent } from './destinations/destinations.component';
+import { DestinationComponent } from './destinations/destination.component';
 
 const pagesRoutes: Routes = [
     {
@@ -105,6 +107,18 @@ const pagesRoutes: Routes = [
         component: EmployeeComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Crear Empleado' }
+    },
+    {
+        path: 'destinations',
+        component: DestinationsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Mantenimiento de Destinos' }
+    },
+    {
+        path: 'destination/:id',
+        component: DestinationComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Crear Destino' }
     },
     {
         path: 'orders',

@@ -8,7 +8,7 @@
     <!-- .section-deck -->
     <div class="section-deck">
         <!-- .card -->
-        <div id="labels" class="card card-fluid">
+        <div id="labels" class="card col-4">
             <!-- .card-body -->
             <div class="card-body">
                 <!-- .form -->
@@ -16,6 +16,11 @@
                     <!-- .fieldset -->
                     <fieldset>
                         <legend>Datos del pedido</legend>
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label class="control-label" for="date">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input #dateV name="date" id="flatpickr" type="text" class="form-control">
+                        </div>
+                        <!-- /.form-group -->
                         <!-- .form-group -->
                         <div class="form-group">
                             <label for="lbl2">No. de pedido <span class="badge badge-danger">Obligatorio</span></label> <input #name name="nombre" type="text" class="form-control" id="lbl2" placeholder="Ingrese el número de pedido" required>
@@ -28,7 +33,7 @@
                             <option *ngFor="" [value]="">
                             </option>
                             </select>
-                            <button type="button" class="btn btn-subtle-success col-3" data-toggle="modal" data-target="#exampleModalCenter">Crear Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
+                            <button type="button" class="btn btn-subtle-success col-3" data-toggle="modal" data-target="#exampleModalCenter">Crear <i class="fas fa-external-link-alt fa-pull-right"></i></button>
                         </div>
                         <!-- /.form-group -->
                     </fieldset>

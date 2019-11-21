@@ -1,0 +1,105 @@
+<!-- .page-section -->
+<div class="page-section">
+    <!-- .card-deck-xl -->
+    <!-- form -->
+    <form>
+        <div class="card-deck-xl">
+            <!-- .card -->
+            <div class="card card-fluid">
+                <!-- .card-body -->
+                <div class="card-body">
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label id="job">Empleado <span class="badge badge-danger">Obligatorio</span></label>
+                        <select name="job" class="form-control select2" style="width:100%!important;">
+                            <option value=""> Seleccione un empleado </option>
+                            <option> Empleado Prueba </option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label id="job">Orden <span class="badge badge-danger">Obligatorio</span></label>
+                        <select name="job" class="form-control select2" style="width:100%!important;">
+                            <option value=""> Seleccione una orden </option>
+                            <option> Orden Prueba </option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="account">No. de Documento </label> <input name="account" type="text" class="form-control" id="account" placeholder="Ingrese el número de documento del viaje">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="name">Metros </label> <input name="name" type="text" class="form-control" id="name" placeholder="Ingrese los metros del viaje">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label class="control-label" for="flatpickr01">Hora de Entrada</label> <input name="date" id="flatpickr" type="text" class="form-control">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label class="control-label" for="flatpickr01">Hora de Salida</label> <input name="date" id="flatpickr" type="text" class="form-control">
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- .card -->
+            <div class="card card-fluid">
+                <!-- .card-body -->
+                <div class="card-body">
+
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label id="job">Vehículo <span class="badge badge-danger">Obligatorio</span></label>
+                        <select name="job" class="form-control select2" style="width:100%!important;">
+                            <option value=""> Seleccione un vehículo </option>
+                            <option> Vehículo Prueba </option>
+                        </select>
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label class="control-label" for="flatpickr01">Fecha de Entrada</label> <input name="date" id="flatpickr" type="text" class="form-control">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="address">No. de Entrega </label> <input name="address" type="text" class="form-control" id="address" placeholder="Ingrese el número de entrega del viaje">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="mobile">Kilogramos Bruto </label> <input name="mobile" type="text" class="form-control" id="mobile" placeholder="Ingrese los kilogramos brutos del viaje">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="igss">Kilogramos Tara </label> <input name="igss" type="text" class="form-control" id="igss" placeholder="Ingrese los kilogramos tara del viaje">
+                    </div>
+                    <!-- /.form-group -->
+                    <!-- .form-group -->
+                    <div class="form-group">
+                        <label for="igss">Kilogramos Netos </label> <input name="igss" type="text" class="form-control" id="igss" placeholder="Ingrese los kilogramos netos del viaje">
+                    </div>
+                    <!-- /.form-group -->
+                    <hr>
+                    <!-- /.d-flex -->
+                    <button class="btn btn-primary fa-pull-right" type="submit" id="btnEmp"><i class="fa fa-save"></i> Guardar</button>
+                    <button [routerLink]="[ '/wtrips' ]" type="button" class="btn btn-light fa-pull-right" data-dismiss="modal">Cancelar</button>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </form>
+    <!-- /.form -->
+    <!-- /.card-deck-xl -->
+</div>
+<!-- /.page-section -->

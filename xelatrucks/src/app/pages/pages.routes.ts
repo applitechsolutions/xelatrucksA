@@ -24,6 +24,8 @@ import { MechanicComponent } from './mechanics/mechanic.component';
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
 import { GtripsComponent } from './gtrips/gtrips.component';
+import { WtripsComponent } from './wtrips/wtrips.component';
+import { WtripComponent } from './wtrips/wtrip.component';
 import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeComponent } from './employees/employee.component';
@@ -137,6 +139,18 @@ const pagesRoutes: Routes = [
         component: GtripsComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Reporte de Cuadros' }
+    },
+    {
+        path: 'wtrip/:id',
+        component: WtripComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Crear Viaje de Líneas' }
+    },
+    {
+        path: 'wtrips',
+        component: WtripsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Mantenimiento de viaje de líneas' }
     },
     {
         path: 'typeTrips',

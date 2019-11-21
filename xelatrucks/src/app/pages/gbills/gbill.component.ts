@@ -28,11 +28,11 @@ export class GbillComponent implements OnInit, AfterViewInit {
   @ViewChild('extra', { static: false }) extra: ElementRef;
 
   formGB: FormGroup;
-
   greenbil: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };
   preDetail: PreDetailBill = {code: '', prod: '', totalmts: 0, trips: 0};
   details: DetailBill[] = [];
   total: number = 0;
+  optional: number = 0;
   loading: boolean = false;
 
   cpcustomers: CPCustomer[] = [];
@@ -95,6 +95,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
         this.tarifas = this.preDetail.tariff;
         this.details = [];
         if (extra <= 0 || extra === '') {
+          this.optional = 0;
           this.tarifas.forEach(element => {
             if ( this.preDetail.totalmts >= element.start && this.preDetail.totalmts <= element.end ) {
               costo = this.preDetail.totalmts * (element.cost * 1.12);
@@ -114,6 +115,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
             }
           });
         } else {
+          this.optional = extra;
           costo = this.preDetail.totalmts * (extra * 1.12);
           this.total = costo;
           this.details.push({
@@ -140,7 +142,6 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
     if (this.formGB.invalid || this.selectC.nativeElement.value === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
-      console.log(this.details);
       return;
     }
 
@@ -164,7 +165,8 @@ export class GbillComponent implements OnInit, AfterViewInit {
         false,
         '',
         '',
-        this.details
+        this.details,
+        this.optional
       );
     }
 

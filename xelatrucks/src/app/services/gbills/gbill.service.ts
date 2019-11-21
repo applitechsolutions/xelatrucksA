@@ -41,6 +41,14 @@ export class GbillService {
     return this.http.get(url);
   }
 
+  borrarFactura( greenBill: GreenBill ) {
+    let url = URL_SERVICES + '/facturaV';
+    url += '/delete?id=' + greenBill._id;
+    url += '&token=' + this.userService.token;
+
+    return this.http.put(url, greenBill);
+  }
+
   crearFacturaVerde( greenBill: GreenBill ) {
     let url = URL_SERVICES + '/facturaV';
 
@@ -50,7 +58,9 @@ export class GbillService {
       return this.http.put(url, greenBill)
       .pipe(
         map((res: any) => {
-          return res.bill;
+          const gbDB = res.bill;
+          swal('Factura creada correctamente!', 'success');
+          return res.facturaV;
         }),
         catchError((err, caught) => {
           swal(err.error.mensaje, err.error.errors.message, 'error');
@@ -63,7 +73,7 @@ export class GbillService {
         .pipe(
           map((res: any) => {
             const gbDB = res.facturaV;
-            swal('Factura creada correctamente!', gbDB.noBill, 'success');
+            swal('Pre-factura creada correctamente!', 'success');
             return res.facturaV;
           }),
           catchError((err, caught) => {

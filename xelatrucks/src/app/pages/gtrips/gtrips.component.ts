@@ -4,7 +4,7 @@ import { Employee } from '../../models/employee.model';
 import { Vehicle } from '../../models/vehicle.model';
 import { Type } from '../../models/type.model';
 import { Material } from '../../models/material.model';
-import { EmployeeService, VehicleService, MaterialService, TripService, DatatablesService } from '../../services/service.index';
+import { EmployeeService, VehicleService, MaterialService, TripService, TypeTripService, DatatablesService } from '../../services/service.index';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
@@ -58,6 +58,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     public vehicleService: VehicleService,
     public tripService: TripService,
     public matService: MaterialService,
+    public typeService: TypeTripService,
     public dtService: DatatablesService,
     private chRef: ChangeDetectorRef
   ) { }
@@ -223,7 +224,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
   }
 
   cargarTypes() {
-    this.tripService.cargarTypes()
+    this.typeService.cargarTypes()
       .subscribe((res: any) => this.types = res.viajes);
   }
 

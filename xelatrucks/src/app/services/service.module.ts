@@ -24,7 +24,8 @@ import {
   CPcustomerService,
   MaterialService,
   TypeMaintenanceService,
-  DestinationService
+  DestinationService,
+  TypeTripService
 } from './service.index';
 
 @NgModule({
@@ -53,6 +54,7 @@ import {
     GbillService,
     CPcustomerService,
     TypeMaintenanceService,
+    TypeTripService,
     MaterialService,
     VerificaTokenGuard,
     DestinationService

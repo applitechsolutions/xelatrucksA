@@ -15,7 +15,11 @@ export class MechanicsComponent implements OnInit {
 
   mechs: Mechanic[] = [];
 
-  constructor(public dtService: DatatablesService, public mechService: MechanicService, private chRef: ChangeDetectorRef) { }
+  constructor(
+    public dtService: DatatablesService, 
+    public mechService: MechanicService, 
+    private chRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.cargarMechs();

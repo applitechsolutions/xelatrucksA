@@ -54,6 +54,7 @@ import { DestinationsComponent } from './destinations/destinations.component';
 import { DestinationComponent } from './destinations/destination.component';
 import { WtripsComponent } from './wtrips/wtrips.component';
 import { WtripComponent } from './wtrips/wtrip.component';
+import { TypeTripComponent } from './type-trips/type-trip.component';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { WtripComponent } from './wtrips/wtrip.component';
         DestinationsComponent,
         DestinationComponent,
         WtripsComponent,
-        WtripComponent
+        WtripComponent,
+        TypeTripComponent
     ],
     exports: [
         DashboardComponent,

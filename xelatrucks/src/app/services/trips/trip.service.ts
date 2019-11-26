@@ -5,7 +5,6 @@ import { URL_SERVICES } from '../../config/config';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { GreenTrip } from 'src/app/models/greenTrip.model';
-import { Type } from '../../models/type.model';
 import swal from 'sweetalert';
 
 
@@ -56,43 +55,5 @@ export class TripService {
 
     return this.http.request('delete', url, { body: trip });
   }
-
-  /* #region  TIPOS DE VIAJES */
-
-  cargarTypes() {
-
-    const url = URL_SERVICES + '/tviajes';
-
-    return this.http.get(url);
-  }
-
-  cargarType( id: string ) {
-    const url = URL_SERVICES + '/tviajes/' + id;
-    return this.http.get(url);
-  }
-
-  crearTypes(type: Type) {
-
-    let url = URL_SERVICES + '/tviajes';
-
-    if (type._id) {
-      return;
-    } else {
-      url += '?token=' + this.userService.token;
-      return this.http.post(url, type)
-        .pipe(
-          map((res: any) => {
-            return res;
-          }),
-          catchError((err, caught) => {
-            swal(err.error.mensaje, err.error.errors.message, 'error');
-            return throwError(err);
-          })
-        );
-    }
-
-  }
-
-  /* #endregion */
 
 }

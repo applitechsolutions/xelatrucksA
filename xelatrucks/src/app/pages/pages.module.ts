@@ -52,6 +52,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
 import { WtripsComponent } from './wtrips/wtrips.component';
 import { WtripComponent } from './wtrips/wtrip.component';
+import { TypeTripComponent } from './type-trips/type-trip.component';
 
 
 @NgModule({
@@ -92,7 +93,8 @@ import { WtripComponent } from './wtrips/wtrip.component';
         ReportsComponent,
         RepairsComponent,
         WtripsComponent,
-        WtripComponent
+        WtripComponent,
+        TypeTripComponent
     ],
     exports: [
         DashboardComponent,

@@ -23,7 +23,8 @@ import {
   GbillService,
   CPcustomerService,
   MaterialService,
-  TypeMaintenanceService
+  TypeMaintenanceService,
+  TypeTripService
 } from './service.index';
 
 @NgModule({
@@ -52,6 +53,7 @@ import {
     GbillService,
     CPcustomerService,
     TypeMaintenanceService,
+    TypeTripService,
     MaterialService,
     VerificaTokenGuard
   ]

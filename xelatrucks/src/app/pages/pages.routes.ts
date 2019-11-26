@@ -35,6 +35,7 @@ import { CustomersComponent } from './customers/customers.component';
 import { GbillsComponent } from './gbills/gbills.component';
 import { GbillComponent } from './gbills/gbill.component';
 import { AdminGuard } from '../services/service.index';
+import { TypeTripComponent } from './type-trips/type-trip.component';
 import { TypeTripsComponent } from './type-trips/type-trips.component';
 import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
@@ -139,10 +140,16 @@ const pagesRoutes: Routes = [
         data: { titulo: 'Mantenimiento de viaje de líneas' }
     },
     {
+        path: 'typeTrip/:id',
+        component: TypeTripComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Crear tipo de viaje' }
+    },
+    {
         path: 'typeTrips',
         component: TypeTripsComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Tipos de viajes' }
+        data: { titulo: 'Mantenimiento tipos de viajes' }
     },
     {
         path: 'CPcustomers',

@@ -1,14 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DatatablesService, GbillService, CPcustomerService, TripService } from '../../services/service.index';
+import { DatatablesService, GbillService, CPcustomerService, TripService, TypeTripService } from '../../services/service.index';
 import { GreenBill } from '../../models/gbill.model';
 import { DetailBill } from '../../models/gdetail.model';
 import { PreDetailBill } from '../../models/gpredetail.model';
 import { CPCustomer } from '../../models/CPcustomer.model';
 import { Type } from '../../models/type.model';
 import { Tariff } from '../../models/tariff.model';
-import { map, catchError } from 'rxjs/operators';
 import swal from 'sweetalert';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
@@ -45,6 +44,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
     public cpService: CPcustomerService,
     public dtService: DatatablesService,
     public tripService: TripService,
+    public typeService: TypeTripService,
     private chRef: ChangeDetectorRef
   ) { }
 
@@ -182,133 +182,10 @@ export class GbillComponent implements OnInit, AfterViewInit {
   }
 
   cargarTypeTrips() {
-    this.tripService.cargarTypes()
+    this.typeService.cargarTypes()
       .subscribe( (res: any) => {
         this.types = res.viajes;
       });
-  }
-
-  /* #endregion */
-
-
-
-  /* #region  FUNCIONES DE TARIFAS */
-
-  desalojo(mts: number) {
-
-    let tarifa: number = 0;
-    let mtscont: number = mts;
-
-    if (mts <= 300) {
-      tarifa = 5000;
-      return tarifa;
-    } else if (mts > 300 && mts <= 2000) {
-      tarifa = 5000;
-      mtscont = mts - 300;
-      tarifa += mtscont * 3.40;
-      return tarifa;
-    } else if (mts > 2000 && mts <= 8000) {
-      tarifa = 10780;
-      mtscont = mts - 2000;
-      tarifa += mtscont * 2.90;
-      return tarifa;
-    } else if (mts > 8000 && mts <= 10000) {
-      tarifa = 28180;
-      mtscont = mts - 8000;
-      tarifa += mtscont * 2.54;
-      return tarifa;
-    } else if (mts > 10000 && mts <= 12000) {
-      tarifa = 33260;
-      mtscont = mts - 10000;
-      tarifa += mtscont * 2.44;
-      return tarifa;
-    } else if (mts > 12000) {
-      tarifa = 38140;
-      mtscont = mts - 12000;
-      tarifa += mtscont * 2.35;
-      return tarifa;
-    }
-
-  }
-
-  cantera(mts: number) {
-    let tarifa: number = 0;
-    let mtscont: number = mts;
-
-    if (mts <= 10000) {
-      tarifa += mts * 5.13;
-      return tarifa;
-    } else if (mts > 10000 && mts <= 15000) {
-      tarifa = 51300;
-      mtscont = mts - 10000;
-      tarifa += mtscont * 4.88;
-      return tarifa;
-    } else if (mts > 15000 && mts <= 20000) {
-      tarifa = 75700;
-      mtscont = mts - 15000;
-      tarifa += mtscont * 4.63;
-      return tarifa;
-    } else if (mts > 20000 && mts <= 25000) {
-      tarifa = 98850;
-      mtscont = mts - 20000;
-      tarifa += mtscont * 4.35;
-      return tarifa;
-    } else if (mts > 25000 && mts <= 30000) {
-      tarifa = 120600;
-      mtscont = mts - 25000;
-      tarifa += mtscont * 4.11;
-      return tarifa;
-    } else if (mts > 30000) {
-      tarifa = 141150;
-      mtscont = mts - 30000;
-      tarifa += mtscont * 3.90;
-      return tarifa;
-    }
-  }
-
-  descapote(mts: number) {
-    let tarifa: number = 0;
-    let mtscont: number = mts;
-
-    if (mts <= 300) {
-      tarifa = 20000;
-      return tarifa;
-    } else if (mts > 300 && mts <= 5000) {
-      tarifa = 20000;
-      mtscont = mts - 300;
-      tarifa += mtscont * 4.85;
-      return tarifa;
-    } else if (mts > 5000 && mts <= 10000) {
-      tarifa = 42795;
-      mtscont = mts - 5000;
-      tarifa += mtscont * 4.25;
-      return tarifa;
-    } else if (mts > 10000 && mts <= 15000) {
-      tarifa = 64045;
-      mtscont = mts - 10000;
-      tarifa += mtscont * 4.09;
-      return tarifa;
-    } else if (mts > 15000 && mts <= 20000) {
-      tarifa = 84495;
-      mtscont = mts - 15000;
-      tarifa += mtscont * 3.84;
-      return tarifa;
-    } else if (mts > 20000 && mts <= 25000) {
-      tarifa = 103695;
-      mtscont = mts - 20000;
-      tarifa += mtscont * 3.64;
-      return tarifa;
-    } else if (mts > 25000 && mts <= 30000) {
-      tarifa = 121895;
-      mtscont = mts - 25000;
-      tarifa += mtscont * 3.44;
-      return tarifa;
-    } else if (mts > 30000) {
-      tarifa = 139095;
-      mtscont = mts - 30000;
-      tarifa += mtscont * 3.24;
-      return tarifa;
-    }
   }
 
   /* #endregion */

@@ -10,7 +10,7 @@ export { TripService } from './trips/trip.service';
 export { GbillService } from './gbills/gbill.service';
 export { MaterialService } from './materials/material.service';
 export { CPcustomerService } from './CPcustomers/cpcustomer.service';
-
+export { DestinationService } from './destinations/destination.service';
 
 // TALLER
 export { PartService } from './parts/part.service';

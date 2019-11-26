@@ -1,5 +1,5 @@
 <!-- floating action -->
-<button [routerLink]="['/order', 'new']" routerLinkActive="router-link-active" type="button" class="btn btn-success btn-floated"><span class="fa fa-plus"></span></button>
+<button [routerLink]="['/destination', 'new']" routerLinkActive="router-link-active" type="button" class="btn btn-success btn-floated"><span class="fa fa-plus"></span></button>
 <!-- /floating action -->
 <!-- .page-section -->
 <div class="page-section">
@@ -26,12 +26,9 @@
                     <div class="input-group-prepend">
                         <select id="filterBy" class="custom-select">
                             <option value='' selected> Filtros </option>
-                            <option value="0"> Fecha </option>
-                            <option value="1"> Orden </option>
-                            <option value="2"> Destino </option>
-                            <option value="3"> Material </option>
-                            <option value="4"> Total, metros </option>
-                            <option value="5"> Total, kilogramos </option>
+                            <option value="0"> Nombre </option>
+                            <option value="1"> Tipo </option>
+                            <option value="2"> Kilómetros </option>
                         </select>
                     </div>
                     <!-- /.input-group-prepend -->
@@ -43,37 +40,27 @@
             <table id="myTable" class="table">
                 <thead>
                     <tr>
-                        <th> Fecha </th>
-                        <th> Orden </th>
-                        <th> Destino </th>
-                        <th> Material </th>
-                        <th> Total, metros </th>
-                        <th> Faltante, metros </th>
-                        <th> Total, kilogramos </th>
-                        <th> Faltante, kilogramos </th>
+                        <th> Nombre </th>
+                        <th> Tipo </th>
+                        <th> Kilómetros </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="align-middle">
-                            21/11/2019
+                        <td class="align-middle text-truncate">
+                            Condominio Vista Hermosa
                         </td>
-                        <td>1245</td>
-                        <td> Condominio Vista Hermosa </td>
-                        <td> PIEDRA ROJA PARA TRITURACIÓN </td>
-                        <td> 30m </td>
-                        <td> 25m </td>
-                        <td> 1000kg </td>
-                        <td> 678.23kg </td>
+                        <td>Puesto en obra</td>
+                        <td> 30 km </td>
                         <td class="align-middle text-right">
                             <div class="dropdown">
                                 <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span class="sr-only">Acciones</span></button>
                                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
                                     <div class="dropdown-arrow mr-n1"></div>
-                                    <button class="dropdown-item" type="button">Ingresar viaje</button>
+                                    <button class="dropdown-item" type="button">Tarifario</button>
                                     <button class="dropdown-item" type="button">Editar</button>
-                                    <button class="dropdown-item" type="button">Anular</button>
+                                    <button class="dropdown-item" type="button">Eliminar</button>
                                 </div>
                             </div>
                         </td>
@@ -81,14 +68,9 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th> Fecha </th>
-                        <th> Orden </th>
-                        <th> Destino </th>
-                        <th> Material </th>
-                        <th> Total, metros </th>
-                        <th> Faltante, metros </th>
-                        <th> Total, kilogramos </th>
-                        <th> Faltante, kilogramos </th>
+                        <th> Nombre </th>
+                        <th> Tipo </th>
+                        <th> Kilómetros </th>
                         <th></th>
                     </tr>
                 </tfoot>

@@ -47,7 +47,7 @@
       <!-- /.card -->
       <!-- grid column -->
       <!-- .card -->
-      <div class="card card-fluid">
+      <div *ngIf="!formaDestination.value._id" class="card card-fluid">
         <!-- .card-header -->
         <div class="card-header border-0">
           <div class="d-flex align-items-center">
@@ -90,7 +90,9 @@
       <!-- /.card -->
     </div>
     <!-- /.section-deck -->
-    <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
+    <button class="btn btn-primary " type="submit " id="btnPart"> Guardar</button>
+    <button [routerLink]="[ '/destinations' ]" type="button" class="btn btn-light"
+      data-dismiss="modal">Cancelar</button>
   </form>
   <!-- /.form -->
 </div>

@@ -18,7 +18,7 @@ export class DestinationService {
   ) { }
 
   cargarDestinos() {
-    const url = URL_SERVICES + 'destino';
+    const url = URL_SERVICES + '/destino';
 
     return this.http.get(url);
   }
@@ -26,7 +26,10 @@ export class DestinationService {
   cargarDestino(id: string) {
     const url = URL_SERVICES + '/destino/' + id;
 
-    return this.http.get(url);
+    return this.http.get(url)
+      .pipe(
+        map((resp: any) => resp.destino)
+      );
   }
 
   borrarDestino(id: string) {
@@ -52,12 +55,13 @@ export class DestinationService {
     let url = URL_SERVICES + '/destino';
 
     if (destination._id) {
-      url += '/' + destination._id;
-      url += '?token=' + this.userS.token;
+      url += '?id=' + destination._id;
+      url += '&token=' + this.userS.token;
 
       return this.http.put(url, destination)
         .pipe(
           map((resp: any) => {
+            console.log(resp);
             const destinoDB = resp.destino;
             swal('Destino Actualizado', destinoDB.name, 'success');
             return resp;

@@ -24,6 +24,7 @@ import {
   CPcustomerService,
   MaterialService,
   TypeMaintenanceService,
+  DestinationService,
   TypeTripService
 } from './service.index';
 
@@ -55,7 +56,8 @@ import {
     TypeMaintenanceService,
     TypeTripService,
     MaterialService,
-    VerificaTokenGuard
+    VerificaTokenGuard,
+    DestinationService
   ]
 })
 export class ServiceModule { }

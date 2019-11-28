@@ -1,83 +1,143 @@
 <!-- floating action -->
-<button [routerLink]="['/destination', 'new']" routerLinkActive="router-link-active" type="button" class="btn btn-success btn-floated"><span class="fa fa-plus"></span></button>
+<button [routerLink]="['/destination', 'new']" routerLinkActive="router-link-active" type="button"
+  class="btn btn-success btn-floated">
+  <span class="fa fa-plus"></span>
+</button>
 <!-- /floating action -->
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .card -->
-    <div class="card card-fluid">
-        <!-- .card-body -->
-        <div class="card-body">
-            <!-- .btn-toolbar -->
-            <div id="dt-buttons" class="btn-toolbar"></div>
-            <!-- /.btn-toolbar -->
-            <!-- .form-group -->
-            <div class="form-group">
-                <!-- .input-group -->
-                <div class="input-group input-group-alt">
-                    <!-- .input-group -->
-                    <div class="input-group has-clearable">
-                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
-                    </div>
-                    <!-- /.input-group -->
-                    <!-- .input-group-prepend -->
-                    <div class="input-group-prepend">
-                        <select id="filterBy" class="custom-select">
-                            <option value='' selected> Filtros </option>
-                            <option value="0"> Nombre </option>
-                            <option value="1"> Tipo </option>
-                            <option value="2"> Kilómetros </option>
-                        </select>
-                    </div>
-                    <!-- /.input-group-prepend -->
-                </div>
-                <!-- /.input-group -->
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .btn-toolbar -->
+      <div id="dt-buttons" class="btn-toolbar"></div>
+      <!-- /.btn-toolbar -->
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .input-group -->
+        <div class="input-group input-group-alt">
+          <!-- .input-group -->
+          <div class="input-group has-clearable">
+            <button id="clear-search" type="button" class="close" aria-label="Close">
+              <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+            </button>
+            <div class="input-group-prepend">
+              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
             </div>
-            <!-- /.form-group -->
-            <!-- .table -->
-            <table id="myTable" class="table">
-                <thead>
-                    <tr>
-                        <th> Nombre </th>
-                        <th> Tipo </th>
-                        <th> Kilómetros </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="align-middle text-truncate">
-                            Condominio Vista Hermosa
-                        </td>
-                        <td>Puesto en obra</td>
-                        <td> 30 km </td>
-                        <td class="align-middle text-right">
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span class="sr-only">Acciones</span></button>
-                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
-                                    <div class="dropdown-arrow mr-n1"></div>
-                                    <button class="dropdown-item" type="button">Tarifario</button>
-                                    <button class="dropdown-item" type="button">Editar</button>
-                                    <button class="dropdown-item" type="button">Eliminar</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th> Nombre </th>
-                        <th> Tipo </th>
-                        <th> Kilómetros </th>
-                        <th></th>
-                    </tr>
-                </tfoot>
-            </table>
+            <input id="table-search" type="text" class="form-control" placeholder="Buscar aquí" />
+          </div>
+          <!-- /.input-group -->
+          <!-- .input-group-prepend -->
+          <div class="input-group-prepend">
+            <select id="filterBy" class="custom-select">
+              <option value="" selected> Filtros </option>
+              <option value="0"> Nombre </option>
+              <option value="1"> Tipo </option>
+              <option value="2"> Kilómetros </option>
+            </select>
+          </div>
+          <!-- /.input-group-prepend -->
         </div>
-        <!-- /.card-body -->
+        <!-- /.input-group -->
+      </div>
+      <!-- /.form-group -->
+      <!-- .table -->
+      <table id="myTable" class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Kilómetros</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let destination of destinations">
+            <td class="align-middle text-truncate">
+              {{ destination.name }}
+            </td>
+            <td *ngIf="destination.type === 'CD'">Centro de distribución</td>
+            <td *ngIf="destination.type === 'MIXTO'">Mixto Listo</td>
+            <td *ngIf="destination.type === 'PUESTOS'">Puesto en obra</td>
+            <td> {{ destination.km | number: '1.2-2' }} </td>
+            <td class="align-middle text-right">
+                <a [routerLink]="[ '/destination', destination._id ]" class=" btn btn-sm btn-icon btn-secondary" alt="Editar"
+                  title="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Editar</span></a>
+                <a class="btn btn-sm btn-icon btn-secondary pointer" data-toggle="modal" data-target="#modalNewTask"
+                  title="Ver tarifas" (click)="verTarifas( destination )"><i class="fas fa-list-ol"></i> <span
+                    class="sr-only ">Tarifas</span></a>
+              </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Kilómetros</th>
+            <th></th>
+          </tr>
+        </tfoot>
+      </table>
     </div>
-    <!-- /.card -->
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
 </div>
 <!-- /.page-section -->
+<!-- .modal -->
+<div class="modal fade" id="modalNewTask" tabindex="-1" role="dialog" aria-labelledby="modalNewTaskLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content px-lg-4 py-lg-3">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h6 id="modalNewTaskLabel" class="modal-title"> Tarifario </h6>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <!-- .table-responsive -->
+        <div class="table-responsive">
+          <!-- .table -->
+          <table class="table table-striped">
+            <!-- thead -->
+            <thead class="thead-">
+              <tr>
+                <th style="min-width:30px"> Tarifa inicial </th>
+                <th style="min-width:30px"> Tarifa final </th>
+                <th class="align-middle text-right" style="min-width:30px"> Costo </th>
+              </tr>
+            </thead>
+            <!-- /thead -->
+            <!-- tbody -->
+            <tbody>
+              <!-- tr -->
+              <tr *ngFor="let tariff of tariffs">
+                <td> {{ tariff.start }} </td>
+                <td> {{ tariff.end }} </td>
+                <td class="align-middle text-right">Q {{ tariff.cost | number : '1.2-2' }} </td>
+              </tr>
+              <!-- /tr -->
+            </tbody>
+            <!-- /tbody -->
+          </table>
+          <!-- /.table -->
+        </div>
+        <!-- /.table-responsive -->
+      </div>
+      <!-- /.modal-body -->
+      <hr>
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+      </div>
+      <!-- /.modal-footer -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

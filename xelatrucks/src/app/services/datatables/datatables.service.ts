@@ -128,8 +128,8 @@ export class DatatablesService {
     });
   }
 
-  init_datePicker2() {
-    flatpickr('#flatpickr02', {
+  init_timePicker() {
+    flatpickr('#flatpickr08', {
       locale: Spanish
     });
   }

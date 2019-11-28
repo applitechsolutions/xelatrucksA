@@ -51,7 +51,6 @@ export class GbillComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     const today = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_datePicker(today);
-    this.dtService.init_datePicker2();
 
     this.cargarCPClientes();
     this.cargarTypeTrips();

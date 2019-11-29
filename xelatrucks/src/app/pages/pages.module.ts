@@ -55,6 +55,7 @@ import { DestinationComponent } from './destinations/destination.component';
 import { WtripsComponent } from './wtrips/wtrips.component';
 import { WtripComponent } from './wtrips/wtrip.component';
 import { TypeTripComponent } from './type-trips/type-trip.component';
+import { OrdersFinishComponent } from './orders/orders-finish.component';
 import { GtripComponent } from './gtrips/gtrip.component';
 
 
@@ -100,6 +101,7 @@ import { GtripComponent } from './gtrips/gtrip.component';
         WtripsComponent,
         WtripComponent,
         TypeTripComponent,
+        OrdersFinishComponent,
         GtripComponent
     ],
     exports: [

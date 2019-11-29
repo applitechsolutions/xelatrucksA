@@ -42,6 +42,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
 import { DestinationsComponent } from './destinations/destinations.component';
 import { DestinationComponent } from './destinations/destination.component';
+import { OrdersFinishComponent } from './orders/orders-finish.component';
 
 const pagesRoutes: Routes = [
     {
@@ -125,10 +126,16 @@ const pagesRoutes: Routes = [
         data: { titulo: 'Crear Destino' }
     },
     {
+        path: 'ordersFinished',
+        component: OrdersFinishComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Historial de Ordenes Finalizadas' }
+    },
+    {
         path: 'orders',
         component: OrdersComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Mantenimiento de Ordenes' }
+        data: { titulo: 'Pull de Ordenes Activas' }
     },
     {
         path: 'order/:id',
@@ -182,13 +189,13 @@ const pagesRoutes: Routes = [
         path: 'gbills',
         component: GbillsComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Facturas de Reporte de Cuadros'}
+        data: { titulo: 'Facturas de Reporte de Cuadros' }
     },
     {
         path: 'gbill/:id',
         component: GbillComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Nueva Factura'}
+        data: { titulo: 'Nueva Factura' }
     },
     // TALLER
     {
@@ -217,7 +224,7 @@ const pagesRoutes: Routes = [
     },
     {
         path: 'vehicles', component:
-        VehiclesComponent,
+            VehiclesComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Mantenimiento de Vehículos' }
     },
@@ -288,7 +295,7 @@ const pagesRoutes: Routes = [
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Mantenimiento de Clientes' }
     },
-    { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
+    { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

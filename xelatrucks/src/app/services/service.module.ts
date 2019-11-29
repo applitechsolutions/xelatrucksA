@@ -25,7 +25,9 @@ import {
   MaterialService,
   TypeMaintenanceService,
   DestinationService,
-  TypeTripService
+  TypeTripService,
+  OrderService,
+  PullService
 } from './service.index';
 
 @NgModule({
@@ -57,7 +59,9 @@ import {
     TypeTripService,
     MaterialService,
     VerificaTokenGuard,
-    DestinationService
+    DestinationService,
+    OrderService,
+    PullService
   ]
 })
 export class ServiceModule { }

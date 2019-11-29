@@ -15,8 +15,8 @@ declare function destroy_datatables();
 export class GtripsComponent implements OnInit {
 
   loading: boolean = false;
-  @ViewChild('date1', {static: false}) date1: ElementRef;
-  @ViewChild('date2', {static: false}) date2: ElementRef;
+  @ViewChild('date1', { static: false }) date1: ElementRef;
+  @ViewChild('date2', { static: false }) date2: ElementRef;
 
   greenTrips: GreenTrip[] = [];
   greenTrip: GreenTrip = { _employee: null, _type: null, _vehicle: null, _material: null }
@@ -41,8 +41,8 @@ export class GtripsComponent implements OnInit {
     const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
     const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
-    this.tripService.cargarGreenTrips( fecha1, fecha2 )
-    .subscribe((res: any) => {
+    this.tripService.cargarGreenTrips(fecha1, fecha2)
+      .subscribe((res: any) => {
         destroy_datatables();
         this.greenTrips = res.viajesV;
         this.loading = false;

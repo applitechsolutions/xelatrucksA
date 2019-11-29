@@ -1,114 +1,251 @@
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .section-deck -->
-    <div class="section-deck">
-        <!-- .card -->
-        <div id="labels" class="card card-fluid col-8">
-            <!-- .card-body -->
-            <!-- .form -->
-            <form ngNativeValidate>
-                <div class="card-body">
-                    <!-- .fieldset -->
-                    <fieldset>
-                        <legend>Encabezado de orden</legend>
-                        <div class="row">
-                            <!-- .form-group -->
-                            <div class="form-group col-3">
-                                <label class="control-label" for="date">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input #date name="date" id="flatpickr" type="text" class="form-control" required>
-                            </div>
-                            <!-- /.form-group -->
-                            <!-- .form-group -->
-                            <div class="form-group col-3">
-                                <label for="noBill">No. de orden </label> <input name="order" type="text" class="form-control" id="order" placeholder="Ingrese el número de orden">
-                            </div>
-                            <!-- /.form-group -->
-                            <!-- .form-group -->
-                            <div class="form-group col-4">
-                                <label id="typeL">Destino <span class="badge badge-danger">Obligatorio</span></label> <select #selectD name="destination" class="form-control select2" style="width:100%!important;">
-                                    <option value=""> Seleccione un destino </option>
-                                   <option [value]=""> Condominio Vista Hermosa </option>
-                               </select>
-                            </div>
-                            <!-- /.form-group -->
-                            <!-- .form-group -->
-                            <div class="form-group col-2">
-                                <label>Crear destino</label><br>
-                                <button [routerLink]="[ '/destination', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></button>
-                            </div>
-                            <!-- /.form-group -->
-                        </div>
-                        <div class="card mt-2">
-                            <!-- .card-body -->
-                            <div class="card-body">
-                                <h2 class="card-title"> Detalle de orden </h2>
-                                <!-- .table-responsive -->
-                                <div class="table-responsive">
-                                    <table id="table1" class="table table-hover" style="min-width: 678px">
-                                        <thead>
-                                            <tr>
-                                                <th> Material </th>
-                                                <th> Subtotal, Metros </th>
-                                                <th> Subtotal, Kilogramos </th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="align-middle"> PIEDRA ROJA PARA TRITURACIÓN </td>
-                                                <td class="align-middle"> 30m </td>
-                                                <td class="align-middle"> 1000kg </td>
-                                                <td class="align-middle text-right">
-                                                    <button type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Remove</span></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.table-responsive -->
-                            </div>
-                            <!-- /.card-body -->
-                            <!-- .card-footer -->
-                            <div class="card-footer">
-                                <a href="#addDetaill" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar Material</a>
-                            </div>
-                            <!-- /.card-footer -->
-                        </div>
-                        <!-- .card-body -->
-                        <div class="row">
-                            <!-- .col -->
-                            <div class="offset-6 col-3">
-                                <!-- .metric -->
-                                <div class="metric text-center">
-                                    <p class="metric-label"> Total, Metros </p>
-                                    <h5 class="metric-value"> 30m </h5>
-                                </div>
-                                <!-- .metric -->
-                            </div>
-                            <!-- /.col -->
-                            <!-- .col -->
-                            <div class="col-3">
-                                <!-- .metric -->
-                                <div class="metric text-center">
-                                    <p class="metric-label"> Total, Kilogramos </p>
-                                    <h5 class="metric-value"> 1000kg </h5>
-                                </div>
-                                <!-- .metric -->
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <hr>
-                        <!-- /.d-flex -->
-                        <button class="btn btn-primary" type="submit" id="btnUser"><i class="fa fa-save"></i> Guardar</button>
-                        <button [routerLink]="[ '/orders' ]" type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                    </fieldset>
-                    <!-- /.fieldset -->
+  <!-- .section-deck -->
+  <div class="section-deck">
+    <!-- .card -->
+    <div id="labels" class="card card-fluid col-10">
+      <!-- .card-body -->
+      <!-- .form -->
+      <form ngNativeValidate>
+        <div class="card-body">
+          <!-- .fieldset -->
+          <fieldset>
+            <legend>Encabezado de orden</legend>
+            <div class="row">
+              <!-- .form-group -->
+              <div class="form-group col-2">
+                <label for="noBill">No. de orden <span class="badge badge-danger">Obligatorio</span></label> <input
+                  [(ngModel)]="order.order" name="order" type="text" class="form-control" id="order"
+                  placeholder="Ingrese un número" required>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group col-2">
+                <label class="control-label" for="date">Fecha <span
+                    class="badge badge-danger">Obligatorio</span></label> <input #date name="date" id="flatpickr"
+                  type="text" class="form-control" required>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group col-6">
+                <label id="typeL">Destino <span class="badge badge-danger">Obligatorio</span></label>
+                <select #selectD name="destination" class="form-control select2" style="width:100%!important;">
+                  <option value=""> Seleccione un destino </option>
+                  <option *ngFor="let destination of destinations" [value]="destination._id">
+                    {{ destination.name + ' (' + destination.km + ' km)' }} </option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group col-2">
+                <label>Crear destino</label><br>
+                <button [routerLink]="[ '/destination', 'new' ]" type="button" class="btn btn-subtle-dark">Nuevo <i
+                    class="fas fa-external-link-alt fa-pull-right"></i></button>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <div class="card mt-2">
+              <!-- .card-body -->
+              <div class="card-body">
+                <h2 class="card-title"> Detalle de orden </h2>
+                <!-- .table-responsive -->
+                <div class="table-responsive">
+                  <table id="table1" class="table table-hover" style="min-width: 678px">
+                    <thead>
+                      <tr>
+                        <th> Material </th>
+                        <th> Subtotal, Metros </th>
+                        <th> Subtotal, Kilogramos </th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="pulls.length === 0">
+                        <td>
+                          <div class="alert alert-warning has-icon" role="alert">
+                            <div class="alert-icon">
+                              <span class="fa fa-bullhorn"></span>
+                            </div>Por favor agregue materiales al detalle, <a href="#addDetail" data-toggle="modal"
+                              class="alert-link">Click en Agregar Material</a>.
+                          </div>
+                        </td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td></td>
+                      </tr>
+                      <tr *ngFor="let pull of pulls">
+                        <td class="align-middle"> {{ pull._material.name }} </td>
+                        <td class="align-middle"> {{ pull.totalMts | number: '1.2-2' }} m </td>
+                        <td class="align-middle"> {{ pull.totalKg | number: '1.2-2' }} kg </td>
+                        <td class="align-middle text-right">
+                          <button (click)="quitarDetalle(pull._material._id)" type="button"
+                            class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span
+                              class="sr-only">Remove</span></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <!-- /.card-body -->
-            </form>
-            <!-- /.form -->
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <!-- .card-footer -->
+              <div class="card-footer">
+                <a href="#addDetail" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i>
+                  Agregar Material</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- .card-body -->
+            <div class="row">
+              <!-- .col -->
+              <div class="offset-6 col-3">
+                <!-- .metric -->
+                <div class="metric text-center">
+                  <p class="metric-label"> Total, Metros </p>
+                  <h5 class="metric-value"> {{ this.totalMts | number: '1.2-2' }} m </h5>
+                </div>
+                <!-- .metric -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-3">
+                <!-- .metric -->
+                <div class="metric text-center">
+                  <p class="metric-label"> Total, Kilogramos </p>
+                  <h5 class="metric-value"> {{ this.totalKgs | number: '1.2-2' }} kg </h5>
+                </div>
+                <!-- .metric -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <hr>
+            <!-- /.d-flex -->
+            <button (click)="crearOrden()" class="btn btn-primary" type="submit" id="btnUser"><i class="fa fa-save"></i>
+              Guardar</button>
+            <button [routerLink]="[ '/orders' ]" type="button" class="btn btn-light"
+              data-dismiss="modal">Cancelar</button>
+          </fieldset>
+          <!-- /.fieldset -->
         </div>
-        <!-- /.card -->
+        <!-- /.card-body -->
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <!-- /.table -->
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </form>
+      <!-- /.form -->
     </div>
-    <!-- /.section-deck -->
+    <!-- /.card -->
+  </div>
+  <!-- /.section-deck -->
 </div>
 <!-- /.page-inner -->
+<!-- Modal Drawer Right -->
+<div class="modal modal-drawer fade" id="addDetail" role="dialog" aria-labelledby="addDetail" aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-drawer-right" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 id="exampleModalDrawerRightLabel" class="modal-title"> Catálogo de materiales </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <br>
+          <p>Aquí puede seleccionar o crear los materiales necesarios para agregar a su orden</p><br>
+          <!-- .form-group -->
+          <div class="form-group">
+            <button data-toggle="modal" data-target="#addMaterial" type="button"
+              class="btn btn-subtle-dark fa-pull-right">Crear Nuevo <i
+                class="fas fa-external-link-alt fa-pull-right"></i></button>
+            <label id="typeL"> Material <span class="badge badge-danger">Obligatorio</span></label>
+            <select #selectM name="material" class="form-control select2" style="width:100%!important;">
+              <option value=""> Seleccione un material </option>
+              <option *ngFor="let material of materials" [selected]="material._material._id === tempMat"
+                [value]="material._material._id"> {{ material._material.code }} {{ material._material.name }} </option>
+            </select>
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group"><label for="mts">Metros <span class="badge badge-danger">Obligatorio</span></label>
+            <input class="form-control" [(ngModel)]="pull.totalMts" id="totalMts" name="totalMts"
+              placeholder="Ingrese una cantidad" type="number" step="0.01" ng-reflect-name="totalMts" required></div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group"><label for="kg">Kilogramos <span class="badge badge-danger">Obligatorio</span></label>
+            <input class="form-control" [(ngModel)]="pull.totalKg" id="totalKg" name="totalKg"
+              placeholder="Ingrese una cantidad" type="number" step="0.01" ng-reflect-name="totalKg" required></div>
+          <!-- /.form-group -->
+
+          <button (click)="agregarDetalle()" class="btn btn-primary" type="submit">Agregar</button>
+        </div>
+        <!-- /.modal-body -->
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+        </div>
+        <!-- /.modal-footer -->
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- .modalMATERIAL -->
+<div class="modal fade" id="addMaterial" tabindex="-1" role="dialog" aria-labelledby="NewMaterialModalLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 class="modal-title"> Crear un nuevo material </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <form ngNativeValidate [formGroup]="formMat" (ngSubmit)="crearMaterial()">
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="name">Código </label> <input formControlName="code" name="code" type="text" class="form-control"
+              id="code" placeholder="Ingrese el código del material" data-autofocus="true">
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="name">Nombre </label> <input formControlName="name" name="name" type="text" class="form-control"
+              id="name" placeholder="Ingrese el nombre del material">
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="pay">Existencia Mínima</label>
+            <div class="input-group">
+              <label class="input-group-prepend" for="minStock"><span class="badge">u</span></label>
+              <input formControlName="minStock" name="minStock" type="number" min="0.00" step="0.01"
+                class="form-control" id="minStock" placeholder="Ingrese la existencia mínima del material">
+            </div>
+          </div>
+          <!-- /.form-group -->
+          <!-- .modal-footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMMt type="button"
+              class="btn btn-light" data-dismiss="modal">Cerrar</button>
+          </div>
+          <!-- /.modal-footer -->
+        </form>
+      </div>
+      <!-- /.modal-body -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modalMATERIAL -->

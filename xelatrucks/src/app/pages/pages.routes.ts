@@ -143,7 +143,7 @@ const pagesRoutes: Routes = [
         data: { titulo: 'Listado de Reportes' }
     },
     {
-        path: 'gtrip/:id/:km',
+        path: 'gtrip/:id',
         component: GtripComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Reporte de Cuadros' }

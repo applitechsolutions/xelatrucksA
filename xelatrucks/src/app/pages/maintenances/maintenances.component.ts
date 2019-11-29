@@ -27,7 +27,7 @@ export class MaintenancesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dtS.init_datePicker2();
+    //this.dtS.init_datePicker2();
   }
 
   searchTerminados() {

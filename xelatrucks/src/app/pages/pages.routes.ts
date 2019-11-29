@@ -24,6 +24,7 @@ import { MechanicComponent } from './mechanics/mechanic.component';
 import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
 import { GtripsComponent } from './gtrips/gtrips.component';
+import { GtripComponent } from './gtrips/gtrip.component';
 import { WtripsComponent } from './wtrips/wtrips.component';
 import { WtripComponent } from './wtrips/wtrip.component';
 import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances.component';
@@ -145,6 +146,12 @@ const pagesRoutes: Routes = [
     {
         path: 'gtrips',
         component: GtripsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Listado de Reportes' }
+    },
+    {
+        path: 'gtrip/:id/:km',
+        component: GtripComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Reporte de Cuadros' }
     },

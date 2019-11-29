@@ -56,6 +56,7 @@ import { WtripsComponent } from './wtrips/wtrips.component';
 import { WtripComponent } from './wtrips/wtrip.component';
 import { TypeTripComponent } from './type-trips/type-trip.component';
 import { OrdersFinishComponent } from './orders/orders-finish.component';
+import { GtripComponent } from './gtrips/gtrip.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { OrdersFinishComponent } from './orders/orders-finish.component';
         WtripsComponent,
         WtripComponent,
         TypeTripComponent,
-        OrdersFinishComponent
+        OrdersFinishComponent,
+        GtripComponent
     ],
     exports: [
         DashboardComponent,

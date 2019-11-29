@@ -7,7 +7,6 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 import { GreenTrip } from 'src/app/models/greenTrip.model';
 import swal from 'sweetalert';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -37,6 +36,13 @@ export class TripService {
         );
     }
 
+  }
+
+  cargarGreenTrip( id: string ) {
+    let url = URL_SERVICES + '/viajeV';
+    url += '/' + id;
+
+    return this.http.get(url);
   }
 
   cargarGreenTrips(fecha1: Date, fecha2: Date) {

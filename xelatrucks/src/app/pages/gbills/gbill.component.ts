@@ -28,7 +28,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
   formGB: FormGroup;
   greenbil: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };
-  preDetail: PreDetailBill = {code: '', prod: '', totalmts: 0, trips: 0};
+  preDetail: PreDetailBill = { code: '', prod: '', totalmts: 0, trips: 0 };
   details: DetailBill[] = [];
   total: number = 0;
   optional: number = 0;
@@ -97,7 +97,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
         if (extra <= 0 || extra === '') {
           this.optional = 0;
           this.tarifas.forEach(element => {
-            if ( this.preDetail.totalmts >= element.start && this.preDetail.totalmts <= element.end ) {
+            if (this.preDetail.totalmts >= element.start && this.preDetail.totalmts <= element.end) {
               costo = this.preDetail.totalmts * (element.cost * 1.12);
               this.total = costo;
               this.details.push({
@@ -111,7 +111,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
                 mts: this.preDetail.totalmts,
                 trips: this.preDetail.trips,
                 cost: costo
-              })
+              });
             }
           });
         } else {
@@ -170,20 +170,20 @@ export class GbillComponent implements OnInit, AfterViewInit {
       );
     }
 
-    this.gbillService.crearFacturaVerde( greenbill )
-      .subscribe( () => this.router.navigate(['/gbills']) );
+    this.gbillService.crearFacturaVerde(greenbill)
+      .subscribe(() => this.router.navigate(['/gbills']));
   }
 
   cargarCPClientes() {
     this.cpService.cargarClientes()
-      .subscribe( (res: any) => {
+      .subscribe((res: any) => {
         this.cpcustomers = res.clientes;
       });
   }
 
   cargarTypeTrips() {
     this.typeService.cargarTypes()
-      .subscribe( (res: any) => {
+      .subscribe((res: any) => {
         this.types = res.viajes;
       });
   }

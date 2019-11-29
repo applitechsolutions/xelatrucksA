@@ -15,5 +15,5 @@ export class BuySpare {
         public noDoc?: string,
         public details?: DetailsSpare[],
         public _id?: string,
-    ) {}
+    ) { }
 }

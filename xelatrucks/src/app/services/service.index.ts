@@ -12,6 +12,8 @@ export { MaterialService } from './materials/material.service';
 export { CPcustomerService } from './CPcustomers/cpcustomer.service';
 export { DestinationService } from './destinations/destination.service';
 export { TypeTripService } from './typeTrips/type-trip.service';
+export { OrderService } from './orders/order.service';
+export { PullService } from './pulls/pull.service';
 // TALLER
 export { PartService } from './parts/part.service';
 export { MechanicService } from './mechanics/mechanic.service';

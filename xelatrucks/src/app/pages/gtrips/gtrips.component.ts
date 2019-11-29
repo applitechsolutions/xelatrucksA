@@ -4,7 +4,14 @@ import { Employee } from '../../models/employee.model';
 import { Vehicle } from '../../models/vehicle.model';
 import { Type } from '../../models/type.model';
 import { Material } from '../../models/material.model';
-import { EmployeeService, VehicleService, MaterialService, TripService, TypeTripService, DatatablesService } from '../../services/service.index';
+import {
+  EmployeeService,
+  VehicleService,
+  MaterialService,
+  TripService,
+  TypeTripService,
+  DatatablesService
+} from '../../services/service.index';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
@@ -23,15 +30,15 @@ declare function destroy_datatables();
 export class GtripsComponent implements OnInit, AfterViewInit {
 
   loading: boolean = false;
-  @ViewChild('date1', {static: false}) date1: ElementRef;
-  @ViewChild('date2', {static: false}) date2: ElementRef;
+  @ViewChild('date1', { static: false }) date1: ElementRef;
+  @ViewChild('date2', { static: false }) date2: ElementRef;
 
-  @ViewChild('closeMTy', {static: false}) closeMty: ElementRef;
-  @ViewChild('closeMMt', {static: false}) closeMMt: ElementRef;
-  @ViewChild('selectE', {static: false}) selectE: ElementRef;
-  @ViewChild('selectT', {static: false}) selectT: ElementRef;
-  @ViewChild('selectV', {static: false}) selectV: ElementRef;
-  @ViewChild('selectM', {static: false}) selectM: ElementRef;
+  @ViewChild('closeMTy', { static: false }) closeMty: ElementRef;
+  @ViewChild('closeMMt', { static: false }) closeMMt: ElementRef;
+  @ViewChild('selectE', { static: false }) selectE: ElementRef;
+  @ViewChild('selectT', { static: false }) selectT: ElementRef;
+  @ViewChild('selectV', { static: false }) selectV: ElementRef;
+  @ViewChild('selectM', { static: false }) selectM: ElementRef;
 
   formGT: FormGroup;
   greenTrip: GreenTrip = { _employee: null, _type: null, _vehicle: null, _material: null };
@@ -182,7 +189,7 @@ export class GtripsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  borrarGreenTrip( trip: GreenTrip ) {
+  borrarGreenTrip(trip: GreenTrip) {
 
     // console.log(trip);
 
@@ -193,24 +200,24 @@ export class GtripsComponent implements OnInit, AfterViewInit {
       buttons: true,
       dangerMode: true,
     })
-    .then( borrar => {
-      if (borrar) {
+      .then(borrar => {
+        if (borrar) {
 
-        this.tripService.borrarGreenTrip( trip )
-          .subscribe( (borrado: any) => {
-            const index = this.todayGT.findIndex(item => item._id === borrado._id);
-            this.todayGT.splice(index, 1);
-            swal({
-              title: 'Exito!',
-              text: 'Viaje borrado correctamente',
-              icon: 'success',
-              button: false,
-              timer: 1000
+          this.tripService.borrarGreenTrip(trip)
+            .subscribe((borrado: any) => {
+              const index = this.todayGT.findIndex(item => item._id === borrado._id);
+              this.todayGT.splice(index, 1);
+              swal({
+                title: 'Exito!',
+                text: 'Viaje borrado correctamente',
+                icon: 'success',
+                button: false,
+                timer: 1000
+              });
             });
-          });
-      }
+        }
 
-    });
+      });
   }
 
   cargarEmpleados() {
@@ -232,9 +239,9 @@ export class GtripsComponent implements OnInit, AfterViewInit {
     this.matService.cargarMateriales()
       .subscribe((res: any) => {
         res.materiales
-        .map( (res: any) => {
-          this.materials = res.storage;
-        });
+          .map((res: any) => {
+            this.materials = res.storage;
+          });
         console.log(this.materials);
       });
   }
@@ -340,8 +347,8 @@ export class GtripsComponent implements OnInit, AfterViewInit {
 
 
 
-    this.tripService.cargarGreenTrips( fecha1, fecha2 )
-    .subscribe((res: any) => {
+    this.tripService.cargarGreenTrips(fecha1, fecha2)
+      .subscribe((res: any) => {
         destroy_datatables();
         this.greenTrips = res.viajesV;
         this.loading = false;

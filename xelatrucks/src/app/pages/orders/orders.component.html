@@ -93,7 +93,8 @@
                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
                   style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
                   <div class="dropdown-arrow mr-n1"></div>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalNewTask">Ingresar
+                  <button (click)="cargarReporte(pull)" class="dropdown-item" type="button" data-toggle="modal"
+                    data-target="#modalNewTask">Ingresar
                     Reporte</button>
                   <button class="dropdown-item" type="button">Finalizar</button>
                 </div>

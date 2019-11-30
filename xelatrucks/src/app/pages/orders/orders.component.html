@@ -70,7 +70,8 @@
             <td class="align-middle">
               <span *ngIf="pull.mts >= pull.totalMts"
                 class="badge badge-success">{{ pull.totalMts - pull.mts | number: '1.2-2' }} m</span>
-              <span *ngIf="pull.mts > 0" class="badge badge-warning">{{ pull.totalMts - pull.mts | number: '1.2-2' }} m
+              <span *ngIf="pull.mts > 0 && pull.mts < pull.totalMts"
+                class="badge badge-warning">{{ pull.totalMts - pull.mts | number: '1.2-2' }} m
               </span>
               <span *ngIf="pull.mts === 0" class="badge badge-danger">{{ pull.totalMts - pull.mts | number: '1.2-2' }} m
               </span>
@@ -80,7 +81,8 @@
               <span *ngIf="pull.kg >= pull.totalKg"
                 class="badge badge-success">{{ pull.totalKg - pull.kg | number: '1.2-2' }}
                 kg</span>
-              <span *ngIf="pull.kg > 0" class="badge badge-warning">{{ pull.totalKg - pull.kg | number: '1.2-2' }}
+              <span *ngIf="pull.kg > 0 && pull.kg < pull.totalKg"
+                class="badge badge-warning">{{ pull.totalKg - pull.kg | number: '1.2-2' }}
                 kg</span>
               <span *ngIf="pull.kg === 0" class="badge badge-danger">{{ pull.totalKg - pull.kg | number: '1.2-2' }}
                 kg</span>
@@ -96,7 +98,7 @@
                   <button (click)="cargarReporte(pull)" class="dropdown-item" type="button" data-toggle="modal"
                     data-target="#modalNewTask">Ingresar
                     Reporte</button>
-                  <button class="dropdown-item" type="button">Finalizar</button>
+                  <button (click)="finalizarPull(pull)" class="dropdown-item" type="button">Finalizar</button>
                 </div>
               </div>
             </td>

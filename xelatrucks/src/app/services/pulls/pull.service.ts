@@ -6,7 +6,7 @@ import { URL_SERVICES } from 'src/app/config/config';
 import { UserService } from '../users/user.service';
 import { Pull } from '../../models/pull.model';
 
-import swal from 'sweetalert';
+declare var swal: any;
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,30 @@ export class PullService {
   cargarFinalizadas() {
     const url = URL_SERVICES + '/pull/finisheds';
     return this.http.get(url);
+  }
+
+  finalizarPull(id: string) {
+
+    let url = URL_SERVICES + '/pull/finish/' + id;
+    url += '?token=' + this.userS.token;
+
+    return this.http.put(url, '')
+      .pipe(
+        map((resp: any) => {
+          swal({
+            title: '¡Pull finalizado!',
+            text: 'Puede consultarlo en el historial',
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
+          return resp;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
+        }));
   }
 
   crearPull(pull: Pull) {

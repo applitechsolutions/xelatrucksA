@@ -83,6 +83,27 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       });
   }
 
+  finalizarPull(pull: Pull) {
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de finalizar la entrega del material: ' + pull._material.code + ' ' + pull._material.name,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then(borrar => {
+        if (borrar) {
+
+          this.pullS.finalizarPull(pull._id)
+            .subscribe((borrado: any) => {
+              destroy_datatables();
+              this.cargarPulls();
+            });
+        }
+      });
+  }
+
+  /* #region  Reportes */
   cargarEmpleados() {
     this.empService.cargarEmpleados()
       .subscribe((res: any) => this.employees = res.empleados);
@@ -131,6 +152,13 @@ export class OrdersComponent implements OnInit, AfterViewInit {
 
     this.tripS.crearWhiteTrip(whiteTrip, this.pull._order._destination.km)
       .subscribe((res: any) => {
+        swal({
+          title: 'Exito!',
+          text: 'Reporte creado correctamente ' + res.viajeB.noTicket,
+          icon: 'success',
+          button: false,
+          timer: 1500
+        });
         const today = moment(new Date()).format('DD/MM/YYYY');
         this.formaTrip.reset({
           date: today
@@ -139,9 +167,10 @@ export class OrdersComponent implements OnInit, AfterViewInit {
         this.loading = false;
         this.closeM.nativeElement.click();
         this.cargarPulls();
-      });
+      }, () => this.loading = false);
 
 
   }
+  /* #endregion */
 
 }

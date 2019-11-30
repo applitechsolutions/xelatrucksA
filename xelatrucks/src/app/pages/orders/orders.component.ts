@@ -13,6 +13,7 @@ declare function destroy_datatables();
 export class OrdersComponent implements OnInit {
 
   pulls: Pull[] = [];
+  pull: Pull = { _order: null, _material: null, mts: 0, totalMts: 0, kg: 0, totalKg: 0 };
 
   constructor(
     public pullS: PullService,
@@ -29,6 +30,11 @@ export class OrdersComponent implements OnInit {
         this.chRef.detectChanges();
         init_datatables();
       });
+  }
+
+  cargarReporte(pull: Pull) {
+    this.pull = pull;
+
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { PullService, DatatablesService, EmployeeService, VehicleService } from 'src/app/services/service.index';
+import { PullService, DatatablesService, EmployeeService, VehicleService, TripService } from 'src/app/services/service.index';
 import { Pull } from '../../models/pull.model';
 import { Employee } from '../../models/employee.model';
 import { Vehicle } from '../../models/vehicle.model';
@@ -22,6 +22,10 @@ export class OrdersComponent implements OnInit, AfterViewInit {
 
   @ViewChild('selectE', { static: false }) selectE: ElementRef;
   @ViewChild('selectV', { static: false }) selectV: ElementRef;
+  @ViewChild('closeM', { static: false }) closeM: ElementRef;
+  @ViewChild('date', { static: false }) date: ElementRef;
+  @ViewChild('checkIN', { static: false }) checkIN: ElementRef;
+  @ViewChild('checkOUT', { static: false }) checkOUT: ElementRef;
 
   pulls: Pull[] = [];
   pull: Pull = { _order: null, _material: null, mts: 0, totalMts: 0, kg: 0, totalKg: 0 };
@@ -37,22 +41,13 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     public chRef: ChangeDetectorRef,
     public dtService: DatatablesService,
     public empService: EmployeeService,
-    public vehicleService: VehicleService
+    public vehicleService: VehicleService,
+    public tripS: TripService
   ) { }
 
   ngOnInit() {
-    this.pullS.cargarActivas()
-      .subscribe((resp: any) => {
-        destroy_datatables();
-        // console.log(resp);
-        this.pulls = resp.pulls;
-        this.chRef.detectChanges();
-        init_datatables();
-      });
 
     this.formaTrip = new FormGroup({
-      _employee: new FormControl('', Validators.required),
-      _vehicle: new FormControl('', Validators.required),
       date: new FormControl(null, Validators.required),
       noTicket: new FormControl('', Validators.required),
       noDelivery: new FormControl('', Validators.required),
@@ -64,6 +59,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       checkOUT: new FormControl(null, Validators.required)
     });
 
+    this.cargarPulls();
     this.cargarVehiculos();
     this.cargarEmpleados();
   }
@@ -74,6 +70,17 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     const today = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_datePicker(today);
     this.dtService.init_timePicker();
+  }
+
+  cargarPulls() {
+    this.pullS.cargarActivas()
+      .subscribe((resp: any) => {
+        destroy_datatables();
+        // console.log(resp);
+        this.pulls = resp.pulls;
+        this.chRef.detectChanges();
+        init_datatables();
+      });
   }
 
   cargarEmpleados() {
@@ -92,6 +99,11 @@ export class OrdersComponent implements OnInit, AfterViewInit {
 
   crearReporte() {
 
+    this.formaTrip.get('date').setValue(this.date.nativeElement.value);
+    this.formaTrip.get('checkIN').setValue(this.checkIN.nativeElement.value);
+    this.formaTrip.get('checkOUT').setValue(this.checkOUT.nativeElement.value);
+    console.log(this.formaTrip);
+
     if (this.formaTrip.invalid || this.selectE.nativeElement.value === '' || this.selectV.nativeElement.value === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
@@ -105,24 +117,31 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       employee,
       vehicle,
       this.pull,
-      this.formaTrip.value.date,
+      moment(this.formaTrip.value.date, 'DD/MM/YYYY').toDate(),
       this.formaTrip.value.noTicket,
       this.formaTrip.value.noDelivery,
       this.formaTrip.value.mts,
       this.formaTrip.value.kgB,
       this.formaTrip.value.kgT,
       this.formaTrip.value.kgN,
-      this.formaTrip.value.checkIN,
-      this.formaTrip.value.checkOUT,
+      moment(this.formaTrip.value.checkIN, 'HH:mm').toDate(),
+      moment(this.formaTrip.value.checkOUT, 'HH:mm').toDate(),
       false
-    )
+    );
 
-    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.tripS.crearWhiteTrip(whiteTrip, this.pull._order._destination.km)
+      .subscribe((res: any) => {
+        const today = moment(new Date()).format('DD/MM/YYYY');
+        this.formaTrip.reset({
+          date: today
+        });
+        this.dtService.init_timePicker();
+        this.loading = false;
+        this.closeM.nativeElement.click();
+        this.cargarPulls();
+      });
 
-    this.formaTrip.reset({
-      date: today
-    });
-    this.dtService.init_timePicker();
+
   }
 
 }

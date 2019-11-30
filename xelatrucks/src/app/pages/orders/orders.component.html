@@ -145,7 +145,7 @@
               <!-- .form-group -->
               <div class="form-group">
                 <label id="job">Empleado</label>
-                <select #selecE name="employee" class="form-control select2" style="width:100%!important;">
+                <select #selectE name="employee" class="form-control select2" style="width:100%!important;">
                   <option value=""> Seleccione un empleado </option>
                   <option *ngFor="let employee of employees" [value]="employee._id"> {{ employee.name }} </option>
                 </select>
@@ -180,8 +180,8 @@
             <div class="col-md-4">
               <!-- .form-group -->
               <div class="form-group">
-                <label class="control-label" for="flatpickr">Fecha</label> <input id="flatpickr" formControlName="date"
-                  name="date" type="text" class="form-control" required>
+                <label class="control-label" for="flatpickr">Fecha</label> <input #date id="flatpickr"
+                  formControlName="date" name="date" type="text" class="form-control" required>
               </div>
               <!-- /.form-group -->
             </div>
@@ -190,9 +190,10 @@
             <div class="col-md-4">
               <!-- .form-group -->
               <div class="form-group">
-                <label class="control-label" for="flatpickr08"> Hora de entrada </label> <input id="flatpickr08"
-                  formControlName="checkIN" name="checkIN" type="text" class="form-control" data-toggle="flatpickr"
-                  data-enable-time="true" data-no-calendar="true" data-date-format="H:i" data-default-date="12:00">
+                <label class="control-label" for="flatpickr08"> Hora de entrada </label> <input #checkIN
+                  id="flatpickr08" formControlName="checkIN" name="checkIN" type="text" class="form-control"
+                  data-toggle="flatpickr" data-enable-time="true" data-no-calendar="true" data-date-format="H:i"
+                  data-default-date="12:00">
               </div>
               <!-- /.form-group -->
             </div>
@@ -201,9 +202,10 @@
             <div class="col-md-4">
               <!-- .form-group -->
               <div class="form-group">
-                <label class="control-label" for="flatpickr08"> Hora de salida </label> <input id="flatpickr08"
-                  formControlName="checkOUT" name="checkOUT" type="text" class="form-control" data-toggle="flatpickr"
-                  data-enable-time="true" data-no-calendar="true" data-date-format="H:i" data-default-date="12:00">
+                <label class="control-label" for="flatpickr08"> Hora de salida </label> <input #checkOUT
+                  id="flatpickr08" formControlName="checkOUT" name="checkOUT" type="text" class="form-control"
+                  data-toggle="flatpickr" data-enable-time="true" data-no-calendar="true" data-date-format="H:i"
+                  data-default-date="12:00">
               </div>
               <!-- /.form-group -->
             </div>

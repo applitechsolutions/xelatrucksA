@@ -7,7 +7,14 @@ import { Type } from '../../models/type.model';
 import { Material } from '../../models/material.model';
 import { GreenTrip } from '../../models/greenTrip.model';
 import { StorageMaterial } from '../../models/storageMaterial.model';
-import { EmployeeService, VehicleService, MaterialService, TripService, TypeTripService, DatatablesService } from '../../services/service.index';
+import {
+  EmployeeService,
+  VehicleService,
+  MaterialService,
+  TripService,
+  TypeTripService,
+  DatatablesService
+} from '../../services/service.index';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
@@ -92,10 +99,10 @@ export class GtripComponent implements OnInit {
     $('.select2').select2();
   }
 
-  cargarViajeVerde( id: string ) {
-    
-    this.tripService.cargarGreenTrip( id )
-      .subscribe( (res: any) => {
+  cargarViajeVerde(id: string) {
+
+    this.tripService.cargarGreenTrip(id)
+      .subscribe((res: any) => {
         this.greenTrip = res.Gviaje;
       });
   }

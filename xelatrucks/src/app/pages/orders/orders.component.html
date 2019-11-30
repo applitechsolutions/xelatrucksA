@@ -123,247 +123,189 @@
 </div>
 <!-- /.page-section -->
 <!-- .form -->
-<form id="addNewTask" action="/add-new-task" method="post" enctype="multipart/form-data" name="addNewTask">
+<form ngNativeValidate [formGroup]="formaTrip" (ngSubmit)="crearReporte()">
   <!-- .modal -->
-  <div class="modal fade" id="modalNewTask" tabindex="-1" role="dialog" aria-labelledby="modalNewTaskLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="modalNewTask" role="dialog" aria-labelledby="modalNewTaskLabel" aria-hidden="true">
     <!-- .modal-dialog -->
     <div class="modal-dialog modal-lg" role="document">
       <!-- .modal-content -->
       <div class="modal-content px-lg-4 py-lg-3">
         <!-- .modal-header -->
         <div class="modal-header">
-          <h6 id="modalNewTaskLabel" class="modal-title"> Add new tasks </h6>
-        </div><!-- /.modal-header -->
+          <h6 id="modalNewTaskLabel" class="modal-title"> Crear reporte líneas <span class="badge badge-danger">Campos
+              obligatorios</span> </h6>
+        </div>
+        <!-- /.modal-header -->
         <!-- .modal-body -->
         <div class="modal-body">
-          <!-- .form-group -->
-          <div class="form-group">
-            <label for="tasksTitle">Title</label> <input type="text" name="taskTitle" id="tasksTitle"
-              class="form-control" required="" autocomplete="off" data-autofocus="true">
-          </div><!-- /.form-group -->
-          <!-- .form-group -->
-          <div class="form-group">
-            <div class="d-flex justify-content-between">
-              <label for="taskDescription">Description</label> <a href="#"
-                onclick="boardDemo.ntMarkdown.togglePreview()" tabindex="-1">Preview</a>
-            </div>
-            <textarea name="taskDescription" id="taskDescription" class="form-control"></textarea>
-            <div class="d-flex align-items-center">
-              <span class="text-muted mt-2"><a href="https://simplemde.com/markdown-guide" target="_blank">Markdown</a>
-                is supported</span>
-              <div class="btn btn-reset fileinput-button text-muted ml-auto">
-                <i class="fa fa-paperclip"></i> <span>Attach a file</span> <input type="file" name="taskAttachment">
-              </div>
-            </div>
-          </div><!-- /.form-group -->
-          <!-- .form-group -->
-          <div class="form-group">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" name="taskVisibility" class="custom-control-input" id="taskVisibility"> <label
-                class="custom-control-label" for="taskVisibility">Should only be visible to team members.</label>
-            </div>
-          </div><!-- /.form-group -->
-          <hr>
           <!-- .form-group -->
           <div class="form-group form-row">
             <!-- .col -->
             <div class="col-md-6">
               <!-- .form-group -->
               <div class="form-group">
-                <label>Assignee</label>
-                <div class="dropdown">
-                  <button type="button"
-                    class="btn btn-secondary btn-block d-flex justify-content-between align-items-center"
-                    id="dntAssignees" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Beni
-                      Arisandi + 1 more</span> <span class="fa fa-angle-down"></span></button> <!-- .dropdown-menu -->
-                  <div class="dropdown-menu dropdown-menu-md overflow-y-auto stop-propagation" data-flip="false"
-                    id="dntmAssignees" aria-labelledby="dropdownAssignee1" style="max-height: 30rem;">
-                    <h6 id="dropdownAssignee1" class="dropdown-header"> Add assignee </h6>
-                    <div class="dropdown-divider"></div>
-                    <div class="form-group px-3 py-2 mb-0">
-                      <input type="text" class="form-control" data-filter="#dntmAssignees .filterable"
-                        placeholder="Search members" autofocus="">
-                    </div><label class="custom-control custom-checkbox"><input type="checkbox"
-                        class="custom-control-input task-unassignees" name="taskAssignees[]" value="0"
-                        data-label="Unassigned"> <span class="custom-control-label">Unassigned</span></label>
-                    <div class="dropdown-divider"></div>
-                    <h6 class="dropdown-header"> Assignee(s) </h6><label
-                      class="custom-control custom-checkbox filterable" data-sort="Beni Arisandi"><input type="checkbox"
-                        class="custom-control-input task-assignees" name="taskAssignees[]" value="4"
-                        data-label="Beni Arisandi" checked> <span
-                        class="custom-control-label custom-control-label-media"><span class="media"><span
-                            class="mr-2"><span class="user-avatar"><img src="assets/images/avatars/uifaces1.jpg"
-                                alt=""></span></span> <span class="media-body">Beni Arisandi<br>
-                            <span class="text-muted">@benz</span></span></span></span></label> <label
-                      class="custom-control custom-checkbox filterable" data-sort="Melissa Day"><input type="checkbox"
-                        class="custom-control-input task-assignees" name="taskAssignees[]" value="2"
-                        data-label="Melissa Day" checked> <span
-                        class="custom-control-label custom-control-label-media"><span class="media"><span
-                            class="mr-2"><span class="user-avatar"><img src="assets/images/avatars/uifaces4.jpg"
-                                alt=""></span></span> <span class="media-body">Melissa Day<br>
-                            <span class="text-muted">@melday</span></span></span></span></label>
-                    <div id="dntDivider" class="dropdown-divider"></div><label
-                      class="custom-control custom-checkbox filterable" data-sort="Adam Medina"><input type="checkbox"
-                        class="custom-control-input task-assignees" name="taskAssignees[]" value="3"
-                        data-label="Adam Medina"> <span class="custom-control-label custom-control-label-media"><span
-                          class="media"><span class="mr-2"><span class="user-avatar"><img
-                                src="assets/images/avatars/uifaces15.jpg" alt=""></span></span> <span
-                            class="media-body">Adam Medina<br>
-                            <span class="text-muted">@amed</span></span></span></span></label> <label
-                      class="custom-control custom-checkbox filterable" data-sort="Diana Miller"><input type="checkbox"
-                        class="custom-control-input task-assignees" name="taskAssignees[]" value="1"
-                        data-label="Diana Miller"> <span class="custom-control-label custom-control-label-media"><span
-                          class="media"><span class="mr-2"><span class="user-avatar"><img
-                                src="assets/images/avatars/uifaces7.jpg" alt=""></span></span> <span
-                            class="media-body">Diana Miller<br>
-                            <span class="text-muted">@dmiller</span></span></span></span></label> <label
-                      class="custom-control custom-checkbox filterable" data-sort="Douglas Lucas"><input type="checkbox"
-                        class="custom-control-input task-assignees" name="taskAssignees[]" value="5"
-                        data-label="Douglas Lucas"> <span class="custom-control-label custom-control-label-media"><span
-                          class="media"><span class="mr-2"><span class="user-avatar"><img
-                                src="assets/images/avatars/uifaces5.jpg" alt=""></span></span> <span
-                            class="media-body">Douglas Lucas<br>
-                            <span class="text-muted">@lucaldoug</span></span></span></span></label>
-                  </div><!-- /.dropdown-menu -->
-                </div><!-- /.dropdown -->
-              </div><!-- /.form-group -->
-              <!-- .form-group -->
-              <div class="form-group">
-                <label>Labels</label> <!-- .dropdown -->
-                <div class="dropdown">
-                  <button type="button"
-                    class="btn btn-secondary btn-block d-flex justify-content-between align-items-center" id="bntLabels"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>No label</span> <span
-                      class="fa fa-angle-down"></span></button> <!-- .dropdown-menu -->
-                  <div class="dropdown-menu dropdown-menu-md stop-propagation" id="dntLabels"
-                    aria-labelledby="dropdownTaskLabels1">
-                    <h6 id="dropdownTaskLabels1" class="dropdown-header"> Select labels </h6>
-                    <div class="dropdown-divider"></div>
-                    <div class="form-group px-3 py-2 mb-0">
-                      <input type="text" class="form-control" data-filter="#dntLabels .filterable" placeholder="Search"
-                        data-autofocus="true">
-                    </div><label class="custom-control custom-checkbox filterable"><input type="checkbox"
-                        class="custom-control-input task-nolabel" name="taskLabels[]" value="0" data-label="No Label"
-                        checked> <span class="custom-control-label">No Label</span></label>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-scroll">
-                      <label class="custom-control custom-checkbox filterable"><input type="checkbox"
-                          class="custom-control-input task-label" name="taskLabels[]" value="1" data-label="Assets">
-                        <span class="custom-control-label"><i class="fa fa-square fa-lg text-blue mr-1"></i>
-                          Assets</span></label> <label class="custom-control custom-checkbox filterable"><input
-                          type="checkbox" class="custom-control-input task-label" name="taskLabels[]" value="2"
-                          data-label="Build Tools"> <span class="custom-control-label"><i
-                            class="fa fa-square fa-lg text-indigo mr-1"></i> Build Tools</span></label> <label
-                        class="custom-control custom-checkbox filterable"><input type="checkbox"
-                          class="custom-control-input task-label" name="taskLabels[]" value="3" data-label="Components">
-                        <span class="custom-control-label"><i class="fa fa-square fa-lg text-purple mr-1"></i>
-                          Components</span></label> <label class="custom-control custom-checkbox filterable"><input
-                          type="checkbox" class="custom-control-input task-label" name="taskLabels[]" value="4"
-                          data-label="Dependencies"> <span class="custom-control-label"><i
-                            class="fa fa-square fa-lg text-pink mr-1"></i> Dependencies</span></label> <label
-                        class="custom-control custom-checkbox filterable"><input type="checkbox"
-                          class="custom-control-input task-label" name="taskLabels[]" value="5" data-label="Design">
-                        <span class="custom-control-label"><i class="fa fa-square fa-lg text-red mr-1"></i>
-                          Design</span></label> <label class="custom-control custom-checkbox filterable"><input
-                          type="checkbox" class="custom-control-input task-label" name="taskLabels[]" value="6"
-                          data-label="Documentation"> <span class="custom-control-label"><i
-                            class="fa fa-square fa-lg text-orange mr-1"></i> Documentation</span></label> <label
-                        class="custom-control custom-checkbox filterable"><input type="checkbox"
-                          class="custom-control-input task-label" name="taskLabels[]" value="7" data-label="Doing">
-                        <span class="custom-control-label"><i class="fa fa-square fa-lg text-yellow mr-1"></i>
-                          Doing</span></label> <label class="custom-control custom-checkbox filterable"><input
-                          type="checkbox" class="custom-control-input task-label" name="taskLabels[]" value="8"
-                          data-label="JS"> <span class="custom-control-label"><i
-                            class="fa fa-square fa-lg text-green mr-1"></i> JS</span></label> <label
-                        class="custom-control custom-checkbox filterable"><input type="checkbox"
-                          class="custom-control-input task-label" name="taskLabels[]" value="9" data-label="SCSS"> <span
-                          class="custom-control-label"><i class="fa fa-square fa-lg text-teal mr-1"></i>
-                          SCSS</span></label> <label class="custom-control custom-checkbox filterable"><input
-                          type="checkbox" class="custom-control-input task-label" name="taskLabels[]" value="10"
-                          data-label="To Do"> <span class="custom-control-label"><i
-                            class="fa fa-square fa-lg text-cyan mr-1"></i> To Do</span></label>
-                    </div>
-                    <div class="dropdown-divider"></div><a href="#" class="dropdown-item">Create new label</a> <a
-                      href="#" class="dropdown-item">Manage labels</a>
-                  </div><!-- /.dropdown-menu -->
-                </div><!-- /.dropdown -->
-              </div><!-- /.form-group -->
-            </div><!-- /.col -->
+                <label id="job">Empleado</label>
+                <select #selecE name="employee" class="form-control select2" style="width:100%!important;">
+                  <option value=""> Seleccione un empleado </option>
+                  <option *ngFor="let employee of employees" [value]="employee._id"> {{ employee.name }} </option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
             <!-- .col -->
             <div class="col-md-6">
               <!-- .form-group -->
               <div class="form-group">
-                <label class="control-label" for="taskDueDate">Due date</label>
-                <div class="input-group input-group-alt flatpickr" data-toggle="flatpickr" data-wrap="true"
-                  data-min-date="today">
-                  <input name="taskDueDate" id="taskDueDate" type="text" class="form-control" data-input="">
-                  <div class="input-group-append">
-                    <button type="button" class="btn btn-secondary" data-toggle=""><i
-                        class="far fa-calendar"></i></button> <button type="button" class="btn btn-secondary"
-                      data-clear=""><i class="fa fa-times"></i></button>
-                  </div>
-                </div>
-              </div><!-- /.form-group -->
-            </div><!-- /.col -->
-          </div><!-- /.form-group -->
+                <label id="job">Vehículo</label>
+                <select #selectV name="vehicle" class="form-control select2" style="width:100%!important;">
+                  <option value=""> Seleccione un vehículo </option>
+                  <ng-container *ngFor="let vehicle of vehicles">
+                    <option *ngIf="vehicle.type === 'camion'" [value]="vehicle._id"> {{ vehicle.plate + ' (Camión)' }}
+                    </option>
+                    <option *ngIf="vehicle.type === 'camionG'" [value]="vehicle._id">
+                      {{ vehicle.plate + ' (Camión Gondola)' }}</option>
+                  </ng-container>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
           <hr>
           <!-- .form-group -->
-          <div class="form-group">
-            <div class="d-flex justify-content-between">
-              <label>Todos</label> <span id="ntTodosMeter" class="text-muted">(0/1)</span>
-            </div><!-- .progress -->
-            <div class="progress progress-sm">
-              <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                aria-valuemax="100" style="width: 0%">
-                <span class="sr-only">0% Complete</span>
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label class="control-label" for="flatpickr">Fecha</label> <input id="flatpickr" formControlName="date"
+                  name="date" type="text" class="form-control" required>
               </div>
-            </div><!-- /.progress -->
-          </div><!-- /.form-group -->
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label class="control-label" for="flatpickr08"> Hora de entrada </label> <input id="flatpickr08"
+                  formControlName="checkIN" name="checkIN" type="text" class="form-control" data-toggle="flatpickr"
+                  data-enable-time="true" data-no-calendar="true" data-date-format="H:i" data-default-date="12:00">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label class="control-label" for="flatpickr08"> Hora de salida </label> <input id="flatpickr08"
+                  formControlName="checkOUT" name="checkOUT" type="text" class="form-control" data-toggle="flatpickr"
+                  data-enable-time="true" data-no-calendar="true" data-date-format="H:i" data-default-date="12:00">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+          <hr>
           <!-- .form-group -->
-          <div class="form-group">
-            <!-- save task todos to this input hidden -->
-            <input type="hidden" name="ntTodos" value="[{id:0, desc:Eat corn on the cob, checked: false}]">
-            <!-- .todo-list -->
-            <div id="ntTodos" class="todo-list">
-              <!-- .todo -->
-              <div class="todo">
-                <!-- .custom-control -->
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="todo0" value="0"> <label
-                    class="custom-control-label" for="todo0">Eat corn on the cob</label>
-                </div><!-- /.custom-control -->
-                <!-- .todo-actions -->
-                <div class="todo-actions pr-1">
-                  <button type="button" class="btn btn-sm btn-light" onclick="boardDemo.removeNtTodo(0)">Delete</button>
-                </div><!-- /.todo-actions -->
-              </div><!-- /.todo -->
-            </div><!-- /.todo-list -->
-            <!-- .publisher -->
-            <div class="publisher">
-              <!-- .publisher-input -->
-              <div class="publisher-input pr-0">
-                <input id="ntTodosInpt" class="form-control form-control-reflow" placeholder="Add a todo"
-                  autocomplete="off">
-              </div><!-- /.publisher-input -->
-              <!-- .publisher-actions -->
-              <div class="publisher-actions">
-                <!-- .publisher-tools -->
-                <div class="publisher-tools pb-0">
-                  <button id="ntTodosAdd" type="button" class="btn btn-secondary">Add</button> <button id="ntTodosClear"
-                    type="button" class="btn btn-light"><i class="fa fa-times"></i></button>
-                </div><!-- /.publisher-tools -->
-              </div><!-- /.publisher-actions -->
-            </div><!-- /.publisher -->
-          </div><!-- /.form-group -->
-        </div><!-- /.modal-body -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">No. de Documento</label> <input type="text" formControlName="noTicket"
+                  name="noTicket" id="noTicket" class="form-control" required=""
+                  placeholder="Ingrese número de documento">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">No. de Entrega</label> <input type="text" formControlName="noDelivery"
+                  name="noDelivery" id="noDelivery" class="form-control" required=""
+                  placeholder="Ingrese número de entrega">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="pay">Metros</label>
+                <div class="input-group">
+                  <label class="input-group-prepend" for="pi9"><span class="badge">m</span></label>
+                  <input formControlName="mts" name="mts" type="number" min="0" step="0.01" class="form-control"
+                    id="trips" placeholder="Ingrese los metros" required>
+                </div>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+          <hr>
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Peso Bruto</label> <input type="number" min="0" step="0.01"
+                  formControlName="kgB" name="kgB" id="kgB" class="form-control" required=""
+                  placeholder="Ingrese los kilogramos brutos">
+              </div>
+              <!-- /.form-group -->
+
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Peso Tara</label> <input type="number" min="0" step="0.01" formControlName="kgT"
+                  name="kgT" id="kgT" class="form-control" required="" placeholder="Ingrese kilogramos tara">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Peso Neto</label> <input type="number" min="0" step="0.01" formControlName="kgN"
+                  name="kgN" id="kgN" class="form-control" required="" placeholder="Ingrese los kilogramos netos">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <!-- /.modal-body -->
         <hr>
         <!-- .modal-footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Save</button> <button type="reset" class="btn btn-light"
-            data-dismiss="modal">Cancel</button>
-        </div><!-- /.modal-footer -->
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-</form><!-- /.form -->
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button> <button #closeM
+            type="reset" class="btn btn-light" data-dismiss="modal">Cancel</button>
+        </div>
+        <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</form>
+<!-- /.form -->

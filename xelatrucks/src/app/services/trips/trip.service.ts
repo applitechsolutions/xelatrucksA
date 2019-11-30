@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { GreenTrip } from 'src/app/models/greenTrip.model';
 import swal from 'sweetalert';
+import { WhiteTrip } from '../../models/whiteTrip.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class TripService {
     public http: HttpClient,
     public userService: UserService
   ) { }
+
+  /* #region  VIAJES VERDES */
 
   crearGreenTrip(greenTrip: GreenTrip) {
     let url = URL_SERVICES + '/viajeV';
@@ -38,7 +41,7 @@ export class TripService {
 
   }
 
-  cargarGreenTrip( id: string ) {
+  cargarGreenTrip(id: string) {
     let url = URL_SERVICES + '/viajeV';
     url += '/' + id;
 
@@ -61,5 +64,32 @@ export class TripService {
 
     return this.http.request('delete', url, { body: trip });
   }
+
+  /* #endregion */
+
+  /* #region  VIAJES BLANCOS */
+
+  crearWhiteTrip(whiteTrip: WhiteTrip, km: number) {
+    let url = URL_SERVICES + '/viajeB';
+
+    if (whiteTrip._id) {
+      return;
+    } else {
+      url += '?km=' + km;
+      url += '&token=' + this.userService.token;
+      return this.http.post(url, whiteTrip)
+        .pipe(
+          map((res: any) => {
+            return res;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          })
+        );
+    }
+  }
+
+  /* #endregion */
 
 }

@@ -23,9 +23,13 @@ export class PullService {
     return this.http.get(url);
   }
 
-  cargarFinalizadas() {
-    const url = URL_SERVICES + '/pull/finisheds';
-    return this.http.get(url);
+  cargarFinalizadas(fecha1: Date, fecha2: Date) {
+    let url = URL_SERVICES + '/pull/finisheds';
+    url += '?fecha1=' + fecha1;
+    url += '&fecha2=' + fecha2;
+
+    return this.http.get(url)
+      .pipe(map((resp: any) => resp.pulls));
   }
 
   finalizarPull(id: string) {

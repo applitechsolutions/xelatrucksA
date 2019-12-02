@@ -1,13 +1,213 @@
-<!-- .empty-state -->
-<div id="notfound-state" class="empty-state">
-  <!-- .empty-state-container -->
-  <div class="empty-state-container">
-    <div class="state-figure">
-      <img class="img-fluid" src="../../../assets/images/illustration/img-6.svg" alt="" style="max-width: 300px">
+<!-- floating action -->
+<button [routerLink]="['/order', 'new']" routerLinkActive="router-link-active" type="button"
+  class="btn btn-success btn-floated"><span class="fa fa-plus"></span></button>
+<!-- /floating action -->
+<!-- .page-section -->
+<div class="page-section">
+  <!-- .card -->
+  <div class="card card-fluid">
+    <div class=" card-header d-flex">
+      <!-- .form-group -->
+      <div class="form-group col-3">
+        <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+        <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
+      </div>
+      <!-- /.form-group -->
+      <!-- .form-group -->
+      <div class="form-group col-3">
+        <label class="control-label" for="flatpickr02">Fecha final</label>
+        <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
+      </div>
+      <!-- /.form-group -->
+      <button type="button" [ngStyle]="{'margin-top': '29px'}" (click)="buscarFinalizadas()" class="btn btn-primary"><i
+          class="fas fa-search"></i> Buscar</button>
     </div>
-    <h3 class="state-header"> Sin contenido, todavía. </h3>
-    <p class="state-description lead text-muted"> Estamos trabajando para próximamente incluir nuevo contenido. </p>
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .btn-toolbar -->
+      <div id="dt-buttons" class="btn-toolbar"></div>
+      <!-- /.btn-toolbar -->
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .input-group -->
+        <div class="input-group input-group-alt">
+          <!-- .input-group -->
+          <div class="input-group has-clearable">
+            <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                  class="fa fa-times-circle"></i></span></button>
+            <div class="input-group-prepend">
+              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+            </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+          </div>
+          <!-- /.input-group -->
+          <!-- .input-group-prepend -->
+          <div class="input-group-prepend">
+            <select id="filterBy" class="custom-select">
+              <option value='' selected> Filtros </option>
+              <option value="0"> Fecha </option>
+              <option value="1"> Orden </option>
+              <option value="2"> Destino </option>
+              <option value="3"> Material </option>
+              <option value="4"> Total, metros </option>
+              <option value="5"> Faltante, metros </option>
+              <option value="6"> Total, kilogramos </option>
+              <option value="7"> Faltante, kilogramos </option>
+            </select>
+          </div>
+          <!-- /.input-group-prepend -->
+        </div>
+        <!-- /.input-group -->
+      </div>
+      <!-- /.form-group -->
+      <!-- .table -->
+      <table id="myTable" class="table">
+        <thead>
+          <tr>
+            <th> Fecha </th>
+            <th> Orden </th>
+            <th> Destino </th>
+            <th> Material </th>
+            <th> Total, metros </th>
+            <th> Faltante, metros </th>
+            <th> Total, kilogramos </th>
+            <th> Faltante, kilogramos </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pull of pulls">
+            <td class="align-middle">
+              {{ dtService.fromJsonDate(pull._order.date) }}
+            </td>
+            <td class="align-middle">{{ pull._order.order }}</td>
+            <td class="align-middle"> {{ pull._order._destination.name }} </td>
+            <td class="align-middle"> {{ pull._material.code + ' ' + pull._material.name }} </td>
+            <td class="align-middle"> {{ pull.totalMts | number: '1.2-2' }} m </td>
+            <td class="align-middle">
+              <span *ngIf="pull.mts >= pull.totalMts"
+                class="badge badge-success">{{ pull.totalMts - pull.mts | number: '1.2-2' }} m</span>
+              <span *ngIf="pull.mts > 0 && pull.mts < pull.totalMts"
+                class="badge badge-warning">{{ pull.totalMts - pull.mts | number: '1.2-2' }} m
+              </span>
+              <span *ngIf="pull.mts === 0" class="badge badge-danger">{{ pull.totalMts - pull.mts | number: '1.2-2' }} m
+              </span>
+            </td>
+            <td class="align-middle"> {{ pull.totalKg | number: '1.2-2' }} kg </td>
+            <td class="align-middle">
+              <span *ngIf="pull.kg >= pull.totalKg"
+                class="badge badge-success">{{ pull.totalKg - pull.kg | number: '1.2-2' }}
+                kg</span>
+              <span *ngIf="pull.kg > 0 && pull.kg < pull.totalKg"
+                class="badge badge-warning">{{ pull.totalKg - pull.kg | number: '1.2-2' }}
+                kg</span>
+              <span *ngIf="pull.kg === 0" class="badge badge-danger">{{ pull.totalKg - pull.kg | number: '1.2-2' }}
+                kg</span>
+            </td>
+            <td class="align-middle text-right">
+              <a (click)="verReportes(pull)" class="btn btn-sm btn-icon btn-secondary pointer" title="Editar"
+                data-toggle="modal" data-target="#modalReports"><i class="fas fa-list-alt"></i><span
+                  class="sr-only ">Detalles</span></a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th> Fecha </th>
+            <th> Orden </th>
+            <th> Destino </th>
+            <th> Material </th>
+            <th> Total, metros </th>
+            <th> Faltante, metros </th>
+            <th> Total, kilogramos </th>
+            <th> Faltante, kilogramos </th>
+            <th></th>
+          </tr>
+        </tfoot>
+      </table>
+      <ng-template #customLoadingTemplate>
+      </ng-template>
+      <!-- /.table -->
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+      </ngx-loading>
+    </div>
+    <!-- /.card-body -->
   </div>
-  <!-- /.empty-state-container -->
+  <!-- /.card -->
 </div>
-<!-- /.empty-state -->
+<!-- /.page-section -->
+<!-- .modal -->
+<div class="modal fade" id="modalReports" role="dialog" tabindex="-1" aria-labelledby="modalNewTaskLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content px-lg-4 py-lg-3">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h6 id="modalNewTaskLabel" class="modal-title"> Reportes de lineas <span
+            class="badge badge-success">{{ 'Orden: ' + pull._order.order + ', ' + pull._material.name }}</span></h6>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <!-- .table -->
+        <table id="table2" class="table dt-responsive nowrap w-100">
+          <thead>
+            <tr>
+              <th> Fecha </th>
+              <th> Documento </th>
+              <th> Entrega </th>
+              <th> Metros </th>
+              <th> Kilogramos </th>
+              <th> Horas </th>
+              <th> Estado </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let wTrip of whiteTrips">
+              <td>
+                <h6>{{ dtService.fromJsonDate(wTrip.date) }}</h6>
+              </td>
+              <td> {{ wTrip.noTicket }} </td>
+              <td> {{ wTrip.noDelivery }} </td>
+              <td> {{ wTrip.mts }} </td>
+              <td> {{ wTrip.kgT }} </td>
+              <td>Entrada: {{ dtService.fromJsonHour(wTrip.checkIN) }}<br> Salida:
+                {{ dtService.fromJsonHour(wTrip.checkOUT) }} </td>
+              <td>
+                <span *ngIf="!wTrip.invoiced" class="badge badge-warning">Pendiente</span>
+                <span *ngIf="wTrip.invoiced" class="badge badge-success">Facturado</span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th> Fecha </th>
+              <th> Documento </th>
+              <th> Entrega </th>
+              <th> Metros </th>
+              <th> Kilogramos </th>
+              <th> Horas </th>
+              <th> Estado </th>
+            </tr>
+          </tfoot>
+        </table>
+        <!-- /.table -->
+      </div>
+      <!-- /.modal-body -->
+      <hr>
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-light" data-dismiss="modal">Cancel</button>
+      </div>
+      <!-- /.modal-footer -->
+      <ng-template #customLoadingTemplate>
+      </ng-template>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+      </ngx-loading>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

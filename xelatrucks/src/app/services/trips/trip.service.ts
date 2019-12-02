@@ -69,6 +69,13 @@ export class TripService {
 
   /* #region  VIAJES BLANCOS */
 
+  cargarWhiteTrips(id: string) {
+    let url = URL_SERVICES + '/viajeB';
+    url += '/' + id;
+
+    return this.http.get(url);
+  }
+
   crearWhiteTrip(whiteTrip: WhiteTrip, km: number) {
     let url = URL_SERVICES + '/viajeB';
 

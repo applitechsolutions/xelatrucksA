@@ -1,13 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PullService, DatatablesService, EmployeeService, VehicleService, TripService } from 'src/app/services/service.index';
 import { Pull } from '../../models/pull.model';
 import { Employee } from '../../models/employee.model';
 import { Vehicle } from '../../models/vehicle.model';
+import { WhiteTrip } from '../../models/whiteTrip.model';
 
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { WhiteTrip } from '../../models/whiteTrip.model';
 
 declare var swal: any;
 declare function init_datatables();
@@ -28,13 +28,30 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   @ViewChild('checkOUT', { static: false }) checkOUT: ElementRef;
 
   pulls: Pull[] = [];
-  pull: Pull = { _order: null, _material: null, mts: 0, totalMts: 0, kg: 0, totalKg: 0 };
+  pull: Pull = {
+    _order: {
+      _destination: null,
+      date: '',
+      order: ''
+    },
+    _material: {
+      code: '',
+      name: '',
+      minStock: 0
+    },
+    mts: 0,
+    totalMts: 0,
+    kg: 0,
+    totalKg: 0
+  };
   loading = false;
 
   employees: Employee[] = [];
   vehicles: Vehicle[] = [];
 
   formaTrip: FormGroup;
+
+  whiteTrips: WhiteTrip[] = [];
 
   constructor(
     public pullS: PullService,
@@ -104,6 +121,23 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   /* #region  Reportes */
+  verReportes(pull: Pull) {
+
+    this.loading = true;
+    this.pull = pull;
+
+    this.tripS.cargarWhiteTrips(this.pull._id)
+      .subscribe((resp: any) => {
+        this.dtService.destroy_table2();
+
+        this.whiteTrips = resp.wviajes;
+
+        this.chRef.detectChanges();
+        this.dtService.init_tables2();
+        this.loading = false;
+      });
+  }
+
   cargarEmpleados() {
     this.empService.cargarEmpleados()
       .subscribe((res: any) => this.employees = res.empleados);

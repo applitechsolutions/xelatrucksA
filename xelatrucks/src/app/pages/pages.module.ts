@@ -57,6 +57,7 @@ import { WtripComponent } from './wtrips/wtrip.component';
 import { TypeTripComponent } from './type-trips/type-trip.component';
 import { OrdersFinishComponent } from './orders/orders-finish.component';
 import { GtripComponent } from './gtrips/gtrip.component';
+import { ReportsModule } from '../reports/reports.module';
 
 
 @NgModule({
@@ -118,6 +119,7 @@ import { GtripComponent } from './gtrips/gtrip.component';
         PAGES_ROUTES,
         ChartsModule,
         PipesModule,
+        ReportsModule,
         NgxLoadingModule.forRoot({})
     ]
 })

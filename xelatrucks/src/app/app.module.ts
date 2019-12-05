@@ -14,7 +14,6 @@ import { LoginComponent } from './login/login.component';
 import { PagesComponent } from './pages/pages.component';
 import { NgxLoadingModule } from 'ngx-loading';
 
-
 @NgModule({
   declarations: [
     AppComponent,

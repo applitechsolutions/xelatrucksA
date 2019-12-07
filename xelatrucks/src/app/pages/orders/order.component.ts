@@ -107,42 +107,53 @@ export class OrderComponent implements OnInit, AfterViewInit {
       swal('Oops...', 'Debe agregar materiales al detalle', 'warning');
       return;
     }
-    this.loading = true;
 
-    this.order._destination = this.selectD.nativeElement.value;
-    this.order.date = fecha.toString();
+    this.orderS.cargarOrden(fecha, this.order.order)
+      .subscribe((resp: any) => {
 
-    this.orderS.crearOrden(this.order)
-      .subscribe(resp => {
-        const orderDB: Order = resp.orden;
-        let itemsProcessed = 0;
+        if (resp.length > 0) {
+          swal('Oops...', 'La orden ya existe en la fecha seleccionada', 'warning');
+          return;
+        } else {
+          this.loading = true;
 
-        this.pulls.forEach(element => {
+          this.order._destination = this.selectD.nativeElement.value;
+          this.order.date = fecha.toString();
 
-          const pull: Pull = {
-            _order: orderDB,
-            _material: element._material,
-            mts: 0,
-            totalMts: element.totalMts,
-            kg: 0,
-            totalKg: element.totalKg
-          };
+          this.orderS.crearOrden(this.order)
+            .subscribe(resp2 => {
+              const orderDB: Order = resp2.orden;
+              let itemsProcessed = 0;
 
-          this.pullS.crearPull(pull)
-            .subscribe(resp => {
-              itemsProcessed++;
+              this.pulls.forEach(element => {
 
-              console.log(itemsProcessed);
-              console.log(this.pulls.length);
+                const pull: Pull = {
+                  _order: orderDB,
+                  _material: element._material,
+                  mts: 0,
+                  totalMts: element.totalMts,
+                  kg: 0,
+                  totalKg: element.totalKg
+                };
 
-              if (itemsProcessed === this.pulls.length) {
-                swal('Orden creada', 'Pull de materiales creado correctamente', 'success');
-                this.loading = false;
-                this.router.navigate(['/orders']);
-              }
+                this.pullS.crearPull(pull)
+                  .subscribe(resp3 => {
+                    itemsProcessed++;
+
+                    // console.log(itemsProcessed);
+                    // console.log(this.pulls.length);
+
+                    if (itemsProcessed === this.pulls.length) {
+                      swal('Orden creada', 'Pull de materiales creado correctamente', 'success');
+                      this.loading = false;
+                      this.router.navigate(['/orders']);
+                    }
+                  });
+              });
             });
-        });
+        }
       });
+
   }
 
   agregarDetalle() {

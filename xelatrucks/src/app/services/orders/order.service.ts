@@ -20,6 +20,17 @@ export class OrderService {
     public userS: UserService
   ) { }
 
+  cargarOrden(fecha: Date, order: string) {
+    let url = URL_SERVICES + '/order/uniqueValidator';
+    url += '?fecha=' + fecha;
+    url += '&order=' + order;
+    return this.http.get(url)
+      .pipe(
+        map((resp: any) => resp.orden)
+      );
+  }
+
+
   crearOrden(order: Order) {
 
     let url = URL_SERVICES + '/order';

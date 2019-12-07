@@ -87,8 +87,8 @@
                         <td> {{ gt.details }} </td>
                         <td> {{ gt.trips }} </td>
                         <td class="align-middle text-right">
-                            <a [routerLink]="[ '/gtrip', gt._id, gt._vehicle.km ]" class="btn btn-sm btn-icon btn-secondary pointer" title="Editar"><i class="fas fa-edit"></i> <span class="sr-only ">Editar</span></a>
-                            <a class="btn btn-sm btn-icon btn-secondary pointer" title="Eliminar"><i class="far fa-trash-alt "></i> <span class="sr-only ">Eliminar</span></a>
+                            <a [routerLink]="[ '/gtrip', gt._id ]" class="btn btn-sm btn-icon btn-secondary pointer" title="Editar"><i class="fas fa-edit"></i> <span class="sr-only ">Editar</span></a>
+                            <a class="btn btn-sm btn-icon btn-secondary pointer" title="Eliminar" (click)="eliminarViajeVerde( gt )"><i class="far fa-trash-alt "></i> <span class="sr-only ">Eliminar</span></a>
                         </td>
                     </tr>
                 </tbody>

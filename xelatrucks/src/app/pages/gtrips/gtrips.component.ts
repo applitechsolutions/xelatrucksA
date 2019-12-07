@@ -34,6 +34,35 @@ export class GtripsComponent implements OnInit {
 
   }
 
+  eliminarViajeVerde( greenTrip: GreenTrip ) {
+
+    const km = greenTrip._type.km * greenTrip.trips * -1;
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar el viaje del camión ' + greenTrip._vehicle.plate,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then(borrar => {
+        if (borrar) {
+          this.tripService.eliminarGreenTrip(greenTrip, km)
+            .subscribe((borrado: any) => {
+              swal({
+                title: 'Exito!',
+                text: 'Viaje borrado correctamente',
+                icon: 'success',
+                button: false,
+                timer: 1000
+              });
+              this.buscarReporteCuadros();
+            });
+        }
+
+      });
+  }
+
   /* #region  LISTAR Reporte Cuadros */
 
   buscarReporteCuadros() {
@@ -49,6 +78,8 @@ export class GtripsComponent implements OnInit {
         this.chRef.detectChanges();
         init_datatables();
 
+      }, () => {
+        this.loading = false;
       });
   }
 

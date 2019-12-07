@@ -44,6 +44,7 @@ export class TripService {
   cargarGreenTrip(id: string) {
     let url = URL_SERVICES + '/viajeV';
     url += '/' + id;
+    url += '?token=' + this.userService.token;
 
     return this.http.get(url);
   }
@@ -63,6 +64,24 @@ export class TripService {
     url += '?token=' + this.userService.token;
 
     return this.http.request('delete', url, { body: trip });
+  }
+
+  eliminarGreenTrip( trip: GreenTrip, km: number ) {
+    let url = URL_SERVICES + '/viajeV';
+    url += '/borrar?id=' + trip._id;
+    url += '&km=' + km;
+    url += '&token=' + this.userService.token;
+
+    return this.http.put(url, trip)
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err, caught) => {
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
+        })
+      );
   }
 
   /* #endregion */

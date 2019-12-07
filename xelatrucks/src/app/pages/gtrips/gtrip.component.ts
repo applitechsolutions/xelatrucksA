@@ -40,11 +40,13 @@ export class GtripComponent implements OnInit {
   todayGT: GreenTrip[] = [];
 
   employees: Employee[] = [];
+  tempEmp: string = '';
+
   vehicles: Vehicle[] = [];
   vehicle: Vehicle;
+  tempVehicle: string = '';
 
   types: Type[] = [];
-
   formTy: FormGroup;
   tempType: string = '';
 
@@ -64,7 +66,17 @@ export class GtripComponent implements OnInit {
     public matService: MaterialService,
     public typeService: TypeTripService,
     public dtService: DatatablesService
-  ) { }
+  ) {
+    activatedRoute.params.subscribe( params => {
+
+      const id = params.id;
+
+      if (id !== 'new') {
+        this.cargarViajeVerde(id);
+      }
+
+    });
+  }
 
   ngOnInit() {
     const today = moment(new Date()).format('DD/MM/YYYY');
@@ -103,7 +115,24 @@ export class GtripComponent implements OnInit {
 
     this.tripService.cargarGreenTrip(id)
       .subscribe((res: any) => {
-        this.greenTrip = res.Gviaje;
+        this.greenTrip = res.reporte;
+        console.log(this.greenTrip);
+        const fecha = this.dtService.fromJsonDate(this.greenTrip.date);
+        const hora1 = this.dtService.fromJsonHour(this.greenTrip.checkIN);
+        const hora2 = this.dtService.fromJsonHour(this.greenTrip.checkOUT);
+        this.tempVehicle = res._vehicle;
+        this.tempEmp = res._employee;
+        this.tempType = res._type;
+        this.tempMat = res._material;
+        this.formGT.get('employee').setValue(this.greenTrip._employee);
+        this.formGT.get('type').setValue(this.greenTrip._type);
+        this.formGT.get('vehicle').setValue(this.greenTrip._vehicle);
+        this.formGT.get('material').setValue(this.greenTrip._material);
+        this.formGT.get('date').setValue(fecha);
+        this.formGT.get('checkIN').setValue(hora1);
+        this.formGT.get('checkOUT').setValue(hora2);
+        this.formGT.get('trips').setValue(this.greenTrip.trips);
+        this.formGT.get('details').setValue(this.greenTrip.details);
       });
   }
 

@@ -23,6 +23,8 @@ export class PurchasesByProvidersComponent implements OnInit, AfterViewInit {
   @ViewChild('selectP', { static: false }) selectP: ElementRef;
   loading: boolean = false;
 
+  idTable = '';
+
   autoProviders: AutoProvider[] = [];
   buySpares: BuySpare[] = [];
   totalB = 0.00;

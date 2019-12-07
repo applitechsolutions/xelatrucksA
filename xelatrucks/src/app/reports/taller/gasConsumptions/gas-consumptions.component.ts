@@ -21,6 +21,9 @@ export class GasConsumptionsComponent implements OnInit, AfterViewInit {
   @ViewChild('dateG1', { static: false }) dateG1: ElementRef;
   @ViewChild('dateG2', { static: false }) dateG2: ElementRef;
 
+
+  idTable = 'myTable';
+
   gasolines: Gas[] = [];
   totalGas = 0.00;
   totalGal = 0.00;

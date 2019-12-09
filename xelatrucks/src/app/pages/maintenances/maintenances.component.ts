@@ -27,10 +27,11 @@ export class MaintenancesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //this.dtS.init_datePicker2();
+    this.dtS.init_datePicker2();
   }
 
   searchTerminados() {
+
     if (this.date1.nativeElement.value === '' || this.date2.nativeElement.value === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;

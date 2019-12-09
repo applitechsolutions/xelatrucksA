@@ -29,7 +29,7 @@
                                 <!-- .form-group -->
                                 <div class="form-group col-6">
                                     <label id="typeL">Empleado <span class="badge badge-danger">Obligatorio</span></label>
-                                    <select #selectE name="employee" class="form-control select2" style="width:100%!important;">
+                                    <select #selectE formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
                                     <option value=""> Seleccione un empleado </option>
                                     <option *ngFor="let empleado of employees" [selected]="empleado._id === tempEmp" [value]="empleado._id"> {{ empleado.name }}
                                     </option>

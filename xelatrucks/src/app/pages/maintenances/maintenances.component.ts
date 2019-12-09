@@ -14,8 +14,8 @@ declare var swal: any;
 })
 export class MaintenancesComponent implements OnInit {
   loading: boolean = false;
-  @ViewChild('date1', {static: false}) date1: ElementRef;
-  @ViewChild('date2', {static: false}) date2: ElementRef;
+  @ViewChild('date1', { static: false }) date1: ElementRef;
+  @ViewChild('date2', { static: false }) date2: ElementRef;
   maintenances: Maintenance[] = [];
   detailsV: DetailsSpare[] = [];
   detailsG: DetailsSpare[] = [];
@@ -27,7 +27,7 @@ export class MaintenancesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //this.dtS.init_datePicker2();
+    this.dtS.init_datePicker2();
   }
 
   searchTerminados() {
@@ -41,7 +41,7 @@ export class MaintenancesComponent implements OnInit {
     const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY hh:mm').toDate();
 
     this.mainService.cargarTerminados(fecha1, fecha2)
-      .subscribe( (res: any) => {
+      .subscribe((res: any) => {
         destroy_datatables();
 
         // console.log(res);
@@ -54,7 +54,7 @@ export class MaintenancesComponent implements OnInit {
       });
   }
 
-  verDetallesV( maintenance: Maintenance ) {
+  verDetallesV(maintenance: Maintenance) {
     this.dtS.destroy_table();
 
     this.detailsV = maintenance.detailsV;
@@ -63,7 +63,7 @@ export class MaintenancesComponent implements OnInit {
     this.dtS.init_tables();
   }
 
-  verDetallesG( maintenance: Maintenance ) {
+  verDetallesG(maintenance: Maintenance) {
     this.dtS.destroy_table2();
 
     this.detailsG = maintenance.detailsG;

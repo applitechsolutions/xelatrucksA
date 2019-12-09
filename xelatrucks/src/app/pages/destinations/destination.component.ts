@@ -14,12 +14,7 @@ declare var swal: any;
 })
 export class DestinationComponent implements OnInit {
 
-  @ViewChild('closeM', { static: false }) closeM: ElementRef;
-
   formaDestination: FormGroup;
-  formaTariff: FormGroup;
-
-  tariffs: Tariff[] = [];
 
   constructor(
     public destinationS: DestinationService,
@@ -43,13 +38,8 @@ export class DestinationComponent implements OnInit {
       _id: new FormControl(''),
       type: new FormControl('', Validators.required),
       name: new FormControl('', Validators.required),
-      km: new FormControl('', Validators.required)
-    });
-
-    this.formaTariff = new FormGroup({
-      start: new FormControl(0, Validators.required),
-      end: new FormControl(0, Validators.required),
-      cost: new FormControl(0, Validators.required)
+      km: new FormControl('', Validators.required),
+      tariff: new FormControl('', Validators.required)
     });
   }
 
@@ -61,44 +51,11 @@ export class DestinationComponent implements OnInit {
         this.formaDestination.get('type').setValue(resp.type);
         this.formaDestination.get('name').setValue(resp.name);
         this.formaDestination.get('km').setValue(resp.km);
+        this.formaDestination.get('tariff').setValue(resp.tariff);
       });
   }
 
-  agregarTarifa() {
-
-    if (this.formaTariff.value.start >= this.formaTariff.value.end) {
-      swal('Oops...', 'El rango inicial no puede ser mayor o igual al rango final', 'warning');
-      return;
-    }
-
-    if (this.tariffs.length > 0) {
-
-      const lastTariff = this.tariffs[Object.keys(this.tariffs).length - 1];
-      if (lastTariff.end >= this.formaTariff.value.start) {
-        swal('Oops...', 'El rango inicial no puede ser menor o igual al último rango final', 'warning');
-        return;
-      }
-    }
-
-    this.tariffs.push({
-      start: this.formaTariff.value.start,
-      end: this.formaTariff.value.end,
-      cost: this.formaTariff.value.cost
-    });
-
-    this.closeM.nativeElement.click();
-    this.formaTariff.reset({
-      start: 0,
-      end: 0,
-      cost: 0
-    });
-  }
-
   crearDestino() {
-    if (this.tariffs.length <= 0 && !this.formaDestination.value._id) {
-      swal('Oops...', 'Debe ingresar la tarifa del viaje', 'warning');
-      return;
-    }
 
     if (this.formaDestination.invalid) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
@@ -112,7 +69,7 @@ export class DestinationComponent implements OnInit {
         this.formaDestination.value.name,
         this.formaDestination.value.type,
         this.formaDestination.value.km,
-        [],
+        this.formaDestination.value.tariff,
         this.formaDestination.value._id
       );
     } else {
@@ -120,7 +77,7 @@ export class DestinationComponent implements OnInit {
         this.formaDestination.value.name,
         this.formaDestination.value.type,
         this.formaDestination.value.km,
-        this.tariffs
+        this.formaDestination.value.tariff
       );
     }
 

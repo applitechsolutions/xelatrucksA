@@ -6,7 +6,7 @@ export class Destination {
         public name: string,
         public type: string,
         public km: number,
-        public tariff: Tariff[],
+        public tariff: number,
         public _id?: string
     ) { }
 

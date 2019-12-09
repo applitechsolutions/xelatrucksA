@@ -44,6 +44,7 @@ export class GtripComponent implements OnInit {
 
   vehicles: Vehicle[] = [];
   vehicle: Vehicle;
+  oldKM: number = 0;
   tempVehicle: string = '';
 
   types: Type[] = [];
@@ -109,6 +110,9 @@ export class GtripComponent implements OnInit {
 
   ngAfterViewInit() {
     $('.select2').select2();
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtService.init_datePicker(today);
+    this.dtService.init_timePicker();
   }
 
   cargarViajeVerde(id: string) {
@@ -116,17 +120,17 @@ export class GtripComponent implements OnInit {
     this.tripService.cargarGreenTrip(id)
       .subscribe((res: any) => {
         this.greenTrip = res.reporte;
-        console.log(this.greenTrip);
         const fecha = this.dtService.fromJsonDate(this.greenTrip.date);
         const hora1 = this.dtService.fromJsonHour(this.greenTrip.checkIN);
         const hora2 = this.dtService.fromJsonHour(this.greenTrip.checkOUT);
-        this.tempVehicle = res._vehicle;
-        this.tempEmp = res._employee;
-        this.tempType = res._type;
-        this.tempMat = res._material;
+        this.oldKM = this.greenTrip._vehicle.km;
+        this.tempVehicle = res.reporte._vehicle._id;
+        this.tempEmp = res.reporte._employee;
+        this.tempType = res.reporte._type._id;
+        this.tempMat = res.reporte._material;
         this.formGT.get('employee').setValue(this.greenTrip._employee);
-        this.formGT.get('type').setValue(this.greenTrip._type);
-        this.formGT.get('vehicle').setValue(this.greenTrip._vehicle);
+        this.formGT.get('type').setValue(this.greenTrip._type._id);
+        this.formGT.get('vehicle').setValue(this.greenTrip._vehicle._id);
         this.formGT.get('material').setValue(this.greenTrip._material);
         this.formGT.get('date').setValue(fecha);
         this.formGT.get('checkIN').setValue(hora1);
@@ -140,19 +144,34 @@ export class GtripComponent implements OnInit {
 
   crearViajeVerde() {
 
-    this.formGT.value.employee = this.selectE.nativeElement.value;
-    this.formGT.value.material = this.selectM.nativeElement.value;
-
-    let type: Type;
-
-    this.vehicle = this.vehicles.find(v => v._id === this.selectV.nativeElement.value);
-    type = this.types.find(ty => ty._id === this.selectT.nativeElement.value);
-
     // tslint:disable-next-line: max-line-length
     if (this.formGT.invalid || this.selectV.nativeElement.value === '' || this.selectT.nativeElement.value === '' || this.selectE.nativeElement.value === '' || this.selectM.nativeElement.value === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }
+    this.formGT.value.employee = this.selectE.nativeElement.value;
+    this.formGT.value.material = this.selectM.nativeElement.value;
+    const horaIn = this.formGT.value.date + ' ' + this.formGT.value.checkIN;
+    const horaOut = this.formGT.value.date + ' ' + this.formGT.value.checkOUT;
+    
+    let type: Type;
+    let diferencia;
+
+    if (this.greenTrip._vehicle._id === this.selectV.nativeElement.value) {
+      if (this.greenTrip.trips === this.formGT.value.trips) {
+        diferencia = 0;
+      } else if (this.greenTrip.trips <= this.formGT.value.trips) {
+        diferencia = (this.formGT.value.trips * this.greenTrip._type.km) - (this.greenTrip.trips * this.greenTrip._type.km);
+      } else if (this.greenTrip.trips >= this.formGT.value.trips) {
+        diferencia = (this.greenTrip.trips * this.greenTrip._type.km) - (this.formGT.value.trips * this.greenTrip._type.km);
+        diferencia = diferencia * -1;
+      }
+    } else if (this.greenTrip._vehicle._id !== this.selectV.nativeElement.value) {
+      diferencia = this.formGT.value.trips * this.greenTrip._type.km;
+    }
+    this.vehicle = this.vehicles.find(v => v._id === this.selectV.nativeElement.value);
+    type = this.types.find(ty => ty._id === this.selectT.nativeElement.value);
+
 
     this.loading = true;
     let greenT;
@@ -164,8 +183,8 @@ export class GtripComponent implements OnInit {
         this.vehicle,
         this.formGT.value.material,
         moment(this.formGT.value.date, 'DD/MM/YYYY').toDate(),
-        moment(this.formGT.value.checkIN, 'HH:mm').toDate(),
-        moment(this.formGT.value.checkOUT, 'HH:mm').toDate(),
+        moment(horaIn, 'DD/MM/YYYY HH:mm').toDate(),
+        moment(horaOut, 'DD/MM/YYYY HH:mm').toDate(),
         this.formGT.value.trips,
         this.formGT.value.details,
         this.greenTrip._id
@@ -177,39 +196,16 @@ export class GtripComponent implements OnInit {
         this.vehicle,
         this.formGT.value.material,
         moment(this.formGT.value.date, 'DD/MM/YYYY').toDate(),
-        moment(this.formGT.value.checkIN, 'HH:mm').toDate(),
-        moment(this.formGT.value.checkOUT, 'HH:mm').toDate(),
+        moment(horaIn, 'DD/MM/YYYY HH:mm').toDate(),
+        moment(horaOut, 'DD/MM/YYYY HH:mm').toDate(),
         this.formGT.value.trips,
         this.formGT.value.details
       );
     }
 
-    this.tripService.crearGreenTrip(greenT)
+    this.tripService.crearGreenTrip(greenT, diferencia)
       .subscribe((res: any) => {
-
-        swal({
-          title: 'Exito!',
-          text: 'Viaje creado correctamente' + res.viajeV.details,
-          icon: 'success',
-          button: false,
-          timer: 1500
-        });
-
-        this.formGT.reset();
-        $('.select2').val('').trigger('change');
-        this.todayGT.push({
-          _employee: res.viajeV._employee,
-          _type: res.viajeV._type,
-          _vehicle: res.viajeV._vehicle,
-          _material: res.viajeV._material,
-          date: res.viajeV.date,
-          checkIN: res.viajeV.checkIN,
-          checkOUT: res.viajeV.checkOUT,
-          trips: res.viajeV.trips,
-          details: res.viajeV.details,
-          _id: res.viajeV._id
-        });
-        this.loading = false;
+        this.router.navigate(['/gtrips']);
       });
   }
 
@@ -268,7 +264,6 @@ export class GtripComponent implements OnInit {
           .map((res: any) => {
             this.materials = res.storage;
           });
-        console.log(this.materials);
       });
   }
 

@@ -32,6 +32,7 @@ export class MaintenancesComponent implements OnInit {
   }
 
   searchTerminados() {
+
     if (this.date1.nativeElement.value === '' || this.date2.nativeElement.value === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;

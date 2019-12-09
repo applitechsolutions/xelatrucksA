@@ -20,17 +20,31 @@ export class TripService {
 
   /* #region  VIAJES VERDES */
 
-  crearGreenTrip(greenTrip: GreenTrip) {
+  crearGreenTrip(greenTrip: GreenTrip, diferencia: number) {
     let url = URL_SERVICES + '/viajeV';
 
     if (greenTrip._id) {
-      return;
+      url += '?id=' + greenTrip._id;
+      url += '&diferencia=' + diferencia;
+      url += '&token=' + this.userService.token;
+      return this.http.put(url, greenTrip)
+        .pipe(
+          map((res: any) => {
+            swal('Reporte cuadros Actualizado', 'consulte para continuar', 'success');
+            return res.viajeV;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          })
+        );
     } else {
       url += '?token=' + this.userService.token;
       return this.http.post(url, greenTrip)
         .pipe(
           map((res: any) => {
-            return res;
+            swal('Reporte cuadros creado', 'consulte para continuar', 'success');
+            return res.viajeV;
           }),
           catchError((err, caught) => {
             swal(err.error.mensaje, err.error.errors.message, 'error');

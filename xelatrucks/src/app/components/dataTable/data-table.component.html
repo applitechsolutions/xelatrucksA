@@ -1,0 +1,20 @@
+<!-- .table -->
+<table id="Mytable" class="table">
+  <thead>
+    <tr>
+      <th *ngFor="let header of headers"> {{ header.name }} </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let body of bodys">
+      <td *ngFor="let col of body" class="align-middle">
+        {{ col.text }}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th *ngFor="let footer of footers"></th>
+    </tr>
+  </tfoot>
+</table>

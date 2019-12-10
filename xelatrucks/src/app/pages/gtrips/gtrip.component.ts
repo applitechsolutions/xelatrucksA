@@ -157,7 +157,7 @@ export class GtripComponent implements OnInit {
     let type: Type;
     let diferencia;
 
-    if (this.greenTrip._vehicle._id === this.selectV.nativeElement.value) {
+
       if (this.greenTrip.trips === this.formGT.value.trips) {
         diferencia = 0;
       } else if (this.greenTrip.trips <= this.formGT.value.trips) {
@@ -166,9 +166,7 @@ export class GtripComponent implements OnInit {
         diferencia = (this.greenTrip.trips * this.greenTrip._type.km) - (this.formGT.value.trips * this.greenTrip._type.km);
         diferencia = diferencia * -1;
       }
-    } else if (this.greenTrip._vehicle._id !== this.selectV.nativeElement.value) {
-      diferencia = this.formGT.value.trips * this.greenTrip._type.km;
-    }
+
     this.vehicle = this.vehicles.find(v => v._id === this.selectV.nativeElement.value);
     type = this.types.find(ty => ty._id === this.selectT.nativeElement.value);
 

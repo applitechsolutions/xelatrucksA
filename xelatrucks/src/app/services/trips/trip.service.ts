@@ -72,6 +72,15 @@ export class TripService {
     return this.http.get(url);
   }
 
+  cargarGreenReport(fecha1: Date, fecha2: Date) {
+
+    let url = URL_SERVICES + '/viajeV/resume';
+    url += '?fecha1=' + fecha1;
+    url += '&fecha2=' + fecha2;
+
+    return this.http.get(url);
+  }
+
   borrarGreenTrip(trip: GreenTrip) {
     let url = URL_SERVICES + '/viajeV';
     url += '/' + trip._id;
@@ -80,7 +89,7 @@ export class TripService {
     return this.http.request('delete', url, { body: trip });
   }
 
-  eliminarGreenTrip( trip: GreenTrip, km: number ) {
+  eliminarGreenTrip(trip: GreenTrip, km: number) {
     let url = URL_SERVICES + '/viajeV';
     url += '/borrar?id=' + trip._id;
     url += '&km=' + km;

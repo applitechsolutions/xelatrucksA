@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { DatatablesService, UserService, VehicleService } from 'src/app/services/service.index';
 import { Gas } from 'src/app/models/gas.model';
 
@@ -15,14 +15,17 @@ declare var swal: any;
   templateUrl: './gas-consumptions.component.html',
   styles: []
 })
-export class GasConsumptionsComponent implements OnInit, AfterViewInit {
+export class GasConsumptionsComponent implements OnInit, AfterViewInit, OnChanges {
 
   loading: boolean = false;
   @ViewChild('dateG1', { static: false }) dateG1: ElementRef;
   @ViewChild('dateG2', { static: false }) dateG2: ElementRef;
 
-
-  idTable = 'myTable';
+  @Input() idTable: string;
+  @Input() dtButtons: string;
+  @Input() clearSearch: string;
+  @Input() tableSearch: string;
+  @Input() filterBy: string;
 
   gasolines: Gas[] = [];
   totalGas = 0.00;
@@ -49,6 +52,18 @@ export class GasConsumptionsComponent implements OnInit, AfterViewInit {
     $('.select2').select2();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+
+    this.cambiarTableID(changes.idTable.currentValue);
+    // You can also use categoryId.previousValue and
+    // categoryId.firstChange for comparing old and new values
+
+  }
+
+  cambiarTableID(idTable: string) {
+    destroy_datatables();
+  }
+
   createReportG() {
     this.today = new Date();
     this.chRef.detectChanges();
@@ -66,7 +81,7 @@ export class GasConsumptionsComponent implements OnInit, AfterViewInit {
     const fecha1 = moment(this.dateG1.nativeElement.value, 'DD/MM/YYYY').toDate();
     const fecha2 = moment(this.dateG2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
-    this.vehicleS.cargarGasolinesAll(fecha1, fecha2).subscribe(resp => {
+    this.vehicleS.cargarGasolinesAll(fecha1, fecha2).subscribe((resp: any) => {
       destroy_datatables();
       this.gasolines = resp;
       // console.log(this.gasolines);

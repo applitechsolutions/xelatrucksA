@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AutoProvider } from 'src/app/models/autoProvider.model';
 import { BuySpare } from 'src/app/models/buySpare.model';
 import { DatatablesService, UserService, AutoProviderService, BuySpareService } from 'src/app/services/service.index';
@@ -16,14 +16,18 @@ declare var swal: any;
   templateUrl: './purchases-by-providers.component.html',
   styles: []
 })
-export class PurchasesByProvidersComponent implements OnInit, AfterViewInit {
+export class PurchasesByProvidersComponent implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild('dateP1', { static: false }) dateP1: ElementRef;
   @ViewChild('dateP2', { static: false }) dateP2: ElementRef;
   @ViewChild('selectP', { static: false }) selectP: ElementRef;
   loading: boolean = false;
 
-  idTable = '';
+  @Input() idTable: string;
+  @Input() dtButtons: string;
+  @Input() clearSearch: string;
+  @Input() tableSearch: string;
+  @Input() filterBy: string;
 
   autoProviders: AutoProvider[] = [];
   buySpares: BuySpare[] = [];
@@ -53,6 +57,18 @@ export class PurchasesByProvidersComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     $('.select2').select2();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    this.cambiarTableID(changes.idTable.currentValue);
+    // You can also use categoryId.previousValue and
+    // categoryId.firstChange for comparing old and new values
+
+  }
+
+  cambiarTableID(idTable: string) {
+    destroy_datatables();
   }
 
   createReportB() {

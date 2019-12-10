@@ -9,13 +9,15 @@ import { DataTableComponent } from '../components/dataTable/data-table.component
 
 import { PurchasesByProvidersComponent } from './taller/purchasesByProviders/purchases-by-providers.component';
 import { GasConsumptionsComponent } from './taller/gasConsumptions/gas-consumptions.component';
+import { GreenTripsComponent } from './transporte/greenTrips/green-trips.component';
 
 
 @NgModule({
     declarations: [
         PurchasesByProvidersComponent,
         GasConsumptionsComponent,
-        DataTableComponent
+        DataTableComponent,
+        GreenTripsComponent
     ],
     exports: [
         PurchasesByProvidersComponent,

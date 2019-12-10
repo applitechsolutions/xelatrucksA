@@ -22,7 +22,7 @@
       class="fas fa-print"></i></button>
 </div>
 <!-- .btn-toolbar -->
-<div id="dt-buttons" class="btn-toolbar"></div>
+<div [id]="dtButtons" class="btn-toolbar"></div>
 <!-- /.btn-toolbar -->
 <!-- .form-group -->
 <div class="form-group">
@@ -30,16 +30,16 @@
   <div class="input-group input-group-alt">
     <!-- .input-group -->
     <div class="input-group has-clearable">
-      <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+      <button [id]="clearSearch" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
             class="fa fa-times-circle"></i></span></button>
       <div class="input-group-prepend">
         <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-      </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+      </div><input [id]="tableSearch" type="text" class="form-control" placeholder="Buscar aquí">
     </div>
     <!-- /.input-group -->
     <!-- .input-group-prepend -->
     <div class="input-group-prepend">
-      <select id="filterBy" class="custom-select">
+      <select [id]="filterBy" class="custom-select">
         <option value='' selected> Filtros </option>
         <option value="0"> Vehículo </option>
         <option value="1"> Fecha </option>
@@ -53,9 +53,8 @@
   <!-- /.input-group -->
 </div>
 <!-- /.form-group -->
-<app-data-table></app-data-table>
 <!-- .table -->
-<!-- <table [id]="idTable" class="table">
+<table [id]="idTable" class="table">
   <thead>
     <tr>
       <th> Vehículo </th>
@@ -68,56 +67,56 @@
   <tbody>
     <tr *ngFor="let gasoline of gasolines">
       <td class="align-middle text-truncate">
-        <div class="media align-items-center"> -->
-<!-- .list-group-item-figure -->
-<!-- <div *ngIf="gasoline.type==='camion'" class="list-group-item-figure">
+        <div class="media align-items-center">
+          <!-- .list-group-item-figure -->
+          <div *ngIf="gasoline.type==='camion'" class="list-group-item-figure">
             <div class="tile tile-circle bg-yellow"> <i class="fas fa-truck"></i></div>
-          </div> -->
-<!-- /.list-group-item-figure -->
-<!-- <div *ngIf="gasoline.type==='camion'" class="media-body">
+          </div>
+          <!-- /.list-group-item-figure -->
+          <div *ngIf="gasoline.type==='camion'" class="media-body">
             <label>Camión <br> {{ gasoline.plate }}</label>
-          </div> -->
-<!-- .list-group-item-figure -->
-<!-- <div *ngIf="gasoline.type==='camionG'" class="list-group-item-figure">
+          </div>
+          <!-- .list-group-item-figure -->
+          <div *ngIf="gasoline.type==='camionG'" class="list-group-item-figure">
             <div class="tile tile-circle bg-orange"> <i class="fas fa-truck-moving"></i> </div>
-          </div> -->
-<!-- /.list-group-item-figure -->
-<!-- .list-group-item-body -->
-<!-- <div *ngIf="gasoline.type==='camionG'" class="media-body">
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div *ngIf="gasoline.type==='camionG'" class="media-body">
             <label>Camión Gondola <br> {{ gasoline.plate }}</label>
-          </div> -->
-<!-- /.list-group-item-body -->
-<!-- .list-group-item-figure -->
-<!-- <div *ngIf="gasoline.type==='vehiculo'" class="list-group-item-figure">
+          </div>
+          <!-- /.list-group-item-body -->
+          <!-- .list-group-item-figure -->
+          <div *ngIf="gasoline.type==='vehiculo'" class="list-group-item-figure">
             <div class="tile tile-circle bg-blue"> <i class="fas fa-truck-pickup"></i> </div>
-          </div> -->
-<!-- /.list-group-item-figure -->
-<!-- .list-group-item-body -->
-<!-- <div *ngIf="gasoline.type==='vehiculo'" class="media-body">
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div *ngIf="gasoline.type==='vehiculo'" class="media-body">
             <label>Vehículo <br> {{ gasoline.plate }}</label>
-          </div> -->
-<!-- /.list-group-item-body -->
-<!-- .list-group-item-figure -->
-<!-- <div *ngIf="gasoline.type==='riego'" class="list-group-item-figure">
+          </div>
+          <!-- /.list-group-item-body -->
+          <!-- .list-group-item-figure -->
+          <div *ngIf="gasoline.type==='riego'" class="list-group-item-figure">
             <div class="tile tile-circle bg-green"> <i class="fas fa-truck-monster"></i> </div>
-          </div> -->
-<!-- /.list-group-item-figure -->
-<!-- .list-group-item-body -->
-<!-- <div *ngIf="gasoline.type==='riego'" class="media-body">
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div *ngIf="gasoline.type==='riego'" class="media-body">
             <label>Camión para riego <br> {{ gasoline.plate }}</label>
-          </div> -->
-<!-- /.list-group-item-body -->
-<!-- .list-group-item-figure -->
-<!-- <div *ngIf="gasoline.type==='stock'" class="list-group-item-figure">
+          </div>
+          <!-- /.list-group-item-body -->
+          <!-- .list-group-item-figure -->
+          <div *ngIf="gasoline.type==='stock'" class="list-group-item-figure">
             <div class="tile tile-circle bg-pink"> <i class="fas fa-snowplow"></i> </div>
-          </div> -->
-<!-- /.list-group-item-figure -->
-<!-- .list-group-item-body -->
-<!-- <div *ngIf="gasoline.type==='stock'" class="media-body">
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div *ngIf="gasoline.type==='stock'" class="media-body">
             <label>Excavadora <br> {{ gasoline.plate }}</label>
-          </div> -->
-<!-- /.list-group-item-body -->
-<!-- </div>
+          </div>
+          <!-- /.list-group-item-body -->
+        </div>
       </td>
       <td class="align-middle">
         {{ dtService.fromJsonDate(gasoline.date) }}
@@ -144,7 +143,7 @@
       </th>
     </tr>
   </tfoot>
-</table> -->
+</table>
 <ng-template #customLoadingTemplate>
 </ng-template>
 <!-- /.table -->

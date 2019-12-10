@@ -27,8 +27,7 @@ export class MaintenancesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const today = moment(new Date()).format('DD/MM/YYYY');
-    this.dtS.init_datePicker(today);
+    this.dtS.init_datePicker2();
   }
 
   searchTerminados() {

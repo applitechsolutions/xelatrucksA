@@ -14,7 +14,6 @@ declare function destroy_datatables();
 export class DestinationsComponent implements OnInit {
 
   destinations: Destination[] = [];
-  tariffs: Tariff[] = [];
 
   constructor(
     public destinationS: DestinationService,
@@ -30,9 +29,4 @@ export class DestinationsComponent implements OnInit {
         init_datatables();
       });
   }
-
-  verTarifas(destination: Destination) {
-    this.tariffs = destination.tariff;
-  }
-
 }

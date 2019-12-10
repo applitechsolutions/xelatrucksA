@@ -33,6 +33,9 @@ export class GtripComponent implements OnInit {
   @ViewChild('selectT', { static: false }) selectT: ElementRef;
   @ViewChild('selectV', { static: false }) selectV: ElementRef;
   @ViewChild('selectM', { static: false }) selectM: ElementRef;
+  @ViewChild('date', { static: false }) date: ElementRef;
+  @ViewChild('checkIN', { static: false }) checkIN: ElementRef;
+  @ViewChild('checkOUT', { static: false }) checkOUT: ElementRef;
 
   formGT: FormGroup;
   greenTrip: GreenTrip = { _employee: null, _type: null, _vehicle: null, _material: null };
@@ -68,7 +71,7 @@ export class GtripComponent implements OnInit {
     public typeService: TypeTripService,
     public dtService: DatatablesService
   ) {
-    activatedRoute.params.subscribe( params => {
+    activatedRoute.params.subscribe(params => {
 
       const id = params.id;
 
@@ -80,26 +83,29 @@ export class GtripComponent implements OnInit {
   }
 
   ngOnInit() {
+
     const today = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_datePicker(today);
     this.dtService.init_timePicker();
-
-    this.cargarEmpleados();
-    this.cargarVehiculos();
-    this.cargarTypes();
-    this.cargarMateriales();
 
     this.formGT = new FormGroup({
       employee: new FormControl(''),
       type: new FormControl(''),
       vehicle: new FormControl(''),
       material: new FormControl(''),
-      date: new FormControl(null),
+      date: new FormControl(''),
       checkIN: new FormControl(null),
       checkOUT: new FormControl(null),
       trips: new FormControl(null),
       details: new FormControl(null)
     });
+
+
+    this.cargarEmpleados();
+    this.cargarVehiculos();
+    this.cargarTypes();
+    this.cargarMateriales();
+
 
     this.formMat = new FormGroup({
       code: new FormControl(null),
@@ -137,12 +143,20 @@ export class GtripComponent implements OnInit {
         this.formGT.get('checkOUT').setValue(hora2);
         this.formGT.get('trips').setValue(this.greenTrip.trips);
         this.formGT.get('details').setValue(this.greenTrip.details);
+
+        this.formGT.controls.type.disable();
+        this.formGT.controls.vehicle.disable();
       });
   }
 
   /* #region  CREAR VIAJE VERDE */
 
   crearViajeVerde() {
+
+    console.log(this.formGT);
+    this.formGT.value.date = this.date.nativeElement.value;
+    this.formGT.value.checkIN = this.checkIN.nativeElement.value;
+    this.formGT.value.checkOUT = this.checkOUT.nativeElement.value;
 
     // tslint:disable-next-line: max-line-length
     if (this.formGT.invalid || this.selectV.nativeElement.value === '' || this.selectT.nativeElement.value === '' || this.selectE.nativeElement.value === '' || this.selectM.nativeElement.value === '') {
@@ -153,19 +167,19 @@ export class GtripComponent implements OnInit {
     this.formGT.value.material = this.selectM.nativeElement.value;
     const horaIn = this.formGT.value.date + ' ' + this.formGT.value.checkIN;
     const horaOut = this.formGT.value.date + ' ' + this.formGT.value.checkOUT;
-    
+
     let type: Type;
     let diferencia;
 
 
-      if (this.greenTrip.trips === this.formGT.value.trips) {
-        diferencia = 0;
-      } else if (this.greenTrip.trips <= this.formGT.value.trips) {
-        diferencia = (this.formGT.value.trips * this.greenTrip._type.km) - (this.greenTrip.trips * this.greenTrip._type.km);
-      } else if (this.greenTrip.trips >= this.formGT.value.trips) {
-        diferencia = (this.greenTrip.trips * this.greenTrip._type.km) - (this.formGT.value.trips * this.greenTrip._type.km);
-        diferencia = diferencia * -1;
-      }
+    if (this.greenTrip.trips === this.formGT.value.trips) {
+      diferencia = 0;
+    } else if (this.greenTrip.trips <= this.formGT.value.trips) {
+      diferencia = (this.formGT.value.trips * this.greenTrip._type.km) - (this.greenTrip.trips * this.greenTrip._type.km);
+    } else if (this.greenTrip.trips >= this.formGT.value.trips) {
+      diferencia = (this.greenTrip.trips * this.greenTrip._type.km) - (this.formGT.value.trips * this.greenTrip._type.km);
+      diferencia = diferencia * -1;
+    }
 
     this.vehicle = this.vehicles.find(v => v._id === this.selectV.nativeElement.value);
     type = this.types.find(ty => ty._id === this.selectT.nativeElement.value);

@@ -1,211 +1,242 @@
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .card -->
-    <div class="card card-fluid">
-        <!-- grid row -->
-        <div class="row">
-            <!-- .labels -->
-            <div id="labels" class="col-8">
-                <!-- .form -->
-                <form ngNativeValidate [formGroup]="formGT" (ngSubmit)="crearViajeVerde()">
-                    <!-- .card-body -->
-                    <div class="card-body">
-                        <!-- .fieldset -->
-                        <fieldset>
-                            <legend>Nuevo Reporte Cuadros</legend>
-                            <div class="row">
-                                <!-- .form-group -->
-                                <div class="form-group col-6">
-                                    <label id="typeL">Vehículo <span class="badge badge-danger">Obligatorio</span></label>
-                                    <select #selectV formControlName="vehicle" name="vehicle" class="form-control select2" style="width:100%!important;" disabled="greenTrip._id">
-                                        <option value=""> Seleccione un vehículo </option>
-                                        <ng-container *ngFor="let vehicle of vehicles">
-                                            <option *ngIf="vehicle.type === 'camion'" [selected]="vehicle._id === tempVehicle" [value]="vehicle._id"> {{ vehicle.plate + ' (Camión)' }}</option>
-                                            <option *ngIf="vehicle.type === 'camionG'" [selected]="vehicle._id === tempVehicle" [value]="vehicle._id"> {{ vehicle.plate + ' (Camión Gondola)' }}</option>
-                                        </ng-container>
-        \                           </select>
-                                </div>
-                                <!-- /.form-group -->
-                                <!-- .form-group -->
-                                <div class="form-group col-6">
-                                    <label id="typeL">Empleado <span class="badge badge-danger">Obligatorio</span></label>
-                                    <select #selectE formControlName="employee" name="employee" class="form-control select2" style="width:100%!important;">
-                                    <option value=""> Seleccione un empleado </option>
-                                    <option *ngFor="let empleado of employees" [selected]="empleado._id === tempEmp" [value]="empleado._id"> {{ empleado.name }}
-                                    </option>
-                                    </select>
-                                </div>
-                                <!-- /.form-group -->
-                            </div>
-                            <div class="row">
-                                <!-- .form-group -->
-                                <div class="form-group col-4">
-                                    <label id="typeL">Producción <span class="badge badge-danger">Obligatorio</span></label>
-                                    <select #selectT formControlName="type" name="type" class="form-control select2" style="width:100%!important;" disabled="greenTrip._id">
-                                        <option value=""> Seleccione un tipo de producción </option>
-                                        <option *ngFor="let type of types" [selected]="type._id === tempType"  [value]="type._id"> {{ type.name + ' ' + '('+ type.km + ' km)' }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <!-- /.form-group -->
-                                <!-- .form-group -->
-                                <div class="form-group col-2">
-                                    <label>Crear Tipo</label><br>
-                                    <a [routerLink]="['/typeTrips']" routerLinkActive="router-link-active" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
-                                </div>
-                                <!-- /.form-group -->
-                                <!-- .form-group -->
-                                <div class="form-group col-4">
-                                    <label id="typeL">Material <span class="badge badge-danger">Obligatorio</span></label> <select #selectM formControlName="material" name="material" class="form-control select2" style="width:100%!important;">
-                                <option value=""> Seleccione un material </option>
-                                <option *ngFor="let material of materials" [selected]="material._material._id === tempMat"  [value]="material._material._id"> {{ material._material.code }} {{ material._material.name }} </option>
-                            </select>
-                                </div>
-                                <!-- /.form-group -->
-                                <!-- .form-group -->
-                                <div class="form-group col-2">
-                                    <label>Crear Material</label><br>
-                                    <a href="#addMaterial" data-toggle="modal" type="button" class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
-                                </div>
-                                <!-- /.form-group -->
-                            </div>
-                            <div class="row">
-                                <!-- .form-group -->
-                                <div class="form-group col-3">
-                                    <label class="control-label" for="flatpickr">Fecha <span class="badge badge-danger">Obligatorio</span></label> <input id="flatpickr" formControlName="date" name="date" type="text" class="form-control" required>
-                                </div>
-                                <!-- /.form-group -->
-                                <!-- .form-group -->
-                                <div class="form-group col-3">
-                                    <label class="control-label" for="flatpickr08"> Hora de entrada </label> <input id="flatpickr08" formControlName="checkIN" name="checkIN" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true"
-                                        data-no-calendar="true" data-date-format="H:i" data-default-date="12:00">
-                                </div>
-                                <!-- /.form-group -->
-                                <!-- .form-group -->
-                                <div class="form-group col-3">
-                                    <label class="control-label" for="flatpickr08"> Hora de salida </label> <input id="flatpickr08" formControlName="checkOUT" name="checkOUT" type="text" class="form-control" data-toggle="flatpickr" data-enable-time="true"
-                                        data-no-calendar="true" data-date-format="H:i" data-default-date="12:00">
-                                </div>
-                                <!-- /.form-group -->
-                                <!-- .form-group -->
-                                <div class="form-group col-3">
-                                    <label for="pay">Viajes <span class="badge badge-danger">Obligatorio</span></label>
-                                    <div class="input-group">
-                                        <label class="input-group-prepend" for="pi9"><span class="badge"><i class="fas fa-snowplow"></i></span></label>
-                                        <input formControlName="trips" name="trips" type="number" min="0" step="1" class="form-control" id="trips" placeholder="Ingrese el total de viajes" required>
-                                    </div>
-                                </div>
-                                <!-- /.form-group -->
-                            </div>
-                            <div class="row">
-                                <!-- .form-group -->
-                                <div class="form-group col-6">
-                                    <label for="tf6">Detalles</label>
-                                    <textarea formControlName="details" name="details" class="form-control" id="tf6" rows="3"></textarea>
-                                </div>
-                                <!-- /.form-group -->
-                            </div>
-                            <hr>
-                            <!-- /.d-flex -->
-                            <button class="btn btn-primary" type="submit" id="btnUser"><i class="fa fa-save"></i> Guardar</button>
-                        </fieldset>
-                        <!-- /.fieldset -->
-                    </div>
-                    <!-- /.card-body -->
-                    <ng-template #customLoadingTemplate>
-                    </ng-template>
-                    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
-                </form>
-                <!-- /.form -->
-            </div>
-            <!-- /.labels -->
-            <!-- .labels -->
-            <div id="labels" class="col-4">
-                <div class="card-header">
-                    <h3 class="card-title">Reportes Ingresados Hoy</h3>
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- grid row -->
+    <div class="row">
+      <!-- .labels -->
+      <div id="labels" class="col-8">
+        <!-- .form -->
+        <form ngNativeValidate [formGroup]="formGT" (ngSubmit)="crearViajeVerde()">
+          <!-- .card-body -->
+          <div class="card-body">
+            <!-- .fieldset -->
+            <fieldset>
+              <legend>Nuevo Reporte Cuadros</legend>
+              <div class="row">
+                <!-- .form-group -->
+                <div class="form-group col-6">
+                  <label id="typeL">Vehículo <span class="badge badge-danger">Obligatorio</span></label>
+                  <select #selectV formControlName="vehicle" name="vehicle" class="form-control select2"
+                    style="width:100%!important;">
+                    <option value=""> Seleccione un vehículo </option>
+                    <ng-container *ngFor="let vehicle of vehicles">
+                      <option *ngIf="vehicle.type === 'camion'" [selected]="vehicle._id === tempVehicle"
+                        [value]="vehicle._id"> {{ vehicle.plate + ' (Camión)' }}</option>
+                      <option *ngIf="vehicle.type === 'camionG'" [selected]="vehicle._id === tempVehicle"
+                        [value]="vehicle._id"> {{ vehicle.plate + ' (Camión Gondola)' }}</option>
+                    </ng-container>
+                    \
+                  </select>
                 </div>
-                <!-- .card -->
-                <div class="card mb-2">
-                    <!-- .card-body -->
-                    <div class="card-body">
-                        <!-- grid row -->
-                        <div *ngFor="let gtrip of todayGT" class="row align-items-center">
-                            <!-- grid column -->
-                            <div class="col-auto">
-                                <a href="#" class="user-avatar user-avatar-md"><i class="fas fa-list-alt"></i> <span class="avatar-badge" title="online"></span></a>
-                            </div>
-                            <!-- /grid column -->
-                            <!-- grid column -->
-                            <div class="col">
-                                <h3 class="card-title">
-                                    <a href="#"> {{ gtrip._vehicle.type }} {{ gtrip._vehicle.plate }} </a> <small class="text-muted"><strong>Número de viajes realizados: {{ gtrip.trips }}</strong></small>
-                                </h3>
-                                <h6 class="card-subtitle text-muted">Material movido: {{ gtrip._material.name }} </h6>
-                            </div>
-                            <!-- /grid column -->
-                            <!-- /grid column -->
-                            <div class="col-auto">
-                                <button (click)="borrarGreenTrip( gtrip )" type="button" class="btn btn-icon btn-secondary mr-1" data-toggle="tooltip" title="Eliminar"><i class="fas fa-trash"></i></button>
-                            </div>
-                            <!-- /grid column -->
-                        </div>
-                        <!-- /grid row -->
-                    </div>
-                    <!-- /.card-body -->
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group col-6">
+                  <label id="typeL">Empleado <span class="badge badge-danger">Obligatorio</span></label>
+                  <select #selectE formControlName="employee" name="employee" class="form-control select2"
+                    style="width:100%!important;">
+                    <option value=""> Seleccione un empleado </option>
+                    <option *ngFor="let empleado of employees" [selected]="empleado._id === tempEmp"
+                      [value]="empleado._id"> {{ empleado.name }}
+                    </option>
+                  </select>
                 </div>
-                <!-- /.card -->
-            </div>
-            <!-- /.labels -->
+                <!-- /.form-group -->
+              </div>
+              <div class="row">
+                <!-- .form-group -->
+                <div class="form-group col-4">
+                  <label id="typeL">Producción <span class="badge badge-danger">Obligatorio</span></label>
+                  <select #selectT formControlName="type" name="type" class="form-control select2"
+                    style="width:100%!important;">
+                    <option value=""> Seleccione un tipo de producción </option>
+                    <option *ngFor="let type of types" [selected]="type._id === tempType" [value]="type._id">
+                      {{ type.name + ' ' + '('+ type.km + ' km)' }}
+                    </option>
+                  </select>
+                </div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group col-2">
+                  <label>Crear Tipo</label><br>
+                  <a [routerLink]="['/typeTrips']" routerLinkActive="router-link-active" type="button"
+                    class="btn btn-subtle-dark">Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i></a>
+                </div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group col-4">
+                  <label id="typeL">Material <span class="badge badge-danger">Obligatorio</span></label> <select
+                    #selectM formControlName="material" name="material" class="form-control select2"
+                    style="width:100%!important;">
+                    <option value=""> Seleccione un material </option>
+                    <option *ngFor="let material of materials" [selected]="material._material._id === tempMat"
+                      [value]="material._material._id"> {{ material._material.code }} {{ material._material.name }}
+                    </option>
+                  </select>
+                </div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group col-2">
+                  <label>Crear Material</label><br>
+                  <a href="#addMaterial" data-toggle="modal" type="button" class="btn btn-subtle-dark">Nuevo <i
+                      class="fas fa-external-link-alt fa-pull-right"></i></a>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <div class="row">
+                <!-- .form-group -->
+                <div class="form-group col-3">
+                  <label class="control-label" for="flatpickr">Fecha <span
+                      class="badge badge-danger">Obligatorio</span></label> <input #date id="flatpickr"
+                    formControlName="date" name="date" type="text" class="form-control">
+                </div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group col-3">
+                  <label class="control-label" for="flatpickr08"> Hora de entrada </label> <input #checkIN
+                    id="flatpickr08" formControlName="checkIN" name="checkIN" type="text" class="form-control"
+                    data-toggle="flatpickr" data-enable-time="true" data-no-calendar="true" data-date-format="H:i"
+                    data-default-date="12:00">
+                </div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group col-3">
+                  <label class="control-label" for="flatpickr08"> Hora de salida </label> <input #checkOUT
+                    id="flatpickr08" formControlName="checkOUT" name="checkOUT" type="text" class="form-control"
+                    data-toggle="flatpickr" data-enable-time="true" data-no-calendar="true" data-date-format="H:i"
+                    data-default-date="12:00">
+                </div>
+                <!-- /.form-group -->
+                <!-- .form-group -->
+                <div class="form-group col-3">
+                  <label for="pay">Viajes <span class="badge badge-danger">Obligatorio</span></label>
+                  <div class="input-group">
+                    <label class="input-group-prepend" for="pi9"><span class="badge"><i
+                          class="fas fa-snowplow"></i></span></label>
+                    <input formControlName="trips" name="trips" type="number" min="0" step="1" class="form-control"
+                      id="trips" placeholder="Ingrese el total de viajes" required>
+                  </div>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <div class="row">
+                <!-- .form-group -->
+                <div class="form-group col-6">
+                  <label for="tf6">Detalles</label>
+                  <textarea formControlName="details" name="details" class="form-control" id="tf6" rows="3"></textarea>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <hr>
+              <!-- /.d-flex -->
+              <button class="btn btn-primary" type="submit" id="btnUser"><i class="fa fa-save"></i> Guardar</button>
+            </fieldset>
+            <!-- /.fieldset -->
+          </div>
+          <!-- /.card-body -->
+          <ng-template #customLoadingTemplate>
+          </ng-template>
+          <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+          </ngx-loading>
+        </form>
+        <!-- /.form -->
+      </div>
+      <!-- /.labels -->
+      <!-- .labels -->
+      <div id="labels" class="col-4">
+        <div class="card-header">
+          <h3 class="card-title">Reportes Ingresados Hoy</h3>
         </div>
-        <!-- /grid row -->
+        <!-- .card -->
+        <div class="card mb-2">
+          <!-- .card-body -->
+          <div class="card-body">
+            <!-- grid row -->
+            <div *ngFor="let gtrip of todayGT" class="row align-items-center">
+              <!-- grid column -->
+              <div class="col-auto">
+                <a href="#" class="user-avatar user-avatar-md"><i class="fas fa-list-alt"></i> <span
+                    class="avatar-badge" title="online"></span></a>
+              </div>
+              <!-- /grid column -->
+              <!-- grid column -->
+              <div class="col">
+                <h3 class="card-title">
+                  <a href="#"> {{ gtrip._vehicle.type }} {{ gtrip._vehicle.plate }} </a> <small
+                    class="text-muted"><strong>Número de viajes realizados: {{ gtrip.trips }}</strong></small>
+                </h3>
+                <h6 class="card-subtitle text-muted">Material movido: {{ gtrip._material.name }} </h6>
+              </div>
+              <!-- /grid column -->
+              <!-- /grid column -->
+              <div class="col-auto">
+                <button (click)="borrarGreenTrip( gtrip )" type="button" class="btn btn-icon btn-secondary mr-1"
+                  data-toggle="tooltip" title="Eliminar"><i class="fas fa-trash"></i></button>
+              </div>
+              <!-- /grid column -->
+            </div>
+            <!-- /grid row -->
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.labels -->
     </div>
-    <!-- /.card -->
+    <!-- /grid row -->
+  </div>
+  <!-- /.card -->
 </div>
 <!-- /.page-section -->
 <!-- .modalMATERIAL -->
-<div class="modal fade" id="addMaterial" tabindex="-1" role="dialog" aria-labelledby="NewMaterialModalLabel" aria-hidden="true">
-    <!-- .modal-dialog -->
-    <div class="modal-dialog" role="document">
-        <!-- .modal-content -->
-        <div class="modal-content">
-            <!-- .modal-header -->
-            <div class="modal-header">
-                <h5 class="modal-title"> Crear un nuevo material </h5>
+<div class="modal fade" id="addMaterial" tabindex="-1" role="dialog" aria-labelledby="NewMaterialModalLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 class="modal-title"> Crear un nuevo material </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <form ngNativeValidate [formGroup]="formMat" (ngSubmit)="crearMaterial()">
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="name">Código </label> <input formControlName="code" name="code" type="text" class="form-control"
+              id="code" placeholder="Ingrese el código del material" data-autofocus="true">
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="name">Nombre </label> <input formControlName="name" name="name" type="text" class="form-control"
+              id="name" placeholder="Ingrese el nombre del material">
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="pay">Existencia Mínima</label>
+            <div class="input-group">
+              <label class="input-group-prepend" for="minStock"><span class="badge">u</span></label>
+              <input formControlName="minStock" name="minStock" type="number" min="0.00" step="0.01"
+                class="form-control" id="minStock" placeholder="Ingrese la existencia mínima del material">
             </div>
-            <!-- /.modal-header -->
-            <!-- .modal-body -->
-            <div class="modal-body">
-                <form ngNativeValidate [formGroup]="formMat" (ngSubmit)="crearMaterial()">
-                    <!-- .form-group -->
-                    <div class="form-group">
-                        <label for="name">Código </label> <input formControlName="code" name="code" type="text" class="form-control" id="code" placeholder="Ingrese el código del material" data-autofocus="true">
-                    </div>
-                    <!-- /.form-group -->
-                    <!-- .form-group -->
-                    <div class="form-group">
-                        <label for="name">Nombre </label> <input formControlName="name" name="name" type="text" class="form-control" id="name" placeholder="Ingrese el nombre del material">
-                    </div>
-                    <!-- /.form-group -->
-                    <!-- .form-group -->
-                    <div class="form-group">
-                        <label for="pay">Existencia Mínima</label>
-                        <div class="input-group">
-                            <label class="input-group-prepend" for="minStock"><span class="badge">u</span></label>
-                            <input formControlName="minStock" name="minStock" type="number" min="0.00" step="0.01" class="form-control" id="minStock" placeholder="Ingrese la existencia mínima del material">
-                        </div>
-                    </div>
-                    <!-- /.form-group -->
-                    <!-- .modal-footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMMt type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                    </div>
-                    <!-- /.modal-footer -->
-                </form>
-            </div>
-            <!-- /.modal-body -->
-        </div>
-        <!-- /.modal-content -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .modal-footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMMt type="button"
+              class="btn btn-light" data-dismiss="modal">Cerrar</button>
+          </div>
+          <!-- /.modal-footer -->
+        </form>
+      </div>
+      <!-- /.modal-body -->
     </div>
-    <!-- /.modal-dialog -->
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>
 <!-- /.modalMATERIAL -->

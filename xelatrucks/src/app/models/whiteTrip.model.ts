@@ -10,14 +10,15 @@ export class WhiteTrip {
         public _pull: Pull,
         public date: Date,
         public noTicket: string,
-        public noDelivery: string,
         public mts: number,
         public kgB: number,
         public kgT: number,
         public kgN: number,
         public checkIN: Date,
         public checkOUT: Date,
+        public tariff: number,
         public invoiced: boolean,
+        public noDelivery?: string,
         public _id?: string
     ) { }
 }

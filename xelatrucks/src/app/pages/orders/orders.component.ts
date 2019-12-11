@@ -67,13 +67,14 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.formaTrip = new FormGroup({
       date: new FormControl(null, Validators.required),
       noTicket: new FormControl('', Validators.required),
-      noDelivery: new FormControl('', Validators.required),
+      noDelivery: new FormControl(''),
       mts: new FormControl('', Validators.required),
       kgB: new FormControl('', Validators.required),
       kgT: new FormControl('', Validators.required),
       kgN: new FormControl('', Validators.required),
       checkIN: new FormControl(null, Validators.required),
-      checkOUT: new FormControl(null, Validators.required)
+      checkOUT: new FormControl(null, Validators.required),
+      tariff: new FormControl('', Validators.required)
     });
 
     this.cargarPulls();
@@ -150,6 +151,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
 
   cargarReporte(pull: Pull) {
     this.pull = pull;
+    this.formaTrip.get('tariff').setValue(this.pull._order._destination.tariff.toFixed(2));
   }
 
   crearReporte() {
@@ -174,14 +176,15 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       this.pull,
       moment(this.formaTrip.value.date, 'DD/MM/YYYY').toDate(),
       this.formaTrip.value.noTicket,
-      this.formaTrip.value.noDelivery,
       this.formaTrip.value.mts,
       this.formaTrip.value.kgB,
       this.formaTrip.value.kgT,
       this.formaTrip.value.kgN,
       moment(this.formaTrip.value.checkIN, 'HH:mm').toDate(),
       moment(this.formaTrip.value.checkOUT, 'HH:mm').toDate(),
-      false
+      this.formaTrip.value.tariff,
+      false,
+      this.formaTrip.value.noDelivery,
     );
 
     this.tripS.crearWhiteTrip(whiteTrip, this.pull._order._destination.km)
@@ -195,7 +198,16 @@ export class OrdersComponent implements OnInit, AfterViewInit {
         });
         const today = moment(new Date()).format('DD/MM/YYYY');
         this.formaTrip.reset({
-          date: today
+          date: today,
+          noTicket: '',
+          noDelivery: '',
+          mts: '',
+          kgB: '',
+          kgT: '',
+          kgN: '',
+          checkIN: null,
+          checkOUT: null,
+          tariff: ''
         });
         this.dtService.init_timePicker();
         this.loading = false;

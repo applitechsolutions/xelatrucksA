@@ -28,6 +28,8 @@ export class PurchasesByProvidersComponent implements OnInit, AfterViewInit, OnC
   @Input() clearSearch: string;
   @Input() tableSearch: string;
   @Input() filterBy: string;
+  @Input() benito: string;
+  @Input() invoice: string;
 
   autoProviders: AutoProvider[] = [];
   buySpares: BuySpare[] = [];

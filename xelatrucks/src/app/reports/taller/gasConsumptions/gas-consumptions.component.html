@@ -69,7 +69,7 @@
       <td class="align-middle text-truncate">
         <div class="media align-items-center">
           <!-- .list-group-item-figure -->
-          <div *ngIf="gasoline.type==='camion'" class="list-group-item-figure">
+          <div *ngIf="gasoline.type === 'camion'" class="list-group-item-figure">
             <div class="tile tile-circle bg-yellow"> <i class="fas fa-truck"></i></div>
           </div>
           <!-- /.list-group-item-figure -->
@@ -133,7 +133,7 @@
       <th> Totales </th>
       <th>
         <h5>
-          Q {{ totalGal | number : '1.2-2' }}
+          {{ totalGal | number : '1.2-2' }}
         </h5>
       </th>
       <th>
@@ -165,7 +165,7 @@
         <!-- .section-block -->
         <div class="section-block">
           <!-- .invoice-wrapper -->
-          <div id="benito" class="invoice-wrapper">
+          <div [id]="benito" class="invoice-wrapper">
             <!-- .invoice-actions -->
             <div class="invoice-actions">
               <div class="dropdown">
@@ -179,7 +179,7 @@
             </div>
             <!-- /.invoice-actions -->
             <!-- .invoice -->
-            <div id="invoice" class="invoice" data-id="RPT-COMBUSTIBLE">
+            <div [id]="invoice" class="invoice" data-id="RPT-COMBUSTIBLE">
               <!-- .invoice-header -->
               <div class="invoice-header">
                 <!-- grid row -->

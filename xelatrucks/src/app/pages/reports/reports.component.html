@@ -25,11 +25,13 @@
       <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active show" id="purchases">
           <app-purchases-by-providers [idTable]="myTable1" [dtButtons]="dtButtons1" [clearSearch]="clearSearch1"
-            [tableSearch]="tableSearch1" [filterBy]="filterBy1"></app-purchases-by-providers>
+            [tableSearch]="tableSearch1" [filterBy]="filterBy1" [benito]="benito1" [invoice]="invoice1">
+          </app-purchases-by-providers>
         </div>
         <div class="tab-pane fade" id="gasolines">
           <app-gas-consumptions [idTable]="myTable2" [dtButtons]="dtButtons2" [clearSearch]="clearSearch2"
-            [tableSearch]="tableSearch2" [filterBy]="filterBy2"></app-gas-consumptions>
+            [tableSearch]="tableSearch2" [filterBy]="filterBy2" [benito]="benito2" [invoice]="invoice2">
+          </app-gas-consumptions>
         </div>
       </div>
       <!-- /.tab-content -->

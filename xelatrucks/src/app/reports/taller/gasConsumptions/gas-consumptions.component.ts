@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { DatatablesService, UserService, VehicleService } from 'src/app/services/service.index';
-import { Gas } from 'src/app/models/gas.model';
 
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
@@ -26,8 +25,10 @@ export class GasConsumptionsComponent implements OnInit, AfterViewInit, OnChange
   @Input() clearSearch: string;
   @Input() tableSearch: string;
   @Input() filterBy: string;
+  @Input() benito: string;
+  @Input() invoice: string;
 
-  gasolines: Gas[] = [];
+  gasolines: any[] = [];
   totalGas = 0.00;
   totalGal = 0.00;
 

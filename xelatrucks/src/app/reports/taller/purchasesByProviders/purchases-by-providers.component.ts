@@ -30,6 +30,7 @@ export class PurchasesByProvidersComponent implements OnInit, AfterViewInit, OnC
   @Input() filterBy: string;
   @Input() benito: string;
   @Input() invoice: string;
+  @Input() downloadPdf: string;
 
   autoProviders: AutoProvider[] = [];
   buySpares: BuySpare[] = [];

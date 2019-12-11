@@ -27,6 +27,7 @@ export class GasConsumptionsComponent implements OnInit, AfterViewInit, OnChange
   @Input() filterBy: string;
   @Input() benito: string;
   @Input() invoice: string;
+  @Input() downloadPdf: string;
 
   gasolines: any[] = [];
   totalGas = 0.00;

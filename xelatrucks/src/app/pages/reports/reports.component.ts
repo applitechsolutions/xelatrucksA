@@ -14,6 +14,7 @@ export class ReportsComponent implements OnInit {
   filterBy1 = 'filterBy';
   benito1 = 'benito';
   invoice1 = 'invoice';
+  downloadPdf1 = 'download-pdf';
   myTable2 = '';
   dtButtons2 = '';
   clearSearch2 = '';
@@ -21,6 +22,7 @@ export class ReportsComponent implements OnInit {
   filterBy2 = '';
   benito2 = 'benito';
   invoice2 = 'invoice';
+  downloadPdf2 = 'download-pdf';
 
   constructor(
 
@@ -38,6 +40,7 @@ export class ReportsComponent implements OnInit {
     this.filterBy1 = '';
     this.benito1 = '';
     this.invoice1 = '';
+    this.downloadPdf1 = '';
     this.myTable2 = '';
     this.dtButtons2 = '';
     this.clearSearch2 = '';
@@ -45,6 +48,7 @@ export class ReportsComponent implements OnInit {
     this.filterBy2 = '';
     this.benito2 = '';
     this.invoice2 = '';
+    this.downloadPdf2 = '';
 
     switch (report) {
       case 'myTable1':
@@ -55,6 +59,7 @@ export class ReportsComponent implements OnInit {
         this.filterBy1 = 'filterBy';
         this.benito1 = 'benito';
         this.invoice1 = 'invoice';
+        this.downloadPdf1 = 'download-pdf';
         break;
       case 'myTable2':
         this.myTable2 = 'myTable';
@@ -64,6 +69,7 @@ export class ReportsComponent implements OnInit {
         this.filterBy2 = 'filterBy';
         this.benito2 = 'benito';
         this.invoice2 = 'invoice';
+        this.downloadPdf2 = 'download-pdf';
         break;
       default:
         break;

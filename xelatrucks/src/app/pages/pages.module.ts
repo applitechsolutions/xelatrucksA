@@ -122,6 +122,7 @@ import { ReportsModule } from '../reports/reports.module';
         ReportsModule,
         NgxLoadingModule.forRoot({})
     ]
+
 })
 
 export class PagesModule { }

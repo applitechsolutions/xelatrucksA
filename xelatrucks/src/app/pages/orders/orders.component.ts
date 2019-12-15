@@ -159,7 +159,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.formaTrip.get('date').setValue(this.date.nativeElement.value);
     this.formaTrip.get('checkIN').setValue(this.checkIN.nativeElement.value);
     this.formaTrip.get('checkOUT').setValue(this.checkOUT.nativeElement.value);
-    console.log(this.formaTrip);
+    // console.log(this.formaTrip);
 
     if (this.formaTrip.invalid || this.selectE.nativeElement.value === '' || this.selectV.nativeElement.value === '') {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');

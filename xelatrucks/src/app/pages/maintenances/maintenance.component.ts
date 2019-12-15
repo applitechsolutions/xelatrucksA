@@ -7,7 +7,8 @@ import {
   MaintenanceService,
   TypeMaintenanceService,
   BuySpareService,
-  PartService
+  PartService,
+  DatatablesService
 } from '../../services/service.index';
 import { Vehicle } from '../../models/vehicle.model';
 import { Gondola } from '../../models/gondola.model';
@@ -31,11 +32,11 @@ declare function init_step();
 })
 export class MaintenanceComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('selectM', {static: false}) selectM: ElementRef;
-  @ViewChild('selectT', {static: false}) selectT: ElementRef;
-  @ViewChild('selectRV', {static: false}) selectRV: ElementRef;
-  @ViewChild('selectRG', {static: false}) selectRG: ElementRef;
-  @ViewChild('scroll', {static: false}) scroll: ElementRef;
+  @ViewChild('selectM', { static: false }) selectM: ElementRef;
+  @ViewChild('selectT', { static: false }) selectT: ElementRef;
+  @ViewChild('selectRV', { static: false }) selectRV: ElementRef;
+  @ViewChild('selectRG', { static: false }) selectRG: ElementRef;
+  @ViewChild('scroll', { static: false }) scroll: ElementRef;
   public loading = false;
   select2: any;
 
@@ -95,7 +96,8 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     public typeS: TypeMaintenanceService,
     public maintenanceS: MaintenanceService,
     public partS: PartService,
-    public buySpareS: BuySpareService
+    public buySpareS: BuySpareService,
+    public dtS: DatatablesService
   ) { }
 
   // Inicializar Mantenimiento
@@ -114,6 +116,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     this.cargarMecanicos();
     this.usuario = this.userS.usuario;
     this.getStorages();
+    this.dtS.init_datePicker2();
   }
 
   ngAfterViewInit(): void {
@@ -154,9 +157,9 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       // ACTUALIZO EL STOCK PARA NO RESTARLE DOS VECES LA MISMA CANTIDAD
       this.detail._part = row._part;
       this.partS.stockSale(this.detail)
-      .subscribe( (resp: any) => {
-        this.getStorages();
-      });
+        .subscribe((resp: any) => {
+          this.getStorages();
+        });
       // RECALCULO LA CANTIDAD Y EL SUBTOTAL
       this.detail.quantity = row.quantity + this.detail.quantity;
       // REMPLAZAMOS EL REPUESTO en base al index encontrado
@@ -165,15 +168,15 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       this.detail._part = part._autopart;
       this.detail.cost = part.cost;
       this.detailsV.push({
-      _part: this.detail._part,
-      quantity: this.detail.quantity,
-      cost: this.detail.cost
+        _part: this.detail._part,
+        quantity: this.detail.quantity,
+        cost: this.detail.cost
       });
       this.partS.stockSale(this.detail)
-      .subscribe( (resp: any) => {
-        // console.log('STOCK OK');
-        this.getStorages();
-      });
+        .subscribe((resp: any) => {
+          // console.log('STOCK OK');
+          this.getStorages();
+        });
     }
     // SUMAR AL TOTAL
     // console.log(this.detail.cost);
@@ -183,10 +186,10 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     this.mantenimiento.detailsV = this.detailsV;
     this.updateMantenimiento();
     this.detail = {
-    _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
-     quantity: null,
-     cost: null
-   };
+      _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
+      quantity: null,
+      cost: null
+    };
   }
 
   addDetailsG() {
@@ -207,9 +210,9 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       // ACTUALIZO EL STOCK PARA NO RESTARLE DOS VECES LA MISMA CANTIDAD
       this.detail._part = row._part;
       this.partS.stockSale(this.detail)
-      .subscribe( (resp: any) => {
-        this.getStorages();
-      });
+        .subscribe((resp: any) => {
+          this.getStorages();
+        });
       // RECALCULO LA CANTIDAD Y EL SUBTOTAL
       this.detail.quantity = row.quantity + this.detail.quantity;
       // REMPLAZAMOS EL REPUESTO en base al index encontrado
@@ -218,15 +221,15 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       this.detail._part = part._autopart;
       this.detail.cost = part.cost;
       this.detailsG.push({
-      _part: this.detail._part,
-      quantity: this.detail.quantity,
-      cost: this.detail.cost
+        _part: this.detail._part,
+        quantity: this.detail.quantity,
+        cost: this.detail.cost
       });
       this.partS.stockSale(this.detail)
-      .subscribe( (resp: any) => {
-        // console.log('STOCK OK');
-        this.getStorages();
-      });
+        .subscribe((resp: any) => {
+          // console.log('STOCK OK');
+          this.getStorages();
+        });
     }
     // SUMAR AL TOTAL
     // console.log(this.detail.cost);
@@ -236,13 +239,13 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
     this.mantenimiento.detailsG = this.detailsG;
     this.updateMantenimiento();
     this.detail = {
-    _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
-     quantity: null,
-     cost: null
-   };
+      _part: { code: '', desc: '', minStock: 0, state: false, _id: '' },
+      quantity: null,
+      cost: null
+    };
   }
 
-  deleteDetailV( id: string ) {
+  deleteDetailV(id: string) {
     // console.log('BORRANDO...');
     // console.log(this.detailsV);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
@@ -255,28 +258,28 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       buttons: true,
       dangerMode: true,
     })
-    .then( borrar => {
-      if (borrar) {
-        // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
-        const row = this.detailsV.find(e => e._part._id === id);
-        this.partS.stockPurchase(row)
-        .subscribe( (resp: any) => {
-          // console.log('STOCK OK');
-          this.getStorages();
-        });
-        // ACTUALIZAMOS el total
-        this.mantenimiento.totalV = this.mantenimiento.totalV - (row.quantity * row.cost);
-        this.mantenimiento._user = this.userS.usuario;
-        this.mantenimiento.detailsV = this.detailsV;
-        this.updateMantenimiento();
-        // ELIMINAMOS EL DETALLE en base al index encontrado
-        this.detailsV.splice(index, 1);
+      .then(borrar => {
+        if (borrar) {
+          // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
+          const row = this.detailsV.find(e => e._part._id === id);
+          this.partS.stockPurchase(row)
+            .subscribe((resp: any) => {
+              // console.log('STOCK OK');
+              this.getStorages();
+            });
+          // ACTUALIZAMOS el total
+          this.mantenimiento.totalV = this.mantenimiento.totalV - (row.quantity * row.cost);
+          this.mantenimiento._user = this.userS.usuario;
+          this.mantenimiento.detailsV = this.detailsV;
+          this.updateMantenimiento();
+          // ELIMINAMOS EL DETALLE en base al index encontrado
+          this.detailsV.splice(index, 1);
 
-      }
-    });
+        }
+      });
   }
 
-  deleteDetailG( id: string ) {
+  deleteDetailG(id: string) {
     // console.log('BORRANDO...');
     // console.log(this.detailsG);
     // BUSCAMOS EL INDEX en el que se encuentra el item a editar dentro del arreglo de basics
@@ -289,25 +292,25 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
       buttons: true,
       dangerMode: true,
     })
-    .then( borrar => {
-      if (borrar) {
-        // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
-        const row = this.detailsG.find(e => e._part._id === id);
-        this.partS.stockPurchase(row)
-        .subscribe( (resp: any) => {
-          // console.log('STOCK OK');
-          this.getStorages();
-        });
-        // ACTUALIZAMOS el total
-        this.mantenimiento.totalG = this.mantenimiento.totalG - (row.quantity * row.cost);
-        this.mantenimiento._user = this.userS.usuario;
-        this.mantenimiento.detailsG = this.detailsG;
-        this.updateMantenimiento();
-        // ELIMINAMOS EL DETALLE en base al index encontrado
-        this.detailsG.splice(index, 1);
+      .then(borrar => {
+        if (borrar) {
+          // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
+          const row = this.detailsG.find(e => e._part._id === id);
+          this.partS.stockPurchase(row)
+            .subscribe((resp: any) => {
+              // console.log('STOCK OK');
+              this.getStorages();
+            });
+          // ACTUALIZAMOS el total
+          this.mantenimiento.totalG = this.mantenimiento.totalG - (row.quantity * row.cost);
+          this.mantenimiento._user = this.userS.usuario;
+          this.mantenimiento.detailsG = this.detailsG;
+          this.updateMantenimiento();
+          // ELIMINAMOS EL DETALLE en base al index encontrado
+          this.detailsG.splice(index, 1);
 
-      }
-    });
+        }
+      });
   }
 
   /* #endregion */
@@ -535,7 +538,7 @@ export class MaintenanceComponent implements OnInit, AfterViewInit {
           this.mantenimiento = {
             _user: null,
             _vehicle: vehicle,
-            _gondola: { plate: '', _id: null },
+            _gondola: null,
             _id: null
           };
           this.mechanics = [];

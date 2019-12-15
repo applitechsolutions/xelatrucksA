@@ -25,6 +25,8 @@ import { MaintenancesComponent } from './maintenances/maintenances.component';
 import { MaintenanceComponent } from './maintenances/maintenance.component';
 import { GtripsComponent } from './gtrips/gtrips.component';
 import { GtripComponent } from './gtrips/gtrip.component';
+import { KtripsComponent } from './ktrips/ktrips.component';
+import { KtripComponent } from './ktrips/ktrip.component';
 import { WtripsComponent } from './wtrips/wtrips.component';
 import { WtripComponent } from './wtrips/wtrip.component';
 import { TypeMaintenancesComponent } from './type-maintenances/type-maintenances.component';
@@ -42,6 +44,8 @@ import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
 import { DestinationsComponent } from './destinations/destinations.component';
 import { DestinationComponent } from './destinations/destination.component';
+import { DestTanksComponent } from './destTanks/dest-tanks.component';
+import { DestTankComponent } from './destTanks/dest-tank.component';
 import { OrdersFinishComponent } from './orders/orders-finish.component';
 
 const pagesRoutes: Routes = [
@@ -126,6 +130,18 @@ const pagesRoutes: Routes = [
         data: { titulo: 'Crear Destino' }
     },
     {
+        path: 'destTanks',
+        component: DestTanksComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Mantenimiento de Destinos de Cisterna' }
+    },
+    {
+        path: 'destTank/:id',
+        component: DestTankComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Crear Destino de Cisterna' }
+    },
+    {
         path: 'ordersFinished',
         component: OrdersFinishComponent,
         canActivate: [VerificaTokenGuard],
@@ -154,6 +170,18 @@ const pagesRoutes: Routes = [
         component: GtripComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Reporte de Cuadros' }
+    },
+    {
+        path: 'ktrips',
+        component: KtripsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Listado de Cisterna' }
+    },
+    {
+        path: 'ktrip/:id',
+        component: KtripComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Reporte de Cisterna' }
     },
     {
         path: 'wtrip/:id',

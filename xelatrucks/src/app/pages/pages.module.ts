@@ -58,6 +58,10 @@ import { TypeTripComponent } from './type-trips/type-trip.component';
 import { OrdersFinishComponent } from './orders/orders-finish.component';
 import { GtripComponent } from './gtrips/gtrip.component';
 import { ReportsModule } from '../reports/reports.module';
+import { KtripsComponent } from './ktrips/ktrips.component';
+import { KtripComponent } from './ktrips/ktrip.component';
+import { DestTanksComponent } from './destTanks/dest-tanks.component';
+import { DestTankComponent } from './destTanks/dest-tank.component';
 
 
 @NgModule({
@@ -103,7 +107,11 @@ import { ReportsModule } from '../reports/reports.module';
         WtripComponent,
         TypeTripComponent,
         OrdersFinishComponent,
-        GtripComponent
+        GtripComponent,
+        KtripsComponent,
+        KtripComponent,
+        DestTanksComponent,
+        DestTankComponent
     ],
     exports: [
         DashboardComponent,

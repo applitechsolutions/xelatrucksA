@@ -11,6 +11,7 @@ export { GbillService } from './gbills/gbill.service';
 export { MaterialService } from './materials/material.service';
 export { CPcustomerService } from './CPcustomers/cpcustomer.service';
 export { DestinationService } from './destinations/destination.service';
+export { DestTankService } from './destTanks/dest-tank.service';
 export { TypeTripService } from './typeTrips/type-trip.service';
 export { OrderService } from './orders/order.service';
 export { PullService } from './pulls/pull.service';

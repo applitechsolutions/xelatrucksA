@@ -60,6 +60,10 @@ import { GtripComponent } from './gtrips/gtrip.component';
 import { ReportsModule } from '../reports/reports.module';
 import { WbillComponent } from './wbills/wbill.component';
 import { WbillsComponent } from './wbills/wbills.component';
+import { KtripsComponent } from './ktrips/ktrips.component';
+import { KtripComponent } from './ktrips/ktrip.component';
+import { DestTanksComponent } from './destTanks/dest-tanks.component';
+import { DestTankComponent } from './destTanks/dest-tank.component';
 
 
 @NgModule({
@@ -108,6 +112,10 @@ import { WbillsComponent } from './wbills/wbills.component';
         GtripComponent,
         WbillComponent,
         WbillsComponent
+        KtripsComponent,
+        KtripComponent,
+        DestTanksComponent,
+        DestTankComponent
     ],
     exports: [
         DashboardComponent,

@@ -37,10 +37,6 @@ export class MechanicsComponent implements OnInit {
 
   borrarMech( mechanic: Mechanic ) {
 
-    mechanic.state = true;
-
-    // console.log(mechanic);
-
     swal({
       title: '¿Está seguro?',
       text: 'Está a punto de borrar a ' + mechanic.name,
@@ -50,7 +46,7 @@ export class MechanicsComponent implements OnInit {
     })
     .then( borrar => {
       if (borrar) {
-
+        mechanic.state = true;
         this.mechService.borrarMecanico(mechanic)
           .subscribe( borrado => {
             // console.log(borrado);

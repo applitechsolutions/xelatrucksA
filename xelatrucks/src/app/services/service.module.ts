@@ -25,6 +25,7 @@ import {
   MaterialService,
   TypeMaintenanceService,
   DestinationService,
+  DestTankService,
   TypeTripService,
   OrderService,
   PullService
@@ -60,6 +61,7 @@ import {
     MaterialService,
     VerificaTokenGuard,
     DestinationService,
+    DestTankService,
     OrderService,
     PullService
   ]

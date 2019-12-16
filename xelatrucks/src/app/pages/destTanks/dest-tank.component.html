@@ -1,0 +1,43 @@
+<!-- .page-section -->
+<div class="page-section">
+    <div class="d-xl-none">
+        <button class="btn btn-danger btn-floated" type="button" data-toggle="sidebar"><i
+          class="fa fa-th-list"></i></button>
+    </div>
+    <!-- .form -->
+    <form ngNativeValidate [formGroup]="formDT" (ngSubmit)="crearDestino()">
+        <!-- .section-deck -->
+        <div class="section-deck">
+            <!-- .card -->
+            <div id="base-style" class="card col-4">
+                <!-- .card-body -->
+                <div class="card-body">
+                    <!-- .fieldset -->
+                    <fieldset>
+                        <legend>Campos</legend>
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="tf1">Nombre</label> <input formControlName="name" id="name" name="name" type="text" class="form-control" aria-describedby="tf1Help" placeholder="Ingrese el nombre del destino" required>
+                        </div>
+                        <!-- /.form-group -->
+                        <!-- .form-group -->
+                        <div class="form-group">
+                            <label for="tf2">Kilómetros</label>
+                            <input formControlName="km" name="km" type="number" class="form-control" min="0" step="0.01" value="0" placeholder="Ingrese los Kilómetros de distancia del destino" required>
+                        </div>
+                        <!-- /.form-group -->
+                    </fieldset>
+                    <!-- /.fieldset -->
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- grid column -->
+        </div>
+        <!-- /.section-deck -->
+        <button class="btn btn-primary " type="submit " id="btnPart"> Guardar</button>
+        <button [routerLink]="[ '/destTanks' ]" type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+    </form>
+    <!-- /.form -->
+</div>
+<!-- /.page-section -->

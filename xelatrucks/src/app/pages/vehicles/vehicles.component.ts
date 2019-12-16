@@ -22,14 +22,14 @@ declare function inputNumber();
 })
 export class VehiclesComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('scroll', {static: false}) scroll: ElementRef;
+  @ViewChild('scroll', { static: false }) scroll: ElementRef;
 
   select2: any;
   public loading = false;
   date: string; // fecha de hoy
 
   // GONDOLA *********************************************************************************************
-  @ViewChild('closeMGo', {static: false}) closeMGo: ElementRef;
+  @ViewChild('closeMGo', { static: false }) closeMGo: ElementRef;
 
   // Informacion de la Gondola
   isTruckG: boolean = false;
@@ -44,7 +44,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   gondola: Gondola = { plate: '' };
 
   // VEHICULOS ******************************************************************************************
-  @ViewChild('detalles', {static: false}) detalles: ElementRef;
+  @ViewChild('detalles', { static: false }) detalles: ElementRef;
   // Listado principal
   vehicles: Vehicle[] = [];
   gondolas: Gondola[] = [];
@@ -70,7 +70,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   };
 
   // BASICS ***********************************************************************************************
-  @ViewChild('closeP', {static: false}) closeP: ElementRef;
+  @ViewChild('closeP', { static: false }) closeP: ElementRef;
 
   // listado
   basics: Basics[] = [];
@@ -78,10 +78,10 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   basic: Basics = {};
 
   // PITS **************************************************************************************************
-  @ViewChild('closeMP', {static: false}) closeMP: ElementRef;
-  @ViewChild('selectR', {static: false}) selectR: ElementRef;
-  @ViewChild('closeMR', {static: false}) closeMR: ElementRef;
-  @ViewChild('datePit', {static: false}) dateP: ElementRef;
+  @ViewChild('closeMP', { static: false }) closeMP: ElementRef;
+  @ViewChild('selectR', { static: false }) selectR: ElementRef;
+  @ViewChild('closeMR', { static: false }) closeMR: ElementRef;
+  @ViewChild('datePit', { static: false }) dateP: ElementRef;
 
   // form de PITS
   formPit: FormGroup;
@@ -104,11 +104,11 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   tempRim: string = '';
 
   // GASOLINES ************************************************************************************************
-  @ViewChild('dateG', {static: false}) dateG: ElementRef;
-  @ViewChild('closeMG', {static: false}) closeMG: ElementRef;
-  @ViewChild('date1', {static: false}) date1: ElementRef;
-  @ViewChild('date2', {static: false}) date2: ElementRef;
-  @ViewChild('codeG', {static: false}) codeG: ElementRef;
+  @ViewChild('dateG', { static: false }) dateG: ElementRef;
+  @ViewChild('closeMG', { static: false }) closeMG: ElementRef;
+  @ViewChild('date1', { static: false }) date1: ElementRef;
+  @ViewChild('date2', { static: false }) date2: ElementRef;
+  @ViewChild('codeG', { static: false }) codeG: ElementRef;
 
   gasolines: Gas[] = [];
   // form de GAS
@@ -226,9 +226,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     };
 
     if (this.gondola._id) {
-      const gondola = new Gondola(formG.value.plateG, truck, this.gondola.basics, this.gondola.pits, false, this.gondola._id );
+      const gondola = new Gondola(formG.value.plateG, truck, this.gondola.basics, this.gondola.pits, false, this.gondola._id);
       this.gondolaS.crearGondola(gondola)
-        .subscribe( (res: any) => {
+        .subscribe((res: any) => {
           this.closeMGo.nativeElement.click();
           this.cargarGondolas();
           this.title = res.gondola.plate;
@@ -238,7 +238,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       const gondola = new Gondola(formG.value.plateG, truck);
 
       this.gondolaS.crearGondola(gondola)
-        .subscribe( (res: any) => {
+        .subscribe((res: any) => {
           this.closeMGo.nativeElement.click();
           this.cargarGondolas();
         });
@@ -247,7 +247,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   }
 
 
-  borrarGondola( gondola: Gondola ) {
+  borrarGondola(gondola: Gondola) {
     swal({
       title: '¿Está seguro?',
       text: 'Está a punto de eliminar la góndola #' + gondola.plate,
@@ -255,29 +255,29 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       buttons: true,
       dangerMode: true,
     })
-    .then(borrar => {
-      if (borrar) {
-        gondola.state = true;
-        this.gondolaS.borrarGondola(gondola)
-          .subscribe( (res: any) => {
-            this.cargarGondolas();
-            this.icon = 'fas fa-info-circle';
-            this.title = 'Góndola borrada';
-            this.type = '';
-            this.info = 'Selecciona un vehículo para comenzar';
-            this.selected = false;
-          });
+      .then(borrar => {
+        if (borrar) {
+          gondola.state = true;
+          this.gondolaS.borrarGondola(gondola)
+            .subscribe((res: any) => {
+              this.cargarGondolas();
+              this.icon = 'fas fa-info-circle';
+              this.title = 'Góndola borrada';
+              this.type = '';
+              this.info = 'Selecciona un vehículo para comenzar';
+              this.selected = false;
+            });
         }
 
       });
   }
 
-  asignarGondola( gondola: Gondola ) {
+  asignarGondola(gondola: Gondola) {
 
     gondola._truck = this.vehicle;
 
     this.gondolaS.asignarGondola(gondola)
-      .subscribe( (res: any) => {
+      .subscribe((res: any) => {
 
         this.vehicle._gondola = res.gondola;
 
@@ -288,7 +288,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
 
   }
 
-  desasignarGondola( gondola: Gondola ) {
+  desasignarGondola(gondola: Gondola) {
 
     const truck: Vehicle = {
       type: '',
@@ -306,12 +306,12 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       buttons: true,
       dangerMode: true,
     })
-    .then(borrar => {
-      if (borrar) {
+      .then(borrar => {
+        if (borrar) {
 
           gondola._truck = truck;
           this.gondolaS.asignarGondola(gondola)
-            .subscribe( (res: any) => {
+            .subscribe((res: any) => {
 
               this.cargarDisponibles();
               this.vehicle._gondola = null;
@@ -432,11 +432,11 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       this.basic = {};
       // CONDICIONAMOS SI ES GONDOLA O TRUCK
       if (this.isGondola) {
-          this.gondola.basics = this.basics;
-          this.gondolaS.crearGondola( this.gondola )
-            .subscribe(resp => {
-              this.basics = resp.gondola.basics;
-            });
+        this.gondola.basics = this.basics;
+        this.gondolaS.crearGondola(this.gondola)
+          .subscribe(resp => {
+            this.basics = resp.gondola.basics;
+          });
       } else if (!this.isGondola) {
         this.vehicle.basics = this.basics;
         this.vehicleS.crearVehiculo(this.vehicle)
@@ -457,7 +457,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       if (this.isGondola) {
         this.gondola.basics = this.basics;
         console.log(this.gondola);
-        this.gondolaS.crearGondola( this.gondola )
+        this.gondolaS.crearGondola(this.gondola)
           .subscribe(resp => {
             this.basics = resp.gondola.basics;
           });
@@ -513,9 +513,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
               });
           } else if (this.isGondola) {
             this.gondola.basics = this.basics;
-            this.gondolaS.crearGondola( this.gondola )
+            this.gondolaS.crearGondola(this.gondola)
               .subscribe(resp => {
-              this.basics = resp.gondola.basics;
+                this.basics = resp.gondola.basics;
               });
           }
         }
@@ -747,7 +747,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
           if (this.isGondola) {
             this.gondola.pits = this.pits;
             this.gondolaS.crearGondola(this.gondola)
-              .subscribe( res => {
+              .subscribe(res => {
                 this.pits = res.gondola.pits;
               });
           } else if (!this.isGondola) {

@@ -1,0 +1,79 @@
+<!-- .page-section -->
+<div class="page-section">
+  <!-- .card-deck-xl -->
+  <div class="card-deck-xl">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <div class="card-header"> Generar reporte </div>
+      <!-- .card-body -->
+      <div class="card-body">
+        <p class="text-muted"> Seleccione el destino y el rango de fechas para generar el reporte </p>
+        <!-- grid row -->
+        <div class="row">
+          <!-- .form-group -->
+          <div class="form-group col-6">
+            <label id="typeL">Destino</label>
+            <select #selectD name="typetrip" class="form-control select2" style="width:100%!important;">
+              <option value=""> Seleccione un destino </option>
+              <option *ngFor="let destination of destinations" [value]="destination._id">
+                {{ destination.name + ' KM: ' + destination.km }} </option>
+            </select>
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group col-3">
+            <label id="typeL">Fecha inicial</label>
+            <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group col-3">
+            <label id="typeL">Fecha final</label>
+            <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <!-- /grid row -->
+        <button type="submit" class="btn btn-success"><i class="fas fa-search"></i> Consultar</button>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <!-- .card -->
+    <div class="card card-fluid">
+      <div class="card-header"> Crear pre-factura </div>
+      <!-- .card-body -->
+      <div class="card-body">
+        <p class="text-muted"> Seleccione el cliente y la fecha para continuar </p>
+        <form ngNativeValidate [formGroup]="formWB" (ngSubmit)="crearFacturaLineas()">
+          <!-- grid row -->
+          <div class="row">
+            <!-- .form-group -->
+            <div class="form-group col-6">
+              <label id="typeL">Cliente <span class="badge badge-danger">Obligatorio</span></label> <select #selectC
+                formControlName="customer" name="customer" class="form-control select2" style="width:100%!important;">
+                <option value=""> Seleccione un cliente </option>
+                <option *ngFor="let customer of cpcustomers" [value]="customer._id"> {{ customer.name }} </option>
+              </select>
+            </div>
+            <!-- /.form-group -->
+            <!-- .form-group -->
+            <div class="form-group col-4">
+              <label class="control-label" for="flatpickr">Fecha <span
+                  class="badge badge-danger">Obligatorio</span></label> <input id="flatpickr" formControlName="date"
+                name="date" type="text" class="form-control" required>
+            </div>
+            <!-- /.form-group -->
+            <button type="submit" class="btn btn-primary" style="margin-top: 28px; margin-left: 10px;"><i
+                class="fas fa-save"></i> Guardar</button>
+          </div>
+          <!-- /grid row -->
+        </form>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.card-deck-xl -->
+</div>
+<!-- /.page-section -->

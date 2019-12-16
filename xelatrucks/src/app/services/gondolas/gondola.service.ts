@@ -28,7 +28,7 @@ export class GondolaService {
     return this.http.get(url);
   }
 
-  crearGondola( gondola: Gondola ) {
+  crearGondola(gondola: Gondola) {
 
     let url = URL_SERVICES + '/gondola';
 
@@ -36,7 +36,7 @@ export class GondolaService {
       url += '/' + gondola._id + '?token=' + this.userS.token;
 
       return this.http.put(url, gondola)
-        .pipe( map( (res: any) => {
+        .pipe(map((res: any) => {
           const gondolaDB = res.gondola;
           swal({
             title: 'Exito!',
@@ -47,17 +47,16 @@ export class GondolaService {
           });
           return res;
         }),
-        catchError((err, caught) => {
-          console.log(err);
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
-        }));
-
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          }));
     } else {
       url += '?token=' + this.userS.token;
 
       return this.http.post(url, gondola)
-        .pipe( map( (res: any) => {
+        .pipe(map((res: any) => {
           const gondolaDB = res.gondola;
           swal({
             title: 'Exito!',
@@ -68,39 +67,39 @@ export class GondolaService {
           });
           return res;
         }),
-        catchError((err, caught) => {
-          console.log(err);
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
-        }));
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          }));
     }
 
   }
 
-  borrarGondola( gondola: Gondola ) {
+  borrarGondola(gondola: Gondola) {
     let url = URL_SERVICES + '/gondola/delete/' + gondola._id;
     url += '?token=' + this.userS.token;
 
     return this.http.put(url, gondola)
-      .pipe( map( (res: any) => {
-          const gondolaDB = res.gondola;
-          swal({
-            title: 'Exito!',
-            text: 'Góndola eliminada correctamente' + gondolaDB.plate,
-            icon: 'success',
-            button: false,
-            timer: 1000
-          });
-          return res;
-        }),
+      .pipe(map((res: any) => {
+        const gondolaDB = res.gondola;
+        swal({
+          title: 'Exito!',
+          text: 'Góndola eliminada correctamente' + gondolaDB.plate,
+          icon: 'success',
+          button: false,
+          timer: 1000
+        });
+        return res;
+      }),
         catchError((err, caught) => {
           console.log(err);
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
         }));
   }
 
-  asignarGondola( gondola: Gondola ) {
+  asignarGondola(gondola: Gondola) {
 
     let url = URL_SERVICES + '/gondola/';
 
@@ -111,7 +110,7 @@ export class GondolaService {
       url += '?token=' + this.userS.token;
 
       return this.http.put(url, gondola)
-        .pipe( map( (res: any) => {
+        .pipe(map((res: any) => {
           const gondolaDB = res.gondola;
           swal({
             title: 'Exito!',
@@ -122,11 +121,11 @@ export class GondolaService {
           });
           return res;
         }),
-        catchError((err, caught) => {
-          console.log(err);
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
-        }));
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          }));
 
     } else {
 
@@ -134,7 +133,7 @@ export class GondolaService {
       url += '?token=' + this.userS.token;
 
       return this.http.put(url, gondola)
-        .pipe( map( (res: any) => {
+        .pipe(map((res: any) => {
           const gondolaDB = res.gondola;
           swal({
             title: 'Exito!',
@@ -145,11 +144,11 @@ export class GondolaService {
           });
           return res;
         }),
-        catchError((err, caught) => {
-          console.log(err);
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
-        }));
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          }));
 
     }
 

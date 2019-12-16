@@ -58,6 +58,8 @@ import { TypeTripComponent } from './type-trips/type-trip.component';
 import { OrdersFinishComponent } from './orders/orders-finish.component';
 import { GtripComponent } from './gtrips/gtrip.component';
 import { ReportsModule } from '../reports/reports.module';
+import { WbillComponent } from './wbills/wbill.component';
+import { WbillsComponent } from './wbills/wbills.component';
 
 
 @NgModule({
@@ -103,7 +105,9 @@ import { ReportsModule } from '../reports/reports.module';
         WtripComponent,
         TypeTripComponent,
         OrdersFinishComponent,
-        GtripComponent
+        GtripComponent,
+        WbillComponent,
+        WbillsComponent
     ],
     exports: [
         DashboardComponent,

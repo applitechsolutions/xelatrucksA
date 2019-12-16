@@ -43,6 +43,8 @@ import { RepairsComponent } from './repairs/repairs.component';
 import { DestinationsComponent } from './destinations/destinations.component';
 import { DestinationComponent } from './destinations/destination.component';
 import { OrdersFinishComponent } from './orders/orders-finish.component';
+import { WbillsComponent } from './wbills/wbills.component';
+import { WbillComponent } from './wbills/wbill.component';
 
 const pagesRoutes: Routes = [
     {
@@ -196,6 +198,18 @@ const pagesRoutes: Routes = [
         component: GbillComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Nueva Factura' }
+    },
+    {
+        path: 'wbills',
+        component: WbillsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Facturas de Reporte de Lineas' }
+    },
+    {
+        path: 'wbill/:id',
+        component: WbillComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Nueva Pre-Factura' }
     },
     // TALLER
     {

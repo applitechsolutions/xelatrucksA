@@ -44,6 +44,8 @@
               "src/assets/vendor/datatables/extensions/buttons/buttons.bootstrap4.min.js",
               "src/assets/vendor/datatables/extensions/buttons/buttons.html5.min.js",
               "src/assets/vendor/datatables/extensions/buttons/buttons.print.min.js",
+              "src/assets/vendor/datatables/extensions/buttons/buttons.flash.min.js",
+              "src/assets/vendor/datatables/extensions/buttons/buttons.colVis.min.js",
               "src/assets/javascript/pages/dataTables.bootstrap.js",
               "src/assets/vendor/html2pdf.js/es6-promise.auto.min.js",
               "src/assets/vendor/html2pdf.js/jspdf.min.js",

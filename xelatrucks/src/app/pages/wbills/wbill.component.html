@@ -189,8 +189,8 @@
                 <td *ngIf="formaDeCobro === 'MTS'"> - </td>
                 <td>{{ detail.tariff }}</td>
                 <td>{{ detail.material }}</td>
-                <td *ngIf="formaDeCobro === 'KG'">{{ (detail.kgN * detail.tariff) | number: '1.3-6' }}</td>
-                <td *ngIf="formaDeCobro === 'MTS'">{{ (detail.mts * detail.tariff) | number: '1.3-6' }}</td>
+                <td *ngIf="formaDeCobro === 'KG'">Q{{ (detail.kgN * detail.tariff) | number: '1.2-2' }}</td>
+                <td *ngIf="formaDeCobro === 'MTS'">Q{{ (detail.mts * detail.tariff) | number: '1.2-2' }}</td>
                 <td>0</td>
                 <td> </td>
                 <td>{{ detail.kgB }}</td>

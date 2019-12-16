@@ -111,7 +111,7 @@ import { DestTankComponent } from './destTanks/dest-tank.component';
         OrdersFinishComponent,
         GtripComponent,
         WbillComponent,
-        WbillsComponent
+        WbillsComponent,
         KtripsComponent,
         KtripComponent,
         DestTanksComponent,

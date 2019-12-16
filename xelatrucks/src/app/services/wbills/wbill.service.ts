@@ -18,16 +18,16 @@ export class WbillService {
     public userService: UserService
   ) { }
 
-  cargarPreDetalle( id: string, fecha1: Date, fecha2: Date ) {
+  cargarPreDetalle(id: string, fecha1: Date, fecha2: Date) {
     let url = URL_SERVICES + '/facturaB/detalles';
-    url += '?id=' + id;
+    url += '?idD=' + id;
     url += '&fecha1=' + fecha1;
     url += '&fecha2=' + fecha2;
 
     return this.http.get(url);
   }
 
-  cargarFacturas( fecha1: Date, fecha2: Date ) {
+  cargarFacturas(fecha1: Date, fecha2: Date) {
     let url = URL_SERVICES + '/facturaB';
     url += '?fecha1=' + fecha1;
     url += '&fecha2=' + fecha2;
@@ -42,7 +42,7 @@ export class WbillService {
     return this.http.get(url);
   }
 
-  borrarFactura( whiteBill: WhiteBill ) {
+  borrarFactura(whiteBill: WhiteBill) {
     let url = URL_SERVICES + '/facturaB';
     url += '/delete?id=' + whiteBill._id;
     url += '&token=' + this.userService.token;
@@ -50,24 +50,24 @@ export class WbillService {
     return this.http.put(url, whiteBill);
   }
 
-  crearFacturaBlanca( whiteBill: WhiteBill ) {
+  crearFacturaBlanca(whiteBill: WhiteBill) {
     let url = URL_SERVICES + '/facturaV';
 
     if (whiteBill._id) {
       url += '/' + whiteBill._id;
       url += '?token=' + this.userService.token;
       return this.http.put(url, whiteBill)
-      .pipe(
-        map((res: any) => {
-          const gbDB = res.bill;
-          swal('Factura creada correctamente!', 'success');
-          return res.facturaV;
-        }),
-        catchError((err, caught) => {
-          swal(err.error.mensaje, err.error.errors.message, 'error');
-          return throwError(err);
-        })
-      );
+        .pipe(
+          map((res: any) => {
+            const gbDB = res.bill;
+            swal('Factura creada correctamente!', 'success');
+            return res.facturaV;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          })
+        );
     } else {
       url += '?token=' + this.userService.token;
       return this.http.post(url, whiteBill)

@@ -15,6 +15,7 @@ export { DestTankService } from './destTanks/dest-tank.service';
 export { TypeTripService } from './typeTrips/type-trip.service';
 export { OrderService } from './orders/order.service';
 export { PullService } from './pulls/pull.service';
+export { WbillService } from './wbills/wbill.service';
 // TALLER
 export { PartService } from './parts/part.service';
 export { MechanicService } from './mechanics/mechanic.service';

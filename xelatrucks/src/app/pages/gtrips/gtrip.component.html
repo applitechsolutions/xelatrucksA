@@ -18,15 +18,14 @@
                                 <div class="form-group col-6">
                                     <label id="typeL">Vehículo <span class="badge badge-danger">Obligatorio</span></label>
                                     <select #selectV formControlName="vehicle" name="vehicle" class="form-control select2" style="width:100%!important;">
-                    <option value=""> Seleccione un vehículo </option>
-                    <ng-container *ngFor="let vehicle of vehicles">
-                      <option *ngIf="vehicle.type === 'camion'" [selected]="vehicle._id === tempVehicle"
-                        [value]="vehicle._id"> {{ vehicle.plate + ' (Camión)' }}</option>
-                      <option *ngIf="vehicle.type === 'camionG'" [selected]="vehicle._id === tempVehicle"
-                        [value]="vehicle._id"> {{ vehicle.plate + ' (Camión Gondola)' }}</option>
-                    </ng-container>
-                    \
-                  </select>
+                                        <option value=""> Seleccione un vehículo </option>
+                                        <ng-container *ngFor="let vehicle of vehicles">
+                                        <option *ngIf="vehicle.type === 'camion'" [selected]="vehicle._id === tempVehicle"
+                                            [value]="vehicle._id"> {{ vehicle.plate + ' (Camión)' }}</option>
+                                        <option *ngIf="vehicle.type === 'camionG'" [selected]="vehicle._id === tempVehicle"
+                                            [value]="vehicle._id"> {{ vehicle.plate + ' (Camión Gondola)' }}</option>
+                                        </ng-container>
+                                    </select>
                                 </div>
                                 <!-- /.form-group -->
                                 <!-- .form-group -->

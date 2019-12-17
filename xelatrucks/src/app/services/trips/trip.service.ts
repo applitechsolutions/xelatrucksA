@@ -7,6 +7,7 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 import { GreenTrip } from 'src/app/models/greenTrip.model';
 import swal from 'sweetalert';
 import { WhiteTrip } from '../../models/whiteTrip.model';
+import { TankTrip } from '../../models/tankTrip.model';
 
 @Injectable({
   providedIn: 'root'
@@ -130,6 +131,85 @@ export class TripService {
         .pipe(
           map((res: any) => {
             return res;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          })
+        );
+    }
+  }
+
+  /* #endregion */
+
+  /* #region  VIAJES CISTERNA */
+
+  cargarTankTrips( fecha1: Date, fecha2: Date) {
+
+    let url = URL_SERVICES + '/viajeA';
+    url += '?fecha1=' + fecha1;
+    url += '&fecha2=' + fecha2;
+
+    return this.http.get(url);
+
+  }
+
+  cargarTankTrip( id: string ) {
+
+    let url = URL_SERVICES + '/viajeA/buscar';
+    url += '?id=' + id;
+    url += '&token=' + this.userService.token;
+
+    return this.http.get(url);
+
+  }
+
+  eliminarTankTrip( tankTrip: TankTrip, km: number ) {
+  
+    let url = URL_SERVICES + '/viajeA';
+    url += '/delete?id=' + tankTrip._id;
+    url += '&km=' + km;
+    url += '&token=' + this.userService.token;
+
+    return this.http.put(url, tankTrip)
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err, caught) => {
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
+        })
+      );
+  }
+
+  crearTankTrip(tankTrip: TankTrip, km: number) {
+
+    let url = URL_SERVICES + '/viajeA';
+
+    if (tankTrip._id) {
+      url += '?id=' + tankTrip._id;
+      url += '&km=' + km;
+      url += '&token=' + this.userService.token;
+      return this.http.put(url, tankTrip)
+        .pipe(
+          map((res: any) => {
+            swal('Reporte cisterna Actualizado', 'consulte para continuar', 'success');
+            return res.viajeV;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          })
+        );
+    } else {
+      url += '?km=' + km;
+      url += '&token=' + this.userService.token;
+      return this.http.post(url, tankTrip)
+        .pipe(
+          map((res: any) => {
+            swal('Reporte cisterna creado', 'consulte para continuar', 'success');
+            return res.viajeA;
           }),
           catchError((err, caught) => {
             swal(err.error.mensaje, err.error.errors.message, 'error');

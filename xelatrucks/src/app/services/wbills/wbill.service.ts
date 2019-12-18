@@ -51,7 +51,7 @@ export class WbillService {
   }
 
   crearFacturaBlanca(whiteBill: WhiteBill) {
-    let url = URL_SERVICES + '/facturaV';
+    let url = URL_SERVICES + '/facturaB';
 
     if (whiteBill._id) {
       url += '/' + whiteBill._id;

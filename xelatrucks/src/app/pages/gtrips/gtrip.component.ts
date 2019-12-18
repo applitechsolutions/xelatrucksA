@@ -47,7 +47,6 @@ export class GtripComponent implements OnInit {
 
   vehicles: Vehicle[] = [];
   vehicle: Vehicle;
-  oldKM: number = 0;
   tempVehicle: string = '';
 
   types: Type[] = [];
@@ -129,7 +128,6 @@ export class GtripComponent implements OnInit {
         const fecha = this.dtService.fromJsonDate(this.greenTrip.date);
         const hora1 = this.dtService.fromJsonHour(this.greenTrip.checkIN);
         const hora2 = this.dtService.fromJsonHour(this.greenTrip.checkOUT);
-        this.oldKM = this.greenTrip._vehicle.km;
         this.tempVehicle = res.reporte._vehicle._id;
         this.tempEmp = res.reporte._employee;
         this.tempType = res.reporte._type._id;
@@ -152,8 +150,7 @@ export class GtripComponent implements OnInit {
   /* #region  CREAR VIAJE VERDE */
 
   crearViajeVerde() {
-
-    console.log(this.formGT);
+  
     this.formGT.value.date = this.date.nativeElement.value;
     this.formGT.value.checkIN = this.checkIN.nativeElement.value;
     this.formGT.value.checkOUT = this.checkOUT.nativeElement.value;

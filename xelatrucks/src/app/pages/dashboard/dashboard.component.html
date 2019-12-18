@@ -1,116 +1,131 @@
-<!-- .section-block -->
-<div class="section-block">
-  <h1 class="section-title"> ¡Nueva Actualización! </h1>
-  <p class="text-muted"> Aquí podrás ver temporalmente las nuevas caracteristicas que se van agregando al sistema...
-  </p>
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <h3>Última Actualización</h3>
+    <h6>18/12/2019</h6>
+    <p>Aquí puedes ver los últimos cambios disponibles en el sistema</p>
+    <ol>
+      <li>Nuevos accesos directos. </li>
+      <li>CRUD (Crear, Listar, Editar y eliminar) viajes de Cisterna. </li>
+      <li>CRUD Destinos de Cisterna. </li>
+    </ol>
+  </div>
+  <!-- /.page-inner -->
+  <!-- .page-sidebar -->
+  <div class="page-sidebar">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-sm-none">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" data-toggle="sidebar"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Atras</a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.sidebar-header -->
+    <!-- .sidebar-section-fill -->
+    <div class="sidebar-section-fill">
+      <!-- .card -->
+      <div class="card card-reflow">
+        <!-- .card-body -->
+        <div class="card-body">
+          <button type="button" class="close mt-n1 d-none d-xl-none d-sm-block" data-toggle="sidebar"
+            aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="card-title"> Accesos Directos </h4>
+          <div class="list-group list-group-divider mb-3">
+            <div class="list-group-header"> Transportes </div>
+            <a [routerLink]="[ '/gtrip/new' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-file-invoice"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Crear Reporte de Cuadros</span>
+              </div>
+            </a>
+            <a [routerLink]="[ '/order/new' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-receipt"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Crear Orden ó Pedido</span>
+              </div>
+            </a>
+            <a [routerLink]="[ '/orders' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-coins"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Pull de Ordenes Activas</span>
+              </div>
+            </a>
+            <a [routerLink]="[ '/ktrip/new' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-tint"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Crear Reporte de Cisterna</span>
+              </div>
+            </a>
+            <div class="list-group-header"> Taller </div>
+            <a [routerLink]="[ '/vehicles' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-truck"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Consultar Vehículos</span>
+              </div>
+            </a>
+            <a [routerLink]="[ '/repairs' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-hammer"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Crear Reparación o Ajuste</span>
+              </div>
+            </a>
+            <a [routerLink]="[ '/maintenance/new' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-tools"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Crear Mantenimiento</span>
+              </div>
+            </a>
+            <a [routerLink]="[ '/parts' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-cogs"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Inventario de Repuestos</span>
+              </div>
+            </a>
+            <a [routerLink]="[ '/buySpare/new' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-shopping-cart"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Crear Compra de Repuestos</span>
+              </div>
+            </a>
+            <div class="list-group-header"> Administración </div>
+            <a [routerLink]="[ '/reports' ]" class="list-group-item list-group-item-action">
+              <div class="list-group-item-figure">
+                <span class="fa fa-lg fa-fw fa-chart-line"></span>
+              </div>
+              <div class="list-group-item-body">
+                <span class="list-group-item-text">Reportes</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.sidebar-section-fill -->
+  </div>
+  <!-- /.page-sidebar -->
 </div>
-<!-- /.section-block -->
-<!-- grid row -->
-<div class="row">
-  <!-- grid column -->
-  <div class="col-xl-3 col-lg-4 col-sm-6">
-    <a [routerLink]="['/orders']" routerLinkActive="router-link-active">
-      <!-- .card -->
-      <div class="card card-figure is-hoverable">
-        <!-- .card-figure -->
-        <figure class="figure">
-          <img class="img-fluid" src="assets/images/builds/whiteTrips.jpg" alt="Card image cap">
-          <!-- .figure-caption -->
-          <figcaption class="figure-caption">
-            <h6 class="figure-title"> Ingreso y listado de reportes </h6>
-            <p class="text-muted mb-0"> Manejo de reportes por orden pendiente de entrega </p>
-          </figcaption>
-          <!-- /.figure-caption -->
-        </figure>
-        <!-- /.card-figure -->
-      </div>
-      <!-- /.card -->
-    </a>
-  </div>
-  <!-- /grid column -->
-  <!-- grid column -->
-  <div class="col-xl-3 col-lg-4 col-sm-6">
-    <a [routerLink]="['/orders']" routerLinkActive="router-link-active">
-      <!-- .card -->
-      <div class="card card-figure is-hoverable">
-        <!-- .card-figure -->
-        <figure class="figure">
-          <img class="img-fluid" src="assets/images/builds/pulls.jpg" alt="Card image cap">
-          <!-- .figure-caption -->
-          <figcaption class="figure-caption">
-            <h6 class="figure-title"> Ordenes Pendientes </h6>
-            <p class="text-muted mb-0"> Control de pulls de materiales pendientes de entrega </p>
-          </figcaption>
-          <!-- /.figure-caption -->
-        </figure>
-        <!-- /.card-figure -->
-      </div>
-      <!-- /.card -->
-    </a>
-  </div>
-  <!-- /grid column -->
-  <!-- grid column -->
-  <div class="col-xl-3 col-lg-4 col-sm-6">
-    <a [routerLink]="['/order', 'new']" routerLinkActive="router-link-active">
-      <!-- .card -->
-      <div class="card card-figure is-hoverable">
-        <!-- .card-figure -->
-        <figure class="figure">
-          <img class="img-fluid" src="assets/images/builds/order.jpg" alt="Card image cap">
-          <!-- .figure-caption -->
-          <figcaption class="figure-caption">
-            <h6 class="figure-title"> Crear Orden </h6>
-            <p class="text-muted mb-0"> Ordenes previas al reporte de lineas por destino y fecha</p>
-          </figcaption>
-          <!-- /.figure-caption -->
-        </figure>
-        <!-- /.card-figure -->
-      </div>
-      <!-- /.card -->
-    </a>
-  </div>
-  <!-- /grid column -->
-  <!-- grid column -->
-  <div class="col-xl-3 col-lg-4 col-sm-6">
-    <a [routerLink]="['/gtrips']" routerLinkActive="router-link-active">
-      <!-- .card -->
-      <div class="card card-figure is-hoverable">
-        <!-- .card-figure -->
-        <figure class="figure">
-          <img class="img-fluid" src="assets/images/builds/menu.jpg" alt="Card image cap">
-          <!-- .figure-caption -->
-          <figcaption class="figure-caption">
-            <h6 class="figure-title"> Reordenamiento del menu principal </h6>
-            <p class="text-muted mb-0"> Se creó un menu especifico para tipos de producción y reportes de cuadros </p>
-          </figcaption>
-          <!-- /.figure-caption -->
-        </figure>
-        <!-- /.card-figure -->
-      </div>
-      <!-- /.card -->
-    </a>
-  </div>
-  <!-- /grid column -->
-  <!-- grid column -->
-  <div class="col-xl-3 col-lg-4 col-sm-6">
-    <a [routerLink]="['/destinations']" routerLinkActive="router-link-active">
-      <!-- .card -->
-      <div class="card card-figure is-hoverable">
-        <!-- .card-figure -->
-        <figure class="figure">
-          <img class="img-fluid" src="assets/images/builds/destinations.jpg" alt="Card image cap">
-          <!-- .figure-caption -->
-          <figcaption class="figure-caption">
-            <h6 class="figure-title"> Matenimiento de destinos </h6>
-            <p class="text-muted mb-0"> Destinos para resportes de lineas </p>
-          </figcaption>
-          <!-- /.figure-caption -->
-        </figure>
-        <!-- /.card-figure -->
-      </div>
-      <!-- /.card -->
-    </a>
-  </div>
-  <!-- /grid column -->
-</div>
-<!-- /grid row -->
+<!-- /.page -->

@@ -189,7 +189,7 @@
                 <td *ngIf="formaDeCobro === 'MTS'"> - </td>
                 <td>{{ detail.tariff }}</td>
                 <td>{{ detail.material }}</td>
-                <td *ngIf="formaDeCobro === 'KG'">Q{{ (detail.kgN * detail.tariff) | number: '1.2-2' }}</td>
+                <td *ngIf="formaDeCobro === 'KG'">Q{{ (( detail.kgN / 1000) * detail.tariff) | number: '1.2-2' }}</td>
                 <td *ngIf="formaDeCobro === 'MTS'">Q{{ (detail.mts * detail.tariff) | number: '1.2-2' }}</td>
                 <td>0</td>
                 <td> </td>

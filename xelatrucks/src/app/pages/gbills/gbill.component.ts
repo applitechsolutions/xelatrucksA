@@ -13,6 +13,9 @@ import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
 
+declare function init_datatables();
+declare function destroy_datatables();
+
 @Component({
   selector: 'app-gbill',
   templateUrl: './gbill.component.html',
@@ -29,6 +32,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
   formGB: FormGroup;
   greenbil: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };
   preDetail: PreDetailBill = { code: '', prod: '', totalmts: 0, trips: 0 };
+  preDetails: any[] = [];
   details: DetailBill[] = [];
   total: number = 0;
   optional: number = 0;
@@ -37,6 +41,10 @@ export class GbillComponent implements OnInit, AfterViewInit {
   cpcustomers: CPCustomer[] = [];
   types: Type[] = [];
   tarifas: Tariff[] = [];
+
+  // NUEVAS VARIABLES
+  TOTALVIAJES = 0;
+  TOTALMTRS = 0;
 
   constructor(
     public router: Router,
@@ -67,6 +75,11 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
   /* #region  FACTURA REPORTE CUADROS */
 
+  calcularTotales() {
+    this.TOTALVIAJES = this.preDetails.reduce((sum, item) => sum + item.totalTrips, 0);
+    this.TOTALMTRS = this.preDetails.reduce((sum, item) => sum + item.totalmts, 0);
+  }
+
   generarPreDetalle() {
 
     this.loading = true;
@@ -88,48 +101,60 @@ export class GbillComponent implements OnInit, AfterViewInit {
         if (res.preDetail.length <= 0) {
           swal('Oops...', 'No hay viajes en ese rango de fechas', 'warning');
           this.details = [];
+          this.loading = false;
           return;
         }
-        this.preDetail = res.preDetail[0];
-        this.tarifas = this.preDetail.tariff;
+        destroy_datatables();
+        this.preDetails = res.preDetail;
+
+        console.log(this.preDetails);
+
+        // CALCULAMOS EL TOTAL DE VIAJES Y DE METROS DE TODAS LAS FECHAS
+        this.calcularTotales();
+
+        // BUSCAMOS EL TARIFARIO DENTRO DEL TIPO DE PRODUCCION
+        const row = this.types.find(e => e._id === this.selectTT.nativeElement.value);
+        this.tarifas = row.tariff;
         this.details = [];
         if (extra <= 0 || extra === '') {
           this.optional = 0;
           this.tarifas.forEach(element => {
-            if (this.preDetail.totalmts >= element.start && this.preDetail.totalmts <= element.end) {
-              costo = this.preDetail.totalmts * (element.cost * 1.12);
+            if (this.TOTALMTRS >= element.start && this.TOTALMTRS <= element.end) {
+              costo = (element.cost * 1.12);
               this.total = costo;
-              this.details.push({
-                _type: {
-                  code: this.preDetail.code,
-                  name: this.preDetail.prod,
-                  km: 0,
-                  tariff: null,
-                  _id: this.preDetail._id
-                },
-                mts: this.preDetail.totalmts,
-                trips: this.preDetail.trips,
-                cost: costo
-              });
+              // this.details.push({
+              //   _type: {
+              //     code: this.preDetail.code,
+              //     name: this.preDetail.prod,
+              //     km: 0,
+              //     tariff: null,
+              //     _id: this.preDetail._id
+              //   },
+              //   mts: this.preDetail.totalmts,
+              //   trips: this.preDetail.trips,
+              //   cost: costo
+              // });
             }
           });
         } else {
           this.optional = extra;
-          costo = this.preDetail.totalmts * (extra * 1.12);
+          costo = (extra * 1.12);
           this.total = costo;
-          this.details.push({
-            _type: {
-              code: '',
-              name: '',
-              km: 0,
-              tariff: null,
-              _id: this.preDetail._id
-            },
-            mts: this.preDetail.totalmts,
-            trips: this.preDetail.trips,
-            cost: costo
-          })
+          // this.details.push({
+          //   _type: {
+          //     code: '',
+          //     name: '',
+          //     km: 0,
+          //     tariff: null,
+          //     _id: this.preDetail._id
+          //   },
+          //   mts: this.preDetail.totalmts,
+          //   trips: this.preDetail.trips,
+          //   cost: costo
+          // })
         }
+        this.chRef.detectChanges();
+        init_datatables();
 
         this.loading = false;
       });

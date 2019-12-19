@@ -35,6 +35,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
   preDetails: any[] = [];
   details: DetailBill[] = [];
   total: number = 0;
+  tarifa: number = 0;
   optional: number = 0;
   loading: boolean = false;
 
@@ -95,7 +96,6 @@ export class GbillComponent implements OnInit, AfterViewInit {
     const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
     const idTipo = this.selectTT.nativeElement.value;
     const extra = this.extra.nativeElement.value;
-    let costo;
 
     if (fecha1 > fecha2 || idTipo === '') {
       swal('Oops...', 'Debe llenar todos los campos o los valores no son válidos', 'warning');
@@ -122,15 +122,15 @@ export class GbillComponent implements OnInit, AfterViewInit {
         console.log(this.TOTALVIAJES);
         // BUSCAMOS EL TARIFARIO DENTRO DEL TIPO DE PRODUCCION
         const row = this.types.find(e => e._id === this.selectTT.nativeElement.value);
-        
+
         this.tarifas = row.tariff;
         this.details = [];
         if (extra <= 0 || extra === '') {
           this.optional = 0;
           this.tarifas.forEach(element => {
             if (this.TOTALMTRS >= element.start && this.TOTALMTRS <= element.end) {
-              costo = (element.cost * 1.12);
-              this.total = costo * this.preDetail.totalmts;
+              this.tarifa = (element.cost * 1.12);
+              this.total = this.tarifa * this.preDetail.totalmts;
               this.details.push({
                 _type: {
                   code: this.preDetail.code,
@@ -141,14 +141,14 @@ export class GbillComponent implements OnInit, AfterViewInit {
                 },
                 mts: this.TOTALMTRS,
                 trips: this.TOTALVIAJES,
-                cost: costo
+                cost: this.tarifa
               });
             }
           });
         } else {
           this.optional = extra;
-          costo = (extra * 1.12);
-          this.total = costo * this.preDetail.totalmts;
+          this.tarifa = (extra * 1.12);
+          this.total = this.tarifa * this.preDetail.totalmts;
           this.details.push({
             _type: {
               code: this.preDetail.code,
@@ -159,7 +159,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
             },
             mts: this.preDetail.totalmts,
             trips: this.preDetail.trips,
-            cost: costo
+            cost: this.tarifa
           })
         }
         this.chRef.detectChanges();

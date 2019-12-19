@@ -162,7 +162,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Q {{ total | number: '1.2-2' }} </td>
+                <td>Q {{ tarifa | number: '1.2-2' }} </td>
               </tr>
               <tr *ngFor="let detail of preDetail.detalles">
                 <td> - </td>
@@ -192,7 +192,7 @@
                 </td>
                 <td>
                   <h6>
-                    Q {{ (preDetail.totalmts * total ) | number: '1.2-2' }}
+                    Q {{ (preDetail.totalmts * tarifa ) | number: '1.2-2' }}
                   </h6>
                 </td>
               </tr>
@@ -219,7 +219,7 @@
               </th>
               <th>
                 <h5>
-                  Q {{ (TOTALMTRS * total) | number: '1.2-2' }}
+                  Q {{ (TOTALMTRS * tarifa) | number: '1.2-2' }}
                 </h5>
               </th>
             </tr>

@@ -130,7 +130,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
           this.tarifas.forEach(element => {
             if (this.TOTALMTRS >= element.start && this.TOTALMTRS <= element.end) {
               costo = (element.cost * 1.12);
-              this.total = costo;
+              this.total = costo * this.preDetail.totalmts;
               this.details.push({
                 _type: {
                   code: this.preDetail.code,
@@ -148,7 +148,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
         } else {
           this.optional = extra;
           costo = (extra * 1.12);
-          this.total = costo;
+          this.total = costo * this.preDetail.totalmts;
           this.details.push({
             _type: {
               code: this.preDetail.code,

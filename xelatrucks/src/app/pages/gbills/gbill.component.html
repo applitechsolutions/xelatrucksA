@@ -226,11 +226,107 @@
             </div>
             <!-- /.card-body -->
         </div>
-        <!-- /.card -->
+        <!-- /.form-group -->
+        <!-- .table -->
+        <table id="myTable" class="table">
+            <thead>
+                <tr>
+                    <th>FECHA</th>
+                    <th> VEHÍCULO </th>
+                    <th> MTS </th>
+                    <th> VIAJES </th>
+                    <th> TOTAL </th>
+                    <th> TARIFA </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let preDetail of preDetails">
+                    <tr>
+                        <td>
+                            {{ preDetail._id | date: 'dd/MM/yyyy' }}
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Q {{ total | number: '1.2-2' }} </td>
+                    </tr>
+                    <tr *ngFor="let detail of preDetail.detalles">
+                        <td> - </td>
+                        <td>{{ detail.vehicle }}</td>
+                        <td>{{ detail.mts | number: '1.2-2'}} m</td>
+                        <td>{{ detail.trips }}</td>
+                        <td>{{ detail.totalmts | number: '1.2-2' }} m</td>
+                        <td> - </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <h6>
+                                Total del día
+                            </h6>
+                        </td>
+                        <td>
+                            <h6>
+                                {{ preDetail.totalTrips }}
+                            </h6>
+                        </td>
+                        <td>
+                            <h6>
+                                {{ preDetail.totalmts | number: '1.2-2' }} m
+                            </h6>
+                        </td>
+                        <td>
+                            <h6>
+                                Q {{ (preDetail.totalmts * total ) | number: '1.2-2' }}
+                            </h6>
+                        </td>
+                    </tr>
+                </ng-container>
+                <tr>
+                    <th>-</th>
+                    <th>-</th>
+                    <th>
+                        <h5>
+                            TOTALES
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            {{ TOTALVIAJES }}
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            {{ TOTALMTRS | number: '1.2-2' }} m
+                        </h5>
+                    </th>
+                    <th>
+                        <h5>
+                            Q {{ (TOTALMTRS * total) | number: '1.2-2' }}
+                        </h5>
+                    </th>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>FECHA</th>
+                    <th> VEHÍCULO </th>
+                    <th> MTS </th>
+                    <th> VIAJES </th>
+                    <th> TOTAL </th>
+                    <th> TARIFA </th>
+                </tr>
+            </tfoot>
+        </table>
+        <!-- /.table -->
     </div>
-    <!-- /.card-deck-xl -->
-    <ng-template #customLoadingTemplate></ng-template>
-    <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate ">
-    </ngx-loading>
+    <!-- /.card-body -->
+</div>
+<!-- /.card-deck-xl -->
+<ng-template #customLoadingTemplate></ng-template>
+<ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate ">
+</ngx-loading>
 </div>
 <!-- /.page-section -->

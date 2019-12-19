@@ -78,6 +78,13 @@ export class GbillComponent implements OnInit, AfterViewInit {
   calcularTotales() {
     this.TOTALVIAJES = this.preDetails.reduce((sum, item) => sum + item.totalTrips, 0);
     this.TOTALMTRS = this.preDetails.reduce((sum, item) => sum + item.totalmts, 0);
+
+    this.preDetails.forEach(item => {
+      this.preDetail.code = item.code;
+      this.preDetail.prod = item.prod;
+      this.preDetail.totalmts += item.totalmts;
+      this.preDetail.trips += item.trips;
+    });
   }
 
   generarPreDetalle() {
@@ -111,9 +118,11 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
         // CALCULAMOS EL TOTAL DE VIAJES Y DE METROS DE TODAS LAS FECHAS
         this.calcularTotales();
-
+        console.log(this.TOTALMTRS);
+        console.log(this.TOTALVIAJES);
         // BUSCAMOS EL TARIFARIO DENTRO DEL TIPO DE PRODUCCION
         const row = this.types.find(e => e._id === this.selectTT.nativeElement.value);
+        
         this.tarifas = row.tariff;
         this.details = [];
         if (extra <= 0 || extra === '') {
@@ -122,36 +131,36 @@ export class GbillComponent implements OnInit, AfterViewInit {
             if (this.TOTALMTRS >= element.start && this.TOTALMTRS <= element.end) {
               costo = (element.cost * 1.12);
               this.total = costo;
-              // this.details.push({
-              //   _type: {
-              //     code: this.preDetail.code,
-              //     name: this.preDetail.prod,
-              //     km: 0,
-              //     tariff: null,
-              //     _id: this.preDetail._id
-              //   },
-              //   mts: this.preDetail.totalmts,
-              //   trips: this.preDetail.trips,
-              //   cost: costo
-              // });
+              this.details.push({
+                _type: {
+                  code: this.preDetail.code,
+                  name: this.preDetail.prod,
+                  km: 0,
+                  tariff: null,
+                  _id: this.selectTT.nativeElement.value
+                },
+                mts: this.TOTALMTRS,
+                trips: this.TOTALVIAJES,
+                cost: costo
+              });
             }
           });
         } else {
           this.optional = extra;
           costo = (extra * 1.12);
           this.total = costo;
-          // this.details.push({
-          //   _type: {
-          //     code: '',
-          //     name: '',
-          //     km: 0,
-          //     tariff: null,
-          //     _id: this.preDetail._id
-          //   },
-          //   mts: this.preDetail.totalmts,
-          //   trips: this.preDetail.trips,
-          //   cost: costo
-          // })
+          this.details.push({
+            _type: {
+              code: this.preDetail.code,
+              name: this.preDetail.prod,
+              km: 0,
+              tariff: null,
+              _id: this.selectTT.nativeElement.value
+            },
+            mts: this.preDetail.totalmts,
+            trips: this.preDetail.trips,
+            cost: costo
+          })
         }
         this.chRef.detectChanges();
         init_datatables();

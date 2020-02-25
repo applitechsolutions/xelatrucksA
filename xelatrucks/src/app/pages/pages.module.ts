@@ -64,6 +64,8 @@ import { KtripsComponent } from './ktrips/ktrips.component';
 import { KtripComponent } from './ktrips/ktrip.component';
 import { DestTanksComponent } from './destTanks/dest-tanks.component';
 import { DestTankComponent } from './destTanks/dest-tank.component';
+import { TbillsComponent } from './tbills/tbills.component';
+import { TbillComponent } from './tbills/tbill.component';
 
 
 @NgModule({
@@ -115,7 +117,9 @@ import { DestTankComponent } from './destTanks/dest-tank.component';
         KtripsComponent,
         KtripComponent,
         DestTanksComponent,
-        DestTankComponent
+        DestTankComponent,
+        TbillsComponent,
+        TbillComponent
     ],
     exports: [
         DashboardComponent,

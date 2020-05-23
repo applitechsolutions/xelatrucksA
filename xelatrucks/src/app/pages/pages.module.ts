@@ -66,6 +66,8 @@ import { DestTanksComponent } from './destTanks/dest-tanks.component';
 import { DestTankComponent } from './destTanks/dest-tank.component';
 import { TbillsComponent } from './tbills/tbills.component';
 import { TbillComponent } from './tbills/tbill.component';
+import { SalesComponent } from './sales/sales.component';
+import { SaleComponent } from './sales/sale.component';
 
 
 @NgModule({
@@ -119,7 +121,9 @@ import { TbillComponent } from './tbills/tbill.component';
         DestTanksComponent,
         DestTankComponent,
         TbillsComponent,
-        TbillComponent
+        TbillComponent,
+        SalesComponent,
+        SaleComponent
     ],
     exports: [
         DashboardComponent,

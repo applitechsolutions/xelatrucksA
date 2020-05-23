@@ -13,7 +13,7 @@ declare var swal: any;
 })
 export class CustomersComponent implements OnInit {
 
-  @ViewChild('closeM', {static: false}) closeM: ElementRef;
+  @ViewChild('closeM', { static: false }) closeM: ElementRef;
 
   loading: boolean = false;
   customers: Customer[] = [];
@@ -37,7 +37,7 @@ export class CustomersComponent implements OnInit {
 
   cargarClientes() {
     this.CustomerS.cargarClientes()
-      .subscribe( (resp: any) => {
+      .subscribe((resp: any) => {
         this.customers = resp.clientes;
 
         this.chRef.detectChanges();
@@ -45,7 +45,7 @@ export class CustomersComponent implements OnInit {
       });
   }
 
-  borrarCliente( customer: Customer) {
+  borrarCliente(customer: Customer) {
     swal({
       title: '¿Está seguro?',
       text: 'Está a punto de borrar a ' + customer.name,
@@ -53,20 +53,20 @@ export class CustomersComponent implements OnInit {
       buttons: true,
       dangerMode: true,
     })
-    .then( borrar => {
-      if (borrar) {
-        this.CustomerS.borrarCliente( customer._id )
-          .subscribe( (borrado: any) => {
-            destroy_datatables();
-            this.cargarClientes();
-          });
-      }
-    });
+      .then(borrar => {
+        if (borrar) {
+          this.CustomerS.borrarCliente(customer._id)
+            .subscribe((borrado: any) => {
+              destroy_datatables();
+              this.cargarClientes();
+            });
+        }
+      });
   }
 
-  cargarCliente( id: string ) {
-    this.CustomerS.cargarCliente( id )
-      .subscribe( resp => {
+  cargarCliente(id: string) {
+    this.CustomerS.cargarCliente(id)
+      .subscribe(resp => {
         this.idCustomer = resp._id;
         this.forma.get('name').setValue(resp.name);
         this.forma.get('nit').setValue(resp.nit);
@@ -92,32 +92,32 @@ export class CustomersComponent implements OnInit {
         this.forma.value.mobile
       );
 
-      this.CustomerS.crearCliente( customer )
-        .subscribe( resp => {
+      this.CustomerS.crearCliente(customer)
+        .subscribe(resp => {
           destroy_datatables();
           this.cargarClientes();
           this.closeM.nativeElement.click();
           this.loading = false;
         });
-      } else {
-        const customer = new Customer(
-          this.forma.value.name,
-          false,
-          this.forma.value.nit,
-          this.forma.value.address,
-          this.forma.value.mobile,
-          this.idCustomer
-        );
+    } else {
+      const customer = new Customer(
+        this.forma.value.name,
+        false,
+        this.forma.value.nit,
+        this.forma.value.address,
+        this.forma.value.mobile,
+        this.idCustomer
+      );
 
-        this.CustomerS.crearCliente( customer )
-        .subscribe( resp => {
+      this.CustomerS.crearCliente(customer)
+        .subscribe(resp => {
           destroy_datatables();
           this.cargarClientes();
           this.closeM.nativeElement.click();
           this.loading = false;
           this.idCustomer = '';
         });
-      }
+    }
     this.forma.reset();
   }
 

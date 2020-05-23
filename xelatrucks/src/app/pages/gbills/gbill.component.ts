@@ -90,8 +90,6 @@ export class GbillComponent implements OnInit, AfterViewInit {
 
   generarPreDetalle() {
 
-    this.loading = true;
-
     const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
     const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
     const idTipo = this.selectTT.nativeElement.value;
@@ -165,6 +163,8 @@ export class GbillComponent implements OnInit, AfterViewInit {
         this.chRef.detectChanges();
         init_datatables();
 
+        this.loading = false;
+      }, error => {
         this.loading = false;
       });
   }

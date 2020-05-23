@@ -4,6 +4,10 @@ export { VerificaTokenGuard } from './guards/verifica-token.guard';
 export { AdminGuard } from './guards/admin.guard';
 export { DatatablesService } from './datatables/datatables.service';
 export { UserService } from './users/user.service';
+// CENTRO DE DISTRIBUCION
+export { SaleService } from './sales/sale.service';
+export { CustomerService } from './customers/customer.service';
+
 // VIAJES
 export { EmployeeService } from './employees/employee.service';
 export { TripService } from './trips/trip.service';

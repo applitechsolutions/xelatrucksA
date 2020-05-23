@@ -49,6 +49,10 @@ import { DestTankComponent } from './destTanks/dest-tank.component';
 import { OrdersFinishComponent } from './orders/orders-finish.component';
 import { WbillsComponent } from './wbills/wbills.component';
 import { WbillComponent } from './wbills/wbill.component';
+import { TbillsComponent } from './tbills/tbills.component';
+import { TbillComponent } from './tbills/tbill.component';
+import { SalesComponent } from './sales/sales.component';
+import { SaleComponent } from './sales/sale.component';
 
 const pagesRoutes: Routes = [
     {
@@ -239,6 +243,18 @@ const pagesRoutes: Routes = [
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Nueva Pre-Factura' }
     },
+    {
+        path: 'tbills',
+        component: TbillsComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Facturas de Reporte Cisterna' }
+    },
+    {
+        path: 'tbill/:id',
+        component: TbillComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Nueva Pre-Factura' }
+    },
     // TALLER
     {
         path: 'buySpares',
@@ -336,6 +352,18 @@ const pagesRoutes: Routes = [
         component: CustomersComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Mantenimiento de Clientes' }
+    },
+    {
+        path: 'sales',
+        component: SalesComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Listado de Ventas' }
+    },
+    {
+        path: 'sale/:id',
+        component: SaleComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Listado de Ventas' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];

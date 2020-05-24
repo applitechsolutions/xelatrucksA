@@ -31,7 +31,7 @@ export class SaleComponent implements OnInit {
   formMat: FormGroup;
   formCliente: FormGroup;
 
-  sale: Sale = { _customer: null, date: '', state: false, total: 0 };
+  sale: Sale = { _customer: null, date: null, state: false, total: 0 };
   details: DetailSale[] = [];
   detail: DetailSale = { material: { code: '', name: 'undefined', minStock: 0 }, total: 0, price: 0 };
   customers: Customer[] = [];

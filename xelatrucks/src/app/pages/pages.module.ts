@@ -3,9 +3,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { PAGES_ROUTES } from './pages.routes';
 
-// ng2-charts
-import { ChartsModule } from 'ng2-charts';
-
 // Pipe Module
 import { PipesModule } from '../pipes/pipes.module';
 

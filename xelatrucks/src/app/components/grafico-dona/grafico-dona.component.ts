@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Label, MultiDataSet } from 'ng2-charts';
+// import { Label, MultiDataSet } from 'ng2-charts';
 import { ChartType } from 'chart.js';
 
 @Component({
@@ -8,10 +8,10 @@ import { ChartType } from 'chart.js';
   styles: []
 })
 export class GraficoDonaComponent implements OnInit {
-  @Input('Label') doughnutChartLabels: Label[] = [];
-  @Input('Data') doughnutChartData: MultiDataSet = [];
+  // @Input('Label') doughnutChartLabels: Label[] = [];
+  // @Input('Data') doughnutChartData: MultiDataSet = [];
   @Input('Type') doughnutChartType: ChartType = 'doughnut';
-  
+
   constructor() { }
 
   ngOnInit() {

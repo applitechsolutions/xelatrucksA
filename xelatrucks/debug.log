@@ -6,3 +6,4 @@
 [1128/125027.555:ERROR:process_info.cc(359)] UncheckedAllocate
 [1128/204918.773:ERROR:process_info.cc(359)] UncheckedAllocate
 [1214/190922.545:ERROR:process_info.cc(359)] UncheckedAllocate
+[0523/194638.189:WARNING:minidump_to_upload_parameters.cc(36)] duplicate key guid, discarding value bd42bd22-3f4b-406e-946e-1eb31ac1ee2f

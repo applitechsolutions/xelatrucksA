@@ -22,14 +22,14 @@ declare function inputNumber();
 })
 export class VehiclesComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('scroll', { static: false }) scroll: ElementRef;
+  @ViewChild('scroll') scroll: ElementRef;
 
   select2: any;
   public loading = false;
   date: string; // fecha de hoy
 
   // GONDOLA *********************************************************************************************
-  @ViewChild('closeMGo', { static: false }) closeMGo: ElementRef;
+  @ViewChild('closeMGo') closeMGo: ElementRef;
 
   // Informacion de la Gondola
   isTruckG: boolean = false;
@@ -44,7 +44,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   gondola: Gondola = { plate: '' };
 
   // VEHICULOS ******************************************************************************************
-  @ViewChild('detalles', { static: false }) detalles: ElementRef;
+  @ViewChild('detalles') detalles: ElementRef;
   // Listado principal
   vehicles: Vehicle[] = [];
   gondolas: Gondola[] = [];
@@ -70,7 +70,7 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   };
 
   // BASICS ***********************************************************************************************
-  @ViewChild('closeP', { static: false }) closeP: ElementRef;
+  @ViewChild('closeP') closeP: ElementRef;
 
   // listado
   basics: Basics[] = [];
@@ -78,10 +78,10 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   basic: Basics = {};
 
   // PITS **************************************************************************************************
-  @ViewChild('closeMP', { static: false }) closeMP: ElementRef;
-  @ViewChild('selectR', { static: false }) selectR: ElementRef;
-  @ViewChild('closeMR', { static: false }) closeMR: ElementRef;
-  @ViewChild('datePit', { static: false }) dateP: ElementRef;
+  @ViewChild('closeMP') closeMP: ElementRef;
+  @ViewChild('selectR') selectR: ElementRef;
+  @ViewChild('closeMR') closeMR: ElementRef;
+  @ViewChild('datePit') dateP: ElementRef;
 
   // form de PITS
   formPit: FormGroup;
@@ -104,11 +104,11 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
   tempRim: string = '';
 
   // GASOLINES ************************************************************************************************
-  @ViewChild('dateG', { static: false }) dateG: ElementRef;
-  @ViewChild('closeMG', { static: false }) closeMG: ElementRef;
-  @ViewChild('date1', { static: false }) date1: ElementRef;
-  @ViewChild('date2', { static: false }) date2: ElementRef;
-  @ViewChild('codeG', { static: false }) codeG: ElementRef;
+  @ViewChild('dateG') dateG: ElementRef;
+  @ViewChild('closeMG') closeMG: ElementRef;
+  @ViewChild('date1') date1: ElementRef;
+  @ViewChild('date2') date2: ElementRef;
+  @ViewChild('codeG') codeG: ElementRef;
 
   gasolines: Gas[] = [];
   // form de GAS

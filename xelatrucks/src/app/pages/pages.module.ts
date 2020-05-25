@@ -7,13 +7,8 @@ import { PAGES_ROUTES } from './pages.routes';
 import { PipesModule } from '../pipes/pipes.module';
 
 // temporal
-import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProgressComponent } from './progress/progress.component';
-import { Graficas1Component } from './graficas1/graficas1.component';
-import { PromesasComponent } from './promesas/promesas.component';
-import { RxjsComponent } from './rxjs/rxjs.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user.component';
 
@@ -70,11 +65,6 @@ import { SaleComponent } from './sales/sale.component';
 @NgModule({
     declarations: [
         DashboardComponent,
-        ProgressComponent,
-        Graficas1Component,
-        GraficoDonaComponent,
-        PromesasComponent,
-        RxjsComponent,
         UsersComponent,
         UserComponent,
         ProfileComponent,
@@ -124,8 +114,6 @@ import { SaleComponent } from './sales/sale.component';
     ],
     exports: [
         DashboardComponent,
-        ProgressComponent,
-        Graficas1Component,
         UserComponent
     ],
     imports: [
@@ -134,7 +122,6 @@ import { SaleComponent } from './sales/sale.component';
         ReactiveFormsModule,
         SharedModule,
         PAGES_ROUTES,
-        ChartsModule,
         PipesModule,
         ReportsModule,
         NgxLoadingModule.forRoot({})

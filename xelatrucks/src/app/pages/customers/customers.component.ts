@@ -13,7 +13,7 @@ declare var swal: any;
 })
 export class CustomersComponent implements OnInit {
 
-  @ViewChild('closeM', { static: false }) closeM: ElementRef;
+  @ViewChild('closeM') closeM: ElementRef;
 
   loading: boolean = false;
   customers: Customer[] = [];

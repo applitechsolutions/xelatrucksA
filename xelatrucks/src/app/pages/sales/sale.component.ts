@@ -20,11 +20,11 @@ declare var swal: any;
 })
 export class SaleComponent implements OnInit {
 
-  @ViewChild('date', { static: false }) date: ElementRef;
-  @ViewChild('selectC', { static: false }) selectC: ElementRef;
-  @ViewChild('closeMD', { static: false }) closeMD: ElementRef;
-  @ViewChild('closeMMt', { static: false }) closeMMt: ElementRef;
-  @ViewChild('closeMC', { static: false }) closeMC: ElementRef;
+  @ViewChild('date') date: ElementRef;
+  @ViewChild('selectC') selectC: ElementRef;
+  @ViewChild('closeMD') closeMD: ElementRef;
+  @ViewChild('closeMMt') closeMMt: ElementRef;
+  @ViewChild('closeMC') closeMC: ElementRef;
 
   formVenta: FormGroup;
   formDetalle: FormGroup;

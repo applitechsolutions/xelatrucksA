@@ -14,7 +14,7 @@ declare var swal: any;
 })
 export class CpcustomersComponent implements OnInit {
 
-  @ViewChild('closeM', {static: false}) closeM: ElementRef;
+  @ViewChild('closeM') closeM: ElementRef;
 
   loading: boolean = false;
   CPcustomers: CPCustomer[] = [];

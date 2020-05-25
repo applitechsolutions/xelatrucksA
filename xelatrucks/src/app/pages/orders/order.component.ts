@@ -25,10 +25,10 @@ declare var swal: any;
 })
 export class OrderComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('closeMMt', { static: false }) closeMMt: ElementRef;
-  @ViewChild('selectM', { static: false }) selectM: ElementRef;
-  @ViewChild('selectD', { static: false }) selectD: ElementRef;
-  @ViewChild('date', { static: false }) date: ElementRef;
+  @ViewChild('closeMMt') closeMMt: ElementRef;
+  @ViewChild('selectM') selectM: ElementRef;
+  @ViewChild('selectD') selectD: ElementRef;
+  @ViewChild('date') date: ElementRef;
 
   loading = false;
 

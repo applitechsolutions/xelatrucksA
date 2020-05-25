@@ -18,12 +18,12 @@ declare var swal: any;
 })
 export class KtripComponent implements OnInit {
 
-  @ViewChild('selectE', { static: false }) selectE: ElementRef;
-  @ViewChild('selectV', { static: false }) selectV: ElementRef;
-  @ViewChild('selectD', { static: false }) selectD: ElementRef;
-  @ViewChild('date', { static: false }) date: ElementRef;
-  @ViewChild('checkIN', { static: false }) checkIN: ElementRef;
-  @ViewChild('checkOUT', { static: false }) checkOUT: ElementRef;
+  @ViewChild('selectE') selectE: ElementRef;
+  @ViewChild('selectV') selectV: ElementRef;
+  @ViewChild('selectD') selectD: ElementRef;
+  @ViewChild('date') date: ElementRef;
+  @ViewChild('checkIN') checkIN: ElementRef;
+  @ViewChild('checkOUT') checkOUT: ElementRef;
 
   formC: FormGroup;
   tankTrip: TankTrip = {_employee: null, _vehicle: null, _destination: null, _id: ''};

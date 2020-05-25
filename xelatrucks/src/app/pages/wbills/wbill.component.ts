@@ -19,9 +19,9 @@ declare function destroy_datatables();
 })
 export class WbillComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('selectD', { static: false }) selectD: ElementRef;
-  @ViewChild('date1', { static: false }) date1: ElementRef;
-  @ViewChild('date2', { static: false }) date2: ElementRef;
+  @ViewChild('selectD') selectD: ElementRef;
+  @ViewChild('date1') date1: ElementRef;
+  @ViewChild('date2') date2: ElementRef;
 
   loading = false;
   destinations: Destination[] = [];

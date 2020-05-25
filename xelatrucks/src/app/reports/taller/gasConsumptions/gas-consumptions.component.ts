@@ -17,8 +17,8 @@ declare var swal: any;
 export class GasConsumptionsComponent implements OnInit, AfterViewInit, OnChanges {
 
   loading: boolean = false;
-  @ViewChild('dateG1', { static: false }) dateG1: ElementRef;
-  @ViewChild('dateG2', { static: false }) dateG2: ElementRef;
+  @ViewChild('dateG1') dateG1: ElementRef;
+  @ViewChild('dateG2') dateG2: ElementRef;
 
   @Input() idTable: string;
   @Input() dtButtons: string;

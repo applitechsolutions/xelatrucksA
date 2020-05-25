@@ -23,11 +23,11 @@ declare function destroy_datatables();
 })
 export class GbillComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('date1', { static: false }) date1: ElementRef;
-  @ViewChild('date2', { static: false }) date2: ElementRef;
-  @ViewChild('selectC', { static: false }) selectC: ElementRef;
-  @ViewChild('selectTT', { static: false }) selectTT: ElementRef;
-  @ViewChild('extra', { static: false }) extra: ElementRef;
+  @ViewChild('date1') date1: ElementRef;
+  @ViewChild('date2') date2: ElementRef;
+  @ViewChild('selectC') selectC: ElementRef;
+  @ViewChild('selectTT') selectTT: ElementRef;
+  @ViewChild('extra') extra: ElementRef;
 
   formGB: FormGroup;
   greenbil: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };

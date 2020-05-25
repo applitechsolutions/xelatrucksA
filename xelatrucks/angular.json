@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/xelatrucks",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -58,10 +59,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": {
@@ -73,11 +76,17 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [{
-                "type": "initial",
-                "maximumWarning": "11mb",
-                "maximumError": "11mb"
-              }]
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "11mb",
+                  "maximumError": "11mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
             }
           }
         },
@@ -158,5 +167,8 @@
       }
     }
   },
-  "defaultProject": "xelatrucks"
+  "defaultProject": "xelatrucks",
+  "cli": {
+    "analytics": "437b6a9e-7f3e-43e9-bb5e-a3e29a8af3c8"
+  }
 }

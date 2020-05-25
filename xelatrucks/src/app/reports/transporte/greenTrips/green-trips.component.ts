@@ -16,8 +16,8 @@ declare var swal: any;
 })
 export class GreenTripsComponent implements OnInit {
 
-  @ViewChild('dateP1', { static: false }) dateP1: ElementRef;
-  @ViewChild('dateP2', { static: false }) dateP2: ElementRef;
+  @ViewChild('dateP1') dateP1: ElementRef;
+  @ViewChild('dateP2') dateP2: ElementRef;
   loading: boolean = false;
 
   gTrips: any[] = [];

@@ -27,16 +27,16 @@ declare var swal: any;
 })
 export class RepairsComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('selectV', { static: false }) selectV: ElementRef;
-  @ViewChild('selectG', { static: false }) selectG: ElementRef;
-  @ViewChild('selectM', { static: false }) selectM: ElementRef;
-  @ViewChild('selectM2', { static: false }) selectM2: ElementRef;
-  @ViewChild('selectT', { static: false }) selectT: ElementRef;
-  @ViewChild('selectT2', { static: false }) selectT2: ElementRef;
-  @ViewChild('selectRV', { static: false }) selectRV: ElementRef;
-  @ViewChild('selectRG', { static: false }) selectRG: ElementRef;
-  @ViewChild('dateV', { static: false }) dateV: ElementRef;
-  @ViewChild('dateG', { static: false }) dateG: ElementRef;
+  @ViewChild('selectV') selectV: ElementRef;
+  @ViewChild('selectG') selectG: ElementRef;
+  @ViewChild('selectM') selectM: ElementRef;
+  @ViewChild('selectM2') selectM2: ElementRef;
+  @ViewChild('selectT') selectT: ElementRef;
+  @ViewChild('selectT2') selectT2: ElementRef;
+  @ViewChild('selectRV') selectRV: ElementRef;
+  @ViewChild('selectRG') selectRG: ElementRef;
+  @ViewChild('dateV') dateV: ElementRef;
+  @ViewChild('dateG') dateG: ElementRef;
   public loading = false;
 
   vehicles: Vehicle[] = [];

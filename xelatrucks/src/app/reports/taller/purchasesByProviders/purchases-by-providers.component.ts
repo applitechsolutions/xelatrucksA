@@ -18,9 +18,9 @@ declare var swal: any;
 })
 export class PurchasesByProvidersComponent implements OnInit, AfterViewInit, OnChanges {
 
-  @ViewChild('dateP1', { static: false }) dateP1: ElementRef;
-  @ViewChild('dateP2', { static: false }) dateP2: ElementRef;
-  @ViewChild('selectP', { static: false }) selectP: ElementRef;
+  @ViewChild('dateP1') dateP1: ElementRef;
+  @ViewChild('dateP2') dateP2: ElementRef;
+  @ViewChild('selectP') selectP: ElementRef;
   loading: boolean = false;
 
   @Input() idTable: string;

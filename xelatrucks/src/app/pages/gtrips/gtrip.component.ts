@@ -28,14 +28,14 @@ declare var swal: any;
 })
 export class GtripComponent implements OnInit {
 
-  @ViewChild('closeMMt', { static: false }) closeMMt: ElementRef;
-  @ViewChild('selectE', { static: false }) selectE: ElementRef;
-  @ViewChild('selectT', { static: false }) selectT: ElementRef;
-  @ViewChild('selectV', { static: false }) selectV: ElementRef;
-  @ViewChild('selectM', { static: false }) selectM: ElementRef;
-  @ViewChild('date', { static: false }) date: ElementRef;
-  @ViewChild('checkIN', { static: false }) checkIN: ElementRef;
-  @ViewChild('checkOUT', { static: false }) checkOUT: ElementRef;
+  @ViewChild('closeMMt') closeMMt: ElementRef;
+  @ViewChild('selectE') selectE: ElementRef;
+  @ViewChild('selectT') selectT: ElementRef;
+  @ViewChild('selectV') selectV: ElementRef;
+  @ViewChild('selectM') selectM: ElementRef;
+  @ViewChild('date') date: ElementRef;
+  @ViewChild('checkIN') checkIN: ElementRef;
+  @ViewChild('checkOUT') checkOUT: ElementRef;
 
   formGT: FormGroup;
   greenTrip: GreenTrip = { _employee: null, _type: null, _vehicle: null, _material: null };

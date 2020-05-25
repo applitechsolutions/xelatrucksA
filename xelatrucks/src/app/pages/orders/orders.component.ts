@@ -20,12 +20,12 @@ declare function destroy_datatables();
 })
 export class OrdersComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('selectE', { static: false }) selectE: ElementRef;
-  @ViewChild('selectV', { static: false }) selectV: ElementRef;
-  @ViewChild('closeM', { static: false }) closeM: ElementRef;
-  @ViewChild('date', { static: false }) date: ElementRef;
-  @ViewChild('checkIN', { static: false }) checkIN: ElementRef;
-  @ViewChild('checkOUT', { static: false }) checkOUT: ElementRef;
+  @ViewChild('selectE') selectE: ElementRef;
+  @ViewChild('selectV') selectV: ElementRef;
+  @ViewChild('closeM') closeM: ElementRef;
+  @ViewChild('date') date: ElementRef;
+  @ViewChild('checkIN') checkIN: ElementRef;
+  @ViewChild('checkOUT') checkOUT: ElementRef;
 
   pulls: Pull[] = [];
   pull: Pull = {

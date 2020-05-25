@@ -14,7 +14,7 @@ declare var swal: any;
 })
 export class TypeTripComponent implements OnInit {
 
-  @ViewChild('closeM', {static: false}) closeM: ElementRef;
+  @ViewChild('closeM') closeM: ElementRef;
 
   formTT: FormGroup;
   formTariff: FormGroup;

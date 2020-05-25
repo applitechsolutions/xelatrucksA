@@ -2,7 +2,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
-import { Graficas1Component } from './graficas1/graficas1.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { UsersComponent } from './users/users.component';
@@ -66,12 +65,6 @@ const pagesRoutes: Routes = [
         component: ProgressComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'ProgressBar' }
-    },
-    {
-        path: 'graficas1',
-        component: Graficas1Component,
-        canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Gráficas' }
     },
     {
         path: 'promesas',

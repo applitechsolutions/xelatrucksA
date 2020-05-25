@@ -16,9 +16,9 @@ declare var swal: any;
 })
 export class GbillsComponent implements OnInit {
 
-  @ViewChild('date1', {static: false}) date1: ElementRef;
-  @ViewChild('date2', {static: false}) date2: ElementRef;
-  @ViewChild('closeM', {static: false}) closeM: ElementRef;
+  @ViewChild('date1') date1: ElementRef;
+  @ViewChild('date2') date2: ElementRef;
+  @ViewChild('closeM') closeM: ElementRef;
 
   formGB: FormGroup;
   greenbil: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };

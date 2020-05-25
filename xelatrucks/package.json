@@ -28,7 +28,7 @@
     "datatables.net-dt": "^1.10.20",
     "flatpickr": "^4.6.3",
     "html2canvas": "^1.0.0-rc.5",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jshint": "^2.11.0",
     "jspdf": "^1.5.3",
     "moment": "^2.24.0",

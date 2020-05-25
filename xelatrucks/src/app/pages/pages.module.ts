@@ -6,11 +6,9 @@ import { PAGES_ROUTES } from './pages.routes';
 // Pipe Module
 import { PipesModule } from '../pipes/pipes.module';
 
+// temporal
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProgressComponent } from './progress/progress.component';
-import { PromesasComponent } from './promesas/promesas.component';
-import { RxjsComponent } from './rxjs/rxjs.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user.component';
 
@@ -65,74 +63,69 @@ import { SaleComponent } from './sales/sale.component';
 
 
 @NgModule({
-    declarations: [
-        DashboardComponent,
-        ProgressComponent,
-        PromesasComponent,
-        RxjsComponent,
-        UsersComponent,
-        UserComponent,
-        ProfileComponent,
-        VehiclesComponent,
-        VehicleComponent,
-        PartsComponent,
-        PartComponent,
-        OrderComponent,
-        OrdersComponent,
-        AutoProvidersComponent,
-        AutoProviderComponent,
-        BuySparesComponent,
-        BuySpareComponent,
-        MechanicsComponent,
-        MechanicComponent,
-        MaintenancesComponent,
-        MaintenanceComponent,
-        GtripsComponent,
-        TypeMaintenancesComponent,
-        EmployeesComponent,
-        EmployeeComponent,
-        GasolinesComponent,
-        CpcustomersComponent,
-        CustomersComponent,
-        GbillsComponent,
-        GbillComponent,
-        TypeTripsComponent,
-        ReportsComponent,
-        RepairsComponent,
-        DestinationsComponent,
-        DestinationComponent,
-        WtripsComponent,
-        WtripComponent,
-        TypeTripComponent,
-        OrdersFinishComponent,
-        GtripComponent,
-        WbillComponent,
-        WbillsComponent,
-        KtripsComponent,
-        KtripComponent,
-        DestTanksComponent,
-        DestTankComponent,
-        TbillsComponent,
-        TbillComponent,
-        SalesComponent,
-        SaleComponent
-    ],
-    exports: [
-        DashboardComponent,
-        ProgressComponent,
-        UserComponent
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SharedModule,
-        PAGES_ROUTES,
-        // ChartsModule,
-        PipesModule,
-        ReportsModule,
-        NgxLoadingModule.forRoot({})
-    ]
+        declarations: [
+                DashboardComponent,
+                UsersComponent,
+                UserComponent,
+                ProfileComponent,
+                VehiclesComponent,
+                VehicleComponent,
+                PartsComponent,
+                PartComponent,
+                OrderComponent,
+                OrdersComponent,
+                AutoProvidersComponent,
+                AutoProviderComponent,
+                BuySparesComponent,
+                BuySpareComponent,
+                MechanicsComponent,
+                MechanicComponent,
+                MaintenancesComponent,
+                MaintenanceComponent,
+                GtripsComponent,
+                TypeMaintenancesComponent,
+                EmployeesComponent,
+                EmployeeComponent,
+                GasolinesComponent,
+                CpcustomersComponent,
+                CustomersComponent,
+                GbillsComponent,
+                GbillComponent,
+                TypeTripsComponent,
+                ReportsComponent,
+                RepairsComponent,
+                DestinationsComponent,
+                DestinationComponent,
+                WtripsComponent,
+                WtripComponent,
+                TypeTripComponent,
+                OrdersFinishComponent,
+                GtripComponent,
+                WbillComponent,
+                WbillsComponent,
+                KtripsComponent,
+                KtripComponent,
+                DestTanksComponent,
+                DestTankComponent,
+                TbillsComponent,
+                TbillComponent,
+                SalesComponent,
+                SaleComponent
+        ],
+        exports: [
+                DashboardComponent,
+                UserComponent
+        ],
+        imports: [
+                CommonModule,
+                FormsModule,
+                ReactiveFormsModule,
+                SharedModule,
+                PAGES_ROUTES,
+                PipesModule,
+                ReportsModule,
+                NgxLoadingModule.forRoot({})
+        ]
 
 })
 

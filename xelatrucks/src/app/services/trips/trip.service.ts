@@ -119,6 +119,11 @@ export class TripService {
     return this.http.get(url);
   }
 
+  cargarWhiteTripsAnulados(id: string) {
+    const url = `${URL_SERVICES}/viajeB/anulados/${id}`;
+    return this.http.get(url);
+  }
+
   cargarWhiteTripsPorFechas(id: string, fecha1: Date, fecha2: Date) {
     const url = `${URL_SERVICES}/viajeB/reports/${id}?fecha1=${fecha1}&fecha2=${fecha2}`;
 

@@ -119,6 +119,12 @@ export class TripService {
     return this.http.get(url);
   }
 
+  cargarWhiteTripsPorFechas(id: string, fecha1: Date, fecha2: Date) {
+    const url = `${URL_SERVICES}/viajeB/reports/${id}?fecha1=${fecha1}&fecha2=${fecha2}`;
+
+    return this.http.get(url);
+  }
+
   crearWhiteTrip(whiteTrip: WhiteTrip, km: number) {
     let url = URL_SERVICES + '/viajeB';
 
@@ -138,6 +144,21 @@ export class TripService {
           })
         );
     }
+  }
+
+  eliminarWhiteTrip(trip: WhiteTrip, km: number) {
+    const url = `${URL_SERVICES}/viajeB/anular?id=${trip._id}&km=${km}&token=${this.userService.token}`;
+
+    return this.http.put(url, trip)
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err, caught) => {
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
+        })
+      );
   }
 
   /* #endregion */

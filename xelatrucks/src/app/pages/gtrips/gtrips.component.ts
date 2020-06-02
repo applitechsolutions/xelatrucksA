@@ -34,7 +34,7 @@ export class GtripsComponent implements OnInit {
 
   }
 
-  eliminarViajeVerde( greenTrip: GreenTrip ) {
+  eliminarViajeVerde(greenTrip: GreenTrip) {
 
     const km = greenTrip._type.km * greenTrip.trips * -1;
 

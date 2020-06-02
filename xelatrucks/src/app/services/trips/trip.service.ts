@@ -144,7 +144,7 @@ export class TripService {
 
   /* #region  VIAJES CISTERNA */
 
-  cargarTankTrips( fecha1: Date, fecha2: Date) {
+  cargarTankTrips(fecha1: Date, fecha2: Date) {
 
     let url = URL_SERVICES + '/viajeA';
     url += '?fecha1=' + fecha1;
@@ -154,7 +154,7 @@ export class TripService {
 
   }
 
-  cargarTankTrip( id: string ) {
+  cargarTankTrip(id: string) {
 
     let url = URL_SERVICES + '/viajeA/buscar';
     url += '?id=' + id;
@@ -164,8 +164,8 @@ export class TripService {
 
   }
 
-  eliminarTankTrip( tankTrip: TankTrip, km: number ) {
-  
+  eliminarTankTrip(tankTrip: TankTrip, km: number) {
+
     let url = URL_SERVICES + '/viajeA';
     url += '/delete?id=' + tankTrip._id;
     url += '&km=' + km;

@@ -32,9 +32,9 @@ export class PullService {
       .pipe(map((resp: any) => resp.pulls));
   }
 
-  finalizarPull(id: string) {
+  finalizarPull(pull: Pull) {
 
-    let url = URL_SERVICES + '/pull/finish/' + id;
+    let url = URL_SERVICES + '/pull/finish/' + pull._id + '/' + pull.details;
     url += '?token=' + this.userS.token;
 
     return this.http.put(url, '')

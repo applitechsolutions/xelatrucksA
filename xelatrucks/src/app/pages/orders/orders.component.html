@@ -99,7 +99,9 @@
                     data-target="#modalNewTask">Ingresar Reporte</button>
                   <button (click)="verReportes(pull)" class="dropdown-item" type="button" data-toggle="modal"
                     data-target="#modalReports">Listar Reportes</button>
-                  <button (click)="finalizarPull(pull)" class="dropdown-item" type="button">Finalizar Orden</button>
+                  <button (click)="abrirFinalizar(pull)" data-toggle="modal" data-target="#finishOrder"
+                    class="dropdown-item" type="button">Finalizar
+                    Orden</button>
                 </div>
               </div>
             </td>
@@ -125,6 +127,57 @@
   <!-- /.card -->
 </div>
 <!-- /.page-section -->
+<!-- form -->
+<form ngNativeValidate>
+  <!-- Alert Warning Modal -->
+  <div class="modal modal-alert fade" id="finishOrder" data-backdrop="static" role="dialog"
+    aria-labelledby="exampleModalAlertWarningLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h5 id="exampleModalAlertWarningLabel" class="modal-title">
+            <i class="fa fa-bullhorn text-warning mr-1"></i> Finalizar orden
+          </h5>
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <h6>{{ pull._material.code + ' ' +
+            pull._material.name }}</h6>
+          <p class="mb-4">Está a punto de finalizar la entrega del material </p>
+          <div class="row">
+            <label for="maskUsphone" class="col-lg-3 text-lg-right">Detalles</label>
+            <div class="col-lg-9">
+              <textarea #detailsFinish cols="46" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- /.modal-body -->
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button #closeD type="button" class="btn btn-warning" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button (click)="finalizarPull()" type="submit" class="btn btn-light">
+            Aplicar
+          </button>
+        </div>
+        <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate> </ng-template>
+        <!-- /.table -->
+        <ngx-loading [show]="loadingM" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</form>
+<!-- /.form -->
 <!-- .form -->
 <form ngNativeValidate [formGroup]="formaTrip" (ngSubmit)="crearReporte()">
   <!-- .modal -->

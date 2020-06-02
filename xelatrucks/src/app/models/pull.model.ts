@@ -10,6 +10,7 @@ export class Pull {
         public totalMts: number,
         public kg: number,
         public totalKg: number,
+        public details?: string,
         public _id?: string
     ) { }
 }

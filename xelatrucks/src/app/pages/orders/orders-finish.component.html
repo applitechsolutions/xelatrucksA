@@ -71,6 +71,7 @@
             <th> Faltante, metros </th>
             <th> Total, kilogramos </th>
             <th> Faltante, kilogramos </th>
+            <th> Detalles</th>
             <th></th>
           </tr>
         </thead>
@@ -103,10 +104,23 @@
               <span *ngIf="pull.kg === 0" class="badge badge-danger">{{ pull.totalKg - pull.kg | number: '1.2-2' }}
                 kg</span>
             </td>
+            <td class="align-middle">
+              <span *ngIf="!pull.details">-</span>
+              <!-- invite members -->
+              <div *ngIf="pull.details" class="dropdown">
+                <a href="#" class="btn btn-sm btn-icon btn-info" data-toggle="dropdown" data-display="static"
+                  aria-haspopup="true" aria-expanded="false"><i class="fa fa-info-circle"></i> <span
+                    class="sr-only">Edit</span></a>
+                <!-- .dropdown-menu -->
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-rich stop-propagation">
+                  <div class="dropdown-arrow"></div>
+                  <div class="dropdown-header"> {{  pull.details }} </div>
+                </div><!-- /.dropdown-menu -->
+              </div><!-- /invite members -->
+            </td>
             <td class="align-middle text-right">
-              <a (click)="verReportes(pull)" class="btn btn-sm btn-icon btn-secondary pointer" title="Editar"
-                data-toggle="modal" data-target="#modalReports"><i class="fas fa-list-alt"></i><span
-                  class="sr-only ">Detalles</span></a>
+              <a (click)="verReportes(pull)" href="#" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal"
+                data-target="#modalReports"><i class="fa fa-list-alt"></i> <span class="sr-only">Detalles</span></a>
             </td>
           </tr>
         </tbody>
@@ -120,6 +134,7 @@
             <th> Faltante, metros </th>
             <th> Total, kilogramos </th>
             <th> Faltante, kilogramos </th>
+            <th></th>
             <th></th>
           </tr>
         </tfoot>

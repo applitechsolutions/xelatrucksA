@@ -23,9 +23,11 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   @ViewChild('selectE') selectE: ElementRef;
   @ViewChild('selectV') selectV: ElementRef;
   @ViewChild('closeM') closeM: ElementRef;
+  @ViewChild('closeD') closeD: ElementRef;
   @ViewChild('date') date: ElementRef;
   @ViewChild('checkIN') checkIN: ElementRef;
   @ViewChild('checkOUT') checkOUT: ElementRef;
+  @ViewChild('detailsFinish') detailsFinish: ElementRef;
 
   pulls: Pull[] = [];
   pull: Pull = {
@@ -45,6 +47,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     totalKg: 0
   };
   loading = false;
+  loadingM = false;
 
   employees: Employee[] = [];
   vehicles: Vehicle[] = [];
@@ -101,23 +104,21 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       });
   }
 
-  finalizarPull(pull: Pull) {
-    swal({
-      title: '¿Está seguro?',
-      text: 'Está a punto de finalizar la entrega del material: ' + pull._material.code + ' ' + pull._material.name,
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true,
-    })
-      .then(borrar => {
-        if (borrar) {
+  abrirFinalizar(pull: Pull) {
+    this.pull = pull;
+    this.detailsFinish.nativeElement.value = '';
+  }
 
-          this.pullS.finalizarPull(pull._id)
-            .subscribe((borrado: any) => {
-              destroy_datatables();
-              this.cargarPulls();
-            });
-        }
+  finalizarPull() {
+    this.loadingM = true;
+    this.pull.details = this.detailsFinish.nativeElement.value;
+
+    this.pullS.finalizarPull(this.pull)
+      .subscribe((borrado: any) => {
+        destroy_datatables();
+        this.cargarPulls();
+        this.loadingM = false;
+        this.closeD.nativeElement.click();
       });
   }
 

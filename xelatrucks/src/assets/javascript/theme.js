@@ -182,7 +182,7 @@ function init_plugins() {
 
             this.classList[this.value ? 'remove' : 'add']('placeholder-shown');
             setTimeout(function () {
-              console.log(_this2.autofill);
+              // console.log(_this2.autofill);
             }, 2000);
           }); // toggle .placeholder-shown onload
 
@@ -2089,23 +2089,23 @@ function init_datatables() {
           return $('#myTable').DataTable({
             dom: "<'text-muted'Bi>\n        <'table-responsive'tr>\n        <'mt-4'p>",
             buttons: [{
-                extend: 'copyHtml5',
-                text: 'Copiar'
-              },
-              {
-                extend: 'print',
-                autoPrint: false,
-                text: 'Imprimir'
-              },
-              {
-                extend: 'pdf',
-                text: 'PDF',
-                download: 'open'
-              },
-              {
-                extend: 'csv',
-                text: 'Excel'
-              }
+              extend: 'copyHtml5',
+              text: 'Copiar'
+            },
+            {
+              extend: 'print',
+              autoPrint: false,
+              text: 'Imprimir'
+            },
+            {
+              extend: 'pdf',
+              text: 'PDF',
+              download: 'open'
+            },
+            {
+              extend: 'csv',
+              text: 'Excel'
+            }
             ],
             language: {
               paginate: {

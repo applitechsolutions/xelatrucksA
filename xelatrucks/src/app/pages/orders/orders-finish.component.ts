@@ -59,7 +59,7 @@ export class OrdersFinishComponent implements OnInit {
       .subscribe(resp => {
         destroy_datatables();
         this.pulls = resp;
-        console.log(resp);
+        // console.log(resp);
         this.chRef.detectChanges();
         init_datatables();
         this.loading = false;

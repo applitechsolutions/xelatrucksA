@@ -112,7 +112,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
         destroy_datatables();
         this.preDetails = res.preDetail;
 
-        console.log(this.preDetails);
+        // console.log(this.preDetails);
 
         // CALCULAMOS EL TOTAL DE VIAJES Y DE METROS DE TODAS LAS FECHAS
         this.calcularTotales();

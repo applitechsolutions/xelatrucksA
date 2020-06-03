@@ -60,6 +60,8 @@ import { TbillsComponent } from './tbills/tbills.component';
 import { TbillComponent } from './tbills/tbill.component';
 import { SalesComponent } from './sales/sales.component';
 import { SaleComponent } from './sales/sale.component';
+import { MaterialsComponent } from './materials/materials.component';
+import { MaterialComponent } from './materials/material.component';
 
 
 @NgModule({
@@ -110,7 +112,9 @@ import { SaleComponent } from './sales/sale.component';
                 TbillsComponent,
                 TbillComponent,
                 SalesComponent,
-                SaleComponent
+                SaleComponent,
+                MaterialsComponent,
+                MaterialComponent
         ],
         exports: [
                 DashboardComponent,

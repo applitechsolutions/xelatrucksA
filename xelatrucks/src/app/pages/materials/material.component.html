@@ -1,1 +1,62 @@
-<p>material works!</p>
+<!-- .modalMATERIAL -->
+<div class="modal fade" id="addMaterial" tabindex="-1" role="dialog" aria-labelledby="NewMaterialModalLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 class="modal-title"> Crear un nuevo material </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <form ngNativeValidate [formGroup]="formMat" (ngSubmit)="crearMaterial()">
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="code">Código </label> <input formControlName="code" name="code" type="text" class="form-control"
+              id="code" placeholder="Ingrese el código del material" data-autofocus="true">
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="name">Nombre </label> <input formControlName="name" name="name" type="text" class="form-control"
+              id="name" placeholder="Ingrese el nombre del material">
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="minStock">Existencia Mínima</label>
+            <div class="input-group">
+              <label class="input-group-prepend" for="minStock"><span class="badge">u</span></label>
+              <input formControlName="minStock" name="minStock" type="number" min="0.00" step="0.01"
+                class="form-control" id="minStock" placeholder="Ingrese la existencia mínima del material">
+            </div>
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="price">Precio de venta</label>
+            <div class="input-group">
+              <label class="input-group-prepend" for="price"><span class="badge">Q</span></label>
+              <input formControlName="price" name="price" type="number" min="0.00" step="0.01" class="form-control"
+                id="price" placeholder="Ingrese el precio de venta del material">
+            </div>
+          </div>
+          <!-- /.form-group -->
+          <!-- .modal-footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMMt type="button"
+              class="btn btn-light" data-dismiss="modal">Cerrar</button>
+          </div>
+          <!-- /.modal-footer -->
+        </form>
+      </div>
+      <!-- /.modal-body -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modalMATERIAL -->

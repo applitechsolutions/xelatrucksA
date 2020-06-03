@@ -150,7 +150,7 @@ export class GtripComponent implements OnInit {
   /* #region  CREAR VIAJE VERDE */
 
   crearViajeVerde() {
-  
+
     this.formGT.value.date = this.date.nativeElement.value;
     this.formGT.value.checkIN = this.checkIN.nativeElement.value;
     this.formGT.value.checkOUT = this.checkOUT.nativeElement.value;
@@ -290,13 +290,15 @@ export class GtripComponent implements OnInit {
         this.formMat.value.code,
         this.formMat.value.name,
         this.formMat.value.minStock,
+        this.formMat.value.price,
         this.material._id
       );
     } else {
       material = new Material(
         this.formMat.value.code,
         this.formMat.value.name,
-        this.formMat.value.minStock
+        this.formMat.value.minStock,
+        this.formMat.value.price
       );
     }
 
@@ -316,7 +318,6 @@ export class GtripComponent implements OnInit {
         this.cargarMateriales();
 
       });
-
   }
 
   /* #endregion */

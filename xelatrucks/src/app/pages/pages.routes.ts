@@ -167,7 +167,7 @@ const pagesRoutes: Routes = [
         path: 'wtrip/:id',
         component: WtripComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Crear Viaje de Líneas' }
+        data: { titulo: 'Anular reportes del pull' }
     },
     {
         path: 'wtrips',

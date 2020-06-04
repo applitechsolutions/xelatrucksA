@@ -1,8 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { WhiteTrip } from '../../models/whiteTrip.model';
 import { TripService, DatatablesService } from "../../services/service.index";
-import * as moment from 'moment/moment';
 
 declare var swal: any;
 declare function init_datatables();
@@ -15,8 +14,6 @@ declare function destroy_datatables();
 export class WtripsComponent implements OnInit {
 
   loading: boolean = false;
-  @ViewChild('date1') date1: ElementRef;
-  @ViewChild('date2') date2: ElementRef;
   id: string = '';
 
   whiteTrips: WhiteTrip[] = [];
@@ -34,8 +31,7 @@ export class WtripsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const today = moment(new Date()).format('DD/MM/YYYY');
-    this.dtService.init_datePicker(today);
+    this.cargarReporteLineas();
   }
 
   eliminarViajeBlanco(whiteTrip: WhiteTrip) {
@@ -59,18 +55,16 @@ export class WtripsComponent implements OnInit {
                 button: false,
                 timer: 1000
               });
-              this.buscarReporteLineas();
+              this.cargarReporteLineas();
             });
         }
       })
   }
 
-  buscarReporteLineas() {
+  cargarReporteLineas() {
     this.loading = true;
-    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
-    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
 
-    this.tripService.cargarWhiteTripsPorFechas(this.id, fecha1, fecha2)
+    this.tripService.cargarWhiteTrips(this.id)
       .subscribe((res: any) => {
         destroy_datatables();
         this.whiteTrips = res.wviajes;

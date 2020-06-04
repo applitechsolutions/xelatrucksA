@@ -24,24 +24,24 @@ export class PartsComponent implements OnInit {
 
   cargarRepuestos() {
     this.partService.cargarRepuestos()
-    .subscribe((resp: any) => {
-      resp.repuestos
-        .map( (res: any) => {
-          this.repuestos = res.storage;
-          this.idC = res._id;
-        });
+      .subscribe((resp: any) => {
+        resp.repuestos
+          .map((res: any) => {
+            this.repuestos = res.storage;
+            this.idC = res._id;
+          });
 
-      console.log(this.repuestos);
+        // console.log(this.repuestos);
 
-      this.chRef.detectChanges();
+        this.chRef.detectChanges();
 
-      this.dtService.init_tables();
+        this.dtService.init_tables();
 
-    });
+      });
 
   }
 
-  borrarRepuesto( repuesto: Storage ) {
+  borrarRepuesto(repuesto: Storage) {
 
     const newRepuestos: any[] = [];
 
@@ -68,17 +68,17 @@ export class PartsComponent implements OnInit {
       buttons: true,
       dangerMode: true,
     })
-    .then( borrar => {
-      if (borrar) {
+      .then(borrar => {
+        if (borrar) {
 
-        this.partService.borrarRepuesto(repuesto._autopart._id, cellar)
-          .subscribe((borrado: any) => {
-            this.dtService.destroy_table();
+          this.partService.borrarRepuesto(repuesto._autopart._id, cellar)
+            .subscribe((borrado: any) => {
+              this.dtService.destroy_table();
 
-            this.cargarRepuestos();
-          });
-      }
-    });
+              this.cargarRepuestos();
+            });
+        }
+      });
   }
 
 }

@@ -1,0 +1,190 @@
+<!-- .form -->
+<form ngNativeValidate (ngSubmit)="crearOrden()">
+  <!-- .modal -->
+  <div class="modal fade" id="modalOrder" role="dialog" aria-labelledby="modalOrderLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-lg" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content px-lg-4 py-lg-3">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h6 id="modalOrderLabel" class="modal-title"> Crear nuevo pedido </h6>
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-3">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label id="order">No. de pedido <span class="badge badge-danger">Obligatorio</span></label>
+                <input [(ngModel)]="order.order" name="order" type="text" class="form-control" id="order"
+                  placeholder="Ingrese un número" required>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-3">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label class="control-label" for="dateOrder">Fecha <span
+                    class="badge badge-danger">Obligatorio</span></label> <input #dateOrder name="dateOrder"
+                  id="flatpickr" type="text" class="form-control" required>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+          <hr>
+          <div class="card mt-2">
+            <!-- .card-body -->
+            <div class="card-body">
+              <h2 class="card-title"> Detalle del pedido </h2>
+              <!-- .table-responsive -->
+              <div class="table-responsive">
+                <table id="table1" class="table table-hover" style="min-width: 678px">
+                  <thead>
+                    <tr>
+                      <th> Material </th>
+                      <th> Subtotal, Metros </th>
+                      <th> Subtotal, Kilogramos </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="pullsDetail.length === 0">
+                      <td>
+                        <div class="alert alert-warning has-icon" role="alert">
+                          <div class="alert-icon">
+                            <span class="fa fa-bullhorn"></span>
+                          </div>Por favor agregue materiales al detalle, <a href="#addDetail" data-toggle="modal"
+                            class="alert-link">Click en Agregar Material</a>.
+                        </div>
+                      </td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td></td>
+                    </tr>
+                    <tr *ngFor="let pull of pullsDetail">
+                      <td class="align-middle"> {{ pull._material.name }} </td>
+                      <td class="align-middle"> {{ pull.totalMts | number: '1.2-2' }} m </td>
+                      <td class="align-middle"> {{ pull.totalKg | number: '1.2-2' }} kg </td>
+                      <td class="align-middle text-right">
+                        <!-- <button (click)="quitarDetalle(pull._material._id)" type="button"
+                            class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span
+                              class="sr-only">Remove</span></button> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+            <!-- .card-footer -->
+            <div class="card-footer">
+              <a href="#addDetail" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i>
+                Agregar Material</a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- .card-body -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="offset-md-6 col-md-3">
+              <!-- .metric -->
+              <div class="metric text-center">
+                <p class="metric-label"> Total, Metros </p>
+                <h5 class="metric-value"> {{ this.totalMts | number: '1.2-2' }} m </h5>
+              </div>
+              <!-- .metric -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-3">
+              <!-- .metric -->
+              <div class="metric text-center">
+                <p class="metric-label"> Total, Kilogramos </p>
+                <h5 class="metric-value"> {{ this.totalKgs | number: '1.2-2' }} kg </h5>
+              </div>
+              <!-- .metric -->
+            </div>
+            <!-- /.col -->
+          </div>
+        </div>
+        <!-- /.modal-body -->
+        <hr>
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button> <button #closeO
+            type="reset" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+        </div>
+        <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <ngx-loading [show]="loadingM" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</form>
+<!-- /.form -->
+<!-- Modal Drawer Right -->
+<div class="modal modal-drawer fade" id="addDetail" role="dialog" aria-labelledby="addDetail" aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-drawer-right" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 id="exampleModalDrawerRightLabel" class="modal-title"> Catálogo de materiales </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <form ngNativeValidate>
+        <div class="modal-body">
+          <br>
+          <p>Aquí puede seleccionar los materiales necesarios para agregar a su orden</p><br>
+          <!-- .form-group -->
+          <div class="form-group">
+            <label id="typeL"> Material <span class="badge badge-danger">Obligatorio</span></label>
+            <select #selectM name="material" class="form-control select2" style="width:100%!important;">
+              <option value=""> Seleccione un material </option>
+              <option *ngFor="let material of materials" [value]="material._material._id"> {{ material._material.code }}
+                {{ material._material.name }} </option>
+            </select>
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group"><label for="mts">Metros <span class="badge badge-danger">Obligatorio</span></label>
+            <input class="form-control" [(ngModel)]="pullOrder.totalMts" id="totalMts" name="totalMts"
+              placeholder="Ingrese una cantidad" type="number" step="0.01" ng-reflect-name="totalMts" required></div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group"><label for="kg">Kilogramos <span class="badge badge-danger">Obligatorio</span></label>
+            <input class="form-control" [(ngModel)]="pullOrder.totalKg" id="totalKg" name="totalKg"
+              placeholder="Ingrese una cantidad" type="number" step="0.01" ng-reflect-name="totalKg" required></div>
+          <!-- /.form-group -->
+
+          <button (click)="agregarDetalle()" class="btn btn-primary" type="submit">Agregar</button>
+        </div>
+        <!-- /.modal-body -->
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+        </div>
+        <!-- /.modal-footer -->
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

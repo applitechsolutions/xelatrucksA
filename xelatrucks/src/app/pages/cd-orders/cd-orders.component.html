@@ -1,0 +1,509 @@
+<!-- floating action -->
+<button type="button" class="btn btn-success btn-floated" data-toggle="modal" data-target="#modalOrder"><span
+    class="fa fa-plus"></span></button>
+<!-- /floating action -->
+<!-- .page-section -->
+<div class="page-section">
+  <!-- .nav-scroller -->
+  <div class="nav-scroller border-bottom">
+    <!-- .nav-tabs -->
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active show" data-toggle="tab" href="#active">Vigentes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#finish">Finalizados</a>
+      </li>
+    </ul>
+    <!-- /.nav-tabs -->
+  </div>
+  <!-- /.nav-scroller -->
+  <!-- .tab-content -->
+  <div class="tab-content pt-4">
+    <!-- .tab-pane -->
+    <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="pedidos-activos">
+      <!-- .card -->
+      <div class="card card-fluid">
+        <!-- .card-header -->
+        <div class="card-header d-flex">
+          <h3 class="card-title"><span class="badge badge-lg badge-warning"><i class="fas fa-hourglass-end"></i></span>
+            Pedidos vigentes </h3>
+          <button type="button" class="btn btn-success ml-auto" data-toggle="modal" data-target="#modalOrder"><i
+              class="fas fa-calendar-plus mr-2"></i>Crear pedido</button>
+        </div><!-- /.card-header -->
+        <!-- .card-body -->
+        <div class="card-body">
+          <!-- .btn-toolbar -->
+          <div id="dt-buttons" class="btn-toolbar"></div>
+          <!-- /.btn-toolbar -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <!-- .input-group -->
+            <div class="input-group input-group-alt">
+              <!-- .input-group -->
+              <div class="input-group has-clearable">
+                <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                      class="fa fa-times-circle"></i></span></button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+              </div>
+              <!-- /.input-group -->
+              <!-- .input-group-prepend -->
+              <div class="input-group-prepend">
+                <select id="filterBy" class="custom-select">
+                  <option value='' selected> Filtros </option>
+                  <option value="0"> Fecha </option>
+                  <option value="1"> Orden </option>
+                  <option value="2"> Material </option>
+                  <option value="3"> Total, metros </option>
+                  <option value="4"> Faltante, metros </option>
+                  <option value="5"> Total, kilogramos </option>
+                  <option value="6"> Faltante, kilogramos </option>
+                </select>
+              </div>
+              <!-- /.input-group-prepend -->
+            </div>
+            <!-- /.input-group -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .table -->
+          <table id="myTable" class="table">
+            <thead>
+              <tr>
+                <th> Fecha </th>
+                <th> Orden </th>
+                <th> Material </th>
+                <th> Total, metros </th>
+                <th> Faltante, metros </th>
+                <th> Total, kilogramos </th>
+                <th> Faltante, kilogramos </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pull of pulls">
+                <td class="align-middle">
+                  {{ dtService.fromJsonDate(pull._order.date) }}
+                </td>
+                <td class="align-middle">{{ pull._order.order }}</td>
+                <td class="align-middle"> {{ pull._material.code + ' ' + pull._material.name }} </td>
+                <td class="align-middle"> {{ pull.totalMts | number: '1.3-6' }} m </td>
+                <td class="align-middle">
+                  <span *ngIf="pull.mts >= pull.totalMts"
+                    class="badge badge-success">{{ pull.totalMts - pull.mts | number: '1.3-6' }} m</span>
+                  <span *ngIf="pull.mts > 0 && pull.mts < pull.totalMts"
+                    class="badge badge-warning">{{ pull.totalMts - pull.mts | number: '1.3-6' }} m
+                  </span>
+                  <span *ngIf="pull.mts === 0"
+                    class="badge badge-danger">{{ pull.totalMts - pull.mts | number: '1.3-6' }} m
+                  </span>
+                </td>
+                <td class="align-middle"> {{ pull.totalKg | number: '1.3-6' }} kg </td>
+                <td class="align-middle">
+                  <span *ngIf="pull.kg >= pull.totalKg"
+                    class="badge badge-success">{{ pull.totalKg - pull.kg | number: '1.3-6' }}
+                    kg</span>
+                  <span *ngIf="pull.kg > 0 && pull.kg < pull.totalKg"
+                    class="badge badge-warning">{{ pull.totalKg - pull.kg | number: '1.3-6' }}
+                    kg</span>
+                  <span *ngIf="pull.kg === 0" class="badge badge-danger">{{ pull.totalKg - pull.kg | number: '1.3-6' }}
+                    kg</span>
+                </td>
+                <td class="align-middle text-right">
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="dropdown"
+                      aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span
+                        class="sr-only">Acciones</span></button>
+                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                      style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
+                      <div class="dropdown-arrow mr-n1"></div>
+                      <button (click)="cargarReporte(pull)" class="dropdown-item" type="button" data-toggle="modal"
+                        data-target="#modalNewTask">Ingresar Reporte</button>
+                      <button (click)="verReportes(pull)" class="dropdown-item" type="button" data-toggle="modal"
+                        data-target="#modalReports">Listar Reportes</button>
+                      <button (click)="abrirFinalizar(pull)" data-toggle="modal" data-target="#finishOrder"
+                        class="dropdown-item" type="button">Finalizar
+                        Orden</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th> Fecha </th>
+                <th> Orden </th>
+                <th> Material </th>
+                <th> Total, metros </th>
+                <th> Faltante, metros </th>
+                <th> Total, kilogramos </th>
+                <th> Faltante, kilogramos </th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.tab-pane -->
+    <!-- .tab-pane -->
+    <div class="tab-pane fade" id="finish" role="tabpanel" aria-labelledby="pedidos-finalizados">
+      <!-- .card -->
+      <div class="card card-fluid">
+        <!-- .card-header -->
+        <div class="card-header d-flex">
+          <h3 class="card-title"><span class="badge badge-lg badge-success"><i
+                class="fas fa-clipboard-check"></i></span>
+            Pedidos finalizados </h3>
+          <button type="button" class="btn btn-primary ml-auto">Add invoice</button>
+        </div><!-- /.card-header -->
+        <!-- .card-body -->
+        <div class="card-body">
+
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.tab-pane -->
+  </div>
+  <!-- /.tab-content -->
+</div>
+<!-- /.page-section -->
+<app-cd-order></app-cd-order>
+<!-- form -->
+<form ngNativeValidate>
+  <!-- Alert Warning Modal -->
+  <div class="modal modal-alert fade" id="finishOrder" data-backdrop="static" role="dialog"
+    aria-labelledby="exampleModalAlertWarningLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h5 id="exampleModalAlertWarningLabel" class="modal-title">
+            <i class="fa fa-bullhorn text-warning mr-1"></i> Finalizar orden
+          </h5>
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <h6>{{ pull._material.code + ' ' +
+            pull._material.name }}</h6>
+          <p class="mb-4">Está a punto de finalizar la entrega del material </p>
+          <div class="row">
+            <label for="maskUsphone" class="col-lg-3 text-lg-right">Detalles</label>
+            <div class="col-lg-9">
+              <textarea #detailsFinish cols="46" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- /.modal-body -->
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button #closeD type="button" class="btn btn-warning" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button (click)="finalizarPull()" type="submit" class="btn btn-light">
+            Aplicar
+          </button>
+        </div>
+        <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate> </ng-template>
+        <!-- /.table -->
+        <ngx-loading [show]="loadingM" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</form>
+<!-- /.form -->
+<!-- .form -->
+<form ngNativeValidate [formGroup]="formaTrip" (ngSubmit)="crearReporte()">
+  <!-- .modal -->
+  <div class="modal fade" id="modalNewTask" role="dialog" aria-labelledby="modalNewTaskLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-lg" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content px-lg-4 py-lg-3">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h6 id="modalNewTaskLabel" class="modal-title"> Crear reporte líneas <span
+              class="badge badge-success">{{ 'Orden: ' + pull._order.order + ', ' + pull._material.name }}</span>
+            <span class="badge badge-danger">Campos
+              obligatorios</span> </h6>
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-6">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label id="job">Empleado</label>
+                <select #selectE name="employee" class="form-control select2" style="width:100%!important;">
+                  <option value=""> Seleccione un empleado </option>
+                  <option *ngFor="let employee of employees" [value]="employee._id"> {{ employee.name }} </option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-6">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label id="job">Vehículo</label>
+                <select #selectV name="vehicle" class="form-control select2" style="width:100%!important;">
+                  <option value=""> Seleccione un vehículo </option>
+                  <ng-container *ngFor="let vehicle of vehicles">
+                    <option *ngIf="vehicle.type === 'camion'" [value]="vehicle._id"> {{ vehicle.plate + ' (Camión)' }}
+                    </option>
+                    <option *ngIf="vehicle.type === 'camionG'" [value]="vehicle._id">
+                      {{ vehicle.plate + ' (Camión Gondola)' }}</option>
+                  </ng-container>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+          <hr>
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-3">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label class="control-label" for="flatpickr">Fecha</label> <input #date id="flatpickr"
+                  formControlName="date" name="date" type="text" class="form-control" required>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-3">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label class="control-label" for="flatpickr08"> Hora de entrada </label> <input #checkIN
+                  id="flatpickr08" formControlName="checkIN" name="checkIN" type="text" class="form-control"
+                  data-toggle="flatpickr" data-enable-time="true" data-no-calendar="true" data-date-format="H:i"
+                  data-default-date="12:00">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-3">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label class="control-label" for="flatpickr08"> Hora de salida </label> <input #checkOUT
+                  id="flatpickr08" formControlName="checkOUT" name="checkOUT" type="text" class="form-control"
+                  data-toggle="flatpickr" data-enable-time="true" data-no-calendar="true" data-date-format="H:i"
+                  data-default-date="12:00">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-3">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Orden de Despacho</label> <input type="text" formControlName="noTicket"
+                  name="noTicket" id="noTicket" class="form-control" required=""
+                  placeholder="Ingrese número de despacho">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">No. de Entrega <span class="badge badge-secondary">Opcional</span></label>
+                <input type="text" formControlName="noDelivery" name="noDelivery" id="noDelivery" class="form-control"
+                  placeholder="Ingrese número de entrega">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="pay">Metros</label>
+                <div class="input-group">
+                  <label class="input-group-prepend" for="pi9"><span class="badge">m</span></label>
+                  <input formControlName="mts" name="mts" type="number" min="0" step="0.000001" class="form-control"
+                    id="trips" placeholder="Ingrese los metros" required>
+                </div>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="pay">Tarifa</label>
+                <div class="input-group">
+                  <label class="input-group-prepend" for="pi9"><span class="badge">Q</span></label>
+                  <input formControlName="tariff" name="tariff" type="number" min="0" step="0.01" class="form-control"
+                    id="tariff" placeholder="Ingrese la tarifa correspondiente" required>
+                </div>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+          <hr>
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Peso Bruto</label> <input type="number" min="0" step="0.000001"
+                  formControlName="kgB" name="kgB" id="kgB" class="form-control" required=""
+                  placeholder="Ingrese los kilogramos brutos">
+              </div>
+              <!-- /.form-group -->
+
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Peso Tara</label> <input type="number" min="0" step="0.000001"
+                  formControlName="kgT" name="kgT" id="kgT" class="form-control" required=""
+                  placeholder="Ingrese kilogramos tara">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Peso Neto</label> <input type="number" min="0" step="0.000001"
+                  formControlName="kgN" name="kgN" id="kgN" class="form-control" required=""
+                  placeholder="Ingrese los kilogramos netos">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <!-- /.modal-body -->
+        <hr>
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button> <button #closeM
+            type="reset" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+        </div>
+        <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</form>
+<!-- /.form -->
+<!-- .modal -->
+<div class="modal fade" id="modalReports" role="dialog" tabindex="-1" aria-labelledby="modalNewTaskLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content px-lg-4 py-lg-3">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h6 id="modalNewTaskLabel" class="modal-title"> Reportes de lineas <span
+            class="badge badge-success">{{ 'Orden: ' + pull._order.order + ', ' + pull._material.name }}</span></h6>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <!-- .table -->
+        <table id="table2" class="table dt-responsive nowrap w-100">
+          <thead>
+            <tr>
+              <th> Fecha </th>
+              <th> Documento </th>
+              <th> Entrega </th>
+              <th> Metros </th>
+              <th> Kilogramos </th>
+              <th> Horas </th>
+              <th> Estado </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let wTrip of whiteTrips">
+              <td>
+                <h6>{{ dtService.fromJsonDate(wTrip.date) }}</h6>
+              </td>
+              <td> {{ wTrip.noTicket }} </td>
+              <td> {{ wTrip.noDelivery }} </td>
+              <td> {{ wTrip.mts }} </td>
+              <td> {{ wTrip.kgN }} </td>
+              <td>Entrada: {{ dtService.fromJsonHour(wTrip.checkIN) }}<br> Salida:
+                {{ dtService.fromJsonHour(wTrip.checkOUT) }} </td>
+              <td>
+                <span *ngIf="!wTrip.invoiced" class="badge badge-warning">Pendiente</span>
+                <span *ngIf="wTrip.invoiced" class="badge badge-success">Facturado</span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th> Fecha </th>
+              <th> Documento </th>
+              <th> Entrega </th>
+              <th> Metros </th>
+              <th> Kilogramos </th>
+              <th> Horas </th>
+              <th> Estado </th>
+            </tr>
+          </tfoot>
+        </table>
+        <!-- /.table -->
+      </div>
+      <!-- /.modal-body -->
+      <hr>
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-light" data-dismiss="modal">Cancel</button>
+      </div>
+      <!-- /.modal-footer -->
+      <ng-template #customLoadingTemplate>
+      </ng-template>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+      </ngx-loading>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

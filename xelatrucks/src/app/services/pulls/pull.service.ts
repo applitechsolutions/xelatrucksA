@@ -23,6 +23,11 @@ export class PullService {
     return this.http.get(url);
   }
 
+  cargarActivasCD() {
+    const url = URL_SERVICES + '/pull/cd/actives';
+    return this.http.get(url);
+  }
+
   cargarFinalizadas(fecha1: Date, fecha2: Date) {
     let url = URL_SERVICES + '/pull/finisheds';
     url += '?fecha1=' + fecha1;

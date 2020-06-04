@@ -1,0 +1,132 @@
+<!-- .page-section -->
+<div class="page-section">
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-header -->
+    <div class="card-header">
+      <!-- .nav-tabs -->
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active show" data-toggle="tab" href="#storage"><span
+              class="badge badge-lg badge-primary"><i class="fas fa-mountain"></i></span> Inventario</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#missing"><span class="badge badge-lg badge-warning"><i
+                class="fas fa-chevron-circle-down"></i></span> Faltantes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#extra"><span class="badge badge-lg badge-success"><i
+                class="fas fa-chevron-circle-up"></i></span> Sobrantes</a>
+        </li>
+      </ul><!-- /.nav-tabs -->
+    </div><!-- /.card-header -->
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .tab-content -->
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show" id="storage">
+          <!-- .form-group -->
+          <div class="form-group">
+            <!-- .input-group -->
+            <div class="input-group input-group-alt">
+              <!-- .input-group -->
+              <div class="input-group has-clearable">
+                <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                      class="fa fa-times-circle"></i></span></button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+              </div>
+              <!-- /.input-group -->
+              <!-- .input-group-prepend -->
+              <div class="input-group-prepend">
+                <select id="filterBy" class="custom-select">
+                  <option value='' selected> Filtros </option>
+                  <option value="0"> Código </option>
+                  <option value="1"> Nombre </option>
+                  <option value="2"> Stock mínimo </option>
+                  <option value="3"> Stock actual </option>
+                  <option value="4"> Costo </option>
+                  <option value="5"> Precio </option>
+                  <option value="6"> Costo total</option>
+                  <option value="7"> Precio total</option>
+                </select>
+              </div>
+              <!-- /.input-group-prepend -->
+            </div>
+            <!-- /.input-group -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .table -->
+          <table id="myTable" class="table">
+            <thead>
+              <tr>
+                <th> Código </th>
+                <th> Nombre </th>
+                <th> Stock mínimo </th>
+                <th> Stock actual </th>
+                <th> Costo </th>
+                <th> Precio </th>
+                <th> Costo total </th>
+                <th> Precio total </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let material of materials">
+                <td class="align-middle text-center">
+                  {{ material._material.code }}
+                </td>
+                <td class="align-middle">
+                  {{ material._material.name }}
+                </td>
+                <td class="align-middle">
+                  {{ material._material.minStock }}m
+                </td>
+                <td class="align-middle">
+                  {{ material.stock }}m
+                </td>
+                <td class="align-middle">
+                  Q{{ material.cost | number: '2.2-2'}}
+                </td>
+                <td class="align-middle">
+                  -
+                  <!-- Q{{ material.material.price | number: '2.2-2'}} -->
+                </td>
+                <td class="align-middle">
+                  Q{{ (material.stock * material.cost) | number: '2.2-2'}}
+                </td>
+                <td class="align-middle">
+                  -
+                  <!-- Q{{ (material.stock * material._material.price) | number: '2.2-2'}} -->
+                </td>
+                <td class="align-middle text-center">
+
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th> Código </th>
+                <th> Nombre </th>
+                <th> Stock mínimo </th>
+                <th> Stock actual </th>
+                <th> Costo </th>
+                <th> Precio </th>
+                <th> Costo total </th>
+                <th> Precio total </th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="tab-pane fade" id="missing">
+          <h4>Listado de faltantes</h4>
+        </div>
+        <div class="tab-pane fade" id="extra">
+          <h4>Listado de SOBRANTES</h4>
+        </div>
+      </div><!-- /.tab-content -->
+    </div><!-- /.card-body -->
+  </div><!-- /.card -->
+</div><!-- /.page-section-->

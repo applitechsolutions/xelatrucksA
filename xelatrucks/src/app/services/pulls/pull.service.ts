@@ -23,6 +23,11 @@ export class PullService {
     return this.http.get(url);
   }
 
+  cargarActivasCD() {
+    const url = URL_SERVICES + '/pull/cd/actives';
+    return this.http.get(url);
+  }
+
   cargarFinalizadas(fecha1: Date, fecha2: Date) {
     let url = URL_SERVICES + '/pull/finisheds';
     url += '?fecha1=' + fecha1;
@@ -34,10 +39,10 @@ export class PullService {
 
   finalizarPull(pull: Pull) {
 
-    let url = URL_SERVICES + '/pull/finish/' + pull._id + '/' + pull.details;
+    let url = URL_SERVICES + '/pull/finish/';
     url += '?token=' + this.userS.token;
 
-    return this.http.put(url, '')
+    return this.http.put(url, pull)
       .pipe(
         map((resp: any) => {
           swal({

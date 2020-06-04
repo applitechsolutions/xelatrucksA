@@ -49,6 +49,8 @@ import { TbillsComponent } from './tbills/tbills.component';
 import { TbillComponent } from './tbills/tbill.component';
 import { SalesComponent } from './sales/sales.component';
 import { SaleComponent } from './sales/sale.component';
+import { CdOrdersComponent } from './cd-orders/cd-orders.component';
+import { CdStockComponent } from './cd-storage/cd-stock.component';
 
 const pagesRoutes: Routes = [
     {
@@ -165,13 +167,13 @@ const pagesRoutes: Routes = [
         path: 'wtrip/:id',
         component: WtripComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Crear Viaje de Líneas' }
+        data: { titulo: 'Anular reportes del pull' }
     },
     {
-        path: 'wtrips/:id',
+        path: 'wtrips',
         component: WtripsComponent,
         canActivate: [VerificaTokenGuard],
-        data: { titulo: 'Anular reportes del pull' }
+        data: { titulo: 'Mantenimiento de viaje de líneas' }
     },
     {
         path: 'typeTrip/:id',
@@ -336,6 +338,18 @@ const pagesRoutes: Routes = [
         component: SaleComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Listado de Ventas' }
+    },
+    {
+        path: 'cd/orders',
+        component: CdOrdersComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Pedidos - Centro de distribución' }
+    },
+    {
+        path: 'cd/storage',
+        component: CdStockComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Inventario - Centro de distribución' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];

@@ -60,6 +60,9 @@ import { TbillsComponent } from './tbills/tbills.component';
 import { TbillComponent } from './tbills/tbill.component';
 import { SalesComponent } from './sales/sales.component';
 import { SaleComponent } from './sales/sale.component';
+import { CdOrdersComponent } from './cd-orders/cd-orders.component';
+import { CdOrderComponent } from './cd-orders/cd-order.component';
+import { CdStockComponent } from './cd-storage/cd-stock.component';
 
 
 @NgModule({
@@ -110,7 +113,10 @@ import { SaleComponent } from './sales/sale.component';
                 TbillsComponent,
                 TbillComponent,
                 SalesComponent,
-                SaleComponent
+                SaleComponent,
+                CdOrdersComponent,
+                CdOrderComponent,
+                CdStockComponent
         ],
         exports: [
                 DashboardComponent,

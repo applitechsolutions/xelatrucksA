@@ -19,6 +19,7 @@ export class WhiteTrip {
         public tariff: number,
         public invoiced: boolean,
         public noDelivery?: string,
-        public _id?: string
+        public _id?: string,
+        public state?: boolean,
     ) { }
 }

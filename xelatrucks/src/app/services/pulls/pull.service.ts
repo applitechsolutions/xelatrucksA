@@ -38,12 +38,11 @@ export class PullService {
   }
 
   finalizarPull(pull: Pull) {
-    console.log("PullService -> finalizarPull -> pull", pull);
 
-    let url = URL_SERVICES + '/pull/finish/' + pull._id + '/' + pull.details;
+    let url = URL_SERVICES + '/pull/finish/';
     url += '?token=' + this.userS.token;
 
-    return this.http.put(url, '')
+    return this.http.put(url, pull)
       .pipe(
         map((resp: any) => {
           swal({

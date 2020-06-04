@@ -102,6 +102,10 @@ export class CdOrdersComponent implements OnInit, AfterViewInit {
     this.dtService.init_timePicker();
   }
 
+  recibirOrden(event: string) { // Se actualiza el listado cuando se guarda una nueva orden
+    this.cargarPullsActivos();
+  }
+
   /* #region  VIGENTES */
   cargarPullsActivos() {
     this.pullS.cargarActivasCD()

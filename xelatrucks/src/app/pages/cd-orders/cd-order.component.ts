@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-
-import * as $ from 'jquery';
-import * as moment from 'moment/moment';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { OrderService, MaterialService, PullService } from 'src/app/services/service.index';
 import { Pull } from 'src/app/models/pull.model';
 import { StorageMaterial } from 'src/app/models/storageMaterial.model';
 import { Order } from 'src/app/models/order.model';
-import { OrderService, MaterialService, PullService } from 'src/app/services/service.index';
+
+import * as $ from 'jquery';
+import * as moment from 'moment/moment';
 declare var swal: any;
 
 @Component({
@@ -19,6 +19,8 @@ export class CdOrderComponent implements OnInit, AfterViewInit {
   @ViewChild('dateOrder') dateOrder: ElementRef;
   @ViewChild('closeO') closeO: ElementRef;
   @ViewChild('selectM') selectM: ElementRef;
+
+  @Output() pasarOrden = new EventEmitter();
 
   loadingM = false;
 
@@ -111,12 +113,21 @@ export class CdOrderComponent implements OnInit, AfterViewInit {
                     itemsProcessed++;
 
                     // console.log(itemsProcessed);
-                    // console.log(this.pulls.length);
+                    // console.log(this.pullsDetail.length);
 
                     if (itemsProcessed === this.pullsDetail.length) {
                       this.loadingM = false;
                       this.closeO.nativeElement.click();
                       swal('Orden creada', 'Pull de materiales creado correctamente', 'success');
+                      this.pasarOrden.emit('OK');
+                      this.order = {
+                        _destination: null,
+                        date: '',
+                        order: ''
+                      };
+                      this.pullsDetail = [];
+                      this.totalMts = 0;
+                      this.totalKgs = 0;
                     }
                   });
               });

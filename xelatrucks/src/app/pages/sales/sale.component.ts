@@ -33,7 +33,7 @@ export class SaleComponent implements OnInit {
 
   sale: Sale = { _customer: null, date: null, state: false, total: 0 };
   details: DetailSale[] = [];
-  detail: DetailSale = { material: { code: '', name: 'undefined', minStock: 0 }, total: 0, price: 0 };
+  detail: DetailSale = { material: { code: '', name: 'undefined', minStock: 0, price: 0 }, total: 0, price: 0 };
   customers: Customer[] = [];
 
   materials: StorageMaterial[] = [];
@@ -179,6 +179,7 @@ export class SaleComponent implements OnInit {
         this.formMat.value.code,
         this.formMat.value.name,
         this.formMat.value.minStock,
+        0,
         this.material._id
       );
     } else {

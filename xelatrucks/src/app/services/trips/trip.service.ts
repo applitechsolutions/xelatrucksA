@@ -119,6 +119,17 @@ export class TripService {
     return this.http.get(url);
   }
 
+  cargarWhiteTripsAnulados(id: string) {
+    const url = `${URL_SERVICES}/viajeB/anulados/${id}`;
+    return this.http.get(url);
+  }
+
+  cargarWhiteTripsPorFechas(id: string, fecha1: Date, fecha2: Date) {
+    const url = `${URL_SERVICES}/viajeB/reports/${id}?fecha1=${fecha1}&fecha2=${fecha2}`;
+
+    return this.http.get(url);
+  }
+
   crearWhiteTrip(whiteTrip: WhiteTrip, km: number) {
     let url = URL_SERVICES + '/viajeB';
 
@@ -140,11 +151,26 @@ export class TripService {
     }
   }
 
+  eliminarWhiteTrip(trip: WhiteTrip, km: number) {
+    const url = `${URL_SERVICES}/viajeB/anular?id=${trip._id}&km=${km}&token=${this.userService.token}`;
+
+    return this.http.put(url, trip)
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err, caught) => {
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
+        })
+      );
+  }
+
   /* #endregion */
 
   /* #region  VIAJES CISTERNA */
 
-  cargarTankTrips( fecha1: Date, fecha2: Date) {
+  cargarTankTrips(fecha1: Date, fecha2: Date) {
 
     let url = URL_SERVICES + '/viajeA';
     url += '?fecha1=' + fecha1;
@@ -154,7 +180,7 @@ export class TripService {
 
   }
 
-  cargarTankTrip( id: string ) {
+  cargarTankTrip(id: string) {
 
     let url = URL_SERVICES + '/viajeA/buscar';
     url += '?id=' + id;
@@ -164,8 +190,8 @@ export class TripService {
 
   }
 
-  eliminarTankTrip( tankTrip: TankTrip, km: number ) {
-  
+  eliminarTankTrip(tankTrip: TankTrip, km: number) {
+
     let url = URL_SERVICES + '/viajeA';
     url += '/delete?id=' + tankTrip._id;
     url += '&km=' + km;

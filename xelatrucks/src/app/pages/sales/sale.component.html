@@ -7,29 +7,50 @@
         <button type="button" class="close" aria-label="Close">
           <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
         </button>
-        <label class="input-group-prepend" for="searchClients"><span class="input-group-text"><span
-              class="oi oi-magnifying-glass"></span></span></label>
-        <input type="text" class="form-control" id="searchClients" data-filter=".board .list-group-item"
-          placeholder="Buscar Materiales..." />
+        <label class="input-group-prepend" for="searchClients"
+          ><span class="input-group-text"
+            ><span class="oi oi-magnifying-glass"></span></span
+        ></label>
+        <input
+          type="text"
+          class="form-control"
+          id="searchClients"
+          data-filter=".board .list-group-item"
+          placeholder="Buscar Materiales..."
+        />
       </div>
       <!-- /.input-group -->
     </header>
-    <button type="button" class="btn btn-primary btn-floated position-absolute" data-toggle="modal"
-      data-target="#addMaterial" title="Agregar nuevo material">
+    <button
+      type="button"
+      class="btn btn-primary btn-floated position-absolute"
+      data-toggle="modal"
+      data-target="#addMaterial"
+      title="Agregar nuevo material"
+    >
       <i class="fa fa-plus"></i>
     </button>
     <!-- board -->
     <div #scroll class="board p-0 perfect-scrollbar">
       <!-- .list-group -->
-      <div class="list-group list-group-flush list-group-divider border-top" data-toggle="radiolist">
+      <div
+        class="list-group list-group-flush list-group-divider border-top"
+        data-toggle="radiolist"
+      >
         <ng-container *ngFor="let material of materials">
           <!-- .list-group-item -->
-          <div class="list-group-item pointer" data-toggle="modal" data-target="#addDetail"
-            (click)="cargarModal(material)">
+          <div
+            class="list-group-item pointer"
+            data-toggle="modal"
+            data-target="#addDetail"
+            (click)="cargarModal(material)"
+          >
             <!-- .list-group-item-figure -->
             <div class="list-group-item-figure">
               <div class="tile tile-img mr-2">
-                <a data-toggle="modal" data-target="#addDetail" class="pointer"><i class="fas fa-cubes"></i></a>
+                <a data-toggle="modal" data-target="#addDetail" class="pointer"
+                  ><i class="fas fa-cubes"></i
+                ></a>
               </div>
             </div>
             <!-- /.list-group-item-figure -->
@@ -37,13 +58,20 @@
             <div class="list-group-item-body">
               <h4 class="list-group-item-title">
                 {{ material._material.name }}
-                <span class="badge badge-subtle badge-info"><strong>Mínimo </strong>{{
-                  material._material.minStock
-                }}</span>
-                <span *ngIf="material.stock > material._material.minStock" class="badge badge-subtle badge-success">
+                <span class="badge badge-subtle badge-info"
+                  ><strong>Mínimo </strong
+                  >{{ material._material.minStock }}</span
+                >
+                <span
+                  *ngIf="material.stock > material._material.minStock"
+                  class="badge badge-subtle badge-success"
+                >
                   <strong>Actual </strong>{{ material.stock }}
                 </span>
-                <span *ngIf="material.stock <= material._material.minStock" class="badge badge-subtle badge-danger">
+                <span
+                  *ngIf="material.stock <= material._material.minStock"
+                  class="badge badge-subtle badge-danger"
+                >
                   <strong>Actual </strong>{{ material.stock }}
                 </span>
               </h4>
@@ -67,12 +95,20 @@
         <h1 class="page-title mr-sm-auto">
           <i class="fas fa-shopping-cart text-muted mr-2"></i> Crear Venta
         </h1>
-        <button [routerLink]="['/tobepaids']" routerLinkActive="router-link-active" type="button"
-          class="btn btn-info ml-auto mr-2">
+        <button
+          [routerLink]="['/tobepaids']"
+          routerLinkActive="router-link-active"
+          type="button"
+          class="btn btn-info ml-auto mr-2"
+        >
           <i class="fas fa-hand-holding-usd mr-2"></i> Compras Pendientes
         </button>
-        <button [routerLink]="['/mainCellar']" routerLinkActive="router-link-active" type="button"
-          class="btn btn-success mr-2">
+        <button
+          [routerLink]="['/mainCellar']"
+          routerLinkActive="router-link-active"
+          type="button"
+          class="btn btn-success mr-2"
+        >
           <i class="fas fa-warehouse mr-2"></i> Bodega Principal
         </button>
       </div>
@@ -92,27 +128,52 @@
             <div class="row">
               <!-- .form-group -->
               <div class="form-group col-3">
-                <label class="control-label" for="date">Fecha
-                  <span class="badge badge-danger">Obligatorio</span></label>
-                <input #date name="date" id="flatpickr" type="text" class="form-control" required />
+                <label class="control-label" for="date"
+                  >Fecha
+                  <span class="badge badge-danger">Obligatorio</span></label
+                >
+                <input
+                  #date
+                  name="date"
+                  id="flatpickr"
+                  type="text"
+                  class="form-control"
+                  required
+                />
               </div>
               <!-- /.form-group -->
               <!-- .form-group -->
               <div class="form-group col-6">
-                <label id="typeL">Cliente
-                  <span class="badge badge-danger">Obligatorio</span></label>
-                <select #selectC formControlName="customer" name="customer" class="form-control select2"
-                  style="width: 100% !important;">
+                <label id="typeL"
+                  >Cliente
+                  <span class="badge badge-danger">Obligatorio</span></label
+                >
+                <select
+                  #selectC
+                  formControlName="customer"
+                  name="customer"
+                  class="form-control select2"
+                  style="width: 100% !important;"
+                >
                   <option value=""> Seleccione un cliente </option>
-                  <option *ngFor="let customer of customers" [value]="customer._id">
-                    {{ customer.name }} {{ customer.nit }}</option>
+                  <option
+                    *ngFor="let customer of customers"
+                    [value]="customer._id"
+                  >
+                    {{ customer.name }} {{ customer.nit }}</option
+                  >
                 </select>
               </div>
               <!-- /.form-group -->
               <!-- .form-group -->
               <div class="form-group col-3">
                 <label>Crear Cliente</label><br />
-                <a type="button" class="btn btn-subtle-dark" data-toggle="modal" data-target="#addCustomer">
+                <a
+                  type="button"
+                  class="btn btn-subtle-dark"
+                  data-toggle="modal"
+                  data-target="#addCustomer"
+                >
                   Nuevo <i class="fas fa-external-link-alt fa-pull-right"></i>
                 </a>
               </div>
@@ -122,15 +183,27 @@
               <!-- .form-group -->
               <div class="form-group col-4">
                 <label for="noBill">No. de factura </label>
-                <input formControlName="noBill" name="noBill" type="text" class="form-control" id="noBill"
-                  placeholder="Ingrese el número de factura" />
+                <input
+                  formControlName="noBill"
+                  name="noBill"
+                  type="text"
+                  class="form-control"
+                  id="noBill"
+                  placeholder="Ingrese el número de factura"
+                />
               </div>
               <!-- /.form-group -->
               <!-- .form-group -->
               <div class="form-group col-4">
                 <label for="noDoc">No. de correlativo </label>
-                <input formControlName="document" name="document" type="text" class="form-control" id="noDoc"
-                  placeholder="Ingrese un número de cheque o doc." />
+                <input
+                  formControlName="document"
+                  name="document"
+                  type="text"
+                  class="form-control"
+                  id="noDoc"
+                  placeholder="Ingrese un número de cheque o doc."
+                />
               </div>
               <!-- /.form-group -->
             </div>
@@ -140,7 +213,11 @@
                 <h2 class="card-title">Detalle de venta</h2>
                 <!-- .table-responsive -->
                 <div class="table-responsive">
-                  <table id="table1" class="table table-hover" style="min-width: 678px;">
+                  <table
+                    id="table1"
+                    class="table table-hover"
+                    style="min-width: 678px;"
+                  >
                     <thead>
                       <tr>
                         <th>Material</th>
@@ -175,7 +252,11 @@
                           Q {{ det.price | number: "1.2-2" }}
                         </td>
                         <td class="align-middle text-right">
-                          <button (click)="quitarDetalle(det)" type="button" class="btn btn-sm btn-icon btn-secondary">
+                          <button
+                            (click)="quitarDetalle(det)"
+                            type="button"
+                            class="btn btn-sm btn-icon btn-secondary"
+                          >
                             <i class="far fa-trash-alt"></i>
                             <span class="sr-only">Remove</span>
                           </button>
@@ -208,14 +289,23 @@
             <button class="btn btn-primary" type="submit" id="btnUser">
               Guardar venta
             </button>
-            <button [routerLink]="['/tobepaids']" type="button" class="btn btn-light" data-dismiss="modal">
+            <button
+              [routerLink]="['/tobepaids']"
+              type="button"
+              class="btn btn-light"
+              data-dismiss="modal"
+            >
               Cancelar
             </button>
           </fieldset>
           <!-- /.fieldset -->
           <ng-template #customLoadingTemplate> </ng-template>
           <!-- /.table -->
-          <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+          <ngx-loading
+            [show]="loading"
+            [config]="{ backdropBorderRadius: '3px' }"
+            [template]="customLoadingTemplate"
+          >
           </ngx-loading>
         </div>
         <!-- /.card-body -->
@@ -228,25 +318,36 @@
 <!-- /.page-section -->
 <!-- .modal -->
 <form ngNativeValidate [formGroup]="formDetalle">
-  <div class="modal fade" id="addDetail" tabindex="-1" role="dialog" aria-labelledby="AgregarDetalle"
-    aria-hidden="true">
+  <div
+    class="modal fade"
+    id="addDetail"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="AgregarDetalle"
+    aria-hidden="true"
+  >
     <!-- .modal-dialog -->
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <!-- .modal-content -->
       <div class="modal-content">
         <!-- .modal-header -->
         <div class="modal-header">
-          <h6 class="modal-title"><i class="fas fa-plus-circle" style="margin-right: 5px;"></i>
-            {{ detail.material.name }} {{ detail.material.code }} </h6>
+          <h6 class="modal-title">
+            <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>
+            {{ detail.material.name }} {{ detail.material.code }}
+          </h6>
 
-          <div *ngIf="isSalable" class="alert alert-danger has-icon pull-left" role="alert">
+          <div
+            *ngIf="isSalable"
+            class="alert alert-danger has-icon pull-left"
+            role="alert"
+          >
             <div class="alert-icon">
               <span class="fas fa-exclamation-circle"></span>
             </div>
             No hay <b>existencias suficientes</b> para agregarlo al
             <b>detalle</b> de venta.
           </div>
-
         </div>
         <!-- /.modal-header -->
         <!-- .modal-body -->
@@ -257,9 +358,21 @@
               <label for="pi9">Cantidad</label>
               <!-- .input-group -->
               <div class="input-group">
-                <label class="input-group-prepend" for="quantity"><span class="badge">mts</span></label> <input
-                  formControlName="total" name="total" type="number" step="1" min="0" class="form-control" id="total"
-                  placeholder="0" required data-autofocus="true">
+                <label class="input-group-prepend" for="quantity"
+                  ><span class="badge">mts</span></label
+                >
+                <input
+                  formControlName="total"
+                  name="total"
+                  type="number"
+                  step="1"
+                  min="0"
+                  class="form-control"
+                  id="total"
+                  placeholder="0"
+                  required
+                  data-autofocus="true"
+                />
               </div>
               <!-- /.input-group -->
             </div>
@@ -270,9 +383,20 @@
               <label for="pi9">Costo total</label>
               <!-- .input-group -->
               <div class="input-group">
-                <label class="input-group-prepend" for="cost"><span class="badge">Q</span></label> <input
-                  formControlName="price" name="price" type="number" step="0.01" min="0" class="form-control" id="price"
-                  placeholder="0.00" required>
+                <label class="input-group-prepend" for="cost"
+                  ><span class="badge">Q</span></label
+                >
+                <input
+                  formControlName="price"
+                  name="price"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  class="form-control"
+                  id="price"
+                  placeholder="0.00"
+                  required
+                />
               </div>
               <!-- /.input-group -->
             </div>
@@ -282,9 +406,22 @@
         <!-- /.modal-body -->
         <!-- .modal-footer -->
         <div class="modal-footer">
-          <button (click)="agregarDetalle()" type="submit" class="btn btn-primary"
-            [disabled]="!formDetalle.valid">Agregar</button> <button #closeMD type="button" class="btn btn-light"
-            data-dismiss="modal">Cerrar</button>
+          <button
+            (click)="agregarDetalle()"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!formDetalle.valid"
+          >
+            Agregar
+          </button>
+          <button
+            #closeMD
+            type="button"
+            class="btn btn-light"
+            data-dismiss="modal"
+          >
+            Cerrar
+          </button>
         </div>
         <!-- /.modal-footer -->
       </div>
@@ -295,12 +432,18 @@
 </form>
 <!-- /.modal -->
 <!-- .Material component -->
-<app-material></app-material>
+<app-material (enviarMaterial)="recibirMaterial($event)"></app-material>
 <!-- /-Material component -->
 <!-- .modalClientes -->
 <form ngNativeValidate [formGroup]="formCliente" (ngSubmit)="crearCliente()">
-  <div class="modal fade" id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="clientNewModalLabel"
-    aria-hidden="true">
+  <div
+    class="modal fade"
+    id="addCustomer"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="clientNewModalLabel"
+    aria-hidden="true"
+  >
     <!-- .modal-dialog -->
     <div class="modal-dialog" role="document">
       <!-- .modal-content -->
@@ -308,8 +451,15 @@
         <!-- .modal-header -->
         <div class="modal-header">
           <h6 id="clientNewModalLabel" class="modal-title inline-editable">
-            <span class="sr-only">Nombre del cliente</span> <input formControlName="name" name="name" type="text"
-              class="form-control form-control-lg" placeholder="Escriba aquí el nombre del cliente..." required="">
+            <span class="sr-only">Nombre del cliente</span>
+            <input
+              formControlName="name"
+              name="name"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Escriba aquí el nombre del cliente..."
+              required=""
+            />
           </h6>
         </div>
         <!-- /.modal-header -->
@@ -319,21 +469,42 @@
           <div class="form-row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="nit">Nit</label> <input formControlName="nit" name="nit" type="text" id="nit"
-                  class="form-control" placeholder="Nit del cliente">
+                <label for="nit">Nit</label>
+                <input
+                  formControlName="nit"
+                  name="nit"
+                  type="text"
+                  id="nit"
+                  class="form-control"
+                  placeholder="Nit del cliente"
+                />
               </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
-                <label for="mobile">Teléfono</label> <input formControlName="mobile" name="mobile" type="text"
-                  id="mobile" class="form-control" placeholder="Teléfono del cliente">
+                <label for="mobile">Teléfono</label>
+                <input
+                  formControlName="mobile"
+                  name="mobile"
+                  type="text"
+                  id="mobile"
+                  class="form-control"
+                  placeholder="Teléfono del cliente"
+                />
               </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
                 <label for="address">Dirección</label>
-                <textarea formControlName="address" name="address" id="address" cols="30" rows="5" class="form-control"
-                  placeholder="Dirección del cliente..."></textarea>
+                <textarea
+                  formControlName="address"
+                  name="address"
+                  id="address"
+                  cols="30"
+                  rows="5"
+                  class="form-control"
+                  placeholder="Dirección del cliente..."
+                ></textarea>
               </div>
             </div>
           </div>
@@ -342,13 +513,23 @@
         <!-- /.modal-body -->
         <!-- .modal-footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMC type="button"
-            class="btn btn-light" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button
+            #closeMC
+            type="button"
+            class="btn btn-light"
+            data-dismiss="modal"
+          >
+            Cerrar
+          </button>
         </div>
         <!-- /.modal-footer -->
-        <ng-template #customLoadingTemplate>
-        </ng-template>
-        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        <ng-template #customLoadingTemplate> </ng-template>
+        <ngx-loading
+          [show]="loading"
+          [config]="{ backdropBorderRadius: '3px' }"
+          [template]="customLoadingTemplate"
+        >
         </ngx-loading>
       </div>
       <!-- /.modal-content -->

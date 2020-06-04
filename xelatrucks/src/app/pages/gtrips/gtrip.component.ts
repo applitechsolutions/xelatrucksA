@@ -54,9 +54,6 @@ export class GtripComponent implements OnInit {
   tempType: string = '';
 
   materials: StorageMaterial[] = [];
-  material: Material = { code: '', name: '', minStock: 0 };
-  formMat: FormGroup;
-  tempMat: string = '';
 
   loading: boolean = false;
 
@@ -104,13 +101,6 @@ export class GtripComponent implements OnInit {
     this.cargarVehiculos();
     this.cargarTypes();
     this.cargarMateriales();
-
-
-    this.formMat = new FormGroup({
-      code: new FormControl(null),
-      name: new FormControl(null, Validators.required),
-      minStock: new FormControl(null, Validators.required)
-    });
   }
 
   ngAfterViewInit() {
@@ -276,48 +266,9 @@ export class GtripComponent implements OnInit {
       });
   }
 
-  crearMaterial() {
-
-    if (this.formMat.invalid) {
-      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
-      return;
-    }
-
-    let material;
-
-    if (this.material._id) {
-      material = new Material(
-        this.formMat.value.code,
-        this.formMat.value.name,
-        this.formMat.value.minStock,
-        this.formMat.value.price,
-        this.material._id
-      );
-    } else {
-      material = new Material(
-        this.formMat.value.code,
-        this.formMat.value.name,
-        this.formMat.value.minStock,
-        this.formMat.value.price
-      );
-    }
-
-    this.matService.crearMaterial(material)
-      .subscribe((res: any) => {
-        swal({
-          title: 'Exito!',
-          text: 'Material creado correctamente' + res.material.code + ' ' + res.material.name,
-          icon: 'success',
-          button: false,
-          timer: 1500
-        });
-
-        this.tempMat = res.material._id;
-        this.formMat.reset();
-        this.closeMMt.nativeElement.click();
-        this.cargarMateriales();
-
-      });
+  recibirMaterial(material: Material) {
+    console.log(material);
+    this.cargarMateriales();
   }
 
   /* #endregion */

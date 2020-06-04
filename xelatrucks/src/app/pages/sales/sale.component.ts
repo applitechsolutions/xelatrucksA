@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Sale } from '../../models/sale.model';
 import { Customer } from '../../models/customer.model';
 import { StorageMaterial } from '../../models/storageMaterial.model';
-import { Material } from "../../models/material.model";
+import { Material } from '../../models/material.model';
 import { DetailSale } from '../../models/detailSale.model';
 import { SaleService, MaterialService, CustomerService, DatatablesService } from "../../services/service.index";
 import * as $ from 'jquery';
@@ -28,7 +28,6 @@ export class SaleComponent implements OnInit {
 
   formVenta: FormGroup;
   formDetalle: FormGroup;
-  formMat: FormGroup;
   formCliente: FormGroup;
 
   sale: Sale = { _customer: null, date: null, state: false, total: 0 };
@@ -37,7 +36,6 @@ export class SaleComponent implements OnInit {
   customers: Customer[] = [];
 
   materials: StorageMaterial[] = [];
-  material: Material = { code: '', name: '', minStock: 0 };
 
   loading: boolean = false;
   isSalable: boolean = false;
@@ -65,12 +63,6 @@ export class SaleComponent implements OnInit {
     this.formDetalle = new FormGroup({
       total: new FormControl(0, Validators.required),
       price: new FormControl(0, Validators.required)
-    }, {});
-
-    this.formMat = new FormGroup({
-      code: new FormControl(null),
-      name: new FormControl(null, Validators.required),
-      minStock: new FormControl(null, Validators.required)
     }, {});
 
     this.formCliente = new FormGroup({
@@ -165,47 +157,10 @@ export class SaleComponent implements OnInit {
       });
   }
 
-  crearMaterial() {
-
-    if (this.formMat.invalid) {
-      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
-      return;
-    }
-
-    let material;
-
-    if (this.material._id) {
-      material = new Material(
-        this.formMat.value.code,
-        this.formMat.value.name,
-        this.formMat.value.minStock,
-        0,
-        this.material._id
-      );
-    } else {
-      material = new Material(
-        this.formMat.value.code,
-        this.formMat.value.name,
-        this.formMat.value.minStock
-      );
-    }
-
-    this.matService.crearMaterial(material)
-      .subscribe((res: any) => {
-        swal({
-          title: 'Exito!',
-          text: 'Material creado correctamente' + res.material.code + ' ' + res.material.name,
-          icon: 'success',
-          button: false,
-          timer: 1500
-        });
-
-        this.formMat.reset();
-        this.closeMMt.nativeElement.click();
-        this.cargarMateriales();
-
-      });
-
+  recibirMaterial(material: Material) {
+    // this.materials.push(material);
+    console.log(material);
+    this.cargarMateriales();
   }
 
   cargarClientes() {

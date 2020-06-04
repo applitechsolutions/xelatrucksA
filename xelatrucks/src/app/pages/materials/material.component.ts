@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Material } from '../../models/material.model';
 import { MaterialService } from "../../services/service.index";
@@ -12,6 +12,7 @@ declare var swal: any;
 })
 export class MaterialComponent implements OnInit {
   @ViewChild('closeMMt') closeMMt: ElementRef;
+  @Output() enviarMaterial = new EventEmitter();
 
   material: Material = { code: '', name: '', minStock: 0, price: 0 };
   formMat: FormGroup;
@@ -63,7 +64,7 @@ export class MaterialComponent implements OnInit {
           button: false,
           timer: 1500
         });
-
+        this.enviarMaterial.emit(res.material);
         this.tempMat = res.material._id;
         this.formMat.reset();
         this.closeMMt.nativeElement.click();

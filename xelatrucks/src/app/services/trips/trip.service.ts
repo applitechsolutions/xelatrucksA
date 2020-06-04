@@ -122,11 +122,6 @@ export class TripService {
     return this.http.get(url);
   }
 
-  cargarWhiteTripsAnulados(id: string) {
-    const url = `${URL_SERVICES}/viajeB/anulados/${id}`;
-    return this.http.get(url);
-  }
-
   crearWhiteTrip(whiteTrip: WhiteTrip, km: number) {
     let url = URL_SERVICES + '/viajeB';
 

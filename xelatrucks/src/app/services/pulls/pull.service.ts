@@ -38,6 +38,7 @@ export class PullService {
   }
 
   finalizarPull(pull: Pull) {
+    console.log("PullService -> finalizarPull -> pull", pull);
 
     let url = URL_SERVICES + '/pull/finish/' + pull._id + '/' + pull.details;
     url += '?token=' + this.userS.token;

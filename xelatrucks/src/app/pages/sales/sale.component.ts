@@ -37,6 +37,8 @@ export class SaleComponent implements OnInit {
 
   materials: StorageMaterial[] = [];
 
+  total: number = 0;
+  flete: number = 0;
   loading: boolean = false;
   isSalable: boolean = false;
 
@@ -57,7 +59,7 @@ export class SaleComponent implements OnInit {
       customer: new FormControl(''),
       noBill: new FormControl(''),
       document: new FormControl(''),
-      flete: new FormControl(0, Validators.required),
+      flete: new FormControl(0),
       total: new FormControl(0, Validators.required)
     }, {});
 
@@ -83,6 +85,7 @@ export class SaleComponent implements OnInit {
 
   cargarModal(material: StorageMaterial) {
     this.detail.material = material._material;
+    this.formDetalle.get('price').setValue(material._material.price);
 
     if (material.stock <= material._material.minStock) {
       this.formDetalle.disable();
@@ -100,19 +103,38 @@ export class SaleComponent implements OnInit {
       price: this.formDetalle.value.price
     });
 
-    this.formVenta.value.total = this.details.map((detail) => {
-      return detail.price
+    this.total += this.details.map((detail) => {
+      return detail.price * detail.total
     }).reduce((prev, curr) => {
       return prev + curr
     });
 
-    console.log(this.formVenta.value.total);
     this.closeMD.nativeElement.click();
     this.formDetalle.reset();
   }
 
   quitarDetalle(detalle: DetailSale) {
     console.log(detalle);
+  }
+
+  cambiarTotal(event: any) {
+
+    if (event.target.value === "" && this.total === 0) {
+      this.total = 0;
+    } else if (this.total === 0) {
+      this.total += Number(event.target.value);
+    } else if (this.total > 0 && event.target.value !== "") {
+      this.total -= this.flete;
+      this.total += Number(event.target.value);
+    }
+
+    if (event.target.value === "" && this.total > 0) {
+      this.total -= this.flete;
+      this.flete = 0;
+    } else {
+      this.flete = Number(event.target.value);
+    }
+
   }
 
   crearVenta() {
@@ -134,6 +156,7 @@ export class SaleComponent implements OnInit {
         this.formVenta.value.document,
         this.formVenta.value.noBill,
         this.details,
+        this.formVenta.value.flete,
       );
 
       this.saleService.crearVenta(sale)

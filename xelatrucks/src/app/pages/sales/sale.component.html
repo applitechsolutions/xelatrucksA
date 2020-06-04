@@ -139,7 +139,7 @@
                 <div class="input-group">
                   <label class="input-group-prepend" for="cost"><span class="badge">Q</span></label>
                   <input formControlName="flete" name="flete" type="number" step="0.01" min="0" class="form-control"
-                    id="flete" placeholder="0.00" required />
+                    id="flete" (change)="cambiarTotal($event)" placeholder="0.00" required />
                 </div>
                 <!-- /.input-group -->
               </div>
@@ -172,6 +172,7 @@
                             <b>detalle</b> de venta.
                           </div>
                         </td>
+                        <td class="align-middle">-</td>
                         <td class="align-middle">-</td>
                         <td class="align-middle">-</td>
                         <td></td>
@@ -209,7 +210,7 @@
                 <div class="metric">
                   <p class="metric-label">Total</p>
                   <h5 class="metric-value">
-                    Q {{ this.formVenta.value.total | number: "1.2-2" }}
+                    Q {{ total | number: "1.2-2" }}
                   </h5>
                 </div>
                 <!-- .metric -->
@@ -339,7 +340,7 @@
               <div class="form-group">
                 <label for="nit">Nit</label>
                 <input formControlName="nit" name="nit" type="text" id="nit" class="form-control"
-                  placeholder="Nit del cliente" />
+                  placeholder="Nit del cliente" data-autofocus="true" />
               </div>
             </div>
             <div class="col-md-12">

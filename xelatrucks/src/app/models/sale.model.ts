@@ -10,6 +10,7 @@ export class Sale {
         public serie?: string,
         public bill?: string,
         public details?: DetailSale[],
+        public flete?: number,
         public _id?: string
     ) { }
 }

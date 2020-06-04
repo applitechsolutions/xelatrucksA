@@ -1,6 +1,6 @@
 <!-- floating action -->
-<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/wtrip', 'new']"><span
-    class="fa fa-plus"></span></button>
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/orders']"><span
+    class="fa fa-clipboard-list"></span></button>
 <!-- /floating action -->
 <!-- .page-section -->
 <div class="page-section">
@@ -8,23 +8,6 @@
   <div class="card card-fluid">
     <!-- .card-body -->
     <div class="card-body">
-      <div class="row">
-        <!-- .form-group -->
-        <div class="form-group col-3">
-          <label class="control-label" for="flatpickr02">Fecha de inicio</label>
-          <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
-        </div>
-        <!-- /.form-group -->
-        <!-- .form-group -->
-        <div class="form-group col-3">
-          <label class="control-label" for="flatpickr02">Fecha final</label>
-          <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
-        </div>
-        <!-- /.form-group -->
-        <button type="button" (click)="buscarReporteLineas()" [ngStyle]="{'margin-top': '29px'}"
-          class="btn btn-primary"><i class="fas fa-search"></i>
-          Buscar</button>
-      </div>
       <!-- .btn-toolbar -->
       <div id="dt-buttons" class="btn-toolbar"></div>
       <!-- /.btn-toolbar -->
@@ -96,8 +79,6 @@
               <p>Salida {{ dtService.fromJsonHour(wt.checkOUT) }}</p>
             </td>
             <td class="align-middle text-right">
-              <a [routerLink]="[ '/wtrip', 'new' ]" class=" btn btn-sm btn-icon btn-secondary " alt="Editar "><i
-                  class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
               <a class="btn btn-sm btn-icon btn-secondary pointer" title="Eliminar"
                 (click)="eliminarViajeBlanco( wt )"><i class="far fa-trash-alt "></i> <span
                   class="sr-only ">Eliminar</span></a>
@@ -106,8 +87,9 @@
         </tbody>
       </table>
       <!-- /.table -->
-      <!-- <ng-template #customLoadingTemplate></ng-template>
-            <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate "></ngx-loading> -->
+      <ng-template #customLoadingTemplate></ng-template>
+      <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate ">
+      </ngx-loading>
     </div>
     <!-- /.card-body -->
   </div>

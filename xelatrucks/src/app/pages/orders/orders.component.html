@@ -99,6 +99,8 @@
                     data-target="#modalNewTask">Ingresar Reporte</button>
                   <button (click)="verReportes(pull)" class="dropdown-item" type="button" data-toggle="modal"
                     data-target="#modalReports">Listar Reportes</button>
+                  <a [routerLink]="['/wtrips', pull._id]" routerLinkActive="router-link-active"
+                    class="dropdown-item">Anular reportes</a>
                   <button (click)="verAnulados(pull)" class="dropdown-item" type="button" data-toggle="modal"
                     data-target="#modalAnulados">Listar reportes anulados</button>
                   <button (click)="abrirFinalizar(pull)" data-toggle="modal" data-target="#finishOrder"
@@ -449,8 +451,6 @@
       <hr>
       <!-- .modal-footer -->
       <div class="modal-footer">
-        <a [routerLink]="['/wtrips', pull._id]" routerLinkActive="router-link-active" type="button" class="btn btn-info"
-          data-dismiss="modal">Detalles</a>
         <button type="reset" class="btn btn-light" data-dismiss="modal">Cancel</button>
       </div>
       <!-- /.modal-footer -->

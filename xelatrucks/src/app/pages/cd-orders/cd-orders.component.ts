@@ -6,7 +6,6 @@ import {
   EmployeeService,
   VehicleService,
   TripService,
-  OrderService,
   MaterialService
 } from 'src/app/services/service.index';
 import { Pull } from 'src/app/models/pull.model';
@@ -72,7 +71,8 @@ export class CdOrdersComponent implements OnInit, AfterViewInit {
     public dtService: DatatablesService,
     public empService: EmployeeService,
     public vehicleService: VehicleService,
-    public tripS: TripService
+    public tripS: TripService,
+    public materialS: MaterialService
   ) { }
 
   ngOnInit(): void {
@@ -205,33 +205,40 @@ export class CdOrdersComponent implements OnInit, AfterViewInit {
 
     this.tripS.crearWhiteTrip(whiteTrip, this.pull._order._destination.km)
       .subscribe((res: any) => {
-        swal({
-          title: 'Exito!',
-          text: 'Reporte creado correctamente ' + res.viajeB.noTicket,
-          icon: 'success',
-          button: false,
-          timer: 1500
-        });
-        const today = moment(new Date()).format('DD/MM/YYYY');
-        this.formaTrip.reset({
-          date: today,
-          noTicket: '',
-          noDelivery: '',
-          mts: '',
-          kgB: '',
-          kgT: '',
-          kgN: '',
-          checkIN: null,
-          checkOUT: null,
-          tariff: ''
-        });
-        this.dtService.init_timePicker();
-        this.loading = false;
-        this.closeM.nativeElement.click();
-        this.cargarPullsActivos();
+        // ACTUALIZAMOS STOCK del material
+        const stockMaterial: any = {
+          _material: this.pull._material,
+          quantity: whiteTrip.mts
+        };
+        this.materialS.stockPurchase(stockMaterial)
+          .subscribe(resp4 => {
+            // EL STOCK SE ACTUALIZO CON EXITO
+            swal({
+              title: 'Exito!',
+              text: 'Reporte creado correctamente ' + res.viajeB.noTicket,
+              icon: 'success',
+              button: false,
+              timer: 1500
+            });
+            const today = moment(new Date()).format('DD/MM/YYYY');
+            this.formaTrip.reset({
+              date: today,
+              noTicket: '',
+              noDelivery: '',
+              mts: '',
+              kgB: '',
+              kgT: '',
+              kgN: '',
+              checkIN: null,
+              checkOUT: null,
+              tariff: ''
+            });
+            this.dtService.init_timePicker();
+            this.loading = false;
+            this.closeM.nativeElement.click();
+            this.cargarPullsActivos();
+          });
       }, () => this.loading = false);
-
-
   }
   /* #endregion */
 }

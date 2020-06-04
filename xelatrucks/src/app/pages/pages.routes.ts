@@ -50,6 +50,7 @@ import { TbillComponent } from './tbills/tbill.component';
 import { SalesComponent } from './sales/sales.component';
 import { SaleComponent } from './sales/sale.component';
 import { CdOrdersComponent } from './cd-orders/cd-orders.component';
+import { CdStockComponent } from './cd-storage/cd-stock.component';
 
 const pagesRoutes: Routes = [
     {
@@ -343,6 +344,12 @@ const pagesRoutes: Routes = [
         component: CdOrdersComponent,
         canActivate: [VerificaTokenGuard, AdminGuard],
         data: { titulo: 'Pedidos - Centro de distribución' }
+    },
+    {
+        path: 'cd/storage',
+        component: CdStockComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Inventario - Centro de distribución' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];

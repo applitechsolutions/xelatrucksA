@@ -62,6 +62,7 @@ import { SalesComponent } from './sales/sales.component';
 import { SaleComponent } from './sales/sale.component';
 import { CdOrdersComponent } from './cd-orders/cd-orders.component';
 import { CdOrderComponent } from './cd-orders/cd-order.component';
+import { CdStockComponent } from './cd-storage/cd-stock.component';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ import { CdOrderComponent } from './cd-orders/cd-order.component';
                 SalesComponent,
                 SaleComponent,
                 CdOrdersComponent,
-                CdOrderComponent
+                CdOrderComponent,
+                CdStockComponent
         ],
         exports: [
                 DashboardComponent,

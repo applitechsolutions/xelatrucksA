@@ -114,7 +114,6 @@ export class CdOrderComponent implements OnInit, AfterViewInit {
 
                     // console.log(itemsProcessed);
                     // console.log(this.pullsDetail.length);
-
                     if (itemsProcessed === this.pullsDetail.length) {
                       this.loadingM = false;
                       this.closeO.nativeElement.click();

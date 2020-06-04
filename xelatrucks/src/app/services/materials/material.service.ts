@@ -14,7 +14,7 @@ export class MaterialService {
 
   constructor(
     public http: HttpClient,
-    public userService: UserService
+    public userS: UserService
   ) { }
 
   cargarMateriales() {
@@ -22,24 +22,41 @@ export class MaterialService {
     return this.http.get(url);
   }
 
-  crearMaterial( material: Material ) {
+  // ACTUALIZAR STOCK PURCHASE
+  stockPurchase(storage: any) {
+    let url = URL_SERVICES + '/material/purchase/';
+    url += '?token=' + this.userS.token;
+    return this.http.put(url, storage)
+      .pipe(
+        map((resp: any) => {
+          return resp;
+        }),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
+        })
+      );
+  }
+
+  crearMaterial(material: Material) {
     let url = URL_SERVICES + '/material';
 
     if (material._id) {
       return;
     } else {
-      url += '?token=' + this.userService.token;
+      url += '?token=' + this.userS.token;
 
       return this.http.post(url, material)
-      .pipe(
-        map( (res: any) => {
-          return res;
-        }),
-        catchError((err, caught) => {
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
-        })
-      );
+        .pipe(
+          map((res: any) => {
+            return res;
+          }),
+          catchError((err, caught) => {
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          })
+        );
     }
   }
 

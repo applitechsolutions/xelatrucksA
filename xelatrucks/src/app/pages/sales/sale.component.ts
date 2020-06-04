@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Sale } from '../../models/sale.model';
@@ -57,6 +57,7 @@ export class SaleComponent implements OnInit {
       customer: new FormControl(''),
       noBill: new FormControl(''),
       document: new FormControl(''),
+      flete: new FormControl(0, Validators.required),
       total: new FormControl(0, Validators.required)
     }, {});
 

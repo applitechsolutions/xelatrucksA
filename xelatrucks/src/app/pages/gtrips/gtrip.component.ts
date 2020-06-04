@@ -121,7 +121,6 @@ export class GtripComponent implements OnInit {
         this.tempVehicle = res.reporte._vehicle._id;
         this.tempEmp = res.reporte._employee;
         this.tempType = res.reporte._type._id;
-        this.tempMat = res.reporte._material;
         this.formGT.get('employee').setValue(this.greenTrip._employee);
         this.formGT.get('type').setValue(this.greenTrip._type._id);
         this.formGT.get('vehicle').setValue(this.greenTrip._vehicle._id);

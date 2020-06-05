@@ -63,7 +63,9 @@ import { SaleComponent } from './sales/sale.component';
 import { CdOrdersComponent } from './cd-orders/cd-orders.component';
 import { CdOrderComponent } from './cd-orders/cd-order.component';
 import { CdStockComponent } from './cd-storage/cd-stock.component';
-
+import { CdPurchaseComponent } from './cd-purchases/cd-purchase.component';
+import { TobePaidsComponent } from './cd-purchases/tobe-paids.component';
+import { CdPurchasesComponent } from './cd-purchases/cd-purchases.component';
 
 @NgModule({
         declarations: [
@@ -116,7 +118,10 @@ import { CdStockComponent } from './cd-storage/cd-stock.component';
                 SaleComponent,
                 CdOrdersComponent,
                 CdOrderComponent,
-                CdStockComponent
+                CdStockComponent,
+                CdPurchaseComponent,
+                TobePaidsComponent,
+                CdPurchasesComponent
         ],
         exports: [
                 DashboardComponent,

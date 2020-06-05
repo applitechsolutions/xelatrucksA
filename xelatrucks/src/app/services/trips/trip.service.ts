@@ -112,6 +112,11 @@ export class TripService {
 
   /* #region  VIAJES BLANCOS */
 
+  cargarWhiteTripsPurchaseCD() {
+    const url = URL_SERVICES + '/viajeB/purchaseCD';
+    return this.http.get(url);
+  }
+
   cargarWhiteTrips(id: string) {
     const url = `${URL_SERVICES}/viajeB/${id}`;
     return this.http.get(url);

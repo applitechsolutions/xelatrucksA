@@ -51,6 +51,9 @@ import { SalesComponent } from './sales/sales.component';
 import { SaleComponent } from './sales/sale.component';
 import { CdOrdersComponent } from './cd-orders/cd-orders.component';
 import { CdStockComponent } from './cd-storage/cd-stock.component';
+import { CdPurchaseComponent } from './cd-purchases/cd-purchase.component';
+import { CdPurchasesComponent } from './cd-purchases/cd-purchases.component';
+import { TobePaidsComponent } from './cd-purchases/tobe-paids.component';
 
 const pagesRoutes: Routes = [
     {
@@ -350,6 +353,30 @@ const pagesRoutes: Routes = [
         component: CdStockComponent,
         canActivate: [VerificaTokenGuard, AdminGuard],
         data: { titulo: 'Inventario - Centro de distribución' }
+    },
+    {
+        path: 'cd/purchase',
+        component: CdPurchaseComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: {
+            titulo: 'Crear Compra - Centro de distribución'
+        }
+    },
+    {
+        path: 'cd/purchases',
+        component: CdPurchasesComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: {
+            titulo: 'Historial de compras - Centro de distribución'
+        }
+    },
+    {
+        path: 'cd/tobepaids',
+        component: TobePaidsComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: {
+            titulo: 'Compras pendientes de pago - Centro de distribución'
+        }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];

@@ -78,9 +78,9 @@
               <!-- /.form-group -->
               <!-- .form-group -->
               <div class="form-group col-4">
-                <label id="order">No. de orden <span class="badge badge-danger">Obligatorio</span></label>
+                <label id="order">No. de pedido <span class="badge badge-danger">Obligatorio</span></label>
                 <select #selectO class="form-control select2" style="width:100%!important;">
-                  <option value=""> Seleccione una orden </option>
+                  <option value=""> Seleccione un pedido </option>
                   <option *ngFor="let order of orders" [value]="order._id">
                     {{ order.order }}-{{ datatableS.fromJsonDate(order.date) }}</option>
                 </select>

@@ -7,7 +7,6 @@ import { PAGES_ROUTES } from './pages.routes';
 import { PipesModule } from '../pipes/pipes.module';
 
 // temporal
-
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user.component';
@@ -65,6 +64,9 @@ import { CdOrderComponent } from './cd-orders/cd-order.component';
 import { CdStockComponent } from './cd-storage/cd-stock.component';
 import { MaterialsComponent } from './materials/materials.component';
 import { MaterialComponent } from './materials/material.component';
+import { CdPurchaseComponent } from './cd-purchases/cd-purchase.component';
+import { CdPurchasesComponent } from './cd-purchases/cd-purchases.component';
+import { TobePaidsComponent } from './cd-purchases/tobe-paids.component';
 
 @NgModule({
         declarations: [
@@ -119,7 +121,10 @@ import { MaterialComponent } from './materials/material.component';
                 CdOrderComponent,
                 CdStockComponent,
                 MaterialsComponent,
-                MaterialComponent
+                MaterialComponent,
+                TobePaidsComponent,
+                CdPurchasesComponent,
+                CdPurchaseComponent
         ],
         exports: [
                 DashboardComponent,
@@ -135,7 +140,6 @@ import { MaterialComponent } from './materials/material.component';
                 ReportsModule,
                 NgxLoadingModule.forRoot({})
         ]
-
 })
 
 export class PagesModule { }

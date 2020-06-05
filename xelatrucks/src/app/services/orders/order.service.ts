@@ -20,6 +20,11 @@ export class OrderService {
     public userS: UserService
   ) { }
 
+  cargarOrdenesPurchaseCD() {
+    const url = URL_SERVICES + '/order/purchaseCD';
+    return this.http.get(url);
+  }
+
   cargarOrden(fecha: Date, order: string) {
     let url = URL_SERVICES + '/order/uniqueValidator';
     url += '?fecha=' + fecha;

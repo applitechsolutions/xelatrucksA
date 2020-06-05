@@ -7,7 +7,7 @@ export { UserService } from './users/user.service';
 // CENTRO DE DISTRIBUCION
 export { SaleService } from './sales/sale.service';
 export { CustomerService } from './customers/customer.service';
-
+export { PurchaseCDService } from './purchasesCD/purchase-cd.service';
 // VIAJES
 export { EmployeeService } from './employees/employee.service';
 export { TripService } from './trips/trip.service';

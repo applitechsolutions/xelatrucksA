@@ -37,9 +37,8 @@
             <div class="list-group-item-body">
               <h4 class="list-group-item-title">
                 {{ material._material.name }}
-                <span class="badge badge-subtle badge-info"><strong>Mínimo </strong>{{
-                  material._material.minStock
-                }}</span>
+                <span class="badge badge-subtle badge-info"><strong>Mínimo
+                  </strong>{{ material._material.minStock }}</span>
                 <span *ngIf="material.stock > material._material.minStock" class="badge badge-subtle badge-success">
                   <strong>Actual </strong>{{ material.stock }}
                 </span>
@@ -94,7 +93,7 @@
               <div class="form-group col-3">
                 <label class="control-label" for="date">Fecha
                   <span class="badge badge-danger">Obligatorio</span></label>
-                <input #date name="date" id="flatpickr" type="text" class="form-control" required />
+                <input #date name="date" id="flatpickr" type="text" class="form-control" disabled required />
               </div>
               <!-- /.form-group -->
               <!-- .form-group -->
@@ -133,6 +132,18 @@
                   placeholder="Ingrese un número de cheque o doc." />
               </div>
               <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group col-3">
+                <label for="pi9">Flete</label>
+                <!-- .input-group -->
+                <div class="input-group">
+                  <label class="input-group-prepend" for="cost"><span class="badge">Q</span></label>
+                  <input formControlName="flete" name="flete" type="number" step="0.01" min="0" class="form-control"
+                    id="flete" (change)="cambiarTotal($event)" placeholder="0.00" required />
+                </div>
+                <!-- /.input-group -->
+              </div>
+              <!-- /.form-group -->
             </div>
             <div class="card mt-2">
               <!-- .card-body -->
@@ -146,6 +157,7 @@
                         <th>Material</th>
                         <th>Cantidad</th>
                         <th>Costo</th>
+                        <th>Subtotal</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -162,6 +174,7 @@
                         </td>
                         <td class="align-middle">-</td>
                         <td class="align-middle">-</td>
+                        <td class="align-middle">-</td>
                         <td></td>
                       </tr>
                       <tr *ngFor="let det of details">
@@ -174,6 +187,7 @@
                         <td class="align-middle">
                           Q {{ det.price | number: "1.2-2" }}
                         </td>
+                        <td class="align-middle">Q {{ det.total * det.price | number : '1.2-2' }} </td>
                         <td class="align-middle text-right">
                           <button (click)="quitarDetalle(det)" type="button" class="btn btn-sm btn-icon btn-secondary">
                             <i class="far fa-trash-alt"></i>
@@ -196,7 +210,7 @@
                 <div class="metric">
                   <p class="metric-label">Total</p>
                   <h5 class="metric-value">
-                    Q {{ this.formVenta.value.total | number: "1.2-2" }}
+                    Q {{ total | number: "1.2-2" }}
                   </h5>
                 </div>
                 <!-- .metric -->
@@ -236,8 +250,10 @@
       <div class="modal-content">
         <!-- .modal-header -->
         <div class="modal-header">
-          <h6 class="modal-title"><i class="fas fa-plus-circle" style="margin-right: 5px;"></i>
-            {{ detail.material.name }} {{ detail.material.code }} </h6>
+          <h6 class="modal-title">
+            <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>
+            {{ detail.material.name }} {{ detail.material.code }}
+          </h6>
 
           <div *ngIf="isSalable" class="alert alert-danger has-icon pull-left" role="alert">
             <div class="alert-icon">
@@ -246,7 +262,6 @@
             No hay <b>existencias suficientes</b> para agregarlo al
             <b>detalle</b> de venta.
           </div>
-
         </div>
         <!-- /.modal-header -->
         <!-- .modal-body -->
@@ -257,9 +272,9 @@
               <label for="pi9">Cantidad</label>
               <!-- .input-group -->
               <div class="input-group">
-                <label class="input-group-prepend" for="quantity"><span class="badge">mts</span></label> <input
-                  formControlName="total" name="total" type="number" step="1" min="0" class="form-control" id="total"
-                  placeholder="0" required data-autofocus="true">
+                <label class="input-group-prepend" for="quantity"><span class="badge">mts</span></label>
+                <input formControlName="total" name="total" type="number" step="1" min="0" class="form-control"
+                  id="total" placeholder="0" required data-autofocus="true" />
               </div>
               <!-- /.input-group -->
             </div>
@@ -267,12 +282,12 @@
 
             <!-- .form-group -->
             <div class="form-group col-3">
-              <label for="pi9">Costo total</label>
+              <label for="pi9">Precio de venta</label>
               <!-- .input-group -->
               <div class="input-group">
-                <label class="input-group-prepend" for="cost"><span class="badge">Q</span></label> <input
-                  formControlName="price" name="price" type="number" step="0.01" min="0" class="form-control" id="price"
-                  placeholder="0.00" required>
+                <label class="input-group-prepend" for="cost"><span class="badge">Q</span></label>
+                <input formControlName="price" name="price" type="number" step="0.01" min="0" class="form-control"
+                  id="price" placeholder="0.00" required />
               </div>
               <!-- /.input-group -->
             </div>
@@ -282,9 +297,12 @@
         <!-- /.modal-body -->
         <!-- .modal-footer -->
         <div class="modal-footer">
-          <button (click)="agregarDetalle()" type="submit" class="btn btn-primary"
-            [disabled]="!formDetalle.valid">Agregar</button> <button #closeMD type="button" class="btn btn-light"
-            data-dismiss="modal">Cerrar</button>
+          <button (click)="agregarDetalle()" type="submit" class="btn btn-primary" [disabled]="!formDetalle.valid">
+            Agregar
+          </button>
+          <button #closeMD type="button" class="btn btn-light" data-dismiss="modal">
+            Cerrar
+          </button>
         </div>
         <!-- /.modal-footer -->
       </div>
@@ -294,58 +312,9 @@
   </div>
 </form>
 <!-- /.modal -->
-<!-- .modalMaterial -->
-<div class="modal fade" id="addMaterial" tabindex="-1" role="dialog" aria-labelledby="NewMaterialModalLabel"
-  aria-hidden="true">
-  <!-- .modal-dialog -->
-  <div class="modal-dialog" role="document">
-    <!-- .modal-content -->
-    <div class="modal-content">
-      <!-- .modal-header -->
-      <div class="modal-header">
-        <h5 class="modal-title"> Crear un nuevo material </h5>
-      </div>
-      <!-- /.modal-header -->
-      <!-- .modal-body -->
-      <div class="modal-body">
-        <form ngNativeValidate [formGroup]="formMat" (ngSubmit)="crearMaterial()">
-          <!-- .form-group -->
-          <div class="form-group">
-            <label for="name">Código </label> <input formControlName="code" name="code" type="text" class="form-control"
-              id="code" placeholder="Ingrese el código del material" data-autofocus="true">
-          </div>
-          <!-- /.form-group -->
-          <!-- .form-group -->
-          <div class="form-group">
-            <label for="name">Nombre </label> <input formControlName="name" name="name" type="text" class="form-control"
-              id="name" placeholder="Ingrese el nombre del material">
-          </div>
-          <!-- /.form-group -->
-          <!-- .form-group -->
-          <div class="form-group">
-            <label for="pay">Existencia Mínima</label>
-            <div class="input-group">
-              <label class="input-group-prepend" for="minStock"><span class="badge">u</span></label>
-              <input formControlName="minStock" name="minStock" type="number" min="0.00" step="0.01"
-                class="form-control" id="minStock" placeholder="Ingrese la existencia mínima del material">
-            </div>
-          </div>
-          <!-- /.form-group -->
-          <!-- .modal-footer -->
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMMt type="button"
-              class="btn btn-light" data-dismiss="modal">Cerrar</button>
-          </div>
-          <!-- /.modal-footer -->
-        </form>
-      </div>
-      <!-- /.modal-body -->
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modalMaterial -->
+<!-- .Material component -->
+<app-material (enviarMaterial)="recibirMaterial($event)"></app-material>
+<!-- /-Material component -->
 <!-- .modalClientes -->
 <form ngNativeValidate [formGroup]="formCliente" (ngSubmit)="crearCliente()">
   <div class="modal fade" id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="clientNewModalLabel"
@@ -357,8 +326,9 @@
         <!-- .modal-header -->
         <div class="modal-header">
           <h6 id="clientNewModalLabel" class="modal-title inline-editable">
-            <span class="sr-only">Nombre del cliente</span> <input formControlName="name" name="name" type="text"
-              class="form-control form-control-lg" placeholder="Escriba aquí el nombre del cliente..." required="">
+            <span class="sr-only">Nombre del cliente</span>
+            <input formControlName="name" name="name" type="text" class="form-control form-control-lg"
+              placeholder="Escriba aquí el nombre del cliente..." required="" />
           </h6>
         </div>
         <!-- /.modal-header -->
@@ -368,14 +338,16 @@
           <div class="form-row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="nit">Nit</label> <input formControlName="nit" name="nit" type="text" id="nit"
-                  class="form-control" placeholder="Nit del cliente">
+                <label for="nit">Nit</label>
+                <input formControlName="nit" name="nit" type="text" id="nit" class="form-control"
+                  placeholder="Nit del cliente" data-autofocus="true" />
               </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
-                <label for="mobile">Teléfono</label> <input formControlName="mobile" name="mobile" type="text"
-                  id="mobile" class="form-control" placeholder="Teléfono del cliente">
+                <label for="mobile">Teléfono</label>
+                <input formControlName="mobile" name="mobile" type="text" id="mobile" class="form-control"
+                  placeholder="Teléfono del cliente" />
               </div>
             </div>
             <div class="col-md-12">
@@ -391,12 +363,13 @@
         <!-- /.modal-body -->
         <!-- .modal-footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMC type="button"
-            class="btn btn-light" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button #closeMC type="button" class="btn btn-light" data-dismiss="modal">
+            Cerrar
+          </button>
         </div>
         <!-- /.modal-footer -->
-        <ng-template #customLoadingTemplate>
-        </ng-template>
+        <ng-template #customLoadingTemplate> </ng-template>
         <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
         </ngx-loading>
       </div>

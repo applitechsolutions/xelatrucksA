@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Sale } from '../../models/sale.model';
 import { Customer } from '../../models/customer.model';
 import { StorageMaterial } from '../../models/storageMaterial.model';
-import { Material } from "../../models/material.model";
+import { Material } from '../../models/material.model';
 import { DetailSale } from '../../models/detailSale.model';
 import { SaleService, MaterialService, CustomerService, DatatablesService } from "../../services/service.index";
 import * as $ from 'jquery';
@@ -28,17 +28,17 @@ export class SaleComponent implements OnInit {
 
   formVenta: FormGroup;
   formDetalle: FormGroup;
-  formMat: FormGroup;
   formCliente: FormGroup;
 
   sale: Sale = { _customer: null, date: null, state: false, total: 0 };
   details: DetailSale[] = [];
-  detail: DetailSale = { material: { code: '', name: 'undefined', minStock: 0 }, total: 0, price: 0 };
+  detail: DetailSale = { material: { code: '', name: 'undefined', minStock: 0, price: 0 }, total: 0, price: 0 };
   customers: Customer[] = [];
 
   materials: StorageMaterial[] = [];
-  material: Material = { code: '', name: '', minStock: 0 };
 
+  total: number = 0;
+  flete: number = 0;
   loading: boolean = false;
   isSalable: boolean = false;
 
@@ -59,18 +59,13 @@ export class SaleComponent implements OnInit {
       customer: new FormControl(''),
       noBill: new FormControl(''),
       document: new FormControl(''),
+      flete: new FormControl(0),
       total: new FormControl(0, Validators.required)
     }, {});
 
     this.formDetalle = new FormGroup({
       total: new FormControl(0, Validators.required),
       price: new FormControl(0, Validators.required)
-    }, {});
-
-    this.formMat = new FormGroup({
-      code: new FormControl(null),
-      name: new FormControl(null, Validators.required),
-      minStock: new FormControl(null, Validators.required)
     }, {});
 
     this.formCliente = new FormGroup({
@@ -90,6 +85,7 @@ export class SaleComponent implements OnInit {
 
   cargarModal(material: StorageMaterial) {
     this.detail.material = material._material;
+    this.formDetalle.get('price').setValue(material._material.price);
 
     if (material.stock <= material._material.minStock) {
       this.formDetalle.disable();
@@ -107,19 +103,57 @@ export class SaleComponent implements OnInit {
       price: this.formDetalle.value.price
     });
 
-    this.formVenta.value.total = this.details.map((detail) => {
-      return detail.price
+    this.total = this.flete + this.details.map((detail) => {
+      return detail.price * detail.total
     }).reduce((prev, curr) => {
       return prev + curr
     });
 
-    console.log(this.formVenta.value.total);
     this.closeMD.nativeElement.click();
     this.formDetalle.reset();
   }
 
   quitarDetalle(detalle: DetailSale) {
-    console.log(detalle);
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de borrar un registro del detalle, esto afectará el total de la venta',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then(borrar => {
+        if (borrar) {
+
+          const index = this.details.findIndex(item => item.material && item.material._id === detalle.material._id);
+          const material = this.details.find(e => e.material && e.material._id === detalle.material._id);
+          // BUSCAMOS EL MATERIAL DENTRO DEL ARREGLO PARA TENER LOS DATOS
+
+          this.total -= material.price * material.total;
+
+          // ELIMINAMOS EL DETALLE en base al index encontrado
+          this.details.splice(index, 1);
+        }
+      });
+  }
+
+  cambiarTotal(event: any) {
+
+    if (event.target.value === "" && this.total === 0) {
+      this.total = 0;
+    } else if (this.total === 0) {
+      this.total += Number(event.target.value);
+    } else if (this.total > 0 && event.target.value !== "") {
+      this.total -= this.flete;
+      this.total += Number(event.target.value);
+    }
+
+    if (event.target.value === "" && this.total > 0) {
+      this.total -= this.flete;
+      this.flete = 0;
+    } else {
+      this.flete = Number(event.target.value);
+    }
+
   }
 
   crearVenta() {
@@ -129,6 +163,7 @@ export class SaleComponent implements OnInit {
     }
 
     this.loading = true;
+    this.formVenta.get('total').setValue(this.total);
 
     if (this.sale._id) {
       return;
@@ -141,6 +176,7 @@ export class SaleComponent implements OnInit {
         this.formVenta.value.document,
         this.formVenta.value.noBill,
         this.details,
+        this.formVenta.value.flete,
       );
 
       this.saleService.crearVenta(sale)
@@ -165,46 +201,10 @@ export class SaleComponent implements OnInit {
       });
   }
 
-  crearMaterial() {
-
-    if (this.formMat.invalid) {
-      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
-      return;
-    }
-
-    let material;
-
-    if (this.material._id) {
-      material = new Material(
-        this.formMat.value.code,
-        this.formMat.value.name,
-        this.formMat.value.minStock,
-        this.material._id
-      );
-    } else {
-      material = new Material(
-        this.formMat.value.code,
-        this.formMat.value.name,
-        this.formMat.value.minStock
-      );
-    }
-
-    this.matService.crearMaterial(material)
-      .subscribe((res: any) => {
-        swal({
-          title: 'Exito!',
-          text: 'Material creado correctamente' + res.material.code + ' ' + res.material.name,
-          icon: 'success',
-          button: false,
-          timer: 1500
-        });
-
-        this.formMat.reset();
-        this.closeMMt.nativeElement.click();
-        this.cargarMateriales();
-
-      });
-
+  recibirMaterial(material: Material) {
+    // this.materials.push(material);
+    console.log(material);
+    this.cargarMateriales();
   }
 
   cargarClientes() {

@@ -19,7 +19,7 @@ export class SaleService {
   ) { }
 
   cargarVentas(fecha1: Date, fecha2: Date) {
-    const url = `${URL_SERVICES}/ventas?fecha=${fecha1}&fecha2=${fecha2}`;
+    const url = `${URL_SERVICES}/ventas?fecha1=${fecha1}&fecha2=${fecha2}`;
 
     return this.http.get(url);
   }

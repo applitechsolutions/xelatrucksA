@@ -1,5 +1,5 @@
 <!-- floating action -->
-<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/wtrip', 'new']"><span
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/sale', 'new']"><span
     class="fa fa-plus"></span></button>
 <!-- /floating action -->
 <!-- .page-section -->
@@ -21,7 +21,8 @@
           <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
         </div>
         <!-- /.form-group -->
-        <button type="button" [ngStyle]="{'margin-top': '29px'}" class="btn btn-primary"><i class="fas fa-search"></i>
+        <button type="button" (click)="buscarVentas()" [ngStyle]="{'margin-top': '29px'}" class="btn btn-primary"><i
+            class="fas fa-search"></i>
           Buscar</button>
       </div>
       <!-- .btn-toolbar -->
@@ -72,13 +73,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td> Empleado Prueba </td>
-            <td> Vehículo Prueba </td>
-            <td> 123456 </td>
-            <td> 01/01/2019 </td>
-            <td> 987654 </td>
-            <td> 123456 </td>
+          <tr *ngFor="let sale of sales">
+            <td> {{ sale._customer.name}} {{ sale._customer.nit }} </td>
+            <td> {{ dtService.fromJsonDate(sale.date) }} </td>
+            <td> {{ sale.bill }} </td>
+            <td> {{ sale.serie }} </td>
+            <td> {{ sale.flete | number: "1.2-2" }} </td>
+            <td> {{ sale.total | number: "1.2-2" }} </td>
             <td>
               <div class="dropdown">
                 <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones" data-toggle="dropdown"
@@ -87,9 +88,8 @@
                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
                   style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
                   <div class="dropdown-arrow mr-n1"></div>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalDetails">Detalles
-                    de
-                    venta</button>
+                  <button class="dropdown-item" (click)="verDetalle(sale)" type="button" data-toggle="modal"
+                    data-target="#modalDetails">Detalles de venta</button>
                   <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalDispatch">Generar
                     orden de despacho</button>
                   <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalBill">Generar
@@ -105,8 +105,9 @@
         </tbody>
       </table>
       <!-- /.table -->
-      <!-- <ng-template #customLoadingTemplate></ng-template>
-            <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate "></ngx-loading> -->
+      <ng-template #customLoadingTemplate></ng-template>
+      <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate ">
+      </ngx-loading>
     </div>
     <!-- /.card-body -->
   </div>
@@ -123,7 +124,7 @@
       <!-- .modal-header -->
       <div class="modal-header">
         <h6 id="modalNewTaskLabel" class="modal-title"> Detalle de venta <span class="badge badge-success">Factura
-            {{ sale.nobill }} Serie {{ sale.serie }}</span></h6>
+            {{ sale.bill }} Serie {{ sale.serie }}</span></h6>
       </div>
       <!-- /.modal-header -->
       <!-- .modal-body -->
@@ -139,11 +140,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let wTrip of whiteTrips">
-              <td> {{ wTrip.noTicket }} </td>
-              <td> {{ wTrip.noDelivery }} </td>
-              <td> {{ wTrip.mts }} </td>
-              <td> {{ wTrip.kgN }} </td>
+            <tr *ngFor="let detail of details">
+              <td> {{ detail.material.code }} {{ detail.material.name }} </td>
+              <td> {{ detail.total }} </td>
+              <td> Q {{ detail.price }} </td>
+              <td> Q {{ detail.total * detail.price | number : '1.2-2' }} </td>
             </tr>
           </tbody>
           <tfoot>

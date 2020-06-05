@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { PurchaseCDService, DatatablesService } from 'src/app/services/service.index';
+
+import * as moment from 'moment/moment';
+import { PurchaseCD } from '../../models/purchaseCD.model';
+declare function init_datatables();
+declare function destroy_datatables();
+declare var swal: any;
 
 @Component({
   selector: 'app-tobe-paids',
@@ -8,9 +15,58 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TobePaidsComponent implements OnInit {
 
-  constructor() { }
+  purchases: any[] = [];
+  details: any[] = [];
+
+  vencidas = 0;
+  saldoPendiente = 0;
+  today: string;
+
+  constructor(
+    public purchaseS: PurchaseCDService,
+    public dpService: DatatablesService,
+    public chRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
+    this.today = moment(new Date()).format('YYYY-MM-DD');
+
+    this.cargarPendientes();
   }
 
+  cargarPendientes() {
+    this.purchaseS.cargarPendientes()
+      .subscribe(resp => {
+        destroy_datatables();
+        this.purchases = resp;
+
+        this.saldoPendiente = this.purchases.reduce((sum, item) => sum + item.total, 0);
+        this.chRef.detectChanges();
+        init_datatables();
+      });
+  }
+
+  verDetalles(purchase: PurchaseCD) {
+    this.details = purchase.details;
+  }
+
+  pagarCompra(purchase: PurchaseCD) {
+
+    swal({
+      title: '¿Está seguro?',
+      text: 'Está a punto de marcar como pagada la compra',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then(borrar => {
+
+        if (borrar) {
+          this.purchaseS.pagarCompra(purchase._id)
+            .subscribe((pagado: any) => {
+              this.cargarPendientes();
+            });
+        }
+      });
+  }
 }

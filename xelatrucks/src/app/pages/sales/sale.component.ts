@@ -103,7 +103,7 @@ export class SaleComponent implements OnInit {
       price: this.formDetalle.value.price
     });
 
-    this.total += this.details.map((detail) => {
+    this.total = this.flete + this.details.map((detail) => {
       return detail.price * detail.total
     }).reduce((prev, curr) => {
       return prev + curr
@@ -114,7 +114,6 @@ export class SaleComponent implements OnInit {
   }
 
   quitarDetalle(detalle: DetailSale) {
-    // console.log(detalle);
     swal({
       title: '¿Está seguro?',
       text: 'Está a punto de borrar un registro del detalle, esto afectará el total de la venta',
@@ -126,14 +125,10 @@ export class SaleComponent implements OnInit {
         if (borrar) {
 
           const index = this.details.findIndex(item => item.material && item.material._id === detalle.material._id);
-          const row = this.details.find(e => e.material && e.material._id === detalle.material._id);
-          // BUSCAMOS LA FILA DENTRO DEL ARREGLO PARA TENER LOS DATOS
-          // ACTUALIZAMOS el total
-          this.total += this.details.map((detail) => {
-            return detail.price * detail.total;
-          }).reduce((prev, curr) => {
-            return prev + curr;
-          });
+          const material = this.details.find(e => e.material && e.material._id === detalle.material._id);
+          // BUSCAMOS EL MATERIAL DENTRO DEL ARREGLO PARA TENER LOS DATOS
+
+          this.total -= material.price * material.total;
 
           // ELIMINAMOS EL DETALLE en base al index encontrado
           this.details.splice(index, 1);
@@ -168,6 +163,7 @@ export class SaleComponent implements OnInit {
     }
 
     this.loading = true;
+    this.formVenta.get('total').setValue(this.total);
 
     if (this.sale._id) {
       return;

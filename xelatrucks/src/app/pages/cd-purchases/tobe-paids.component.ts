@@ -46,6 +46,14 @@ export class TobePaidsComponent implements OnInit {
       });
   }
 
+  calculateDiff(dateSent) {
+    const currentDate = new Date();
+    dateSent = new Date(dateSent);
+
+    // tslint:disable-next-line: max-line-length
+    return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(), dateSent.getDate())) / (1000 * 60 * 60 * 24));
+  }
+
   verDetalles(purchase: PurchaseCD) {
     this.details = purchase.details;
   }

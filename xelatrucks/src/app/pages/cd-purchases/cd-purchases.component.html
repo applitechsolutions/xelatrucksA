@@ -1,1 +1,247 @@
-<p>cd-purchases works!</p>
+<header class="page-title-bar">
+  <!-- floating action -->
+  <button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/cd/purchase']"><span
+      class="fa fa-plus"></span></button>
+  <!-- /floating action -->
+  <!-- title and toolbar -->
+  <div class="d-md-flex align-items-md-start">
+    <button [routerLink]="['/cd/tobepaids']" routerLinkActive="router-link-active" type="button"
+      class="btn btn-info ml-auto ml-auto mr-2"><i class="fas fa-hand-holding-usd"></i> Compras Pendientes</button>
+    <button [routerLink]="['/cd/purchase']" routerLinkActive="router-link-active" type="button"
+      class="btn btn-success"><i class="fas fa-shopping-cart mr-2"></i> Crear compra</button>
+  </div>
+  <!-- /title and toolbar -->
+</header>
+<!-- .page-section -->
+<div class="page-section">
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-header -->
+    <div class="card-header">
+      <div class="row">
+        <div class="form-group col-3">
+          <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+          <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
+        </div>
+        <!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group col-3">
+          <label class="control-label" for="flatpickr02">Fecha final</label>
+          <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
+        </div>
+        <!-- /.form-group -->
+        <button type="button" [ngStyle]="{'margin-top': '29px'}" (click)="searchP()" class="btn btn-primary"><i
+            class="fas fa-search"></i> Buscar</button>
+      </div>
+    </div>
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .section-block -->
+      <div class="section-block">
+        <!-- metric row -->
+        <div class="metric-row">
+          <!-- metric column -->
+          <div class="col">
+            <!-- .metric -->
+            <div class="metric metric-bordered">
+              <h2 class="metric-label"> Fechas consultadas </h2>
+              <p class="metric-value h4">
+                <span class="value">{{ this.fecha1Consulta + ' - ' + this.fecha2Consulta }}</span>
+              </p>
+            </div>
+            <!-- /.metric -->
+          </div>
+          <!-- /metric column -->
+          <!-- metric column -->
+          <div class="col">
+            <!-- .metric -->
+            <div class="metric metric-bordered">
+              <h2 class="metric-label"> Facturas por pagar </h2>
+              <p class="metric-value h1">
+                <sup>#</sup> <span class="value">{{ pendientes | number : '1.0' }}</span>
+              </p>
+            </div>
+            <!-- /.metric -->
+          </div>
+          <!-- /metric column -->
+          <!-- metric column -->
+          <div class="col">
+            <!-- .metric -->
+            <div class="metric metric-bordered">
+              <h2 class="metric-label"> Saldo pendiente </h2>
+              <p class="metric-value h1">
+                <sup>Q</sup> <span class="value">{{ saldoPendiente | number : "1.2-2" }}</span>
+              </p>
+            </div>
+            <!-- /.metric -->
+          </div>
+          <!-- /metric column -->
+          <!-- metric column -->
+          <div class="col">
+            <!-- .metric -->
+            <div class="metric metric-bordered">
+              <h2 class="metric-label"> Total </h2>
+              <p class="metric-value h1">
+                <sup>Q</sup> <span class="value">{{ total | number : "1.2-2" }} </span>
+              </p>
+            </div>
+            <!-- /.metric -->
+          </div>
+          <!-- /metric column -->
+        </div>
+        <!-- /metric row -->
+      </div>
+      <!-- /.section-block -->
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .input-group -->
+        <div class="input-group input-group-alt">
+          <!-- .input-group -->
+          <div class="input-group has-clearable">
+            <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                  class="fa fa-times-circle"></i></span></button>
+            <div class="input-group-prepend">
+              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+            </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+          </div>
+          <!-- /.input-group -->
+          <!-- .input-group-prepend -->
+          <div class="input-group-prepend">
+            <select id="filterBy" class="custom-select">
+              <option value='' selected> Filtros </option>
+              <option value="0"> Fecha </option>
+              <option value="1"> Pedido </option>
+              <option value="2"> No. de factura </option>
+              <option value="3"> Serie </option>
+              <option value="4"> Sap </option>
+              <option value="5"> Forma de pago </option>
+              <option value="6"> Estado </option>
+              <option value="7"> Total </option>
+            </select>
+          </div>
+          <!-- /.input-group-prepend -->
+        </div>
+        <!-- /.input-group -->
+      </div>
+      <!-- /.form-group -->
+      <!-- .table -->
+      <table id="myTable" class="table">
+        <thead>
+          <tr>
+            <th> Fecha </th>
+            <th> Pedido </th>
+            <th> No. de factura </th>
+            <th> Serie </th>
+            <th> Sap </th>
+            <th> Forma de pago </th>
+            <th> Estado </th>
+            <th> Total </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let purchase of purchases">
+            <td class="align-middle">
+              {{ dpService.fromJsonDate(purchase.date) }}
+            </td>
+            <td class="align-middle">{{ purchase._order.order }}</td>
+            <td class="align-middle">{{ purchase.noBill }}</td>
+            <td class="align-middle">{{ purchase.serie }}</td>
+            <td class="align-middle">{{ purchase.sap }}</td>
+            <td class="align-middle">
+              <span *ngIf="purchase.payment">CREDITO</span>
+              <span *ngIf="!purchase.payment">CONTADO</span>
+            </td>
+            <td *ngIf="!purchase.paid" class="align-middle">
+              <span *ngIf="calculateDiff(purchase.date) < 31" class="badge badge-warning">Pendiente</span>
+              <span *ngIf="calculateDiff(purchase.date) > 30" class="badge badge-danger">Vencida</span>
+            </td>
+            <td *ngIf="purchase.paid" class="align-middle">
+              <span class="badge badge-success">Pagada</span>
+            </td>
+            <td class="align-middle">Q {{ purchase.total | number : '1.2-2' }} </td>
+            <td class="align-middle text-right">
+              <button (click)="verDetalles(purchase)" type="button" class="btn btn-sm btn-icon btn-secondary"
+                data-toggle="tooltip" data-placement="top" title="Ver detalle" data-toggle="modal"
+                data-target="#details"><i class="fa fa-list"></i> <span class="sr-only">detalles</span></button>
+              <button *ngIf="!purchase.paid" (click)="pagarCompra( purchase )" type="button"
+                class="btn btn-sm btn-icon btn-secondary" data-toggle="tooltip" data-placement="left"
+                title="Marcar como pagada"><i class="fas fa-hand-holding-usd"></i> <span
+                  class="sr-only">pagar</span></button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th> Fecha </th>
+            <th> Pedido </th>
+            <th> No. de factura </th>
+            <th> Serie </th>
+            <th> Sap </th>
+            <th> Forma de pago </th>
+            <th> Estado </th>
+            <th> Total </th>
+            <th></th>
+          </tr>
+        </tfoot>
+      </table>
+      <ng-template #customLoadingTemplate>
+      </ng-template>
+      <!-- /.table -->
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+      </ngx-loading>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.page-section -->
+  <!-- Modal -->
+  <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="modalTableLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 id="modalTableLabel" class="modal-title"> Detalles de compra
+          </h6><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body p-0">
+          <!-- .table -->
+          <table class="table table-striped">
+            <!-- thead -->
+            <thead class="thead-">
+              <tr>
+                <th style="min-width:200px"> Reporte </th>
+                <th> Costo </th>
+                <th> Cantidad </th>
+                <th> Total </th>
+              </tr>
+            </thead>
+            <!-- /thead -->
+            <!-- tbody -->
+            <tbody>
+              <!-- tr -->
+              <tr *ngFor="let detail of details">
+                <td class="align-middle text-truncate">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <label>{{ detail._whiteTrip.noTicket }}</label>
+                    </div>
+                  </div>
+                </td>
+                <td>Q {{ detail.cost | number: "1.2-2" }} </td>
+                <td> {{ detail._whiteTrip.mts }} </td>
+                <td>Q {{ (detail._whiteTrip.mts * detail.cost) | number: "1.2-2" }} </td>
+              </tr>
+              <!-- /tr -->
+            </tbody>
+            <!-- /tbody -->
+          </table>
+          <!-- /.table -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.modal -->

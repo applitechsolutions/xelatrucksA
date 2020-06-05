@@ -114,9 +114,8 @@
             <td class="align-middle">{{ purchase.sap }}</td>
             <td class="align-middle">CREDITO </td>
             <td class="align-middle">
-              -
-              <!-- <span *ngIf="purchase.dateExp > today" class="badge badge-warning">Pendiente</span>
-              <span *ngIf="purchase.dateExp <= today" class="badge badge-danger">Vencida</span> -->
+              <span *ngIf="calculateDiff(purchase.date) < 31" class="badge badge-warning">Pendiente</span>
+              <span *ngIf="calculateDiff(purchase.date) > 30" class="badge badge-danger">Vencida</span>
             </td>
             <td class="align-middle">Q {{ purchase.total | number : '1.2-2' }} </td>
             <td class="align-middle text-right">

@@ -37,13 +37,13 @@
             <div class="list-group-item-body">
               <h4 class="list-group-item-title">
                 {{ material._material.name }}
-                <span class="badge badge-subtle badge-info"><strong>Mínimo
-                  </strong>{{ material._material.minStock }}</span>
-                <span *ngIf="material.stock > material._material.minStock" class="badge badge-subtle badge-success">
-                  <strong>Actual </strong>{{ material.stock }}
+                <span *ngIf="material.stock > material._material.minStock"
+                  class="badge badge-subtle badge-success float-right">
+                  {{ material.stock }}<strong>m </strong>
                 </span>
-                <span *ngIf="material.stock <= material._material.minStock" class="badge badge-subtle badge-danger">
-                  <strong>Actual </strong>{{ material.stock }}
+                <span *ngIf="material.stock <= material._material.minStock"
+                  class="badge badge-subtle badge-danger float-right">
+                  {{ material.stock }}<strong>m </strong>
                 </span>
               </h4>
               <p class="list-group-item-text">
@@ -66,13 +66,13 @@
         <h1 class="page-title mr-sm-auto">
           <i class="fas fa-shopping-cart text-muted mr-2"></i> Crear Venta
         </h1>
-        <button [routerLink]="['/tobepaids']" routerLinkActive="router-link-active" type="button"
+        <button [routerLink]="['/sales']" routerLinkActive="router-link-active" type="button"
           class="btn btn-info ml-auto mr-2">
-          <i class="fas fa-hand-holding-usd mr-2"></i> Compras Pendientes
+          <i class="fas fa-history mr-2"></i> Ventas historial
         </button>
-        <button [routerLink]="['/mainCellar']" routerLinkActive="router-link-active" type="button"
+        <button [routerLink]="['/cd/storage']" routerLinkActive="router-link-active" type="button"
           class="btn btn-success mr-2">
-          <i class="fas fa-warehouse mr-2"></i> Bodega Principal
+          <i class="fas fa-mountain mr-2"></i> Inventario
         </button>
       </div>
       <!-- /title and toolbar -->

@@ -46,7 +46,7 @@ export class WtripsComponent implements OnInit {
         if (borrar) {
           whiteTrip.state = true;
           const km = whiteTrip._pull._order._destination.km;
-          this.tripService.eliminarWhiteTrip(whiteTrip, km)
+          this.tripService.borrarWhiteTrip(whiteTrip, km)
             .subscribe((borrado: any) => {
               swal({
                 title: 'Exito!',

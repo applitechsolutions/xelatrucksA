@@ -1,16 +1,24 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {
+  SaleService,
+  MaterialService,
+  CustomerService,
+  DatatablesService,
+  UserService
+} from '../../services/service.index';
 import { Sale } from '../../models/sale.model';
 import { Customer } from '../../models/customer.model';
 import { StorageMaterial } from '../../models/storageMaterial.model';
 import { Material } from '../../models/material.model';
 import { DetailSale } from '../../models/detailSale.model';
-import { SaleService, MaterialService, CustomerService, DatatablesService } from "../../services/service.index";
+
+import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
-
+import { } from 'src/app/services/service.index';
 declare var swal: any;
 
 @Component({
@@ -18,8 +26,9 @@ declare var swal: any;
   templateUrl: './sale.component.html',
   styles: []
 })
-export class SaleComponent implements OnInit {
+export class SaleComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('scroll') scroll: ElementRef; // id para PerfectScrollBar
   @ViewChild('date') date: ElementRef;
   @ViewChild('selectC') selectC: ElementRef;
   @ViewChild('closeMD') closeMD: ElementRef;
@@ -47,12 +56,11 @@ export class SaleComponent implements OnInit {
     public saleService: SaleService,
     public matService: MaterialService,
     public custService: CustomerService,
-    public dtService: DatatablesService
+    public dtService: DatatablesService,
+    public userS: UserService
   ) { }
 
   ngOnInit() {
-    const today = moment(new Date()).format('DD/MM/YYYY');
-    this.dtService.init_datePicker(today);
     this.dtService.init_timePicker();
 
     this.formVenta = new FormGroup({
@@ -81,6 +89,9 @@ export class SaleComponent implements OnInit {
 
   ngAfterViewInit() {
     $('.select2').select2();
+    // SE CAMBIO aqui por la condicion si es 'ADMIN_ROLE' o no!
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtService.init_datePicker(today);
   }
 
   cargarModal(material: StorageMaterial) {
@@ -104,9 +115,9 @@ export class SaleComponent implements OnInit {
     });
 
     this.total = this.flete + this.details.map((detail) => {
-      return detail.price * detail.total
+      return detail.price * detail.total;
     }).reduce((prev, curr) => {
-      return prev + curr
+      return prev + curr;
     });
 
     this.closeMD.nativeElement.click();
@@ -138,16 +149,16 @@ export class SaleComponent implements OnInit {
 
   cambiarTotal(event: any) {
 
-    if (event.target.value === "" && this.total === 0) {
+    if (event.target.value === '' && this.total === 0) {
       this.total = 0;
     } else if (this.total === 0) {
       this.total += Number(event.target.value);
-    } else if (this.total > 0 && event.target.value !== "") {
+    } else if (this.total > 0 && event.target.value !== '') {
       this.total -= this.flete;
       this.total += Number(event.target.value);
     }
 
-    if (event.target.value === "" && this.total > 0) {
+    if (event.target.value === '' && this.total > 0) {
       this.total -= this.flete;
       this.flete = 0;
     } else {
@@ -195,8 +206,9 @@ export class SaleComponent implements OnInit {
     this.matService.cargarMateriales()
       .subscribe((res: any) => {
         res.materiales
-          .map((res: any) => {
-            this.materials = res.storage
+          .map((resp: any) => {
+            this.materials = resp.storage;
+            const ps = new PerfectScrollbar(this.scroll.nativeElement);
           });
       });
   }

@@ -3,23 +3,23 @@
  * Copyright (c) 2018 Erik Koopmans
  * Released under the MIT License.
  */
-(function(global, factory) {
+(function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('es6-promise/auto'), require('jspdf'), require('html2canvas')) :
         typeof define === 'function' && define.amd ? define(['es6-promise/auto', 'jspdf', 'html2canvas'], factory) :
-        (global.html2pdf = factory(null, global.jsPDF, global.html2canvas));
-}(this, (function(auto, jsPDF, html2canvas) {
+            (global.html2pdf = factory(null, global.jsPDF, global.html2canvas));
+}(this, (function (auto, jsPDF, html2canvas) {
     'use strict';
 
     jsPDF = jsPDF && jsPDF.hasOwnProperty('default') ? jsPDF['default'] : jsPDF;
     html2canvas = html2canvas && html2canvas.hasOwnProperty('default') ? html2canvas['default'] : html2canvas;
 
-    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
-    } : function(obj) {
+    } : function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
 
-    var _extends = Object.assign || function(target) {
+    var _extends = Object.assign || function (target) {
         for (var i = 1; i < arguments.length; i++) {
             var source = arguments[i];
 
@@ -84,7 +84,7 @@
             }
 
             // Preserve the node's scroll position when it loads.
-            clone.addEventListener('load', function() {
+            clone.addEventListener('load', function () {
                 clone.scrollTop = node.scrollTop;
                 clone.scrollLeft = node.scrollLeft;
             }, true);
@@ -157,7 +157,9 @@
             margin: [0, 0, 0, 0],
             image: { type: 'jpeg', quality: 0.95 },
             enableLinks: true,
-            html2canvas: {},
+            html2canvas: {
+                scale: 2
+            },
             jsPDF: {}
         }
     };
@@ -268,7 +270,7 @@
             return html2canvas(this.prop.container, options);
         }).then(function toCanvas_post(canvas) {
             // Handle old-fashioned 'onrendered' argument.
-            var onRendered = this.opt.html2canvas.onrendered || function() {};
+            var onRendered = this.opt.html2canvas.onrendered || function () { };
             onRendered(canvas);
 
             this.prop.canvas = canvas;
@@ -418,7 +420,7 @@
         }
 
         // Build an array of setter functions to queue.
-        var fns = Object.keys(opt || {}).map(function(key) {
+        var fns = Object.keys(opt || {}).map(function (key) {
             if (key in Worker.template.prop) {
                 // Set pre-defined properties.
                 return function set_prop() {
@@ -575,7 +577,7 @@
         return self;
     };
 
-    Worker.prototype['catch'] = function(onRejected) {
+    Worker.prototype['catch'] = function (onRejected) {
         // Bind `this` to the promise handler, call `catch`, and return a Worker.
         if (onRejected) {
             onRejected = onRejected.bind(this);
@@ -605,7 +607,7 @@
 
     // Import dependencies.
     // Get dimensions of a PDF page, as determined by jsPDF.
-    jsPDF.getPageSize = function(orientation, unit, format) {
+    jsPDF.getPageSize = function (orientation, unit, format) {
         // Decode options object
         if ((typeof orientation === 'undefined' ? 'undefined' : _typeof(orientation)) === 'object') {
             var options = orientation;
@@ -763,7 +765,7 @@
     Worker.template.opt.pagebreak = {
         mode: ['css', 'legacy'],
         before: [],
-        after: [],
+        after: ['.afterClass'],
         avoid: []
     };
 
@@ -784,7 +786,7 @@
             // Get arrays of all explicitly requested elements.
             var select = {};
             var self = this;
-            ['before', 'after', 'avoid'].forEach(function(key) {
+            ['before', 'after', 'avoid'].forEach(function (key) {
                 var all = mode.avoidAll && key === 'avoid';
                 select[key] = all ? [] : [].concat(self.opt.pagebreak[key] || []);
                 if (select[key].length > 0) {
@@ -822,7 +824,7 @@
                 }
 
                 // Add rules for explicit requests.
-                Object.keys(rules).forEach(function(key) {
+                Object.keys(rules).forEach(function (key) {
                     rules[key] = rules[key] || select[key].indexOf(el) !== -1;
                 });
 
@@ -887,7 +889,7 @@
                 linkInfo = [];
 
                 // Loop through each anchor tag.
-                Array.prototype.forEach.call(links, function(link) {
+                Array.prototype.forEach.call(links, function (link) {
                     // Treat each client rect as a separate link (for text-wrapping).
                     var clientRects = link.getClientRects();
                     for (var i = 0; i < clientRects.length; i++) {
@@ -911,7 +913,7 @@
             // Add hyperlinks if the option is enabled.
             if (this.opt.enableLinks) {
                 // Attach each anchor tag based on info from toContainer().
-                linkInfo.forEach(function(l) {
+                linkInfo.forEach(function (l) {
                     this.prop.pdf.setPage(l.page);
                     this.prop.pdf.link(l.left, l.top, l.clientRect.width, l.clientRect.height, { url: l.link.href });
                 }, this);

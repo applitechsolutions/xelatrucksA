@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -20,6 +20,9 @@ import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
 import { } from 'src/app/services/service.index';
 declare var swal: any;
+
+// IMPRESIONES
+declare function init_despacho();
 
 @Component({
   selector: 'app-sale',
@@ -51,16 +54,20 @@ export class SaleComponent implements OnInit, AfterViewInit {
   loading: boolean = false;
   isSalable: boolean = false;
 
+  today2 = '';
+
   constructor(
     public router: Router,
     public saleService: SaleService,
     public matService: MaterialService,
     public custService: CustomerService,
     public dtService: DatatablesService,
-    public userS: UserService
+    public userS: UserService,
+    public chRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
+    this.today2 = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_timePicker();
 
     this.formVenta = new FormGroup({
@@ -172,6 +179,12 @@ export class SaleComponent implements OnInit, AfterViewInit {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }
+
+    document.documentElement.scrollTop = document.body.scrollTop = 0; // SIRVE PARA QUE LAS IMPRESIONES SALGAN CORRECTAMENTE
+
+    this.chRef.detectChanges();
+    init_despacho();
+    return;
 
     this.loading = true;
     this.formVenta.get('total').setValue(this.total);

@@ -189,13 +189,10 @@ export class SaleComponent implements OnInit, AfterViewInit {
     }
 
     document.documentElement.scrollTop = document.body.scrollTop = 0; // SIRVE PARA QUE LAS IMPRESIONES SALGAN CORRECTAMENTE
-
-    this.chRef.detectChanges();
-    init_despacho();
-    return;
-
     this.loading = true;
     this.formVenta.get('total').setValue(this.total);
+    this.chRef.detectChanges(); // IMPRESION DE ORDEN DE DESPACHO
+    init_despacho();
 
     if (this.sale._id) {
       return;

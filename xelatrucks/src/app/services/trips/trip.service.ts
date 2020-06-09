@@ -142,7 +142,7 @@ export class TripService {
 
   borrarWhiteTrip(trip: WhiteTrip, km: number) {
     const url = `${URL_SERVICES}/viajeB/${trip._id}?km=${km}&token=${this.userService.token}`;
-    return this.http.request('detele', url, { body: trip });
+    return this.http.request('delete', url, { body: trip });
   }
 
   eliminarWhiteTrip(trip: WhiteTrip, km: number) {

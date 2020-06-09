@@ -83,10 +83,7 @@ export class TripService {
   }
 
   borrarGreenTrip(trip: GreenTrip) {
-    let url = URL_SERVICES + '/viajeV';
-    url += '/' + trip._id;
-    url += '?token=' + this.userService.token;
-
+    const url = `${URL_SERVICES}/viajeV/${trip._id}?token=${this.userService.token}`;
     return this.http.request('delete', url, { body: trip });
   }
 
@@ -122,11 +119,6 @@ export class TripService {
     return this.http.get(url);
   }
 
-  cargarWhiteTripsAnulados(id: string) {
-    const url = `${URL_SERVICES}/viajeB/anulados/${id}`;
-    return this.http.get(url);
-  }
-
   crearWhiteTrip(whiteTrip: WhiteTrip, km: number) {
     let url = URL_SERVICES + '/viajeB';
 
@@ -146,6 +138,11 @@ export class TripService {
           })
         );
     }
+  }
+
+  borrarWhiteTrip(trip: WhiteTrip, km: number) {
+    const url = `${URL_SERVICES}/viajeB/${trip._id}?km=${km}&token=${this.userService.token}`;
+    return this.http.request('delete', url, { body: trip });
   }
 
   eliminarWhiteTrip(trip: WhiteTrip, km: number) {

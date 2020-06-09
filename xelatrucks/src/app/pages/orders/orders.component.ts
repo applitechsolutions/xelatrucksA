@@ -140,23 +140,6 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       });
   }
 
-  verAnulados(pull: Pull) {
-    this.loading = true;
-    this.pull = pull;
-
-    this.tripS.cargarWhiteTripsAnulados(pull._id)
-      .subscribe((res: any) => {
-        this.dtService.destroy_table2();
-        this.whiteTrips = res.wviajes;
-        this.chRef.detectChanges();
-        this.dtService.init_tables2();
-        this.loading = false;
-      }, (err) => {
-        console.error(err);
-        this.loading = false;
-      });
-  }
-
   cargarEmpleados() {
     this.empService.cargarEmpleados()
       .subscribe((res: any) => this.employees = res.empleados);

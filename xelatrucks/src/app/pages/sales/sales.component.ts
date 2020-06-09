@@ -37,6 +37,10 @@ export class SalesComponent implements OnInit {
     this.dtService.init_timePicker();
   }
 
+  anularVenta(sale: Sale) {
+
+  }
+
   buscarVentas() {
     this.loading = true;
     const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();

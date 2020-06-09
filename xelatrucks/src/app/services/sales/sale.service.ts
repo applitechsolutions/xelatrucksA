@@ -41,4 +41,10 @@ export class SaleService {
         })
       );
   }
+
+  anularVenta(sale: Sale) {
+    const url = `${URL_SERVICES}/ventas/${sale._id}?token=${this.userService.token}`;
+    return this.http.patch(url, sale)
+      .subscribe();
+  }
 }

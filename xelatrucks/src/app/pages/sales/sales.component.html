@@ -95,10 +95,8 @@
                   <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalBill">Generar
                     factura</button>
                 </div>
-                <a [routerLink]="[ '/sale', 'new' ]" class=" btn btn-sm btn-icon btn-secondary" title="Editar"
-                  alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only"></span></a>
-                <a class="btn btn-sm btn-icon btn-secondary pointer" title="Eliminar" alt="Eliminar"><i
-                    class="far fa-trash-alt"></i><span class="sr-only"></span></a>
+                <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="anularVenta(sale)" title="Eliminar"
+                  alt="Eliminar"><i class="far fa-trash-alt"></i><span class="sr-only"></span></a>
               </div>
             </td>
           </tr>

@@ -24,6 +24,21 @@ export class SaleService {
     return this.http.get(url);
   }
 
+
+  cargarCorrelativo() {
+    const url = URL_SERVICES + '/ventas/lastCorrelative';
+
+    return this.http.get(url)
+      .pipe(
+        map((resp: any) => resp.venta),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
+        })
+      );
+  }
+
   crearVenta(sale: Sale) {
     let url = `${URL_SERVICES}/ventas?token=${this.userService.token}`;
 

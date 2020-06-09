@@ -92,6 +92,7 @@ export class SaleComponent implements OnInit, AfterViewInit {
 
     this.cargarMateriales();
     this.cargarClientes();
+    this.cargarCorrelativo();
   }
 
   ngAfterViewInit() {
@@ -99,6 +100,13 @@ export class SaleComponent implements OnInit, AfterViewInit {
     // SE CAMBIO aqui por la condicion si es 'ADMIN_ROLE' o no!
     const today = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_datePicker(today);
+  }
+
+  cargarCorrelativo() {
+    this.saleService.cargarCorrelativo().subscribe(sale => {
+      this.formVenta.get('noBill').setValue(+sale.bill + 1);
+      this.formVenta.get('document').setValue(+sale.serie + 1);
+    });
   }
 
   cargarModal(material: StorageMaterial) {

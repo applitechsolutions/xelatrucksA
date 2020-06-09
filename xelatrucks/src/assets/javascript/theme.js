@@ -2167,10 +2167,10 @@ function init_despacho() {
             var worker = html2pdf();
             var element = document.getElementById("despacho");
             var correlative = document.getElementById("noDespacho").textContent;
-            var $element = $(element);
-            var $wrapper = $element.parent();
-            var filename = $element.data("id");
-            var $img = $("<img />");
+            // var $element = $(element);
+            // var $wrapper = $element.parent();
+            // var filename = $element.data("id");
+            // var $img = $("<img />");
             // console.log(element);
             // Choose pagebreak options based on mode.
             var pagebreak =
@@ -2184,44 +2184,45 @@ function init_despacho() {
                 : {
                   mode: "css"
                 };
-            worker
-              .from(element)
+            worker.from(element)
               .set({
-                pagebreak: pagebreak
+                pagebreak: pagebreak,
+                filename: "Despacho_" + correlative + ".pdf",
+                jsPDF: { unit: 'mm', format: 'a5', orientation: 'landscape' }
               })
-              .toImg()
-              .then(function () {
-                $element.css("display", "none");
-
-                $img
-                  .prop("alt", filename)
-                  .prop("src", worker.prop.img.src)
-                  .addClass("invoice-img")
-                  .css("max-width", "".concat($element.outerWidth(), "px"));
-                $wrapper.append($img);
-                worker
-                  .from(element)
-                  .set({
-                    filename: "Despacho_" + correlative + ".pdf",
-                    pagebreak: pagebreak
-                  })
-                  .save();
+              .toPdf().get('pdf').then(function (pdfObj) {
+                // pdfObj has your jsPDF object in it, use it as you please!
+                // For instance (untested):
+                pdfObj.autoPrint();
+                window.open(pdfObj.output('bloburl'), '_blank');
               });
-            // worker.from(element).set({
-            //   filename: 'proforma.pdf',
-            //   pagebreak: pagebreak,
-            //   jsPDF: {
-            //     orientation: 'portrait',
-            //     unit: 'mm',
-            //     format: [396, 612],
-            //     compressPDF: true
-            //   }
-            // }).save();
-            // $("#download-pdf").prop("onclick", null).off("click");
-            // $('#download-pdf').on('click', function (e) {
-            //   e.preventDefault();
+            // worker
+            //   .from(element)
+            //   .set({
+            //     pagebreak: pagebreak,
+            //     jsPDF: { unit: 'pt', format: 'a5', orientation: 'landscape' },
+            //   })
+            //   .toImg()
+            //   .then(function () {
+            //     $element.css("display", "none");
 
-            // AQUI VA EL BOTON PARA GUARDAR A PDF
+            //     $img
+            //       .prop("alt", filename)
+            //       .prop("src", worker.prop.img.src)
+            //       .addClass("invoice-img")
+            //       .css("max-width", "".concat($element.outerWidth(), "px"));
+            //     $wrapper.append($img);
+
+
+            // PARA guardar el PDF es el siguiente codigo
+            // worker
+            //   .from(element)
+            //   .set({
+            //     filename: "Despacho_" + correlative + ".pdf",
+            //     pagebreak: pagebreak,
+            //     jsPDF: { unit: 'mm', format: 'a5', orientation: 'landscape' }
+            //   })
+            //   .save();
             // });
           }
         }

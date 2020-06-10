@@ -11,8 +11,8 @@
               class="badge badge-lg badge-primary"><i class="fas fa-mountain"></i></span> Inventario</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#missing"><span class="badge badge-lg badge-warning"><i
-                class="fas fa-chevron-circle-down"></i></span> Faltantes</a>
+          <a class="nav-link" (click)="cargarExcesos(true)" data-toggle="tab" href="#missing"><span
+              class="badge badge-lg badge-warning"><i class="fas fa-chevron-circle-down"></i></span> Faltantes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#extra"><span class="badge badge-lg badge-success"><i
@@ -171,32 +171,30 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let material of materials">
+              <tr *ngFor="let missing of missings">
                 <td class="align-middle text-center">
-                  {{ material._material.code }}
+                  {{ missing._user.name }}
                 </td>
                 <td class="align-middle">
-                  {{ material._material.name }}
+                  {{ missing._material.name }} {{ missing._material.code }}
                 </td>
                 <td class="align-middle">
-                  {{ material._material.minStock }}m
+                  {{ missing._material.minStock | number: '1.2-2' }}m
                 </td>
                 <td class="align-middle">
-                  {{ material.stock | number: '1.2-2' }}m
+                  {{ missing._materialCellar.stock | number: '1.2-2' }}m
                 </td>
                 <td class="align-middle">
-                  Q{{ material.cost | number: '1.2-2'}}
+                  Q{{ missing._materialCellar.cost | number: '1.2-2'}}
                 </td>
                 <td class="align-middle">
-                  -
-                  <!-- Q{{ material.material.price | number: '1.2-2'}} -->
+                  Q{{ missing._material.price | number: '1.2-2'}}
                 </td>
                 <td class="align-middle">
-                  Q{{ (material.stock * material.cost) | number: '1.2-2'}}
+                  Q{{ (missing._materialCellar.stock * missing._materialCellar.cost) | number: '1.2-2'}}
                 </td>
                 <td class="align-middle">
-                  -
-                  <!-- Q{{ (material.stock * material._material.price) | number: '1.2-2'}} -->
+                  Q{{ (missing._materialCellar.stock * missing._material.price) | number: '1.2-2'}}
                 </td>
                 <td class="align-middle text-center">
 
@@ -218,11 +216,10 @@
             </tfoot>
           </table>
         </div>
-      </div>
-      <div class="tab-pane fade" id="extra">
-        <h4>Listado de SOBRANTES</h4>
-      </div>
-    </div><!-- /.tab-content -->
-  </div><!-- /.card-body -->
-</div><!-- /.card -->
+        <div class="tab-pane fade" id="extra">
+          <h4>Listado de SOBRANTES</h4>
+        </div>
+      </div><!-- /.tab-content -->
+    </div><!-- /.card-body -->
+  </div><!-- /.card -->
 </div><!-- /.page-section-->

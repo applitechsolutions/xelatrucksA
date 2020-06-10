@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MissingSurplus } from "../../models/missingsurplus.model";
+import { MissingSurplus } from '../../models/missingsurplus.model';
 import { MaterialService, CdStorageService } from 'src/app/services/service.index';
 declare function init_datatables();
 declare function destroy_datatables();
@@ -15,6 +15,7 @@ export class CdStockComponent implements OnInit {
 
   loading = false;
   materials: any[] = [];
+  missings: MissingSurplus[] = [];
 
   constructor(
     public cdStorageS: CdStorageService,
@@ -32,10 +33,23 @@ export class CdStockComponent implements OnInit {
         .map((res: any) => {
           this.materials = res.storage;
         });
-
+      destroy_datatables();
       this.chRef.detectChanges();
       init_datatables();
     });
+  }
+
+  cargarExcesos(type: boolean) {
+    this.cdStorageS.cargarExcesos(type).subscribe((res: any) => {
+      this.loading = true;
+      this.missings = res.excesos
+      destroy_datatables();
+      this.chRef.detectChanges();
+      init_datatables();
+      console.log(res);
+    }, ((err: any) => {
+      this.loading = false;
+    }));
   }
 
 }

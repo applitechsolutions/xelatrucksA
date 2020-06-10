@@ -6,112 +6,207 @@
 <div class="page-section">
   <!-- .card -->
   <div class="card card-fluid">
+    <!-- .card-header -->
+    <div class="card-header">
+      <!-- .nav-tabs -->
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active show" data-toggle="tab" href="#today"><span class="badge badge-lg badge-success"><i
+                class="fas fa-calendar-day"></i></span> Del día</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#history"><span class="badge badge-lg badge-primary"><i
+                class="fas fa-history"></i></span> Historial</a>
+        </li>
+      </ul><!-- /.nav-tabs -->
+    </div><!-- /.card-header -->
     <!-- .card-body -->
     <div class="card-body">
-      <div class="row">
-        <!-- .form-group -->
-        <div class="form-group col-3">
-          <label class="control-label" for="flatpickr02">Fecha de inicio</label>
-          <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
-        </div>
-        <!-- /.form-group -->
-        <!-- .form-group -->
-        <div class="form-group col-3">
-          <label class="control-label" for="flatpickr02">Fecha final</label>
-          <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
-        </div>
-        <!-- /.form-group -->
-        <button type="button" (click)="buscarVentas()" [ngStyle]="{'margin-top': '29px'}" class="btn btn-primary"><i
-            class="fas fa-search"></i>
-          Buscar</button>
-      </div>
-      <!-- .btn-toolbar -->
-      <div id="dt-buttons" class="btn-toolbar"></div>
-      <!-- /.btn-toolbar -->
-      <!-- .form-group -->
-      <div class="form-group">
-        <!-- .input-group -->
-        <div class="input-group input-group-alt">
-          <!-- .input-group -->
-          <div class="input-group has-clearable">
-            <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
-                  class="fa fa-times-circle"></i></span></button>
-            <div class="input-group-prepend">
-              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-            </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
-          </div>
-          <!-- /.input-group -->
-          <!-- .input-group-prepend -->
-          <div class="input-group-prepend">
-            <select id="filterBy" class="custom-select">
-              <option value='' selected> Filtros </option>
-              <option value="0"> Cliente </option>
-              <option value="1"> Fecha </option>
-              <option value="2"> No. de Factura </option>
-              <option value="3"> No. de Serie </option>
-              <option value="4"> Flete </option>
-              <option value="5"> Total </option>
-              <option value="6"> Detalles </option>
-            </select>
-          </div>
-          <!-- /.input-group-prepend -->
-        </div>
-        <!-- /.input-group -->
-      </div>
-      <!-- /.form-group -->
-      <!-- .table -->
-      <table id="myTable" class="table">
-        <thead>
-          <tr>
-            <th> Cliente </th>
-            <th> Fecha </th>
-            <th> No. de Factura </th>
-            <th> No. de Serie </th>
-            <th> Flete </th>
-            <th> Total </th>
-            <th><i class="fas fa-cogs"></i></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let sale of sales">
-            <td> {{ sale._customer.name}} {{ sale._customer.nit }} </td>
-            <td> {{ dtService.fromJsonDate(sale.date) }} </td>
-            <td> {{ sale.bill }} </td>
-            <td> {{ sale.serie }} </td>
-            <td> {{ sale.flete | number: "1.2-2" }} </td>
-            <td> {{ sale.total | number: "1.2-2" }} </td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones" data-toggle="dropdown"
-                  aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span
-                    class="sr-only"></span></button>
-                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
-                  style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
-                  <div class="dropdown-arrow mr-n1"></div>
-                  <button class="dropdown-item" (click)="verDetalle(sale)" type="button" data-toggle="modal"
-                    data-target="#modalDetails">Detalles de venta</button>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalDispatch">Generar
-                    orden de despacho</button>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalBill">Generar
-                    factura</button>
-                </div>
-                <a [routerLink]="[ '/sale', 'new' ]" class=" btn btn-sm btn-icon btn-secondary" title="Editar"
-                  alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only"></span></a>
-                <a class="btn btn-sm btn-icon btn-secondary pointer" title="Eliminar" alt="Eliminar"><i
-                    class="far fa-trash-alt"></i><span class="sr-only"></span></a>
+      <!-- .tab-content -->
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show" id="today">
+          <!-- .form-group -->
+          <div class="form-group">
+            <!-- .input-group -->
+            <div class="input-group input-group-alt">
+              <!-- .input-group -->
+              <div class="input-group has-clearable">
+                <button id="clear-search2" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                      class="fa fa-times-circle"></i></span></button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div><input id="table-search2" type="text" class="form-control" placeholder="Buscar aquí">
               </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- /.table -->
-      <ng-template #customLoadingTemplate></ng-template>
-      <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate ">
-      </ngx-loading>
-    </div>
-    <!-- /.card-body -->
-  </div>
-  <!-- /.card -->
+              <!-- /.input-group -->
+              <!-- .input-group-prepend -->
+              <div class="input-group-prepend">
+                <select id="filterBy2" class="custom-select">
+                  <option value='' selected> Filtros </option>
+                  <option value="0"> Cliente </option>
+                  <option value="1"> Fecha </option>
+                  <option value="2"> Orden de despacho </option>
+                  <option value="3"> No. de Factura </option>
+                  <option value="4"> Flete </option>
+                  <option value="5"> Total </option>
+                  <option value="6"> Detalles </option>
+                </select>
+              </div>
+              <!-- /.input-group-prepend -->
+            </div>
+            <!-- /.input-group -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .table -->
+          <table id="myTable2" class="table">
+            <thead>
+              <tr>
+                <th> Cliente </th>
+                <th> Fecha </th>
+                <th> Orde de despacho </th>
+                <th> No. de Factura </th>
+                <th> Flete </th>
+                <th> Total </th>
+                <th><i class="fas fa-cogs"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sale of salesToday">
+                <td> {{ sale._customer.name}} {{ sale._customer.nit }} </td>
+                <td> {{ dtService.fromJsonDate(sale.date) }} </td>
+                <td> {{ sale.serie }} </td>
+                <td> {{ sale.bill }} </td>
+                <td> {{ sale.flete | number: "1.2-2" }} </td>
+                <td> {{ sale.total | number: "1.2-2" }} </td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones"
+                      data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i>
+                      <span class="sr-only"></span></button>
+                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                      style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
+                      <div class="dropdown-arrow mr-n1"></div>
+                      <button class="dropdown-item" (click)="verDetalle(sale)" type="button" data-toggle="modal"
+                        data-target="#modalDetails">Detalles de venta</button>
+                      <button (click)="generarDespacho(sale)" class="dropdown-item" type="button" data-toggle="modal"
+                        data-target="#modalDispatch">Generar
+                        orden de despacho</button>
+                      <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalBill">Generar
+                        factura</button>
+                    </div>
+                    <a class="btn btn-sm btn-icon btn-secondary pointer disabled" title="Eliminar" alt="Eliminar"><i
+                        class="far fa-trash-alt"></i><span class="sr-only"></span></a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- /.table -->
+        </div>
+        <div class="tab-pane fade" id="history">
+          <div class="row">
+            <!-- .form-group -->
+            <div class="form-group col-3">
+              <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+              <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
+            </div>
+            <!-- /.form-group -->
+            <!-- .form-group -->
+            <div class="form-group col-3">
+              <label class="control-label" for="flatpickr02">Fecha final</label>
+              <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
+            </div>
+            <!-- /.form-group -->
+            <button type="button" (click)="buscarVentas()" [ngStyle]="{'margin-top': '29px'}" class="btn btn-primary"><i
+                class="fas fa-search"></i>
+              Buscar</button>
+          </div>
+          <!-- .btn-toolbar -->
+          <div id="dt-buttons" class="btn-toolbar"></div>
+          <!-- /.btn-toolbar -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <!-- .input-group -->
+            <div class="input-group input-group-alt">
+              <!-- .input-group -->
+              <div class="input-group has-clearable">
+                <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                      class="fa fa-times-circle"></i></span></button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+              </div>
+              <!-- /.input-group -->
+              <!-- .input-group-prepend -->
+              <div class="input-group-prepend">
+                <select id="filterBy" class="custom-select">
+                  <option value='' selected> Filtros </option>
+                  <option value="0"> Cliente </option>
+                  <option value="1"> Fecha </option>
+                  <option value="2"> Orden de despacho </option>
+                  <option value="3"> No. de Factura </option>
+                  <option value="4"> Flete </option>
+                  <option value="5"> Total </option>
+                  <option value="6"> Detalles </option>
+                </select>
+              </div>
+              <!-- /.input-group-prepend -->
+            </div>
+            <!-- /.input-group -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .table -->
+          <table id="myTable" class="table">
+            <thead>
+              <tr>
+                <th> Cliente </th>
+                <th> Fecha </th>
+                <th> Orde de despacho </th>
+                <th> No. de Factura </th>
+                <th> Flete </th>
+                <th> Total </th>
+                <th><i class="fas fa-cogs"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sale of sales">
+                <td> {{ sale._customer.name}} {{ sale._customer.nit }} </td>
+                <td> {{ dtService.fromJsonDate(sale.date) }} </td>
+                <td> {{ sale.serie }} </td>
+                <td> {{ sale.bill }} </td>
+                <td> {{ sale.flete | number: "1.2-2" }} </td>
+                <td> {{ sale.total | number: "1.2-2" }} </td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones"
+                      data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i>
+                      <span class="sr-only"></span></button>
+                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                      style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
+                      <div class="dropdown-arrow mr-n1"></div>
+                      <button class="dropdown-item" (click)="verDetalle(sale)" type="button" data-toggle="modal"
+                        data-target="#modalDetails">Detalles de venta</button>
+                      <button (click)="generarDespacho(sale)" class="dropdown-item" type="button" data-toggle="modal"
+                        data-target="#modalDispatch">Generar
+                        orden de despacho</button>
+                      <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalBill">Generar
+                        factura</button>
+                    </div>
+                    <a class="btn btn-sm btn-icon btn-secondary pointer disabled" title="Eliminar" alt="Eliminar"><i
+                        class="far fa-trash-alt"></i><span class="sr-only"></span></a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- /.table -->
+          <ng-template #customLoadingTemplate></ng-template>
+          <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } "
+            [template]="customLoadingTemplate ">
+          </ngx-loading>
+        </div>
+      </div><!-- /.tab-content -->
+    </div><!-- /.card-body -->
+  </div><!-- /.card -->
 </div>
 <!-- /.page-section -->
 <!-- .modal Detalle -->
@@ -175,3 +270,4 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+<app-despacho [sale]="sale"></app-despacho>

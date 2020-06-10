@@ -25154,9 +25154,9 @@ a.metric:hover {
   display: flex;
   flex-direction: column;
   margin: auto;
-  padding: 1rem 1rem;
-  width: 794px;
-  min-height: 559px;
+  padding: 0rem 0rem;
+  width: 756px;
+  min-height: 503px;
   background-color: #ffffff;
   z-index: -1;
   font-size: 12px;
@@ -25193,8 +25193,8 @@ a.metric:hover {
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 0 1rem;
-  padding: 1rem 0;
+  margin: 0 0rem;
+  padding: 0rem 0;
   border-top: 1px solid rgba(34, 34, 48, 0.1);
   font-size: 12px;
 }

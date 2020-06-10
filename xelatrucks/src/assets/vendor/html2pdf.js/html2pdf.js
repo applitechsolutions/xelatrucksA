@@ -665,7 +665,7 @@
             'ledger': [1224, 792],
             'tabloid': [792, 1224],
             'credit-card': [153, 243],
-            'mediaA4': [396, 612]
+            'personalizado': [400, 600]
         };
 
         // Unit conversion

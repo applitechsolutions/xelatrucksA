@@ -2033,7 +2033,6 @@ function init_step() {
   new stepsDemo();
 }
 
-
 function init_reports() {
   "use strict";
 
@@ -2188,7 +2187,7 @@ function init_despacho() {
               .set({
                 pagebreak: pagebreak,
                 filename: "Despacho_" + correlative + ".pdf",
-                jsPDF: { unit: 'mm', format: 'a5', orientation: 'landscape' }
+                jsPDF: { unit: 'pt', format: 'personalizado', orientation: 'landscape' }
               })
               .toPdf().get('pdf').then(function (pdfObj) {
                 // pdfObj has your jsPDF object in it, use it as you please!
@@ -2240,6 +2239,12 @@ function init_despacho() {
 
 function destroy_datatables() {
   $('#myTable').DataTable().destroy();
+}
+
+function destroy_datatables2() {
+  $("#myTable2")
+    .DataTable()
+    .destroy();
 }
 
 function init_datatables() {
@@ -2384,6 +2389,176 @@ function init_datatables() {
 
       return DataTablesDemo;
     }();
+  /**
+   * Keep in mind that your scripts may not always be executed after the theme is completely ready,
+   * you might need to observe the `theme:load` event to make sure your scripts are executed after the theme is ready.
+   */
+  new DataTablesDemo();
+}
+
+function init_datatables2() {
+  "use strict";
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  // DataTables Demo
+  // =============================================================
+  var DataTablesDemo =
+    /*#__PURE__*/
+    (function () {
+      function DataTablesDemo() {
+        _classCallCheck(this, DataTablesDemo);
+
+        this.init();
+      }
+
+      _createClass(DataTablesDemo, [
+        {
+          key: "init",
+          value: function init() {
+            // event handlers
+            this.table = this.table();
+            this.searchRecords();
+
+            this.table
+              .buttons()
+              .container()
+              .appendTo("#dt-buttons2");
+          }
+        },
+        {
+          key: "table",
+          value: function table() {
+            return $("#myTable2").DataTable({
+              dom:
+                "<'text-muted'Bi>\n        <'table-responsive'tr>\n        <'mt-4'p>",
+              buttons: [
+                {
+                  extend: "copyHtml5",
+                  text: "Copiar"
+                },
+                {
+                  extend: "print",
+                  autoPrint: false,
+                  text: "Imprimir"
+                },
+                {
+                  extend: "pdf",
+                  text: "PDF",
+                  download: "open"
+                },
+                {
+                  extend: "csv",
+                  text: "Excel"
+                }
+              ],
+              language: {
+                paginate: {
+                  previous: '<i class="fa fa-lg fa-angle-left"></i>',
+                  next: '<i class="fa fa-lg fa-angle-right"></i>',
+                  first: "Primero",
+                  last: "Último"
+                },
+                info: "Mostrando _START_-_END_ de _TOTAL_ registros",
+                empyTable: "No hay registros",
+                infoEmpty: "0 registros",
+                lengthChange: "Mostrar ",
+                infoFiltered: "(Filtrado de _MAX_ total de registros)",
+                lengthMenu: "Mostrar _MENU_ registros",
+                loadingRecords: "Cargando...",
+                processing: "Procesando...",
+                search: "Buscar:",
+                zeroRecords: "Sin resultados encontrados"
+              },
+              autoWidth: false,
+              deferRender: true,
+              order: []
+              // FUNCION PARA SUMAR Y PONERLO EN EL FOOTER DE LA TABLA
+              // footerCallback: function(row, data, start, end, display) {
+              //     var api = this.api();
+              //     api.columns('.sum', {
+              //         page: 'current'
+              //     }).every(function() {
+              //         var sum = this
+              //             .data()
+              //             .reduce(function(a, b) {
+              //                 var x = parseFloat(a) || 0;
+              //                 var y = parseFloat(b) || 0;
+              //                 return x + y;
+              //             }, 0);
+              //         console.log(sum); //alert(sum);
+              //         $(this.footer()).html(sum);
+              //     });
+              // }
+            });
+          }
+        },
+        {
+          key: "searchRecords",
+          value: function searchRecords() {
+            var self = this;
+            $("#table-search2, #filterBy2").on("keyup change focus", function (
+              e
+            ) {
+              // console.log('2');
+              var filterBy = $("#filterBy2").val();
+              var hasFilter = filterBy !== "";
+              var value = $("#table-search2").val(); // clear selected rows
+
+              if (value.length && (e.type === "keyup" || e.type === "change")) {
+                self.clearSelectedRows();
+              } // reset search term
+
+              self.table
+                .search("")
+                .columns()
+                .search("")
+                .draw();
+
+              if (hasFilter) {
+                self.table
+                  .columns(filterBy)
+                  .search(value)
+                  .draw();
+              } else {
+                self.table.search(value).draw();
+              }
+            });
+          }
+        },
+        {
+          key: "clearSelectedRows",
+          value: function clearSelectedRows() {
+            $("#check-handle")
+              .prop("indeterminate", false)
+              .prop("checked", false)
+              .trigger("change");
+          }
+        }
+      ]);
+
+      return DataTablesDemo;
+    })();
   /**
    * Keep in mind that your scripts may not always be executed after the theme is completely ready,
    * you might need to observe the `theme:load` event to make sure your scripts are executed after the theme is ready.

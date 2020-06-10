@@ -54,8 +54,6 @@ export class SaleComponent implements OnInit, AfterViewInit {
   loading: boolean = false;
   isSalable: boolean = false;
 
-  today2 = '';
-
   constructor(
     public router: Router,
     public saleService: SaleService,
@@ -67,7 +65,6 @@ export class SaleComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.today2 = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_timePicker();
 
     this.formVenta = new FormGroup({
@@ -191,8 +188,6 @@ export class SaleComponent implements OnInit, AfterViewInit {
     document.documentElement.scrollTop = document.body.scrollTop = 0; // SIRVE PARA QUE LAS IMPRESIONES SALGAN CORRECTAMENTE
     this.loading = true;
     this.formVenta.get('total').setValue(this.total);
-    this.chRef.detectChanges(); // IMPRESION DE ORDEN DE DESPACHO
-    init_despacho();
 
     if (this.sale._id) {
       return;
@@ -207,6 +202,9 @@ export class SaleComponent implements OnInit, AfterViewInit {
         this.details,
         this.formVenta.value.flete,
       );
+      this.sale = sale;
+      this.chRef.detectChanges(); // IMPRESION DE ORDEN DE DESPACHO
+      init_despacho();
 
       this.saleService.crearVenta(sale)
         .subscribe((res: any) => {

@@ -2187,7 +2187,7 @@ function init_despacho() {
               .set({
                 pagebreak: pagebreak,
                 filename: "Despacho_" + correlative + ".pdf",
-                jsPDF: { unit: 'pt', format: 'personalizado', orientation: 'landscape' }
+                // jsPDF: { unit: 'pt', format: 'personalizado', orientation: 'portrait' }
               })
               .toPdf().get('pdf').then(function (pdfObj) {
                 // pdfObj has your jsPDF object in it, use it as you please!

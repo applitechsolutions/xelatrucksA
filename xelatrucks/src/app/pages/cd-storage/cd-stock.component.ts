@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MaterialService } from 'src/app/services/service.index';
-
+import { MissingSurplus } from "../../models/missingsurplus.model";
+import { MaterialService, CdStorageService } from 'src/app/services/service.index';
 declare function init_datatables();
 declare function destroy_datatables();
 declare var swal: any;
@@ -17,6 +17,7 @@ export class CdStockComponent implements OnInit {
   materials: any[] = [];
 
   constructor(
+    public cdStorageS: CdStorageService,
     public materialS: MaterialService,
     private chRef: ChangeDetectorRef
   ) { }

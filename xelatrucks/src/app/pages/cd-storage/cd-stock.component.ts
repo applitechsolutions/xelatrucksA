@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MissingSurplus } from '../../models/missingsurplus.model';
-import { MaterialService, CdStorageService } from 'src/app/services/service.index';
+import { MaterialService, CdStorageService, DatatablesService } from 'src/app/services/service.index';
 declare function init_datatables();
 declare function destroy_datatables();
 declare var swal: any;
@@ -15,11 +15,12 @@ export class CdStockComponent implements OnInit {
 
   loading = false;
   materials: any[] = [];
-  missings: MissingSurplus[] = [];
+  missings: any[] = [];
 
   constructor(
     public cdStorageS: CdStorageService,
     public materialS: MaterialService,
+    public dtService: DatatablesService,
     private chRef: ChangeDetectorRef
   ) { }
 

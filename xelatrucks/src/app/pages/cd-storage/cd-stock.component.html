@@ -140,13 +140,10 @@
                   <option value='' selected> Filtros </option>
                   <option value="0"> Usuario </option>
                   <option value="1"> Material </option>
-                  <option value="2"> Stock mínimo </option>
-                  <option value="3"> Stock actual </option>
-                  <option value="4"> Costo </option>
-                  <option value="5"> Precio </option>
-                  <option value="6"> Costo total </option>
-                  <option value="7"> Precio total </option>
-                  <option value="8"> Estado </option>
+                  <option value="2"> Faltante </option>
+                  <option value="3"> Descripción </option>
+                  <option value="4"> Fecha </option>
+                  <option value="5"> Estado </option>
                 </select>
               </div>
               <!-- /.input-group-prepend -->
@@ -155,19 +152,16 @@
           </div>
           <!-- /.form-group -->
           <!-- .table -->
-          <table id="myTable" class="table">
+          <table id="myTable" class="table table-striped">
             <thead>
               <tr>
                 <th> Usuario </th>
                 <th> Material </th>
-                <th> Stock mínimo </th>
-                <th> Stock actual </th>
-                <th> Costo </th>
-                <th> Precio </th>
-                <th> Costo total </th>
-                <th> Precio total </th>
+                <th> Faltante </th>
+                <th> Descripción </th>
+                <th> Fecha </th>
                 <th> Estado </th>
-                <th></th>
+                <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
               </tr>
             </thead>
             <tbody>
@@ -179,39 +173,45 @@
                   {{ missing._material.name }} {{ missing._material.code }}
                 </td>
                 <td class="align-middle">
-                  {{ missing._material.minStock | number: '1.2-2' }}m
+                  {{ missing.load | number: "1.2.2" }}
                 </td>
                 <td class="align-middle">
-                  {{ missing._materialCellar.stock | number: '1.2-2' }}m
+                  {{ missing.description }}
                 </td>
                 <td class="align-middle">
-                  Q{{ missing._materialCellar.cost | number: '1.2-2'}}
+                  {{ dtService.fromJsonDate(missing.createdAt) }}
                 </td>
                 <td class="align-middle">
-                  Q{{ missing._material.price | number: '1.2-2'}}
+                  {{ missing.state }}
                 </td>
                 <td class="align-middle">
-                  Q{{ (missing._materialCellar.stock * missing._materialCellar.cost) | number: '1.2-2'}}
-                </td>
-                <td class="align-middle">
-                  Q{{ (missing._materialCellar.stock * missing._material.price) | number: '1.2-2'}}
-                </td>
-                <td class="align-middle text-center">
-
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones"
+                      data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i>
+                      <span class="sr-only"></span></button>
+                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                      style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
+                      <div class="dropdown-arrow mr-n1"></div>
+                      <button class="dropdown-item" type="button" data-toggle="modal"
+                        data-target="#modalDetails">Solicitar confirmación</button>
+                      <button class="dropdown-item" type="button" data-toggle="modal"
+                        data-target="#modalDispatch">Solicitar Rechazo</button>
+                      <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalBill">Generar
+                        factura</button>
+                    </div>
+                  </div>
                 </td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
-                <th> Código </th>
-                <th> Nombre </th>
-                <th> Stock mínimo </th>
-                <th> Stock actual </th>
-                <th> Costo </th>
-                <th> Precio </th>
-                <th> Costo total </th>
-                <th> Precio total </th>
-                <th></th>
+                <th> Usuario </th>
+                <th> Material </th>
+                <th> Faltante </th>
+                <th> Descripción </th>
+                <th> Fecha </th>
+                <th> Estado </th>
+                <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
               </tr>
             </tfoot>
           </table>

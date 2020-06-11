@@ -5,6 +5,7 @@ import { StorageMaterial } from './storageMaterial.model';
 export class MissingSurplus {
     constructor(
         public type: boolean,
+        public load: number,
         public _user: User,
         public _material: Material,
         public description: string,

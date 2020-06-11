@@ -1,25 +1,37 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {
+  SaleService,
+  MaterialService,
+  CustomerService,
+  DatatablesService,
+  UserService
+} from '../../services/service.index';
 import { Sale } from '../../models/sale.model';
 import { Customer } from '../../models/customer.model';
 import { StorageMaterial } from '../../models/storageMaterial.model';
 import { Material } from '../../models/material.model';
 import { DetailSale } from '../../models/detailSale.model';
-import { SaleService, MaterialService, CustomerService, DatatablesService } from "../../services/service.index";
+
+import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
-
+import { } from 'src/app/services/service.index';
 declare var swal: any;
+
+// IMPRESIONES
+declare function init_despacho();
 
 @Component({
   selector: 'app-sale',
   templateUrl: './sale.component.html',
   styles: []
 })
-export class SaleComponent implements OnInit {
+export class SaleComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('scroll') scroll: ElementRef; // id para PerfectScrollBar
   @ViewChild('date') date: ElementRef;
   @ViewChild('selectC') selectC: ElementRef;
   @ViewChild('closeMD') closeMD: ElementRef;
@@ -47,12 +59,12 @@ export class SaleComponent implements OnInit {
     public saleService: SaleService,
     public matService: MaterialService,
     public custService: CustomerService,
-    public dtService: DatatablesService
+    public dtService: DatatablesService,
+    public userS: UserService,
+    public chRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    const today = moment(new Date()).format('DD/MM/YYYY');
-    this.dtService.init_datePicker(today);
     this.dtService.init_timePicker();
 
     this.formVenta = new FormGroup({
@@ -77,10 +89,21 @@ export class SaleComponent implements OnInit {
 
     this.cargarMateriales();
     this.cargarClientes();
+    this.cargarCorrelativo();
   }
 
   ngAfterViewInit() {
     $('.select2').select2();
+    // SE CAMBIO aqui por la condicion si es 'ADMIN_ROLE' o no!
+    const today = moment(new Date()).format('DD/MM/YYYY');
+    this.dtService.init_datePicker(today);
+  }
+
+  cargarCorrelativo() {
+    this.saleService.cargarCorrelativo().subscribe(sale => {
+      this.formVenta.get('noBill').setValue(+sale.bill + 1);
+      this.formVenta.get('document').setValue(+sale.serie + 1);
+    });
   }
 
   cargarModal(material: StorageMaterial) {
@@ -97,6 +120,13 @@ export class SaleComponent implements OnInit {
   }
 
   agregarDetalle() {
+
+    // Descontanmos la cantidad del STOCK disponible en este momento
+    const storageMaterial = this.materials.find(e => e._material._id === this.detail.material._id);
+    const indexStorageMaterial = this.materials.findIndex(e => e._material._id === this.detail.material._id);
+    storageMaterial.stock = +storageMaterial.stock - +this.formDetalle.value.total;
+    this.materials.splice(indexStorageMaterial, 1, storageMaterial);
+
     this.details.push({
       material: this.detail.material,
       total: this.formDetalle.value.total,
@@ -104,9 +134,9 @@ export class SaleComponent implements OnInit {
     });
 
     this.total = this.flete + this.details.map((detail) => {
-      return detail.price * detail.total
+      return detail.price * detail.total;
     }).reduce((prev, curr) => {
-      return prev + curr
+      return prev + curr;
     });
 
     this.closeMD.nativeElement.click();
@@ -132,22 +162,28 @@ export class SaleComponent implements OnInit {
 
           // ELIMINAMOS EL DETALLE en base al index encontrado
           this.details.splice(index, 1);
+
+          // Sumamos la cantidad a el STOCK disponible en este momento
+          const storageMaterial = this.materials.find(e => e._material._id === detalle.material._id);
+          const indexStorageMaterial = this.materials.findIndex(e => e._material._id === detalle.material._id);
+          storageMaterial.stock = +storageMaterial.stock + +detalle.total;
+          this.materials.splice(indexStorageMaterial, 1, storageMaterial);
         }
       });
   }
 
   cambiarTotal(event: any) {
 
-    if (event.target.value === "" && this.total === 0) {
+    if (event.target.value === '' && this.total === 0) {
       this.total = 0;
     } else if (this.total === 0) {
       this.total += Number(event.target.value);
-    } else if (this.total > 0 && event.target.value !== "") {
+    } else if (this.total > 0 && event.target.value !== '') {
       this.total -= this.flete;
       this.total += Number(event.target.value);
     }
 
-    if (event.target.value === "" && this.total > 0) {
+    if (event.target.value === '' && this.total > 0) {
       this.total -= this.flete;
       this.flete = 0;
     } else {
@@ -162,6 +198,12 @@ export class SaleComponent implements OnInit {
       return;
     }
 
+    if (this.total <= 0) {
+      swal('Oops...', 'No puede guardar una venta en Q 0.00', 'warning');
+      return;
+    }
+
+    document.documentElement.scrollTop = document.body.scrollTop = 0; // SIRVE PARA QUE LAS IMPRESIONES SALGAN CORRECTAMENTE
     this.loading = true;
     this.formVenta.get('total').setValue(this.total);
 
@@ -178,6 +220,9 @@ export class SaleComponent implements OnInit {
         this.details,
         this.formVenta.value.flete,
       );
+      // this.sale = sale;
+      // this.chRef.detectChanges(); // IMPRESION DE ORDEN DE DESPACHO
+      // init_despacho();
 
       this.saleService.crearVenta(sale)
         .subscribe((res: any) => {
@@ -195,8 +240,9 @@ export class SaleComponent implements OnInit {
     this.matService.cargarMateriales()
       .subscribe((res: any) => {
         res.materiales
-          .map((res: any) => {
-            this.materials = res.storage
+          .map((resp: any) => {
+            this.materials = resp.storage;
+            const ps = new PerfectScrollbar(this.scroll.nativeElement);
           });
       });
   }

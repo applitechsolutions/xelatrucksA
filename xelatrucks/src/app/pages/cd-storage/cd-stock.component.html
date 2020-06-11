@@ -58,7 +58,7 @@
           </div>
           <!-- /.form-group -->
           <!-- .table -->
-          <table id="myTable" class="table">
+          <table id="myTable" class="table table-striped">
             <thead>
               <tr>
                 <th> Código </th>
@@ -84,21 +84,21 @@
                   {{ material._material.minStock }}m
                 </td>
                 <td class="align-middle">
-                  {{ material.stock }}m
+                  {{ material.stock | number: '1.2-2' }}m
                 </td>
                 <td class="align-middle">
-                  Q{{ material.cost | number: '2.2-2'}}
-                </td>
-                <td class="align-middle">
-                  -
-                  <!-- Q{{ material.material.price | number: '2.2-2'}} -->
-                </td>
-                <td class="align-middle">
-                  Q{{ (material.stock * material.cost) | number: '2.2-2'}}
+                  Q{{ material.cost | number: '1.2-2'}}
                 </td>
                 <td class="align-middle">
                   -
-                  <!-- Q{{ (material.stock * material._material.price) | number: '2.2-2'}} -->
+                  <!-- Q{{ material.material.price | number: '1.2-2'}} -->
+                </td>
+                <td class="align-middle">
+                  Q{{ (material.stock * material.cost) | number: '1.2-2'}}
+                </td>
+                <td class="align-middle">
+                  -
+                  <!-- Q{{ (material.stock * material._material.price) | number: '1.2-2'}} -->
                 </td>
                 <td class="align-middle text-center">
 

@@ -1,0 +1,80 @@
+<!-- .invoice-wrapper -->
+<div id="benito2" class="invoice-wrapper" style="display: none;">
+  <!-- .invoice -->
+  <div id="despacho" class="invoiceDespacho" data-id="DESPACHO">
+    <!-- .invoice-header -->
+    <div class="invoice-header">
+      <!-- grid row -->
+      <div class="row">
+        <!-- .col -->
+        <div class="col-4">
+          <h2 class="invoice-brand align-self-center">
+            <img src="assets/images/logo-min.png" width="240" alt=""> <span class="sr-only">Reporte la Viña
+              S.A</span>
+          </h2>
+        </div><!-- /.col -->
+        <!-- .col -->
+        <div class="col">
+          <table class="table table-borderless table-sm">
+            <tbody>
+              <tr>
+                <td>
+                  <h2>
+                    <span> TRANSPORTES LA VIÑA</span><br>
+                  </h2>
+                </td>
+                <td></td>
+              </tr>
+              <tr style="color: #363642;">
+                <td>
+                </td>
+                <td>
+                  <small>ORDEN DE DESPACHO</small><br>
+                  <h5><b id="noDespacho">{{sale.serie }}</b></h5>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div><!-- /.col -->
+      </div><!-- /grid row -->
+    </div><!-- /.invoice-header -->
+    <!-- .invoice-body -->
+    <div class="invoice-body">
+      <table class="table table-sm">
+        <thead>
+          <tr style="background-color: #b4b4b4;">
+            <th> Material </th>
+            <th> MTS³ </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detail of sale.details">
+            <td> {{ detail.material.name }} </td>
+            <td> {{ detail.total }} </td>
+          </tr>
+          <!-- fake border -->
+          <tr>
+            <td colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!-- /.invoice-body -->
+    <!-- .invoice-footer -->
+    <div class="invoice-footer-despacho">
+      <table class="table table-borderless table-sm">
+        <tbody>
+          <tr>
+            <th>
+              <br>
+              <br>
+              <p>________________________________</p>
+              <p>AUTORIZADO</p>
+            </th>
+            <th class="text-right"> No. FACTURA <br> FECHA </th>
+            <th> {{ sale.bill }} <br> {{ today2 | date:"dd/MM/yyyy" }} </th>
+          </tr>
+        </tbody>
+      </table>
+    </div><!-- /.invoice-footer -->
+  </div><!-- /.invoice -->
+</div><!-- /.invoice-wrapper -->

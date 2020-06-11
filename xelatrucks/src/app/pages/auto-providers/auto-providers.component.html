@@ -1,87 +1,91 @@
 <!-- floating action -->
-<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/autoProvider', 'new']"><span class="fa fa-plus"></span></button>
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/autoProvider', 'new']"><span
+    class="fa fa-plus"></span></button>
 <!-- /floating action -->
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .card -->
-    <div class="card card-fluid">
-        <!-- .card-body -->
-        <div class="card-body">
-            <!-- .form-group -->
-            <div class="form-group">
-                <!-- .input-group -->
-                <div class="input-group input-group-alt">
-                    <!-- .btn-toolbar -->
-                    <div id="dt-buttons" class="btn-toolbar"></div>
-                    <!-- /.btn-toolbar -->
-                    <!-- .input-group -->
-                    <div class="input-group has-clearable">
-                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
-                    </div>
-                    <!-- /.input-group -->
-                    <!-- .input-group-prepend -->
-                    <div class="input-group-prepend">
-                        <select id="filterBy" class="custom-select">
-                            <option value='' selected> Filtros </option>
-                            <option value="0"> Nombre </option>
-                            <option value="1"> Dirección </option>
-                            <option value="2"> Teléfonos </option>
-                            <option value="3"> Email </option>
-                            <option value="4"> Cuentas Bancarias </option>
-                            <option value="5"> Detalles </option>
-                        </select>
-                    </div>
-                    <!-- /.input-group-prepend -->
-                </div>
-                <!-- /.input-group -->
-            </div>
-            <!-- /.form-group -->
-            <!-- .table -->
-            <table id="myTable" class="table">
-                <thead>
-                    <tr>
-                        <th> Nombre </th>
-                        <th> Dirección </th>
-                        <th> Teléfonos </th>
-                        <th> Email </th>
-                        <th> Cuentas Bancarias </th>
-                        <th> Detalles </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let autoProvider of autoProviders">
-                        <td>
-                            <h5>{{ autoProvider.name }}</h5>
-                        </td>
-                        <td> {{ autoProvider.address }} </td>
-                        <td>
-                            <h6>{{ autoProvider.mobile1 }}</h6>
-                            <h6>{{ autoProvider.mobile2 }}</h6>
-                        </td>
-                        <td>
-                            {{ autoProvider.email }}
-                        </td>
-                        <td>
-                            {{ autoProvider.account1 }} <br> {{ autoProvider.account2 }}
-                        </td>
-                        <td>
-                            {{ autoProvider.details }}
-                        </td>
-                        <td class="align-middle text-right">
-                            <a [routerLink]="[ '/autoProvider', autoProvider._id ]" class=" btn btn-sm btn-icon btn-secondary" alt="Editar"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Edit</span></a>
-                            <a (click)="borrarProveedor( autoProvider )" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt"></i><span class="sr-only ">Remove</span></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- /.table -->
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .input-group -->
+        <div class="input-group input-group-alt">
+          <!-- .btn-toolbar -->
+          <div id="dt-buttons" class="btn-toolbar"></div>
+          <!-- /.btn-toolbar -->
+          <!-- .input-group -->
+          <div class="input-group has-clearable">
+            <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                  class="fa fa-times-circle"></i></span></button>
+            <div class="input-group-prepend">
+              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+            </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
+          </div>
+          <!-- /.input-group -->
+          <!-- .input-group-prepend -->
+          <div class="input-group-prepend">
+            <select id="filterBy" class="custom-select">
+              <option value='' selected> Filtros </option>
+              <option value="0"> Nombre </option>
+              <option value="1"> Dirección </option>
+              <option value="2"> Teléfonos </option>
+              <option value="3"> Email </option>
+              <option value="4"> Cuentas Bancarias </option>
+              <option value="5"> Detalles </option>
+            </select>
+          </div>
+          <!-- /.input-group-prepend -->
         </div>
-        <!-- /.card-body -->
+        <!-- /.input-group -->
+      </div>
+      <!-- /.form-group -->
+      <!-- .table -->
+      <table id="myTable" class="table table-striped">
+        <thead>
+          <tr>
+            <th> Nombre </th>
+            <th> Dirección </th>
+            <th> Teléfonos </th>
+            <th> Email </th>
+            <th> Cuentas Bancarias </th>
+            <th> Detalles </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let autoProvider of autoProviders">
+            <td>
+              <h5>{{ autoProvider.name }}</h5>
+            </td>
+            <td> {{ autoProvider.address }} </td>
+            <td>
+              <h6>{{ autoProvider.mobile1 }}</h6>
+              <h6>{{ autoProvider.mobile2 }}</h6>
+            </td>
+            <td>
+              {{ autoProvider.email }}
+            </td>
+            <td>
+              {{ autoProvider.account1 }} <br> {{ autoProvider.account2 }}
+            </td>
+            <td>
+              {{ autoProvider.details }}
+            </td>
+            <td class="align-middle text-right">
+              <a [routerLink]="[ '/autoProvider', autoProvider._id ]" class=" btn btn-sm btn-icon btn-secondary"
+                alt="Editar"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Edit</span></a>
+              <a (click)="borrarProveedor( autoProvider )" class="btn btn-sm btn-icon btn-secondary pointer"><i
+                  class="far fa-trash-alt"></i><span class="sr-only ">Remove</span></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- /.table -->
     </div>
-    <!-- /.card -->
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
 </div>
 <!-- /.page-section -->

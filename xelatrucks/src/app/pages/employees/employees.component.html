@@ -1,93 +1,97 @@
 <!-- floating action -->
-<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/employee', 'new']"><span class="fa fa-plus"></span></button>
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/employee', 'new']"><span
+    class="fa fa-plus"></span></button>
 <!-- /floating action -->
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .card -->
-    <div class="card card-fluid">
-        <!-- .card-body -->
-        <div class="card-body">
-            <!-- .form-group -->
-            <div class="form-group">
-                <!-- .input-group -->
-                <div class="input-group input-group-alt">
-                    <!-- .btn-toolbar -->
-                    <div id="dt-buttons" class="btn-toolbar"></div>
-                    <!-- /.btn-toolbar -->
-                    <!-- .input-group -->
-                    <div class="input-group has-clearable">
-                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
-                    </div>
-                    <!-- /.input-group -->
-                    <!-- .input-group-prepend -->
-                    <div class="input-group-prepend">
-                        <select id="filterBy" class="custom-select">
-                            <option value='' selected> Filtros </option>
-                            <option value="0"> Puesto </option>
-                            <option value="1"> No. Entrada </option>
-                            <option value="2"> No. de Cuenta </option>
-                            <option value="3"> Nombre </option>
-                            <option value="4"> Fecha de Entrada </option>
-                            <option value="5"> Pago </option>
-                            <option value="6"> Dpi </option>
-                            <option value="7"> Dirección </option>
-                            <option value="8"> Teléfono </option>
-                            <option value="9"> Igss </option>
-                        </select>
-                    </div>
-                    <!-- /.input-group-prepend -->
-                </div>
-                <!-- /.input-group -->
-            </div>
-            <!-- /.form-group -->
-            <!-- .table -->
-            <table id="myTable" class="table">
-                <!-- thead -->
-                <thead>
-                    <tr>
-                        <th>Puesto</th>
-                        <th>No. Entrada</th>
-                        <th>No. de Cuenta</th>
-                        <th>Nombre</th>
-                        <th>Fecha de Entrada</th>
-                        <th>Pago</th>
-                        <th>Dpi</th>
-                        <th>Dirección</th>
-                        <th>Teléfono</th>
-                        <th>Igss</th>
-                        <th><i class="fas fa-cogs fa-pull-right"></i></th>
-                    </tr>
-                </thead>
-                <!-- /thead -->
-                <!-- tbody -->
-                <tbody>
-                    <!-- create empty row to passing html validator -->
-                    <tr *ngFor="let employee of employees">
-                        <td> {{ employee.job }} </td>
-                        <td> {{ employee.entry }} </td>
-                        <td> {{ employee.account }} </td>
-                        <td> {{ employee.name }} </td>
-                        <td> {{ dtService.fromJsonDate(employee.datestart) }} </td>
-                        <td> {{ employee.pay }} </td>
-                        <td> {{ employee.dpi }} </td>
-                        <td> {{ employee.address }} </td>
-                        <td> {{ employee.mobile }} </td>
-                        <td> {{ employee.igss }} </td>
-                        <td class="align-middle text-right">
-                            <a [routerLink]="[ '/employee', employee._id ]" class=" btn btn-sm btn-icon btn-secondary " alt="Editar "><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
-                            <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="borrarEmpleado( employee )"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <!-- /tbody -->
-            </table>
-            <!-- /.table -->
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .input-group -->
+        <div class="input-group input-group-alt">
+          <!-- .btn-toolbar -->
+          <div id="dt-buttons" class="btn-toolbar"></div>
+          <!-- /.btn-toolbar -->
+          <!-- .input-group -->
+          <div class="input-group has-clearable">
+            <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                  class="fa fa-times-circle"></i></span></button>
+            <div class="input-group-prepend">
+              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+            </div><input id="table-search" type="text" class="form-control" placeholder="Buscar...">
+          </div>
+          <!-- /.input-group -->
+          <!-- .input-group-prepend -->
+          <div class="input-group-prepend">
+            <select id="filterBy" class="custom-select">
+              <option value='' selected> Filtros </option>
+              <option value="0"> Puesto </option>
+              <option value="1"> No. Entrada </option>
+              <option value="2"> No. de Cuenta </option>
+              <option value="3"> Nombre </option>
+              <option value="4"> Fecha de Entrada </option>
+              <option value="5"> Pago </option>
+              <option value="6"> Dpi </option>
+              <option value="7"> Dirección </option>
+              <option value="8"> Teléfono </option>
+              <option value="9"> Igss </option>
+            </select>
+          </div>
+          <!-- /.input-group-prepend -->
         </div>
-        <!-- /.card-body -->
+        <!-- /.input-group -->
+      </div>
+      <!-- /.form-group -->
+      <!-- .table -->
+      <table id="myTable" class="table table-striped">
+        <!-- thead -->
+        <thead>
+          <tr>
+            <th>Puesto</th>
+            <th>No. Entrada</th>
+            <th>No. de Cuenta</th>
+            <th>Nombre</th>
+            <th>Fecha de Entrada</th>
+            <th>Pago</th>
+            <th>Dpi</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Igss</th>
+            <th><i class="fas fa-cogs fa-pull-right"></i></th>
+          </tr>
+        </thead>
+        <!-- /thead -->
+        <!-- tbody -->
+        <tbody>
+          <!-- create empty row to passing html validator -->
+          <tr *ngFor="let employee of employees">
+            <td> {{ employee.job }} </td>
+            <td> {{ employee.entry }} </td>
+            <td> {{ employee.account }} </td>
+            <td> {{ employee.name }} </td>
+            <td> {{ dtService.fromJsonDate(employee.datestart) }} </td>
+            <td> {{ employee.pay }} </td>
+            <td> {{ employee.dpi }} </td>
+            <td> {{ employee.address }} </td>
+            <td> {{ employee.mobile }} </td>
+            <td> {{ employee.igss }} </td>
+            <td class="align-middle text-right">
+              <a [routerLink]="[ '/employee', employee._id ]" class=" btn btn-sm btn-icon btn-secondary "
+                alt="Editar "><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
+              <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="borrarEmpleado( employee )"><i
+                  class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
+            </td>
+          </tr>
+        </tbody>
+        <!-- /tbody -->
+      </table>
+      <!-- /.table -->
     </div>
-    <!-- /.card -->
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
 </div>
 <!-- /.page-section -->

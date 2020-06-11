@@ -1,78 +1,87 @@
 <!-- floating action -->
-<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/usuario', 'new']"><span class="fa fa-plus"></span></button>
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/usuario', 'new']"><span
+    class="fa fa-plus"></span></button>
 <!-- /floating action -->
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .card -->
-    <div class="card card-fluid">
-        <!-- .card-body -->
-        <div class="card-body">
-            <!-- .form-group -->
-            <div class="form-group">
-                <!-- .input-group -->
-                <div class="input-group input-group-alt">
-                    <!-- .input-group -->
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                        </div><input #input (keyup)="buscarUsuarios( input.value )" type="text" class="form-control" placeholder="Buscar Usuario">
-                        <div class="spinner-border text-success" role="status" *ngIf="cargando">
-                            <span class="sr-only">Cargando...</span>
-                        </div>
-                    </div>
-                    <!-- /.input-group -->
-                </div>
-                <!-- /.input-group -->
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .input-group -->
+        <div class="input-group input-group-alt">
+          <!-- .input-group -->
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+            </div><input #input (keyup)="buscarUsuarios( input.value )" type="text" class="form-control"
+              placeholder="Buscar Usuario">
+            <div class="spinner-border text-success" role="status" *ngIf="cargando">
+              <span class="sr-only">Cargando...</span>
             </div>
-            <!-- /.form-group -->
-            <!-- .table-responsive -->
-            <div class="text-muted"> Mostrando 1 de {{ totalRegistros }} Usuarios registrados </div>
-            <div class="table-responsive" *ngIf="!cargando">
-                <!-- .table -->
-                <table class="table">
-                    <!-- thead -->
-                    <thead>
-                        <tr>
-                            <th> Nombre </th>
-                            <th> Apellido </th>
-                            <th> Email </th>
-                            <th> Rol </th>
-                            <th style="width:100px; min-width:100px;"> &nbsp; </th>
-                        </tr>
-                    </thead>
-                    <!-- /thead -->
-                    <!-- tbody -->
-                    <tbody>
-                        <!-- tr -->
-                        <tr *ngFor="let usuario of usuarios">
-                            <td>
-                                <div class="user-avatar user-avatar-lg mr-3"><img data-toggle="modal" data-target="#exampleModal" (click)="mostrarModal( usuario._id )" class="img-fluid pointer" [src]="usuario.img | imagen" alt="Card image cap"></div> {{ usuario.name }}</td>
-                            <td>{{ usuario.lastName}}</td>
-                            <td>{{ usuario.email }}</td>
-                            <td>
-                                <select (change)="actualizarRol( usuario )" [(ngModel)]="usuario.role" name="role" id="role" class="custom-select">
-                                    <option value="ADMIN_ROLE">Administrador</option>
-                                    <option value="USER_ROLE">Operativo</option>
-                                </select>
-                            </td>
-                            <td class="align-middle text-right">
-                                <a (click)="abrirModal( usuario._id, usuario.name + ' ' + usuario.lastName )" data-toggle="modal" data-target="#exampleModalScrollable" class=" btn btn-sm btn-icon btn-secondary " alt="Editar"><i class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
-                                <a (click)="borrarUsuario(usuario)" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
-                            </td>
-                        </tr>
-                        <!-- /tr -->
-                    </tbody>
-                    <!-- /tbody -->
-                </table>
-                <!-- /.table -->
-            </div>
-            <!-- /.table-responsive -->
-            <!-- .pagination -->
-            <ul class="pagination justify-content-center mt-4 ">
-                <li class="page-item pointer ">
-                    <a class="page-link " (click)="cambiarDesde(-5) "><i class="fa fa-lg fa-angle-left "></i></a>
-                </li>
-                <!-- <li class="page-item ">
+          </div>
+          <!-- /.input-group -->
+        </div>
+        <!-- /.input-group -->
+      </div>
+      <!-- /.form-group -->
+      <!-- .table-responsive -->
+      <div class="text-muted"> Mostrando 1 de {{ totalRegistros }} Usuarios registrados </div>
+      <div class="table-responsive" *ngIf="!cargando">
+        <!-- .table -->
+        <table class="table table-striped">
+          <!-- thead -->
+          <thead>
+            <tr>
+              <th> Nombre </th>
+              <th> Apellido </th>
+              <th> Email </th>
+              <th> Rol </th>
+              <th style="width:100px; min-width:100px;"> &nbsp; </th>
+            </tr>
+          </thead>
+          <!-- /thead -->
+          <!-- tbody -->
+          <tbody>
+            <!-- tr -->
+            <tr *ngFor="let usuario of usuarios">
+              <td>
+                <div class="user-avatar user-avatar-lg mr-3"><img data-toggle="modal" data-target="#exampleModal"
+                    (click)="mostrarModal( usuario._id )" class="img-fluid pointer" [src]="usuario.img | imagen"
+                    alt="Card image cap"></div> {{ usuario.name }}
+              </td>
+              <td>{{ usuario.lastName}}</td>
+              <td>{{ usuario.email }}</td>
+              <td>
+                <select (change)="actualizarRol( usuario )" [(ngModel)]="usuario.role" name="role" id="role"
+                  class="custom-select">
+                  <option value="ADMIN_ROLE">Administrador</option>
+                  <option value="USER_ROLE">Operativo</option>
+                </select>
+              </td>
+              <td class="align-middle text-right">
+                <a (click)="abrirModal( usuario._id, usuario.name + ' ' + usuario.lastName )" data-toggle="modal"
+                  data-target="#exampleModalScrollable" class=" btn btn-sm btn-icon btn-secondary " alt="Editar"><i
+                    class="fa fa-pencil-alt "></i> <span class="sr-only ">Edit</span></a>
+                <a (click)="borrarUsuario(usuario)" class="btn btn-sm btn-icon btn-secondary pointer"><i
+                    class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
+              </td>
+            </tr>
+            <!-- /tr -->
+          </tbody>
+          <!-- /tbody -->
+        </table>
+        <!-- /.table -->
+      </div>
+      <!-- /.table-responsive -->
+      <!-- .pagination -->
+      <ul class="pagination justify-content-center mt-4 ">
+        <li class="page-item pointer ">
+          <a class="page-link " (click)="cambiarDesde(-5) "><i class="fa fa-lg fa-angle-left "></i></a>
+        </li>
+        <!-- <li class="page-item ">
                     <a class="page-link " href="# ">1</a>
                 </li>
                 <li class="page-item disabled ">
@@ -93,68 +102,72 @@
                 <li class="page-item ">
                     <a class="page-link " href="# ">24</a>
                 </li> -->
-                <li class="page-item pointer ">
-                    <a class="page-link " (click)="cambiarDesde(5) "><i class="fa fa-lg fa-angle-right "></i></a>
-                </li>
-            </ul>
-            <!-- /.pagination -->
-        </div>
-        <!-- /.card-body -->
+        <li class="page-item pointer ">
+          <a class="page-link " (click)="cambiarDesde(5) "><i class="fa fa-lg fa-angle-right "></i></a>
+        </li>
+      </ul>
+      <!-- /.pagination -->
     </div>
-    <!-- /.card -->
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
 </div>
 <!-- /.page-section -->
 
 <!-- Normal modal -->
-<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
-    <!-- .modal-dialog -->
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <!-- .modal-content -->
-        <div class="modal-content">
-            <!-- .modal-header -->
-            <div class="modal-header">
-                <h5 id="exampleModalScrollableLabel" class="modal-title"> {{ modalTitle }} </h5>
-            </div>
-            <!-- /.modal-header -->
-            <!-- .modal-body -->
-            <div class="modal-body">
-                <h5> Asignar áreas de trabajo: </h5>
-                <div class="form-group">
-                    <label class="col-form-label" for="selDefault">Área</label> <select [(ngModel)]="area._id" class="custom-select" id="selDefault">
-                      <option value=""> Seleccione un área </option>
-                      <option *ngFor="let area of areas" [value]="area._id" > {{ area.name }} </option>
-                    </select>
-                </div>
-                <button type="button" (click)="addArea( user )" class="btn btn-warning">Asignar área</button>
-                <br>
-                <!-- .table -->
-                <table class="table dt-responsive nowrap w-100">
-                    <thead>
-                        <tr>
-                            <th> Área </th>
-                            <th> Quitar </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let userArea of userAreas">
-                            <td>{{ userArea._area.name }}</td>
-                            <td>
-                                <button (click)="deleteArea(userArea._area._id)" type="button" class="btn btn-danger" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- /.table -->
-            </div>
-            <!-- /.modal-body -->
-            <!-- .modal-footer -->
-            <div class="modal-footer">
-                <button (click)="crearUsuario()" type="button" class="btn btn-primary">Guardar</button> <button id="close" type="button" data-dismiss="modal" class="btn btn-light">Cerrar</button>
-            </div>
-            <!-- /.modal-footer -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 id="exampleModalScrollableLabel" class="modal-title"> {{ modalTitle }} </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <h5> Asignar áreas de trabajo: </h5>
+        <div class="form-group">
+          <label class="col-form-label" for="selDefault">Área</label> <select [(ngModel)]="area._id"
+            class="custom-select" id="selDefault">
+            <option value=""> Seleccione un área </option>
+            <option *ngFor="let area of areas" [value]="area._id"> {{ area.name }} </option>
+          </select>
         </div>
-        <!-- /.modal-content -->
+        <button type="button" (click)="addArea( user )" class="btn btn-warning">Asignar área</button>
+        <br>
+        <!-- .table -->
+        <table class="table dt-responsive nowrap w-100">
+          <thead>
+            <tr>
+              <th> Área </th>
+              <th> Quitar </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let userArea of userAreas">
+              <td>{{ userArea._area.name }}</td>
+              <td>
+                <button (click)="deleteArea(userArea._area._id)" type="button" class="btn btn-danger"
+                  aria-label="Close"><span aria-hidden="true">×</span></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- /.table -->
+      </div>
+      <!-- /.modal-body -->
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button (click)="crearUsuario()" type="button" class="btn btn-primary">Guardar</button> <button id="close"
+          type="button" data-dismiss="modal" class="btn btn-light">Cerrar</button>
+      </div>
+      <!-- /.modal-footer -->
     </div>
-    <!-- /.modal-dialog -->
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->

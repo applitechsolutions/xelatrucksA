@@ -90,6 +90,7 @@ export class CdStockComponent implements OnInit {
           this.closeMEx.nativeElement.click();
         });
     }
+    this.formExcesos.reset();
   }
 
   finalizarExceso(missingsurplus: MissingSurplus, isGood: boolean, name: string) {

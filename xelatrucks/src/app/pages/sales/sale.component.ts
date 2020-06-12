@@ -18,7 +18,6 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
 import '../../../assets/vendor/select2/js/select2.js';
-import { } from 'src/app/services/service.index';
 declare var swal: any;
 
 @Component({

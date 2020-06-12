@@ -7,7 +7,7 @@
       <!-- .nav-tabs -->
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-          <a class="nav-link active show" data-toggle="tab" href="#storage"><span
+          <a class="nav-link active show" (click)="cargarStorage()" data-toggle="tab" href="#storage"><span
               class="badge badge-lg badge-primary"><i class="fas fa-mountain"></i></span> Inventario</a>
         </li>
         <li class="nav-item">
@@ -15,8 +15,8 @@
               class="badge badge-lg badge-warning"><i class="fas fa-chevron-circle-down"></i></span> Faltantes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#extra"><span class="badge badge-lg badge-success"><i
-                class="fas fa-chevron-circle-up"></i></span> Sobrantes</a>
+          <a class="nav-link" (click)="cargarExcesos(false)" data-toggle="tab" href="#extra"><span
+              class="badge badge-lg badge-success"><i class="fas fa-chevron-circle-up"></i></span> Sobrantes</a>
         </li>
       </ul><!-- /.nav-tabs -->
     </div><!-- /.card-header -->
@@ -100,8 +100,13 @@
                   -
                   <!-- Q{{ (material.stock * material._material.price) | number: '1.2-2'}} -->
                 </td>
-                <td class="align-middle text-center">
-
+                <td class="align-middle">
+                  <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="cargarModalExcesos(material, true)"
+                    data-toggle="modal" data-target="#addExcesos" title="Crear Faltante" alt="Faltante"><span
+                      class="badge badge-lg badge-warning"><i class="fas fa-chevron-circle-down"></i></span></a>
+                  <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="cargarModalExcesos(material, false)"
+                    data-toggle="modal" data-target="#addExcesos" title="Crear Sobrante" alt="Sobrante"><span
+                      class="badge badge-lg badge-success"><i class="fas fa-chevron-circle-up"></i></span></a>
                 </td>
               </tr>
             </tbody>
@@ -167,13 +172,13 @@
             <tbody>
               <tr *ngFor="let missing of missings">
                 <td class="align-middle text-center">
-                  {{ missing._user.name }}
+                  {{ missing._user.name }} {{ missing._user.role }}
                 </td>
                 <td class="align-middle">
                   {{ missing._material.name }} {{ missing._material.code }}
                 </td>
                 <td class="align-middle">
-                  {{ missing.load | number: "1.2.2" }}
+                  {{ missing.load | number: "1.2-2" }}
                 </td>
                 <td class="align-middle">
                   {{ missing.description }}
@@ -182,22 +187,20 @@
                   {{ dtService.fromJsonDate(missing.createdAt) }}
                 </td>
                 <td class="align-middle">
-                  {{ missing.state }}
+                  <span class="badge badge-warning">{{ missing.state }}</span>
                 </td>
                 <td class="align-middle">
-                  <div class="dropdown">
+                  <div *ngIf="this.userService.usuario.role === 'ADMIN_ROLE'" class="dropdown">
                     <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones"
                       data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i>
                       <span class="sr-only"></span></button>
                     <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
                       style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
                       <div class="dropdown-arrow mr-n1"></div>
-                      <button class="dropdown-item" type="button" data-toggle="modal"
-                        data-target="#modalDetails">Solicitar confirmación</button>
-                      <button class="dropdown-item" type="button" data-toggle="modal"
-                        data-target="#modalDispatch">Solicitar Rechazo</button>
-                      <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalBill">Generar
-                        factura</button>
+                      <button class="dropdown-item" (click)="finalizarExceso(missing, true, 'Faltante')"
+                        type="button">Confirmar</button>
+                      <button class="dropdown-item" (click)="finalizarExceso(missing, false, 'Faltante')"
+                        type="button">Rechazar</button>
                     </div>
                   </div>
                 </td>
@@ -217,9 +220,142 @@
           </table>
         </div>
         <div class="tab-pane fade" id="extra">
-          <h4>Listado de SOBRANTES</h4>
+          <!-- .form-group -->
+          <div class="form-group">
+            <!-- .input-group -->
+            <div class="input-group input-group-alt">
+              <!-- .input-group -->
+              <div class="input-group has-clearable">
+                <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                      class="fa fa-times-circle"></i></span></button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+              </div>
+              <!-- /.input-group -->
+              <!-- .input-group-prepend -->
+              <div class="input-group-prepend">
+                <select id="filterBy" class="custom-select">
+                  <option value='' selected> Filtros </option>
+                  <option value="0"> Usuario </option>
+                  <option value="1"> Material </option>
+                  <option value="2"> Sobrante </option>
+                  <option value="3"> Descripción </option>
+                  <option value="4"> Fecha </option>
+                  <option value="5"> Estado </option>
+                </select>
+              </div>
+              <!-- /.input-group-prepend -->
+            </div>
+            <!-- /.input-group -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .table -->
+          <table id="myTable" class="table table-striped">
+            <thead>
+              <tr>
+                <th> Usuario </th>
+                <th> Material </th>
+                <th> Sobrante </th>
+                <th> Descripción </th>
+                <th> Fecha </th>
+                <th> Estado </th>
+                <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let surplus of missings">
+                <td class="align-middle text-center">
+                  {{ surplus._user.name }} {{ surplus._user.role }}
+                </td>
+                <td class="align-middle">
+                  {{ surplus._material.name }} {{ surplus._material.code }}
+                </td>
+                <td class="align-middle">
+                  {{ surplus.load | number: "1.2-2" }}
+                </td>
+                <td class="align-middle">
+                  {{ surplus.description }}
+                </td>
+                <td class="align-middle">
+                  {{ dtService.fromJsonDate(surplus.createdAt) }}
+                </td>
+                <td class="align-middle">
+                  <span class="badge badge-warning">{{ surplus.state }}</span>
+                </td>
+                <td class="align-middle">
+                  <div *ngIf="this.userService.usuario.role === 'ADMIN_ROLE'" class="dropdown">
+                    <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones"
+                      data-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i>
+                      <span class="sr-only"></span></button>
+                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
+                      style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
+                      <div class="dropdown-arrow mr-n1"></div>
+                      <button class="dropdown-item" (click)="finalizarExceso(surplus, true, 'Sobrante')"
+                        type="button">Confirmar</button>
+                      <button class="dropdown-item" (click)="finalizarExceso(surplus, false, 'Sobrante')"
+                        type="button">Rechazar</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th> Usuario </th>
+                <th> Material </th>
+                <th> Sobrante </th>
+                <th> Descripción </th>
+                <th> Fecha </th>
+                <th> Estado </th>
+                <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
+              </tr>
+            </tfoot>
+          </table>
         </div>
       </div><!-- /.tab-content -->
     </div><!-- /.card-body -->
   </div><!-- /.card -->
 </div><!-- /.page-section-->
+<!-- .modal Excesos -->
+<div class="modal fade" id="addExcesos" tabindex="-1" role="dialog" aria-labelledby="NewMaterialModalLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 class="modal-title"> {{name}} </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <form ngNativeValidate [formGroup]="formExcesos" (ngSubmit)="crearExceso()">
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="load">Cantidad </label> <input formControlName="load" name="load" type="text"
+              class="form-control" id="load" placeholder="Ingrese la cantidad" data-autofocus="true">
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <label for="description">Descripción </label> <input formControlName="description" name="description"
+              type="textarea" class="form-control" id="description" placeholder="Ingrese la descripción">
+          </div>
+          <!-- /.form-group -->
+          <!-- .modal-footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMEx type="button"
+              class="btn btn-light" data-dismiss="modal">Cerrar</button>
+          </div>
+          <!-- /.modal-footer -->
+        </form>
+      </div>
+      <!-- /.modal-body -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal Excesos -->

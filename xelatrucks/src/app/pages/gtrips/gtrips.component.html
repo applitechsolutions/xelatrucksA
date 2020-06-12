@@ -1,106 +1,114 @@
 <!-- floating action -->
-<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/gtrip', 'new']"><span class="fa fa-plus"></span></button>
+<button type="button" class="btn btn-success btn-floated" [routerLink]="[ '/gtrip', 'new']"><span
+    class="fa fa-plus"></span></button>
 <!-- /floating action -->
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .card -->
-    <div class="card card-fluid">
-        <!-- .card-header -->
-        <div class="card-header d-flex">
-            <!-- .form-group -->
-            <div class="form-group offset-3 col-2">
-                <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
-            </div>
-            <!-- /.form-group -->
-            <!-- .form-group -->
-            <div class="form-group col-2">
-                <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
-            </div>
-            <!-- /.form-group -->
-            <button type="button" (click)="buscarReporteCuadros()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
-        </div>
-        <!-- /.card-header -->
-        <br>
-        <!-- .card-body -->
-        <div class="card-body">
-            <!-- .btn-toolbar -->
-            <div id="dt-buttons" class="btn-toolbar"></div>
-            <!-- /.btn-toolbar -->
-            <!-- .form-group -->
-            <div class="form-group">
-                <!-- .input-group -->
-                <div class="input-group input-group-alt">
-                    <!-- .input-group -->
-                    <div class="input-group has-clearable">
-                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
-                    </div>
-                    <!-- /.input-group -->
-                    <!-- .input-group-prepend -->
-                    <div class="input-group-prepend">
-                        <select id="filterBy" class="custom-select">
-                            <option value='' selected> Filtros </option>
-                            <option value="0"> Vehículo </option>
-                            <option value="1"> Viaje </option>
-                            <option value="2"> Empleado </option>
-                            <option value="3"> Material </option>
-                            <option value="4"> Fecha </option>
-                            <option value="5"> Horarios </option>
-                            <option value="6"> Detalles </option>
-                            <option value="7"> Viajes </option>
-                        </select>
-                    </div>
-                    <!-- /.input-group-prepend -->
-                </div>
-                <!-- /.input-group -->
-            </div>
-            <!-- /.form-group -->
-            <!-- .table -->
-            <table id="myTable" class="table" #customLoadingTemplate>
-                <!-- thead -->
-                <thead>
-                    <tr>
-                        <th>Vehículo</th>
-                        <th>Viaje</th>
-                        <th>Empleado</th>
-                        <th>Material</th>
-                        <th>Fecha</th>
-                        <th>Horarios</th>
-                        <th>Detalles</th>
-                        <th>Viajes</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <!-- /thead -->
-                <!-- tbody -->
-                <tbody>
-                    <!-- create empty row to passing html validator -->
-                    <tr *ngFor="let gt of greenTrips">
-                        <td> {{ gt._vehicle.plate }} {{ gt._vehicle.type }} </td>
-                        <td> {{ gt._type.name }} </td>
-                        <td> {{ gt._employee.name }} </td>
-                        <td> {{ gt._material.code }} {{ gt._material.name }} </td>
-                        <td> {{ dtService.fromJsonDate(gt.date) }} </td>
-                        <td> {{ 'Entrada: ' + dtService.fromJsonHour(gt.checkIN )}} <br> {{ 'Salida: ' + dtService.fromJsonHour(gt.checkOUT) }} </td>
-                        <td> {{ gt.details }} </td>
-                        <td> {{ gt.trips }} </td>
-                        <td class="align-middle text-right">
-                            <a [routerLink]="[ '/gtrip', gt._id ]" class="btn btn-sm btn-icon btn-secondary pointer" title="Editar"><i class="fas fa-edit"></i> <span class="sr-only ">Editar</span></a>
-                            <a class="btn btn-sm btn-icon btn-secondary pointer" title="Eliminar" (click)="eliminarViajeVerde( gt )"><i class="far fa-trash-alt "></i> <span class="sr-only ">Eliminar</span></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <!-- /tbody -->
-            </table>
-            <!-- /.table -->
-            <ng-template #customLoadingTemplate>
-            </ng-template>
-            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
-        </div>
-        <!-- /.card-body -->
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-header -->
+    <div class="card-header d-flex">
+      <!-- .form-group -->
+      <div class="form-group offset-3 col-2">
+        <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
+      </div>
+      <!-- /.form-group -->
+      <!-- .form-group -->
+      <div class="form-group col-2">
+        <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
+      </div>
+      <!-- /.form-group -->
+      <button type="button" (click)="buscarReporteCuadros()" class="btn btn-primary"><i class="fas fa-search"></i>
+        Buscar</button>
     </div>
-    <!-- /.card -->
+    <!-- /.card-header -->
+    <br>
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .btn-toolbar -->
+      <div id="dt-buttons" class="btn-toolbar"></div>
+      <!-- /.btn-toolbar -->
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .input-group -->
+        <div class="input-group input-group-alt">
+          <!-- .input-group -->
+          <div class="input-group has-clearable">
+            <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                  class="fa fa-times-circle"></i></span></button>
+            <div class="input-group-prepend">
+              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+            </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+          </div>
+          <!-- /.input-group -->
+          <!-- .input-group-prepend -->
+          <div class="input-group-prepend">
+            <select id="filterBy" class="custom-select">
+              <option value='' selected> Filtros </option>
+              <option value="0"> Vehículo </option>
+              <option value="1"> Viaje </option>
+              <option value="2"> Empleado </option>
+              <option value="3"> Material </option>
+              <option value="4"> Fecha </option>
+              <option value="5"> Horarios </option>
+              <option value="6"> Detalles </option>
+              <option value="7"> Viajes </option>
+            </select>
+          </div>
+          <!-- /.input-group-prepend -->
+        </div>
+        <!-- /.input-group -->
+      </div>
+      <!-- /.form-group -->
+      <!-- .table -->
+      <table id="myTable" class="table table-striped" #customLoadingTemplate>
+        <!-- thead -->
+        <thead>
+          <tr>
+            <th>Vehículo</th>
+            <th>Viaje</th>
+            <th>Empleado</th>
+            <th>Material</th>
+            <th>Fecha</th>
+            <th>Horarios</th>
+            <th>Detalles</th>
+            <th>Viajes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <!-- /thead -->
+        <!-- tbody -->
+        <tbody>
+          <!-- create empty row to passing html validator -->
+          <tr *ngFor="let gt of greenTrips">
+            <td> {{ gt._vehicle.plate }} {{ gt._vehicle.type }} </td>
+            <td> {{ gt._type.name }} </td>
+            <td> {{ gt._employee.name }} </td>
+            <td> {{ gt._material.code }} {{ gt._material.name }} </td>
+            <td> {{ dtService.fromJsonDate(gt.date) }} </td>
+            <td> {{ 'Entrada: ' + dtService.fromJsonHour(gt.checkIN )}} <br>
+              {{ 'Salida: ' + dtService.fromJsonHour(gt.checkOUT) }} </td>
+            <td> {{ gt.details }} </td>
+            <td> {{ gt.trips }} </td>
+            <td class="align-middle text-right">
+              <a [routerLink]="[ '/gtrip', gt._id ]" class="btn btn-sm btn-icon btn-secondary pointer" title="Editar"><i
+                  class="fas fa-edit"></i> <span class="sr-only ">Editar</span></a>
+              <a class="btn btn-sm btn-icon btn-secondary pointer" title="Eliminar"
+                (click)="eliminarViajeVerde( gt )"><i class="far fa-trash-alt "></i> <span
+                  class="sr-only ">Eliminar</span></a>
+            </td>
+          </tr>
+        </tbody>
+        <!-- /tbody -->
+      </table>
+      <!-- /.table -->
+      <ng-template #customLoadingTemplate>
+      </ng-template>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+      </ngx-loading>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
 </div>
 <!-- /.page-section -->

@@ -44,7 +44,7 @@
       </div>
       <!-- /.form-group -->
       <!-- .table -->
-      <table id="myTable" class="table">
+      <table id="myTable" class="table table-striped">
         <thead>
           <tr>
             <th> Fecha </th>
@@ -190,14 +190,16 @@
       <div class="modal-content px-lg-4 py-lg-3">
         <!-- .modal-header -->
         <div class="modal-header">
-          <h6 id="modalNewTaskLabel" class="modal-title"> Crear reporte líneas <span
-              class="badge badge-success">{{ 'Orden: ' + pull._order.order + ', ' + pull._material.name }}</span>
-            <span class="badge badge-danger">Campos
-              obligatorios</span> </h6>
+          <h6 id="modalNewTaskLabel" class="modal-title"> Crear reporte líneas
+            <span class="badge badge-success">{{ 'Orden: ' + pull._order.order}}</span>
+          </h6>
+          <span class="badge badge-danger float-right">Campos
+            obligatorios</span>
         </div>
         <!-- /.modal-header -->
         <!-- .modal-body -->
         <div class="modal-body">
+          <h4>{{ pull._material.name  }}</h4>
           <!-- .form-group -->
           <div class="form-group form-row">
             <!-- .col -->

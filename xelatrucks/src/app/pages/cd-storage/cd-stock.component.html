@@ -199,7 +199,8 @@
                   <span *ngIf="missing.state === 'pendiente'" class="badge badge-warning"> {{ missing.state }} </span>
                 </td>
                 <td class="align-middle">
-                  <div *ngIf="this.userService.usuario.role === 'ADMIN_ROLE'" class="dropdown">
+                  <div *ngIf="this.userService.usuario.role === 'ADMIN_ROLE' && missing.state === 'pendiente'"
+                    class="dropdown">
                     <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones"
                       data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                       <i class="fa fa-ellipsis-h"></i>
@@ -305,7 +306,8 @@
                   <span *ngIf="surplus.state === 'pendiente'" class="badge badge-warning"> {{ surplus.state }} </span>
                 </td>
                 <td class="align-middle">
-                  <div *ngIf="this.userService.usuario.role === 'ADMIN_ROLE'" class="dropdown">
+                  <div *ngIf="this.userService.usuario.role === 'ADMIN_ROLE' && surplus.state === 'pendiente'"
+                    class="dropdown">
                     <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones"
                       data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                       <i class="fa fa-ellipsis-h"></i>

@@ -45,6 +45,14 @@ export class SaleService {
   anularVenta(sale: Sale) {
     const url = `${URL_SERVICES}/ventas/${sale._id}?token=${this.userService.token}`;
     return this.http.patch(url, sale)
-      .subscribe();
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError((err, caught) => {
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
+        })
+      );
   }
 }

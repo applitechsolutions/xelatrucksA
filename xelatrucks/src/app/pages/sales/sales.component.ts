@@ -38,7 +38,29 @@ export class SalesComponent implements OnInit {
   }
 
   anularVenta(sale: Sale) {
-
+    swal({
+      title: '¿Está seguro?',
+      text: `Esta a punto de eliminar la venta con factura ${sale.bill} y correlativo ${sale.serie}, esto afectará el inventario`,
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then(anular => {
+        if (anular) {
+          sale.state = true;
+          this.saleService.anularVenta(sale)
+            .subscribe((res: any) => {
+              swal({
+                title: 'Exito!',
+                text: 'Venta anulada correctamente',
+                icon: 'success',
+                button: false,
+                timer: 1000
+              });
+              this.buscarVentas();
+            });
+        }
+      });
   }
 
   buscarVentas() {

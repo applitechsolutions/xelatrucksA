@@ -1,3 +1,4 @@
+
 // GUARDS
 export { LoginGuardGuard } from './guards/login-guard.guard';
 export { VerificaTokenGuard } from './guards/verifica-token.guard';
@@ -8,6 +9,7 @@ export { UserService } from './users/user.service';
 export { SaleService } from './sales/sale.service';
 export { CustomerService } from './customers/customer.service';
 export { PurchaseCDService } from './purchasesCD/purchase-cd.service';
+export { CdStorageService } from './cd-storages/cd-storage.service';
 // VIAJES
 export { EmployeeService } from './employees/employee.service';
 export { TripService } from './trips/trip.service';

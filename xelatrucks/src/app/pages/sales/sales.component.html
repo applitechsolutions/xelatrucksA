@@ -207,53 +207,6 @@
         <!-- /.input-group -->
       </div>
       <!-- /.form-group -->
-      <!-- .table -->
-      <table id="myTable" class="table">
-        <thead>
-          <tr>
-            <th> Cliente </th>
-            <th> Fecha </th>
-            <th> No. de Factura </th>
-            <th> No. de Serie </th>
-            <th> Flete </th>
-            <th> Total </th>
-            <th><i class="fas fa-cogs"></i></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let sale of sales">
-            <td> {{ sale._customer.name}} {{ sale._customer.nit }} </td>
-            <td> {{ dtService.fromJsonDate(sale.date) }} </td>
-            <td> {{ sale.bill }} </td>
-            <td> {{ sale.serie }} </td>
-            <td> {{ sale.flete | number: "1.2-2" }} </td>
-            <td> {{ sale.total | number: "1.2-2" }} </td>
-            <td>
-              <div class="dropdown">
-                <button type="button" class="btn btn-sm btn-icon btn-secondary" title="Acciones" data-toggle="dropdown"
-                  aria-expanded="false" aria-haspopup="true"><i class="fa fa-ellipsis-h"></i> <span
-                    class="sr-only"></span></button>
-                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
-                  style="position: absolute; will-change: top, left; top: 29px; left: 34px;">
-                  <div class="dropdown-arrow mr-n1"></div>
-                  <button class="dropdown-item" (click)="verDetalle(sale)" type="button" data-toggle="modal"
-                    data-target="#modalDetails">Detalles de venta</button>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalDispatch">Generar
-                    orden de despacho</button>
-                  <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalBill">Generar
-                    factura</button>
-                </div>
-                <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="anularVenta(sale)" title="Eliminar"
-                  alt="Eliminar"><i class="far fa-trash-alt"></i><span class="sr-only"></span></a>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- /.table -->
-      <ng-template #customLoadingTemplate></ng-template>
-      <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate ">
-      </ngx-loading>
     </div>
     <!-- /.card-body -->
   </div>

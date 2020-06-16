@@ -1,134 +1,146 @@
 <!-- floating action -->
-<button type="button" class="btn btn-success btn-floated" data-toggle="modal" data-target="#clientNewModal"><span class="fa fa-plus"></span></button>
+<button type="button" class="btn btn-success btn-floated" data-toggle="modal" data-target="#clientNewModal"><span
+    class="fa fa-plus"></span></button>
 <!-- /floating action -->
 <!-- .page-section -->
 <div class="page-section">
-    <!-- .card -->
-    <div class="card card-fluid">
-        <!-- .card-body -->
-        <div class="card-body">
-            <!-- .btn-toolbar -->
-            <div id="dt-buttons" class="btn-toolbar"></div>
-            <!-- /.btn-toolbar -->
-            <!-- .form-group -->
-            <div class="form-group">
-                <!-- .input-group -->
-                <div class="input-group input-group-alt">
-                    <!-- .input-group -->
-                    <div class="input-group has-clearable">
-                        <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                        </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
-                    </div>
-                    <!-- /.input-group -->
-                    <!-- .input-group-prepend -->
-                    <div class="input-group-prepend">
-                        <select id="filterBy" class="custom-select">
-                            <option value='' selected> Filtros </option>
-                            <option value="0"> Nombre </option>
-                            <option value="1"> Nit </option>
-                            <option value="2"> Dirección </option>
-                            <option value="3"> Teléfono </option>
-                        </select>
-                    </div>
-                    <!-- /.input-group-prepend -->
-                </div>
-                <!-- /.input-group -->
-            </div>
-            <!-- /.form-group -->
-            <!-- .table -->
-            <table id="myTable" class="table">
-                <thead>
-                    <tr>
-                        <th> Nombre </th>
-                        <th> Nit </th>
-                        <th> Dirección </th>
-                        <th> Teléfono </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let CPcustomer of CPcustomers">
-                        <td class="align-middle text-truncate">
-                            {{ CPcustomer.name }}
-                        </td>
-                        <td>{{ CPcustomer.nit }}</td>
-                        <td>{{ CPcustomer.address }}</td>
-                        <td>{{ CPcustomer.mobile }}</td>
-                        <td class="align-middle text-right">
-                            <a (click)="cargarCliente( CPcustomer._id )" class=" btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#clientNewModal" alt="Editar"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Edit</span></a>
-                            <a (click)="borrarCliente( CPcustomer )" class="btn btn-sm btn-icon btn-secondary pointer"><i class="far fa-trash-alt"></i><span class="sr-only ">Remove</span></a>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th> Nombre </th>
-                        <th> Nit </th>
-                        <th> Dirección </th>
-                        <th> Teléfono </th>
-                        <th></th>
-                    </tr>
-                </tfoot>
-            </table>
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .btn-toolbar -->
+      <div id="dt-buttons" class="btn-toolbar"></div>
+      <!-- /.btn-toolbar -->
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .input-group -->
+        <div class="input-group input-group-alt">
+          <!-- .input-group -->
+          <div class="input-group has-clearable">
+            <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                  class="fa fa-times-circle"></i></span></button>
+            <div class="input-group-prepend">
+              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+            </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+          </div>
+          <!-- /.input-group -->
+          <!-- .input-group-prepend -->
+          <div class="input-group-prepend">
+            <select id="filterBy" class="custom-select">
+              <option value='' selected> Filtros </option>
+              <option value="0"> Nombre </option>
+              <option value="1"> Nit </option>
+              <option value="2"> Dirección </option>
+              <option value="3"> Teléfono </option>
+            </select>
+          </div>
+          <!-- /.input-group-prepend -->
         </div>
-        <!-- /.card-body -->
+        <!-- /.input-group -->
+      </div>
+      <!-- /.form-group -->
+      <!-- .table -->
+      <table id="myTable" class="table table-striped">
+        <thead>
+          <tr>
+            <th> Nombre </th>
+            <th> Nit </th>
+            <th> Dirección </th>
+            <th> Teléfono </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let CPcustomer of CPcustomers">
+            <td class="align-middle text-truncate">
+              {{ CPcustomer.name }}
+            </td>
+            <td>{{ CPcustomer.nit }}</td>
+            <td>{{ CPcustomer.address }}</td>
+            <td>{{ CPcustomer.mobile }}</td>
+            <td class="align-middle text-right">
+              <a (click)="cargarCliente( CPcustomer._id )" class=" btn btn-sm btn-icon btn-secondary"
+                data-toggle="modal" data-target="#clientNewModal" alt="Editar"><i class="fa fa-pencil-alt"></i> <span
+                  class="sr-only">Edit</span></a>
+              <a (click)="borrarCliente( CPcustomer )" class="btn btn-sm btn-icon btn-secondary pointer"><i
+                  class="far fa-trash-alt"></i><span class="sr-only ">Remove</span></a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th> Nombre </th>
+            <th> Nit </th>
+            <th> Dirección </th>
+            <th> Teléfono </th>
+            <th></th>
+          </tr>
+        </tfoot>
+      </table>
     </div>
-    <!-- /.card -->
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
 </div>
 <!-- /.page-section -->
 
 <!-- .modal -->
 <form ngNativeValidate [formGroup]="forma" (ngSubmit)="crearCliente();">
-    <div class="modal fade" id="clientNewModal" tabindex="-1" role="dialog" aria-labelledby="clientNewModalLabel" aria-hidden="true">
-        <!-- .modal-dialog -->
-        <div class="modal-dialog" role="document">
-            <!-- .modal-content -->
-            <div class="modal-content">
-                <!-- .modal-header -->
-                <div class="modal-header">
-                    <h6 id="clientNewModalLabel" class="modal-title inline-editable">
-                        <span class="sr-only">Nombre del cliente</span> <input formControlName="name" name="name" type="text" class="form-control form-control-lg" placeholder="Escriba aquí el nombre del cliente..." required="">
-                    </h6>
-                </div>
-                <!-- /.modal-header -->
-                <!-- .modal-body -->
-                <div class="modal-body">
-                    <!-- .form-row -->
-                    <div class="form-row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="nit">Nit</label> <input formControlName="nit" name="nit" type="text" id="nit" class="form-control" placeholder="Nit del cliente">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="mobile">Teléfono</label> <input formControlName="mobile" name="mobile" type="text" id="mobile" class="form-control" placeholder="Teléfono del cliente">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="address">Dirección</label>
-                                <textarea formControlName="address" name="address" id="address" cols="30" rows="5" class="form-control" placeholder="Dirección del cliente..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.form-row -->
-                </div>
-                <!-- /.modal-body -->
-                <!-- .modal-footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Guardar</button> <button #closeM type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                </div>
-                <!-- /.modal-footer -->
-                <ng-template #customLoadingTemplate>
-                </ng-template>
-                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
-            </div>
-            <!-- /.modal-content -->
+  <div class="modal fade" id="clientNewModal" tabindex="-1" role="dialog" aria-labelledby="clientNewModalLabel"
+    aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h6 id="clientNewModalLabel" class="modal-title inline-editable">
+            <span class="sr-only">Nombre del cliente</span> <input formControlName="name" name="name" type="text"
+              class="form-control form-control-lg" placeholder="Escriba aquí el nombre del cliente..." required="">
+          </h6>
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <!-- .form-row -->
+          <div class="form-row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="nit">Nit</label> <input formControlName="nit" name="nit" type="text" id="nit"
+                  class="form-control" placeholder="Nit del cliente">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="mobile">Teléfono</label> <input formControlName="mobile" name="mobile" type="text"
+                  id="mobile" class="form-control" placeholder="Teléfono del cliente">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address">Dirección</label>
+                <textarea formControlName="address" name="address" id="address" cols="30" rows="5" class="form-control"
+                  placeholder="Dirección del cliente..."></textarea>
+              </div>
+            </div>
+          </div>
+          <!-- /.form-row -->
+        </div>
+        <!-- /.modal-body -->
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button> <button #closeM type="button"
+            class="btn btn-light" data-dismiss="modal">Cerrar</button>
+        </div>
+        <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.modal-content -->
     </div>
+    <!-- /.modal-dialog -->
+  </div>
 </form>
 <!-- /.modal -->

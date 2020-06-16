@@ -1,800 +1,874 @@
 <!-- .page -->
 <div class="page has-sidebar has-sidebar-fluid has-sidebar-expand-xl">
-    <!-- .page-inner -->
-    <div class="page-inner page-inner-fill position-relative">
-        <header class="page-navs bg-light shadow-sm">
-            <!-- .input-group -->
-            <div class="input-group has-clearable">
-                <button type="button" class="close" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button> <label class="input-group-prepend" for="searchClients"><span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span></label>                <input type="text" class="form-control" id="searchClients" data-filter=".board .list-group-item" placeholder="Buscar Vehículos">
-            </div>
-            <!-- /.input-group -->
-        </header><button [routerLink]="[ '/vehicle/new']" type="button" class="btn btn-primary btn-floated position-absolute" title="Crear Camión"><i class="fa fa-plus"></i></button>
-        <!-- board -->
-        <div #scroll class="board p-0 perfect-scrollbar">
-            <!-- .list-group -->
-            <div class="list-group list-group-flush list-group-divider border-top" data-toggle="radiolist">
-                <!-- .list-group-item -->
-                <div *ngFor="let vehicle of vehicles" class="list-group-item" data-toggle="sidebar" data-sidebar="show">
-                    <a href="#" (click)="seleccionarVehicle( vehicle )" class="stretched-link"></a>
-                    <!-- .list-group-item-figure -->
-                    <div *ngIf="vehicle.type === 'camion'" class="list-group-item-figure">
-                        <div class="tile tile-circle bg-yellow"> <i class="fas fa-truck"></i> </div>
-                    </div>
-                    <!-- /.list-group-item-figure -->
-                    <!-- .list-group-item-body -->
-                    <div *ngIf="vehicle.type === 'camion'" class="list-group-item-body">
-                        <h4 class="list-group-item-title">Camión: {{ vehicle.plate }} </h4>
-                        <p class="list-group-item-text">#{{ vehicle.no + ' ' + vehicle._make.name + ' CP: ' + vehicle.cp }} </p>
-                    </div>
-                    <!-- /.list-group-item-body -->
-                    <!-- .list-group-item-figure -->
-                    <div *ngIf="vehicle.type === 'camionG'" class="list-group-item-figure">
-                        <div class="tile tile-circle bg-orange"> <i class="fas fa-truck-moving"></i> </div>
-                    </div>
-                    <!-- /.list-group-item-figure -->
-                    <!-- .list-group-item-body -->
-                    <div *ngIf="vehicle.type === 'camionG'" class="list-group-item-body">
-                        <h4 class="list-group-item-title">Camión gondola: {{ vehicle.plate }} </h4>
-                        <p class="list-group-item-text"> #{{ vehicle.no + ' ' + vehicle._make.name + ' CP: ' + vehicle.cp }} </p>
-                    </div>
-                    <!-- /.list-group-item-body -->
-                    <!-- .list-group-item-figure -->
-                    <div *ngIf="vehicle.type === 'vehiculo'" class="list-group-item-figure">
-                        <div class="tile tile-circle bg-blue"> <i class="fas fa-truck-pickup"></i> </div>
-                    </div>
-                    <!-- /.list-group-item-figure -->
-                    <!-- .list-group-item-body -->
-                    <div *ngIf="vehicle.type === 'vehiculo'" class="list-group-item-body">
-                        <h4 class="list-group-item-title">Vehículo: {{ vehicle.plate }} </h4>
-                        <p class="list-group-item-text"> {{ vehicle._make.name }} </p>
-                    </div>
-                    <!-- /.list-group-item-body -->
-                    <!-- .list-group-item-figure -->
-                    <div *ngIf="vehicle.type === 'riego'" class="list-group-item-figure">
-                        <div class="tile tile-circle bg-green"> <i class="fas fa-truck-monster"></i> </div>
-                    </div>
-                    <!-- /.list-group-item-figure -->
-                    <!-- .list-group-item-body -->
-                    <div *ngIf="vehicle.type === 'riego'" class="list-group-item-body">
-                        <h4 class="list-group-item-title">Camión para riego: {{ vehicle.plate }} </h4>
-                        <p class="list-group-item-text"> #{{ vehicle.no + ' ' + vehicle._make.name + ' CP:' + vehicle.cp }} </p>
-                    </div>
-                    <!-- /.list-group-item-body -->
-                    <!-- .list-group-item-figure -->
-                    <div *ngIf="vehicle.type === 'stock'" class="list-group-item-figure">
-                        <div class="tile tile-circle bg-pink"> <i class="fas fa-snowplow"></i> </div>
-                    </div>
-                    <!-- /.list-group-item-figure -->
-                    <!-- .list-group-item-body -->
-                    <div *ngIf="vehicle.type === 'stock'" class="list-group-item-body">
-                        <h4 class="list-group-item-title">Excavadora: {{ vehicle.plate }} </h4>
-                        <p class="list-group-item-text"> {{ vehicle._make.name }} </p>
-                    </div>
-                    <!-- /.list-group-item-body -->
-                </div>
-                <!-- /.list-group-item -->
-                <!-- .list-group-item -->
-                <div *ngFor="let gondola of gondolas" class="list-group-item" data-toggle="sidebar" data-sidebar="show">
-                    <a href="#" (click)="seleccionarGondola( gondola )" class="stretched-link"></a>
-                    <!-- .list-group-item-figure -->
-                    <div class="list-group-item-figure">
-                        <div class="tile tile-circle bg-red"> <i class="fas fa-truck-moving"></i> </div>
-                    </div>
-                    <!-- /.list-group-item-figure -->
-                    <!-- .list-group-item-body -->
-                    <div class="list-group-item-body">
-                        <h4 class="list-group-item-title">Gondola: {{ gondola.plate }} </h4>
-                        <p *ngIf="gondola._truck !== null" class="list-group-item-text"> {{ 'Camión asignado: ' + gondola._truck.plate }} </p>
-                        <p *ngIf="gondola._truck === null" class="list-group-item-text"> Camión sin asignar </p>
-                    </div>
-                    <!-- /.list-group-item-body -->
-                </div>
-                <!-- /.list-group-item -->
-            </div>
-            <!-- /.list-group -->
+  <!-- .page-inner -->
+  <div class="page-inner page-inner-fill position-relative">
+    <header class="page-navs bg-light shadow-sm">
+      <!-- .input-group -->
+      <div class="input-group has-clearable">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+              class="fa fa-times-circle"></i></span></button> <label class="input-group-prepend"
+          for="searchClients"><span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span></label>
+        <input type="text" class="form-control" id="searchClients" data-filter=".board .list-group-item"
+          placeholder="Buscar Vehículos">
+      </div>
+      <!-- /.input-group -->
+    </header><button [routerLink]="[ '/vehicle/new']" type="button"
+      class="btn btn-primary btn-floated position-absolute" title="Crear Camión"><i class="fa fa-plus"></i></button>
+    <!-- board -->
+    <div #scroll class="board p-0 perfect-scrollbar">
+      <!-- .list-group -->
+      <div class="list-group list-group-flush list-group-divider border-top" data-toggle="radiolist">
+        <!-- .list-group-item -->
+        <div *ngFor="let vehicle of vehicles" class="list-group-item" data-toggle="sidebar" data-sidebar="show">
+          <a href="#" (click)="seleccionarVehicle( vehicle )" class="stretched-link"></a>
+          <!-- .list-group-item-figure -->
+          <div *ngIf="vehicle.type === 'camion'" class="list-group-item-figure">
+            <div class="tile tile-circle bg-yellow"> <i class="fas fa-truck"></i> </div>
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div *ngIf="vehicle.type === 'camion'" class="list-group-item-body">
+            <h4 class="list-group-item-title">Camión: {{ vehicle.plate }} </h4>
+            <p class="list-group-item-text">#{{ vehicle.no + ' ' + vehicle._make.name + ' CP: ' + vehicle.cp }} </p>
+          </div>
+          <!-- /.list-group-item-body -->
+          <!-- .list-group-item-figure -->
+          <div *ngIf="vehicle.type === 'camionG'" class="list-group-item-figure">
+            <div class="tile tile-circle bg-orange"> <i class="fas fa-truck-moving"></i> </div>
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div *ngIf="vehicle.type === 'camionG'" class="list-group-item-body">
+            <h4 class="list-group-item-title">Camión gondola: {{ vehicle.plate }} </h4>
+            <p class="list-group-item-text"> #{{ vehicle.no + ' ' + vehicle._make.name + ' CP: ' + vehicle.cp }} </p>
+          </div>
+          <!-- /.list-group-item-body -->
+          <!-- .list-group-item-figure -->
+          <div *ngIf="vehicle.type === 'vehiculo'" class="list-group-item-figure">
+            <div class="tile tile-circle bg-blue"> <i class="fas fa-truck-pickup"></i> </div>
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div *ngIf="vehicle.type === 'vehiculo'" class="list-group-item-body">
+            <h4 class="list-group-item-title">Vehículo: {{ vehicle.plate }} </h4>
+            <p class="list-group-item-text"> {{ vehicle._make.name }} </p>
+          </div>
+          <!-- /.list-group-item-body -->
+          <!-- .list-group-item-figure -->
+          <div *ngIf="vehicle.type === 'riego'" class="list-group-item-figure">
+            <div class="tile tile-circle bg-green"> <i class="fas fa-truck-monster"></i> </div>
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div *ngIf="vehicle.type === 'riego'" class="list-group-item-body">
+            <h4 class="list-group-item-title">Camión para riego: {{ vehicle.plate }} </h4>
+            <p class="list-group-item-text"> #{{ vehicle.no + ' ' + vehicle._make.name + ' CP:' + vehicle.cp }} </p>
+          </div>
+          <!-- /.list-group-item-body -->
+          <!-- .list-group-item-figure -->
+          <div *ngIf="vehicle.type === 'stock'" class="list-group-item-figure">
+            <div class="tile tile-circle bg-pink"> <i class="fas fa-snowplow"></i> </div>
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div *ngIf="vehicle.type === 'stock'" class="list-group-item-body">
+            <h4 class="list-group-item-title">Excavadora: {{ vehicle.plate }} </h4>
+            <p class="list-group-item-text"> {{ vehicle._make.name }} </p>
+          </div>
+          <!-- /.list-group-item-body -->
         </div>
-        <!-- /board -->
+        <!-- /.list-group-item -->
+        <!-- .list-group-item -->
+        <div *ngFor="let gondola of gondolas" class="list-group-item" data-toggle="sidebar" data-sidebar="show">
+          <a href="#" (click)="seleccionarGondola( gondola )" class="stretched-link"></a>
+          <!-- .list-group-item-figure -->
+          <div class="list-group-item-figure">
+            <div class="tile tile-circle bg-red"> <i class="fas fa-truck-moving"></i> </div>
+          </div>
+          <!-- /.list-group-item-figure -->
+          <!-- .list-group-item-body -->
+          <div class="list-group-item-body">
+            <h4 class="list-group-item-title">Gondola: {{ gondola.plate }} </h4>
+            <p *ngIf="gondola._truck !== null" class="list-group-item-text">
+              {{ 'Camión asignado: ' + gondola._truck.plate }} </p>
+            <p *ngIf="gondola._truck === null" class="list-group-item-text"> Camión sin asignar </p>
+          </div>
+          <!-- /.list-group-item-body -->
+        </div>
+        <!-- /.list-group-item -->
+      </div>
+      <!-- /.list-group -->
     </div>
-    <!-- /.page-inner -->
-    <!-- .page-sidebar -->
-    <div class="page-sidebar bg-light">
-        <!-- .sidebar-header -->
-        <header class="sidebar-header d-xl-none">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active">
-                        <a href="#" data-toggle="sidebar"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Atras</a>
-                    </li>
-                </ol>
-            </nav>
-        </header>
-        <!-- /.sidebar-header -->
-        <!-- .sidebar-section -->
-        <div class="sidebar-section sidebar-section-fill">
-            <h1 class="page-title">
-                <i class="{{ icon }} text-muted mr-2"></i> {{ this.type + ' ' + this.title }} </h1>
-            <p class="text-muted"> {{ this.info }} </p>
-            <!-- .nav-scroller -->
-            <div class="nav-scroller border-bottom">
-                <!-- .nav-tabs -->
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a #detalles class="nav-link active show" data-toggle="tab" href="#detalles" (click)="inGondola = false; inGas = false;"> Detalles del vehículo</a>
-                    </li>
-                    <li *ngIf="selected" class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#vehicle-rims" (click)="inGondola = false; inGas = false;"> Neumáticos</a>
-                    </li>
-                    <li *ngIf="selected && !isGondola" class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#gasolines" (click)="inGondola = false; inGas = true;">Combustible</a>
-                    </li>
-                    <li *ngIf="selected && isTruckG" class="nav-item" (click)="inGondola = true; inGas = false;">
-                        <a class="nav-link" data-toggle="tab" href="#type-gondola">Góndola</a>
-                    </li>
-                </ul>
-                <!-- /.nav-tabs -->
+    <!-- /board -->
+  </div>
+  <!-- /.page-inner -->
+  <!-- .page-sidebar -->
+  <div class="page-sidebar bg-light">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-xl-none">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" data-toggle="sidebar"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Atras</a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.sidebar-header -->
+    <!-- .sidebar-section -->
+    <div class="sidebar-section sidebar-section-fill">
+      <h1 class="page-title">
+        <i class="{{ icon }} text-muted mr-2"></i> {{ this.type + ' ' + this.title }} </h1>
+      <p class="text-muted"> {{ this.info }} </p>
+      <!-- .nav-scroller -->
+      <div class="nav-scroller border-bottom">
+        <!-- .nav-tabs -->
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a #detalles class="nav-link active show" data-toggle="tab" href="#detalles"
+              (click)="inGondola = false; inGas = false;"> Detalles del vehículo</a>
+          </li>
+          <li *ngIf="selected" class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#vehicle-rims" (click)="inGondola = false; inGas = false;">
+              Neumáticos</a>
+          </li>
+          <li *ngIf="selected && !isGondola" class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#gasolines"
+              (click)="inGondola = false; inGas = true;">Combustible</a>
+          </li>
+          <li *ngIf="selected && isTruckG" class="nav-item" (click)="inGondola = true; inGas = false;">
+            <a class="nav-link" data-toggle="tab" href="#type-gondola">Góndola</a>
+          </li>
+        </ul>
+        <!-- /.nav-tabs -->
+      </div>
+      <!-- /.nav-scroller -->
+      <!-- .tab-content -->
+      <div class="tab-content pt-4" id="clientDetailsTabs">
+        <!-- .tab-pane -->
+        <div class="tab-pane fade show active" id="detalles" role="tabpanel"
+          aria-labelledby="client-billing-contact-tab">
+          <div *ngIf="!selected" class="alert alert-warning has-icon" role="alert">
+            <div class="alert-icon">
+              <span class="fa fa-bullhorn"></span>
+            </div>Seleccione un vehículo para comenzar...
+          </div>
+          <!-- .card -->
+          <div class="card">
+            <!-- .card-body -->
+            <div *ngIf="!isGondola" class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <h2 id="client-billing-contact-tab" class="card-title"> #: {{this.vehicle.no}}
+                  {{ this.type + ' ' + this.title }} </h2>
+              </div>
+              <p class="metric-value h1 fa-pull-right">
+                <span class="value">{{ this.vehicle.km }}</span> <sup>km</sup>
+              </p>
+              <address>
+                <strong>Código Cementos Progreso:</strong> {{ this.vehicle.cp }}<br>
+                <strong>Marca:</strong> {{ this.vehicle._make.name }}<br>
+                <strong>Modelo:</strong> {{ this.vehicle.model }} <br>
+                <strong>mts:</strong> {{ this.vehicle.mts }}
+              </address>
+              <button *ngIf="selected" (click)="borraVehiculo( this.vehicle )" type="button"
+                class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span
+                  class="sr-only">Eliminar</span></button>
+              <button *ngIf="selected" [routerLink]="[ '/vehicle', this.vehicle._id ]" type="button"
+                class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="fa fa-pencil-alt"></i> <span
+                  class="sr-only">Editar</span></button>
             </div>
-            <!-- /.nav-scroller -->
-            <!-- .tab-content -->
-            <div class="tab-content pt-4" id="clientDetailsTabs">
-                <!-- .tab-pane -->
-                <div class="tab-pane fade show active" id="detalles" role="tabpanel" aria-labelledby="client-billing-contact-tab">
-                    <div *ngIf="!selected" class="alert alert-warning has-icon" role="alert">
-                        <div class="alert-icon">
-                            <span class="fa fa-bullhorn"></span>
-                        </div>Seleccione un vehículo para comenzar...
+            <!-- /.card-body -->
+            <!-- .card-body -->
+            <div *ngIf="isGondola" class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <h2 id="client-billing-contact-tab" class="card-title"> {{ this.type + ' ' + this.title }} </h2>
+              </div>
+              <button *ngIf="selected && gondola._truck === null" (click)="borrarGondola( this.gondola )" type="button"
+                class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span
+                  class="sr-only">Eliminar</span></button>
+              <button *ngIf="selected" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"
+                data-toggle="modal" data-target="#addGondola"><i class="fa fa-pencil-alt"></i> <span
+                  class="sr-only">Editar</span></button>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+          <!-- .card -->
+          <div *ngIf="selected" class="card mt-4">
+            <!-- .card-body -->
+            <div class="card-body">
+              <h2 class="card-title"> Componentes básicos del vehículo </h2>
+              <!-- .table-responsive -->
+              <div class="table-responsive">
+                <table class="table table-hover" style="min-width: 678px">
+                  <thead>
+                    <tr>
+                      <th> Código </th>
+                      <th> Nombre </th>
+                      <th> Descripcón </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let basic of basics">
+                      <td class="align-middle"> {{ basic.code }} </td>
+                      <td class="align-middle"> {{ basic.name }} </td>
+                      <td class="align-middle"> {{ basic.description }} </td>
+                      <td class="align-middle text-right">
+                        <button (click)="editarBasic( basic._id )" type="button"
+                          class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addBasic"><i
+                            class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                        <button (click)="deleteBasic( basic._id )" type="button"
+                          class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span
+                            class="sr-only">Eliminar</span></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+            <!-- .card-footer -->
+            <div class="card-footer">
+              <a href="#addBasic" (click)="this.basic = {};" class="card-footer-item" data-toggle="modal"><i
+                  class="fa fa-plus-circle mr-1"></i> Agregar componente</a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.tab-pane -->
+        <!-- .tab-pane -->
+        <div class="tab-pane fade" id="vehicle-rims" role="tabpanel" aria-labelledby="vehicle-rims-tab">
+          <!-- .card -->
+          <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <h2 class="card-title"><i class="fas fa-truck-monster"> Neumáticos del Vehículo</i></h2>
+            </div>
+            <!-- /.card-header -->
+            <!-- .card-body -->
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h3 id="client-tasks-tab" class="card-title"> </h3>
+                <div class="card-title-control">
+                  <div class="dropdown">
+                    <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false"><i class="fas fa-dharmachakra"></i></button>
+                    <div class="dropdown-arrow"></div>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a href="#addRim" class="dropdown-item" data-toggle="modal">Agregar nueva llanta</a>
                     </div>
-                    <!-- .card -->
-                    <div class="card">
-                        <!-- .card-body -->
-                        <div *ngIf="!isGondola" class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h2 id="client-billing-contact-tab" class="card-title"> #: {{this.vehicle.no}} {{ this.type + ' ' + this.title }} </h2>
-                            </div>
-                            <p class="metric-value h1 fa-pull-right">
-                                <span class="value">{{ this.vehicle.km }}</span> <sup>km</sup>
-                            </p>
-                            <address> 
-                                <strong>Código Cementos Progreso:</strong> {{ this.vehicle.cp }}<br> 
-                                <strong>Marca:</strong> {{ this.vehicle._make.name }}<br> 
-                                <strong>Modelo:</strong> {{ this.vehicle.model }} <br>
-                                <strong>mts:</strong> {{ this.vehicle.mts }}
-                            </address>
-                            <button *ngIf="selected" (click)="borraVehiculo( this.vehicle )" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
-                            <button *ngIf="selected" [routerLink]="[ '/vehicle', this.vehicle._id ]" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
-                        </div>
-                        <!-- /.card-body -->
-                        <!-- .card-body -->
-                        <div *ngIf="isGondola" class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h2 id="client-billing-contact-tab" class="card-title"> {{ this.type + ' ' + this.title }} </h2>
-                            </div>
-                            <button *ngIf="selected && gondola._truck === null" (click)="borrarGondola( this.gondola )" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
-                            <button *ngIf="selected" type="button" class="btn btn-sm btn-icon btn-secondary fa-pull-right" data-toggle="modal" data-target="#addGondola"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                    <!-- .card -->
-                    <div *ngIf="selected" class="card mt-4">
-                        <!-- .card-body -->
-                        <div class="card-body">
-                            <h2 class="card-title"> Componentes básicos del vehículo </h2>
-                            <!-- .table-responsive -->
-                            <div class="table-responsive">
-                                <table class="table table-hover" style="min-width: 678px">
-                                    <thead>
-                                        <tr>
-                                            <th> Código </th>
-                                            <th> Nombre </th>
-                                            <th> Descripcón </th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let basic of basics">
-                                            <td class="align-middle"> {{ basic.code }} </td>
-                                            <td class="align-middle"> {{ basic.name }} </td>
-                                            <td class="align-middle"> {{ basic.description }} </td>
-                                            <td class="align-middle text-right">
-                                                <button (click)="editarBasic( basic._id )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addBasic"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
-                                                <button (click)="deleteBasic( basic._id )" type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.card-body -->
-                        <!-- .card-footer -->
-                        <div class="card-footer">
-                            <a href="#addBasic" (click)="this.basic = {};" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar componente</a>
-                        </div>
-                        <!-- /.card-footer -->
-                    </div>
-                    <!-- /.card -->
+                  </div>
                 </div>
-                <!-- /.tab-pane -->
-                <!-- .tab-pane -->
-                <div class="tab-pane fade" id="vehicle-rims" role="tabpanel" aria-labelledby="vehicle-rims-tab">
-                    <!-- .card -->
-                    <div class="card">
-                        <!-- .card-header -->
-                        <div class="card-header d-flex">
-                            <h2 class="card-title"><i class="fas fa-truck-monster"> Neumáticos del Vehículo</i></h2>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- .card-body -->
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <h3 id="client-tasks-tab" class="card-title"> </h3>
-                                <div class="card-title-control">
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-dharmachakra"></i></button>
-                                        <div class="dropdown-arrow"></div>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#addRim" class="dropdown-item" data-toggle="modal">Agregar nueva llanta</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- .todo-list -->
-                            <!-- .table-responsive -->
-                            <div class="table-responsive">
-                                <table class="table table-hover" style="min-width: 678px">
-                                    <thead>
-                                        <tr>
-                                            <th> Código </th>
-                                            <th> Descripcón </th>
-                                            <th> Eje </th>
-                                            <th> Posición </th>
-                                            <th> Lado </th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let pit of pits">
-                                            <td class="align-middle"> {{ pit.rim.code }} </td>
-                                            <td class="align-middle"> {{ pit.rim.desc }} </td>
-                                            <td class="align-middle"> {{ pit.axis }} </td>
-                                            <td class="align-middle"> {{ pit.place }} </td>
-                                            <td class="align-middle"> {{ pit.side }} </td>
-                                            <td class="align-middle text-right">
-                                                <button (click)="editarPit( pit._id, false )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addPit"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
-                                                <button (click)="editarPit( pit._id, true )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addPit"><i class="fas fa-wrench"></i> <span class="sr-only">Mantenimiento</span></button>
-                                                <button (click)="deletePit( pit._id )" type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.card-body -->
-                        <!-- .card-footer -->
-                        <div class="card-footer">
-                            <a href="#addPit" (click)="resetModal()" class="card-footer-item" data-toggle="modal"><i class="fa fa-plus-circle mr-1"></i> Agregar Neumático</a>
-                        </div>
-                        <!-- /.card-footer -->
+              </div>
+              <!-- .todo-list -->
+              <!-- .table-responsive -->
+              <div class="table-responsive">
+                <table class="table table-hover" style="min-width: 678px">
+                  <thead>
+                    <tr>
+                      <th> Código </th>
+                      <th> Descripcón </th>
+                      <th> Eje </th>
+                      <th> Posición </th>
+                      <th> Lado </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let pit of pits">
+                      <td class="align-middle"> {{ pit.rim.code }} </td>
+                      <td class="align-middle"> {{ pit.rim.desc }} </td>
+                      <td class="align-middle"> {{ pit.axis }} </td>
+                      <td class="align-middle"> {{ pit.place }} </td>
+                      <td class="align-middle"> {{ pit.side }} </td>
+                      <td class="align-middle text-right">
+                        <button (click)="editarPit( pit._id, false )" type="button"
+                          class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addPit"><i
+                            class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                        <button (click)="editarPit( pit._id, true )" type="button"
+                          class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addPit"><i
+                            class="fas fa-wrench"></i> <span class="sr-only">Mantenimiento</span></button>
+                        <button (click)="deletePit( pit._id )" type="button"
+                          class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span
+                            class="sr-only">Eliminar</span></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+            <!-- .card-footer -->
+            <div class="card-footer">
+              <a href="#addPit" (click)="resetModal()" class="card-footer-item" data-toggle="modal"><i
+                  class="fa fa-plus-circle mr-1"></i> Agregar Neumático</a>
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+          <!-- .card -->
+          <div class="card">
+            <div class="card-header border-0" id="headingCompletedTodo">
+              <button class="btn btn-block btn-reset d-flex justify-content-between collapsed" data-toggle="collapse"
+                data-target="#completedTodo" aria-expanded="false" aria-controls="completedTodo"><span><i
+                    class="fa fa-history text-muted mr-2"></i> Mantenimientos Realizados ( {{ Hpits.length }} )</span>
+                <span class="collapse-indicator"><i class="fa fa-fw fa-chevron-down"></i></span></button>
+            </div>
+            <div id="completedTodo" class="collapse" aria-labelledby="headingCompletedTodo">
+              <div class="card-body pt-0">
+                <div class="d-flex justify-content-between">
+                  <h3 id="client-tasks-tab" class="card-title"> </h3>
+                  <div class="card-title-control">
+                    <div class="dropdown">
+                      <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"><i class="fas fa-dharmachakra"></i></button>
+                      <div class="dropdown-arrow"></div>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#addRim" class="dropdown-item" data-toggle="modal">Agregar nueva llanta</a>
+                      </div>
                     </div>
-                    <!-- /.card -->
-                    <!-- .card -->
-                    <div class="card">
-                        <div class="card-header border-0" id="headingCompletedTodo">
-                            <button class="btn btn-block btn-reset d-flex justify-content-between collapsed" data-toggle="collapse" data-target="#completedTodo" aria-expanded="false" aria-controls="completedTodo"><span><i class="fa fa-history text-muted mr-2"></i> Mantenimientos Realizados ( {{ Hpits.length }} )</span> <span class="collapse-indicator"><i class="fa fa-fw fa-chevron-down"></i></span></button>
-                        </div>
-                        <div id="completedTodo" class="collapse" aria-labelledby="headingCompletedTodo">
-                            <div class="card-body pt-0">
-                                <div class="d-flex justify-content-between">
-                                    <h3 id="client-tasks-tab" class="card-title"> </h3>
-                                    <div class="card-title-control">
-                                        <div class="dropdown">
-                                            <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-dharmachakra"></i></button>
-                                            <div class="dropdown-arrow"></div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#addRim" class="dropdown-item" data-toggle="modal">Agregar nueva llanta</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- .todo-list -->
-                                <div class="table-responsive">
-                                    <table id="table1" class="table table-hover" style="min-width: 678px">
-                                        <thead>
-                                            <tr>
-                                                <th> Fecha de Instalación </th>
-                                                <th> Llanta </th>
-                                                <th> Posición </th>
-                                                <th> Costo </th>
-                                                <th> Kilometraje </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let pit of Hpits">
-                                                <td class="align-middle"> {{ dtService.fromJsonDate(pit.date) }} </td>
-                                                <td class="align-middle"> {{ pit.rim.code }} {{ pit.rim.desc }} </td>
-                                                <td class="align-middle"> {{ pit.axis }} {{ pit.place }} {{ pit.side }} </td>
-                                                <td class="align-middle"> {{ pit.total }} </td>
-                                                <td class="align-middle"> {{ pit.km }} </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card -->
+                  </div>
                 </div>
-                <!-- /.tab-pane -->
-                <!-- .tab-pane -->
-                <div class="tab-pane fade" id="gasolines" role="tabpanel" aria-labelledby="client-projects-tab">
-                    <!-- .card -->
-                    <div class="card">
-                        <!-- .card-header -->
-                        <div class="card-header d-flex">
-                            <!-- .form-group -->
-                            <div class="form-group col-3">
-                                <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
-                            </div>
-                            <!-- /.form-group -->
-                            <!-- .form-group -->
-                            <div class="form-group col-3">
-                                <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
-                            </div>
-                            <!-- /.form-group -->
-                            <button type="button" (click)="searchG()" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
-                            <button type="button" (click)="resetModal()" data-toggle="modal" data-target="#addGas" class="btn btn-outline-primary ml-auto">Agregar Cupón <i class="fas fa-gas-pump"></i></button>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="row">
-                            <!-- .col -->
-                            <div class="col-3">
-                                <!-- .metric -->
-                                <div class="metric">
-                                    <p class="metric-label"> Total Gastado </p>
-                                    <h5 class="metric-value">Q {{ totalGas | number : '1.2-2' }} </h5>
-                                </div>
-                                <!-- .metric -->
-                            </div>
-                            <!-- /.col -->
-                            <!-- .col -->
-                            <div class="col-2">
-                                <!-- .metric -->
-                                <div class="metric">
-                                    <p class="metric-label"> Galones </p>
-                                    <h5 class="metric-value"> {{ totalGal | number : '1.0' }} </h5>
-                                </div>
-                                <!-- .metric -->
-                            </div>
-                            <!-- /.col -->
-                            <!-- .col -->
-                            <div class="col-2">
-                                <!-- .metric -->
-                                <div class="metric">
-                                    <p class="metric-label"> Cupones </p>
-                                    <h5 class="metric-value"> {{ this.gasolines.length }} </h5>
-                                </div>
-                                <!-- .metric -->
-                            </div>
-                            <!-- /.col -->
-                            <!-- .col -->
-                            <div class="col-5">
-                                <!-- .metric -->
-                                <div class="metric">
-                                    <p class="metric-label"> Fechas consultadas </p>
-                                    <p class=" metric-value"> {{ this.fecha1Consulta + ' - ' + this.fecha2Consulta }} </p>
-                                </div>
-                                <!-- .metric -->
-                            </div>
-                            <!-- /.col -->
-                            <!-- .col -->
-                            <div class="col-10">
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <hr>
-                        <!-- .table-responsive -->
-                        <div class="table-responsive">
-                            <!-- .table -->
-                            <table class="table" #customLoadingTemplate>
-                                <!-- thead -->
-                                <thead>
-                                    <tr>
-                                        <th> Código </th>
-                                        <th> Fecha </th>
-                                        <th> Galones </th>
-                                        <th> Total </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <!-- /thead -->
-                                <!-- tbody -->
-                                <tbody>
-                                    <!-- tr -->
-                                    <tr *ngFor="let gasoline of gasolines">
-                                        <td class="align-middle">{{ gasoline.code }}</td>
-                                        <td class="align-middle">
-                                            <h6>{{ dtService.fromJsonDate(gasoline.date) }}</h6>
-                                        </td>
-                                        <td class="align-middle"> {{ gasoline.gallons }} </td>
-                                        <td class="align-middle">Q {{ gasoline.total | number : '1.2-2' }} </td>
-                                        <td class="align-middle text-right">
-                                            <button (click)="editarGas( gasoline._id )" type="button" class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
-                                            <button (click)="deleteGas( gasoline._id )" type="button" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span class="sr-only">Eliminar</span></button>
-                                        </td>
-                                    </tr>
-                                    <!-- /tr -->
-                                </tbody>
-                                <!-- /tbody -->
-                            </table>
-                        </div>
-                        <!-- /.table-responsive -->
-                        <ng-template #customLoadingTemplate>
-                        </ng-template>
-                        <!-- /.table -->
-                        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
-                    </div>
-                    <!-- /.card -->
+                <!-- .todo-list -->
+                <div class="table-responsive">
+                  <table id="table1" class="table table-hover" style="min-width: 678px">
+                    <thead>
+                      <tr>
+                        <th> Fecha de Instalación </th>
+                        <th> Llanta </th>
+                        <th> Posición </th>
+                        <th> Costo </th>
+                        <th> Kilometraje </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let pit of Hpits">
+                        <td class="align-middle"> {{ dtService.fromJsonDate(pit.date) }} </td>
+                        <td class="align-middle"> {{ pit.rim.code }} {{ pit.rim.desc }} </td>
+                        <td class="align-middle"> {{ pit.axis }} {{ pit.place }} {{ pit.side }} </td>
+                        <td class="align-middle"> {{ pit.total }} </td>
+                        <td class="align-middle"> {{ pit.km }} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.tab-pane -->
+        <!-- .tab-pane -->
+        <div class="tab-pane fade" id="gasolines" role="tabpanel" aria-labelledby="client-projects-tab">
+          <!-- .card -->
+          <div class="card">
+            <!-- .card-header -->
+            <div class="card-header d-flex">
+              <!-- .form-group -->
+              <div class="form-group col-3">
+                <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group col-3">
+                <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
+              </div>
+              <!-- /.form-group -->
+              <button type="button" (click)="searchG()" class="btn btn-primary"><i class="fas fa-search"></i>
+                Buscar</button>
+              <button type="button" (click)="resetModal()" data-toggle="modal" data-target="#addGas"
+                class="btn btn-outline-primary ml-auto">Agregar Cupón <i class="fas fa-gas-pump"></i></button>
+            </div>
+            <!-- /.card-header -->
+            <div class="row">
+              <!-- .col -->
+              <div class="col-3">
+                <!-- .metric -->
+                <div class="metric">
+                  <p class="metric-label"> Total Gastado </p>
+                  <h5 class="metric-value">Q {{ totalGas | number : '1.2-2' }} </h5>
+                </div>
+                <!-- .metric -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-2">
+                <!-- .metric -->
+                <div class="metric">
+                  <p class="metric-label"> Galones </p>
+                  <h5 class="metric-value"> {{ totalGal | number : '1.0' }} </h5>
+                </div>
+                <!-- .metric -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-2">
+                <!-- .metric -->
+                <div class="metric">
+                  <p class="metric-label"> Cupones </p>
+                  <h5 class="metric-value"> {{ this.gasolines.length }} </h5>
+                </div>
+                <!-- .metric -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-5">
+                <!-- .metric -->
+                <div class="metric">
+                  <p class="metric-label"> Fechas consultadas </p>
+                  <p class=" metric-value"> {{ this.fecha1Consulta + ' - ' + this.fecha2Consulta }} </p>
+                </div>
+                <!-- .metric -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-10">
+              </div>
+              <!-- /.col -->
+            </div>
+            <hr>
+            <!-- .table-responsive -->
+            <div class="table-responsive">
+              <!-- .table -->
+              <table class="table table-striped" #customLoadingTemplate>
+                <!-- thead -->
+                <thead>
+                  <tr>
+                    <th> Código </th>
+                    <th> Fecha </th>
+                    <th> Galones </th>
+                    <th> Total </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <!-- /thead -->
+                <!-- tbody -->
+                <tbody>
+                  <!-- tr -->
+                  <tr *ngFor="let gasoline of gasolines">
+                    <td class="align-middle">{{ gasoline.code }}</td>
+                    <td class="align-middle">
+                      <h6>{{ dtService.fromJsonDate(gasoline.date) }}</h6>
+                    </td>
+                    <td class="align-middle"> {{ gasoline.gallons }} </td>
+                    <td class="align-middle">Q {{ gasoline.total | number : '1.2-2' }} </td>
+                    <td class="align-middle text-right">
+                      <button (click)="editarGas( gasoline._id )" type="button"
+                        class="btn btn-sm btn-icon btn-secondary" data-toggle="modal" data-target="#addGas"><i
+                          class="fa fa-pencil-alt"></i> <span class="sr-only">Editar</span></button>
+                      <button (click)="deleteGas( gasoline._id )" type="button"
+                        class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span
+                          class="sr-only">Eliminar</span></button>
+                    </td>
+                  </tr>
+                  <!-- /tr -->
+                </tbody>
+                <!-- /tbody -->
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+            <ng-template #customLoadingTemplate>
+            </ng-template>
+            <!-- /.table -->
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+            </ngx-loading>
+          </div>
+          <!-- /.card -->
 
-                </div>
-                <!-- /.tab-pane -->
-                <!-- .tab-pane -->
-                <div *ngIf="selected && isTruckG" class="tab-pane fade" id="type-gondola" role="tabpanel" aria-labelledby="client-billing-contact-tab">
-                    <!-- .card -->
-                    <div class="card col-md-6">
-                        <!-- .card-body -->
-                        <div *ngIf="vehicle._gondola !== null" class="card-body">
-                            <!-- grid row -->
-                            <div class="row text-center text-sm-left">
-                                <!-- grid column -->
-                                <div class="col-sm-auto col-12 mb-2">
-                                    <span class="tile tile-xl bg-pink"><i class="fas fa-truck-loading"></i></span>
-                                </div>
-                                <!-- /grid column -->
-                                <!-- grid column -->
-                                <div class="col-12">
-                                    <h1 class="page-title"> Góndola Asignada: {{ vehicle._gondola.plate }} </h1>
-                                    <div class="page-item">
-                                        <button (click)="desasignarGondola( vehicle._gondola )" type="button" class="btn btn-lg btn-icon btn-secondary fa-pull-right"><i class="fas fa-toggle-off"></i> <span class="sr-only">Remover</span></button>
-                                    </div>
-                                </div>
-                                <!-- /grid column -->
-                            </div>
-                            <!-- /grid row -->
-                        </div>
-                        <!-- /.card-body -->
-                        <!-- .card-body -->
-                        <div *ngIf="vehicle._gondola === null" class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h2 id="client-billing-contact-tab" class="card-title"> No tiene una Góndola Asignada </h2>
-                            </div>
-                            <!-- grid column -->
-                            <div class="col">
-                                <!-- .card -->
-                                <div class="card card-fluid">
-                                    <!-- .card-header -->
-                                    <div class="card-header border-0">
-                                        <div class="d-flex align-items-center">
-                                            <span class="mr-auto">Góndolas Disponibles</span>
-                                            <div class="dropdown">
-                                                <button type="button" class="btn btn-icon btn-light" data-toggle="modal" data-target="#addGondola"><i class="fas fa-plus-square"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.card-header -->
-                                    <!-- .table-responsive -->
-                                    <div class="table-responsive">
-                                        <!-- .table -->
-                                        <table class="table table-striped">
-                                            <!-- thead -->
-                                            <thead class="thead-">
-                                                <tr>
-                                                    <th style="min-width:200px"> Placa </th>
-                                                    <th> Asignar </th>
-                                                </tr>
-                                            </thead>
-                                            <!-- /thead -->
-                                            <!-- tbody -->
-                                            <tbody>
-                                                <!-- tr -->
-                                                <tr *ngFor="let gondola of gondolasAv">
-                                                    <td> {{ gondola.plate }} </td>
-                                                    <td>
-                                                        <button (click)="asignarGondola( gondola )" type="button" class="btn btn-sm btn-icon btn-secondary"><i class="fas fa-toggle-on"></i> <span class="sr-only">Asignar</span></button>
-                                                    </td>
-                                                </tr>
-                                                <!-- /tr -->
-                                            </tbody>
-                                            <!-- /tbody -->
-                                        </table>
-                                        <!-- /.table -->
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!-- /grid column -->
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
         </div>
-        <!-- /.sidebar-section -->
-    </div>
-    <!-- /.page-sidebar -->
-    <!-- Keep in mind that modals should be placed outsite of page sidebar -->
-    <!-- .modalBASIC -->
-    <div class="modal fade" id="addBasic" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
-        <!-- .modal-dialog -->
-        <div class="modal-dialog" role="document">
-            <!-- .modal-content -->
-            <div class="modal-content">
-                <!-- .modal-header -->
-                <div class="modal-header">
-                    <h5 class="modal-title"> #: {{this.vehicle.no}} {{ this.type + ' ' + this.title }} </h5>
+        <!-- /.tab-pane -->
+        <!-- .tab-pane -->
+        <div *ngIf="selected && isTruckG" class="tab-pane fade" id="type-gondola" role="tabpanel"
+          aria-labelledby="client-billing-contact-tab">
+          <!-- .card -->
+          <div class="card col-md-6">
+            <!-- .card-body -->
+            <div *ngIf="vehicle._gondola !== null" class="card-body">
+              <!-- grid row -->
+              <div class="row text-center text-sm-left">
+                <!-- grid column -->
+                <div class="col-sm-auto col-12 mb-2">
+                  <span class="tile tile-xl bg-pink"><i class="fas fa-truck-loading"></i></span>
                 </div>
-                <!-- /.modal-header -->
-                <!-- .modal-body -->
-                <div class="modal-body">
-                    <!-- .form-group -->
-                    <div class="form-group">
-                        <div class="form-label-group">
-                            <input [(ngModel)]="basic.code" type="text" class="form-control" name="codeP" data-autofocus="true"> <label for="code">Código</label>
-                        </div>
-                    </div>
-                    <!-- /.form-group -->
-                    <!-- .form-group -->
-                    <div class="form-group">
-                        <div class="form-label-group">
-                            <input [(ngModel)]="basic.name" type="text" name="nameP" class="form-control"> <label for="name">Nombre</label>
-                        </div>
-                    </div>
-                    <!-- /.form-group -->
-                    <!-- .form-group -->
-                    <div class="form-group">
-                        <div class="form-label-group">
-                            <textarea [(ngModel)]="basic.description" name="descriptionP" cols="30" rows="10" class="form-control" placeholder="Detalles del componente"></textarea>
-                        </div>
-                    </div>
-                    <!-- /.form-group -->
+                <!-- /grid column -->
+                <!-- grid column -->
+                <div class="col-12">
+                  <h1 class="page-title"> Góndola Asignada: {{ vehicle._gondola.plate }} </h1>
+                  <div class="page-item">
+                    <button (click)="desasignarGondola( vehicle._gondola )" type="button"
+                      class="btn btn-lg btn-icon btn-secondary fa-pull-right"><i class="fas fa-toggle-off"></i> <span
+                        class="sr-only">Remover</span></button>
+                  </div>
                 </div>
-                <!-- /.modal-body -->
-                <!-- .modal-footer -->
-                <div class="modal-footer">
-                    <button (click)="addBasic()" type="submit" class="btn btn-primary">Guardar</button> <button #closeP type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                </div>
-                <!-- /.modal-footer -->
+                <!-- /grid column -->
+              </div>
+              <!-- /grid row -->
             </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modalBASIC -->
-    <!-- .modalRIM -->
-    <div class="modal fade" id="addRim" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
-        <!-- .modal-dialog -->
-        <div class="modal-dialog" role="document">
-            <!-- .modal-content -->
-            <div class="modal-content">
-                <!-- .modal-header -->
-                <div class="modal-header">
-                    <h5 class="modal-title"> Crear una nueva Llanta </h5>
+            <!-- /.card-body -->
+            <!-- .card-body -->
+            <div *ngIf="vehicle._gondola === null" class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <h2 id="client-billing-contact-tab" class="card-title"> No tiene una Góndola Asignada </h2>
+              </div>
+              <!-- grid column -->
+              <div class="col">
+                <!-- .card -->
+                <div class="card card-fluid">
+                  <!-- .card-header -->
+                  <div class="card-header border-0">
+                    <div class="d-flex align-items-center">
+                      <span class="mr-auto">Góndolas Disponibles</span>
+                      <div class="dropdown">
+                        <button type="button" class="btn btn-icon btn-light" data-toggle="modal"
+                          data-target="#addGondola"><i class="fas fa-plus-square"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <!-- .table-responsive -->
+                  <div class="table-responsive">
+                    <!-- .table -->
+                    <table class="table table-striped">
+                      <!-- thead -->
+                      <thead class="thead-">
+                        <tr>
+                          <th style="min-width:200px"> Placa </th>
+                          <th> Asignar </th>
+                        </tr>
+                      </thead>
+                      <!-- /thead -->
+                      <!-- tbody -->
+                      <tbody>
+                        <!-- tr -->
+                        <tr *ngFor="let gondola of gondolasAv">
+                          <td> {{ gondola.plate }} </td>
+                          <td>
+                            <button (click)="asignarGondola( gondola )" type="button"
+                              class="btn btn-sm btn-icon btn-secondary"><i class="fas fa-toggle-on"></i> <span
+                                class="sr-only">Asignar</span></button>
+                          </td>
+                        </tr>
+                        <!-- /tr -->
+                      </tbody>
+                      <!-- /tbody -->
+                    </table>
+                    <!-- /.table -->
+                  </div>
+                  <!-- /.table-responsive -->
                 </div>
-                <!-- /.modal-header -->
-                <!-- .modal-body -->
-                <div class="modal-body">
-                    <form ngNativeValidate #f="ngForm" (ngSubmit)="addRim( f )">
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input [(ngModel)]="rim.code" type="text" class="form-control" name="codeR" data-autofocus="true" required> <label for="code">Código</label>
-                            </div>
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input [(ngModel)]="rim.desc" type="text" name="descR" class="form-control" required> <label for="name">Descripión</label>
-                            </div>
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .modal-footer -->
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMR type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                        </div>
-                        <!-- /.modal-footer -->
-                    </form>
-                </div>
-                <!-- /.modal-body -->
+                <!-- /.card -->
+              </div>
+              <!-- /grid column -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.tab-pane -->
+      </div>
+      <!-- /.tab-content -->
     </div>
-    <!-- /.modalRIM -->
-    <!-- .modalPITS -->
-    <div class="modal fade" id="addPit" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
-        <!-- .modal-dialog -->
-        <div class="modal-dialog" role="document">
-            <!-- .modal-content -->
-            <div class="modal-content">
-                <!-- .modal-header -->
-                <div class="modal-header">
-                    <h5 class="modal-title"> Agregar un neumático </h5>
-                </div>
-                <!-- /.modal-header -->
+    <!-- /.sidebar-section -->
+  </div>
+  <!-- /.page-sidebar -->
+  <!-- Keep in mind that modals should be placed outsite of page sidebar -->
+  <!-- .modalBASIC -->
+  <div class="modal fade" id="addBasic" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel"
+    aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h5 class="modal-title"> #: {{this.vehicle.no}} {{ this.type + ' ' + this.title }} </h5>
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <!-- .form-group -->
+          <div class="form-group">
+            <div class="form-label-group">
+              <input [(ngModel)]="basic.code" type="text" class="form-control" name="codeP" data-autofocus="true">
+              <label for="code">Código</label>
+            </div>
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <div class="form-label-group">
+              <input [(ngModel)]="basic.name" type="text" name="nameP" class="form-control"> <label
+                for="name">Nombre</label>
+            </div>
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group">
+            <div class="form-label-group">
+              <textarea [(ngModel)]="basic.description" name="descriptionP" cols="30" rows="10" class="form-control"
+                placeholder="Detalles del componente"></textarea>
+            </div>
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <!-- /.modal-body -->
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button (click)="addBasic()" type="submit" class="btn btn-primary">Guardar</button> <button #closeP
+            type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+        </div>
+        <!-- /.modal-footer -->
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modalBASIC -->
+  <!-- .modalRIM -->
+  <div class="modal fade" id="addRim" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel"
+    aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h5 class="modal-title"> Crear una nueva Llanta </h5>
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <form ngNativeValidate #f="ngForm" (ngSubmit)="addRim( f )">
+            <!-- .form-group -->
+            <div class="form-group">
+              <div class="form-label-group">
+                <input [(ngModel)]="rim.code" type="text" class="form-control" name="codeR" data-autofocus="true"
+                  required> <label for="code">Código</label>
+              </div>
+            </div>
+            <!-- /.form-group -->
+            <!-- .form-group -->
+            <div class="form-group">
+              <div class="form-label-group">
+                <input [(ngModel)]="rim.desc" type="text" name="descR" class="form-control" required> <label
+                  for="name">Descripión</label>
+              </div>
+            </div>
+            <!-- /.form-group -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMR type="button"
+                class="btn btn-light" data-dismiss="modal">Cerrar</button>
+            </div>
+            <!-- /.modal-footer -->
+          </form>
+        </div>
+        <!-- /.modal-body -->
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modalRIM -->
+  <!-- .modalPITS -->
+  <div class="modal fade" id="addPit" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h5 class="modal-title"> Agregar un neumático </h5>
+        </div>
+        <!-- /.modal-header -->
 
-                <form ngNativeValidate [formGroup]="formPit" (ngSubmit)="addPit()" action="#">
-                    <!-- .modal-body -->
-                    <div class="modal-body">
-                        <fieldset>
-                            <legend> Lugar </legend>
-                            <!-- .form-group -->
-                            <div class="form-group">
-                                <div class="form-label-group">
-                                    <input formControlName="axis" name="axis" type="text" class="form-control" data-autofocus="true" required> <label for="axis">Eje</label>
-                                </div>
-                            </div>
-                            <!-- /.form-group -->
-                            <!-- .form-group -->
-                            <div class="form-group">
-                                <div class="form-label-group">
-                                    <input formControlName="place" name="place" type="text" class="form-control" required> <label for="place">Posición</label>
-                                </div>
-                            </div>
-                            <!-- /.form-group -->
-                            <!-- .form-group -->
-                            <div class="form-group">
-                                <div class="form-label-group">
-                                    <input formControlName="side" name="side" type="text" class="form-control" required> <label for="name">Lado</label>
-                                </div>
-                            </div>
-                            <!-- /.form-group -->
-                        </fieldset>
+        <form ngNativeValidate [formGroup]="formPit" (ngSubmit)="addPit()" action="#">
+          <!-- .modal-body -->
+          <div class="modal-body">
+            <fieldset>
+              <legend> Lugar </legend>
+              <!-- .form-group -->
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input formControlName="axis" name="axis" type="text" class="form-control" data-autofocus="true"
+                    required> <label for="axis">Eje</label>
+                </div>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input formControlName="place" name="place" type="text" class="form-control" required> <label
+                    for="place">Posición</label>
+                </div>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group">
+                <div class="form-label-group">
+                  <input formControlName="side" name="side" type="text" class="form-control" required> <label
+                    for="name">Lado</label>
+                </div>
+              </div>
+              <!-- /.form-group -->
+            </fieldset>
 
-                        <fieldset>
-                            <legend> Mantenimiento </legend>
-                            <!-- .form-group -->
-                            <div class="form-group">
-                                <select #selectR name="rim" class="form-control select2" id="rim" style="width:100%!important;">
-                                    <option value=""> Seleccione una llanta </option>
-                                    <option *ngFor="let rim of rims" [selected]="rim._id === tempRim" [value]="rim._id"> {{ rim.code }}  {{ rim.desc }}
-                                    </option>
-                                </select>
-                            </div>
-                            <!-- /.form-group -->
-                            <!-- .form-group -->
-                            <div class="form-group">
-                                <label class="control-label" for="flatpickr">Fecha de Instalación</label> <input #datePit formControlName="date" name="date" id="flatpickr" type="text" class="form-control">
-                            </div>
-                            <!-- /.form-group -->
-                            <!-- .form-group -->
-                            <div class="form-group">
-                                <label for="pi9">Total Instalación</label>
-                                <!-- .input-group -->
-                                <div class="input-group">
-                                    <label class="input-group-prepend" for="pi9"><span class="badge">Q</span></label> <input formControlName="total" name="total" type="number" step="0.01" class="form-control" id="pi9">
-                                </div>
-                                <!-- /.input-group -->
-                            </div>
-                            <!-- /.form-group -->
-                        </fieldset>
-                    </div>
-                    <!-- /.modal-body -->
-                    <!-- .modal-footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMP type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                    </div>
-                    <!-- /.modal-footer -->
+            <fieldset>
+              <legend> Mantenimiento </legend>
+              <!-- .form-group -->
+              <div class="form-group">
+                <select #selectR name="rim" class="form-control select2" id="rim" style="width:100%!important;">
+                  <option value=""> Seleccione una llanta </option>
+                  <option *ngFor="let rim of rims" [selected]="rim._id === tempRim" [value]="rim._id"> {{ rim.code }}
+                    {{ rim.desc }}
+                  </option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group">
+                <label class="control-label" for="flatpickr">Fecha de Instalación</label> <input #datePit
+                  formControlName="date" name="date" id="flatpickr" type="text" class="form-control">
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="pi9">Total Instalación</label>
+                <!-- .input-group -->
+                <div class="input-group">
+                  <label class="input-group-prepend" for="pi9"><span class="badge">Q</span></label> <input
+                    formControlName="total" name="total" type="number" step="0.01" class="form-control" id="pi9">
+                </div>
+                <!-- /.input-group -->
+              </div>
+              <!-- /.form-group -->
+            </fieldset>
+          </div>
+          <!-- /.modal-body -->
+          <!-- .modal-footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMP type="button"
+              class="btn btn-light" data-dismiss="modal">Cerrar</button>
+          </div>
+          <!-- /.modal-footer -->
 
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
+        </form>
+      </div>
+      <!-- /.modal-content -->
     </div>
-    <!-- /.modalPITS -->
-    <!-- .modalGASOLINE -->
-    <div class="modal fade" id="addGas" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
-        <!-- .modal-dialog -->
-        <div class="modal-dialog" role="document">
-            <!-- .modal-content -->
-            <div class="modal-content">
-                <!-- .modal-header -->
-                <div class="modal-header">
-                    <h5 class="modal-title"> #: {{this.vehicle.no}} {{ this.type + ' ' + this.title }} </h5>
-                </div>
-                <!-- /.modal-header -->
-                <form ngNativeValidate [formGroup]="formGas" (ngSubmit)="addGas()" action="#">
-                    <!-- .modal-body -->
-                    <div class="modal-body">
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input #codeG formControlName="code" type="text" class="form-control" name="codeG" data-autofocus="true"> <label for="codeG">Código del Cupón</label>
-                            </div>
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <label class="control-label" for="flatpickr">Fecha del Cúpon</label> <input #dateG formControlName="dateG" name="dateG" id="flatpickr" type="text" class="form-control" required>
-                        </div>
-                        <!-- /.form-group -->
-                        <div class="row">
-                            <!-- .form-group -->
-                            <div class="form-group col-6">
-                                <label for="gallons">Galones</label>
-                                <!-- .input-group -->
-                                <div class="input-group">
-                                    <label class="input-group-prepend" for="gallons"><span class="badge"></span></label> <input formControlName="gallons" name="gallons" type="number" step="0.01" min="0" class="form-control" id="gallons" placeholder="Ingrese una cantidad"
-                                        required>
-                                </div>
-                                <!-- /.input-group -->
-                            </div>
-                            <!-- /.form-group -->
-                            <!-- .form-group -->
-                            <div class="form-group col-6">
-                                <label for="pi9">Total</label>
-                                <!-- .input-group -->
-                                <div class="input-group">
-                                    <label class="input-group-prepend" for="total"><span class="badge">Q</span></label> <input formControlName="total" name="total" type="number" step="0.01" min="0" class="form-control" id="total">
-                                </div>
-                                <!-- /.input-group -->
-                            </div>
-                            <!-- /.form-group -->
-                        </div>
-                    </div>
-                    <!-- /.modal-body -->
-                    <!-- .modal-footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMG type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                    </div>
-                    <!-- /.modal-footer -->
-                </form>
-            </div>
-            <!-- /.modal-content -->
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modalPITS -->
+  <!-- .modalGASOLINE -->
+  <div class="modal fade" id="addGas" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h5 class="modal-title"> #: {{this.vehicle.no}} {{ this.type + ' ' + this.title }} </h5>
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modalGASOLINE -->
-    <!-- .modalGondola -->
-    <div class="modal fade" id="addGondola" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel" aria-hidden="true">
-        <!-- .modal-dialog -->
-        <div class="modal-dialog" role="document">
-            <!-- .modal-content -->
-            <div class="modal-content">
-                <!-- .modal-header -->
-                <div class="modal-header">
-                    <h5 class="modal-title"> Crear una nueva Góndola </h5>
-                </div>
-                <!-- /.modal-header -->
-                <!-- .modal-body -->
-                <div class="modal-body">
-                    <form ngNativeValidate #fG="ngForm" (ngSubmit)="addGondola( fG )">
-                        <!-- .form-group -->
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <input [(ngModel)]="gondola.plate" type="text" class="form-control" name="plateG" data-autofocus="true" required> <label for="plate">Placa</label>
-                            </div>
-                        </div>
-                        <!-- /.form-group -->
-                        <!-- .modal-footer -->
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMGo type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
-                        </div>
-                        <!-- /.modal-footer -->
-                    </form>
-                </div>
-                <!-- /.modal-body -->
+        <!-- /.modal-header -->
+        <form ngNativeValidate [formGroup]="formGas" (ngSubmit)="addGas()" action="#">
+          <!-- .modal-body -->
+          <div class="modal-body">
+            <!-- .form-group -->
+            <div class="form-group">
+              <div class="form-label-group">
+                <input #codeG formControlName="code" type="text" class="form-control" name="codeG"
+                  data-autofocus="true"> <label for="codeG">Código del Cupón</label>
+              </div>
             </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
+            <!-- /.form-group -->
+            <!-- .form-group -->
+            <div class="form-group">
+              <label class="control-label" for="flatpickr">Fecha del Cúpon</label> <input #dateG formControlName="dateG"
+                name="dateG" id="flatpickr" type="text" class="form-control" required>
+            </div>
+            <!-- /.form-group -->
+            <div class="row">
+              <!-- .form-group -->
+              <div class="form-group col-6">
+                <label for="gallons">Galones</label>
+                <!-- .input-group -->
+                <div class="input-group">
+                  <label class="input-group-prepend" for="gallons"><span class="badge"></span></label> <input
+                    formControlName="gallons" name="gallons" type="number" step="0.01" min="0" class="form-control"
+                    id="gallons" placeholder="Ingrese una cantidad" required>
+                </div>
+                <!-- /.input-group -->
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group col-6">
+                <label for="pi9">Total</label>
+                <!-- .input-group -->
+                <div class="input-group">
+                  <label class="input-group-prepend" for="total"><span class="badge">Q</span></label> <input
+                    formControlName="total" name="total" type="number" step="0.01" min="0" class="form-control"
+                    id="total">
+                </div>
+                <!-- /.input-group -->
+              </div>
+              <!-- /.form-group -->
+            </div>
+          </div>
+          <!-- /.modal-body -->
+          <!-- .modal-footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMG type="button"
+              class="btn btn-light" data-dismiss="modal">Cerrar</button>
+          </div>
+          <!-- /.modal-footer -->
+        </form>
+      </div>
+      <!-- /.modal-content -->
     </div>
-    <!-- /.modalGondola -->
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modalGASOLINE -->
+  <!-- .modalGondola -->
+  <div class="modal fade" id="addGondola" tabindex="-1" role="dialog" aria-labelledby="clientContactNewModalLabel"
+    aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h5 class="modal-title"> Crear una nueva Góndola </h5>
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <form ngNativeValidate #fG="ngForm" (ngSubmit)="addGondola( fG )">
+            <!-- .form-group -->
+            <div class="form-group">
+              <div class="form-label-group">
+                <input [(ngModel)]="gondola.plate" type="text" class="form-control" name="plateG" data-autofocus="true"
+                  required> <label for="plate">Placa</label>
+              </div>
+            </div>
+            <!-- /.form-group -->
+            <!-- .modal-footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMGo type="button"
+                class="btn btn-light" data-dismiss="modal">Cerrar</button>
+            </div>
+            <!-- /.modal-footer -->
+          </form>
+        </div>
+        <!-- /.modal-body -->
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modalGondola -->
 </div>
 <!-- /.page -->

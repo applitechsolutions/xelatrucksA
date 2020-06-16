@@ -67,6 +67,7 @@ import { MaterialComponent } from './materials/material.component';
 import { CdPurchaseComponent } from './cd-purchases/cd-purchase.component';
 import { CdPurchasesComponent } from './cd-purchases/cd-purchases.component';
 import { TobePaidsComponent } from './cd-purchases/tobe-paids.component';
+import { DespachoComponent } from './prints/despacho/despacho.component';
 
 @NgModule({
         declarations: [
@@ -124,7 +125,8 @@ import { TobePaidsComponent } from './cd-purchases/tobe-paids.component';
                 MaterialComponent,
                 TobePaidsComponent,
                 CdPurchasesComponent,
-                CdPurchaseComponent
+                CdPurchaseComponent,
+                DespachoComponent
         ],
         exports: [
                 DashboardComponent,

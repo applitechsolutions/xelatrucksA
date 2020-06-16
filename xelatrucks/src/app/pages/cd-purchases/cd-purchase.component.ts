@@ -1,13 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { DatatablesService, TripService, OrderService, PurchaseCDService } from 'src/app/services/service.index';
 import { PurchaseCD } from '../../models/purchaseCD.model';
 import { Order } from '../../models/order.model';
 
-import '../../../assets/vendor/select2/js/select2.js';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from 'jquery';
 import * as moment from 'moment/moment';
-import { Router } from '@angular/router';
+import '../../../assets/vendor/select2/js/select2.js';
 declare var swal: any;
 
 @Component({
@@ -18,6 +18,7 @@ declare var swal: any;
 })
 export class CdPurchaseComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('scroll') scroll: ElementRef; // id para perfectScrollBar
   @ViewChild('date') date: ElementRef;
   @ViewChild('selectO') selectO: ElementRef;
   @ViewChild('closeQ') closeQ: ElementRef;
@@ -68,6 +69,7 @@ export class CdPurchaseComponent implements OnInit, AfterViewInit {
     this.tripS.cargarWhiteTripsPurchaseCD()
       .subscribe((resp: any) => {
         this.whiteTrips = resp.viajesBlancos;
+        const ps = new PerfectScrollbar(this.scroll.nativeElement); // Inicializamos el perfectScrollBar
       });
   }
 

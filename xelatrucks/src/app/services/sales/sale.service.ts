@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../users/user.service';
-import { Sale } from "../../models/sale.model";
 import { URL_SERVICES } from 'src/app/config/config';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import { Sale } from '../../models/sale.model';
 
 import swal from 'sweetalert';
 
@@ -24,8 +24,22 @@ export class SaleService {
     return this.http.get(url);
   }
 
+  cargarCorrelativo() {
+    const url = URL_SERVICES + '/ventas/lastCorrelative';
+
+    return this.http.get(url)
+      .pipe(
+        map((resp: any) => resp.venta),
+        catchError((err, caught) => {
+          console.log(err);
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
+        })
+      );
+  }
+
   crearVenta(sale: Sale) {
-    let url = `${URL_SERVICES}/ventas?token=${this.userService.token}`;
+    const url = `${URL_SERVICES}/ventas?token=${this.userService.token}`;
 
     console.log(sale);
     return this.http.post(url, sale)

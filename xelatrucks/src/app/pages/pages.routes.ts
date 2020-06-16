@@ -351,7 +351,7 @@ const pagesRoutes: Routes = [
     {
         path: 'cd/storage',
         component: CdStockComponent,
-        canActivate: [VerificaTokenGuard, AdminGuard],
+        canActivate: [VerificaTokenGuard],
         data: { titulo: 'Inventario - Centro de distribución' }
     },
     {

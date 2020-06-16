@@ -82,7 +82,7 @@ export class PurchaseCDService {
     return this.http.post(url, purchase)
       .pipe(map((resp: any) => {
         swal('Compra creada', 'Reportes actualizados', 'success');
-        console.log(resp);
+        // console.log(resp);s
         return resp;
       }),
         catchError((err, caught) => {

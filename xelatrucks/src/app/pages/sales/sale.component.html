@@ -39,11 +39,11 @@
                 {{ material._material.name }}
                 <span *ngIf="material.stock > material._material.minStock"
                   class="badge badge-subtle badge-success float-right">
-                  {{ material.stock }}<strong>m </strong>
+                  {{ material.stock | number: '1.2-2' }}<strong>m </strong>
                 </span>
                 <span *ngIf="material.stock <= material._material.minStock"
                   class="badge badge-subtle badge-danger float-right">
-                  {{ material.stock }}<strong>m </strong>
+                  {{ material.stock | number: '1.2-2' }}<strong>m </strong>
                 </span>
               </h4>
               <p class="list-group-item-text">
@@ -93,7 +93,10 @@
               <div class="form-group col-3">
                 <label class="control-label" for="date">Fecha
                   <span class="badge badge-danger">Obligatorio</span></label>
-                <input #date name="date" id="flatpickr" type="text" class="form-control" disabled required />
+                <input *ngIf="userS.usuario.role === 'USER_ROLE'" #date name="date" id="flatpickr" type="text"
+                  class="form-control" disabled required />
+                <input *ngIf="userS.usuario.role === 'ADMIN_ROLE'" #date name="date" id="flatpickr" type="text"
+                  class="form-control" required />
               </div>
               <!-- /.form-group -->
               <!-- .form-group -->
@@ -245,7 +248,7 @@
   <div class="modal fade" id="addDetail" tabindex="-1" role="dialog" aria-labelledby="AgregarDetalle"
     aria-hidden="true">
     <!-- .modal-dialog -->
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <!-- .modal-content -->
       <div class="modal-content">
         <!-- .modal-header -->
@@ -254,7 +257,10 @@
             <i class="fas fa-plus-circle" style="margin-right: 5px;"></i>
             {{ detail.material.name }} {{ detail.material.code }}
           </h6>
-
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
           <div *ngIf="isSalable" class="alert alert-danger has-icon pull-left" role="alert">
             <div class="alert-icon">
               <span class="fas fa-exclamation-circle"></span>
@@ -262,13 +268,9 @@
             No hay <b>existencias suficientes</b> para agregarlo al
             <b>detalle</b> de venta.
           </div>
-        </div>
-        <!-- /.modal-header -->
-        <!-- .modal-body -->
-        <div class="modal-body">
           <div class="row">
             <!-- .form-group -->
-            <div class="form-group col-3">
+            <div class="form-group col-6">
               <label for="pi9">Cantidad</label>
               <!-- .input-group -->
               <div class="input-group">
@@ -281,7 +283,7 @@
             <!-- /.form-group -->
 
             <!-- .form-group -->
-            <div class="form-group col-3">
+            <div class="form-group col-6">
               <label for="pi9">Precio de venta</label>
               <!-- .input-group -->
               <div class="input-group">
@@ -379,3 +381,4 @@
   </div>
 </form>
 <!-- /.modalClientes -->
+<app-despacho [sale]="sale"></app-despacho>

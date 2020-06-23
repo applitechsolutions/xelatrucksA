@@ -1,0 +1,45 @@
+<!-- .card-deck-xl -->
+<div class="card-deck-xl">
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-header -->
+    <div class="card-header">
+      <!-- .nav-tabs -->
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a (click)="MandarTableID('myTable1')" class="nav-link active show" data-toggle="tab"
+            href="#purchases">Compras
+            por proveedor</a>
+        </li>
+        <li class="nav-item">
+          <a (click)="MandarTableID('myTable2')" class="nav-link" data-toggle="tab" href="#gasolines">Consumo de
+            combustible</a>
+        </li>
+      </ul>
+      <!-- /.nav-tabs -->
+    </div>
+    <!-- /.card-header -->
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .tab-content -->
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show" id="purchases">
+          <app-purchases-by-providers [idTable]="myTable1" [dtButtons]="dtButtons1" [clearSearch]="clearSearch1"
+            [tableSearch]="tableSearch1" [filterBy]="filterBy1" [benito]="benito1" [invoice]="invoice1"
+            [downloadPdf]="downloadPdf1">
+          </app-purchases-by-providers>
+        </div>
+        <div class="tab-pane fade" id="gasolines">
+          <app-gas-consumptions [idTable]="myTable2" [dtButtons]="dtButtons2" [clearSearch]="clearSearch2"
+            [tableSearch]="tableSearch2" [filterBy]="filterBy2" [benito]="benito2" [invoice]="invoice2"
+            [downloadPdf]="downloadPdf2">
+          </app-gas-consumptions>
+        </div>
+      </div>
+      <!-- /.tab-content -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /.card-deck-xl -->

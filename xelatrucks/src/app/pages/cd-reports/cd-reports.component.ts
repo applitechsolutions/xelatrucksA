@@ -74,3 +74,4 @@ export class CdReportsComponent implements OnInit {
     }
 
   }
+}

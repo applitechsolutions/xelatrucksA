@@ -23,7 +23,8 @@ import { SalesByAmountComponent } from './distribucion/sales-by-amount/sales-by-
     ],
     exports: [
         PurchasesByProvidersComponent,
-        GasConsumptionsComponent
+        GasConsumptionsComponent,
+        SalesByAmountComponent
     ],
     imports: [
         CommonModule,

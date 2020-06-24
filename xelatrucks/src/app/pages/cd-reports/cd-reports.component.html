@@ -7,13 +7,14 @@
       <!-- .nav-tabs -->
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-          <a (click)="MandarTableID('myTable1')" class="nav-link active show" data-toggle="tab"
-            href="#purchases">Compras
-            por proveedor</a>
+          <a class="nav-link active show" (click)="MandarTableID('myTable1')" data-toggle="tab" href="#amount"><span
+              class="badge badge-lg badge-success"><i class="fas fa-money-bill-wave-alt"></i></span> Por cantidad
+            vendida</a>
         </li>
         <li class="nav-item">
-          <a (click)="MandarTableID('myTable2')" class="nav-link" data-toggle="tab" href="#gasolines">Consumo de
-            combustible</a>
+          <a class="nav-link" (click)="MandarTableID('myTable2')" data-toggle="tab" href="#billed"><span
+              class="badge badge-lg badge-primary"><i class="fas fa-file-invoice-dollar"></i></span> Ventas con
+            factura</a>
         </li>
       </ul>
       <!-- /.nav-tabs -->
@@ -23,6 +24,11 @@
     <div class="card-body">
       <!-- .tab-content -->
       <div id="myTabContent" class="tab-content">
+        <div id="amount" class="tab-pane fade active show">
+          <app-sales-by-amount></app-sales-by-amount>
+        </div>
+      </div>
+      <!-- <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade active show" id="purchases">
           <app-purchases-by-providers [idTable]="myTable1" [dtButtons]="dtButtons1" [clearSearch]="clearSearch1"
             [tableSearch]="tableSearch1" [filterBy]="filterBy1" [benito]="benito1" [invoice]="invoice1"
@@ -35,7 +41,7 @@
             [downloadPdf]="downloadPdf2">
           </app-gas-consumptions>
         </div>
-      </div>
+      </div> -->
       <!-- /.tab-content -->
     </div>
     <!-- /.card-body -->

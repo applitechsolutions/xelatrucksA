@@ -131,3 +131,146 @@
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
 </ngx-loading>
 <!-- /.loader -->
+<!-- .modalREPORT -->
+<div class="modal fade" id="modalSalesByAmount" role="dialog" aria-labelledby="clientContactNewModalLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-money-check-alt"></i> Reporte de ventas con factura </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <!-- .section-block -->
+        <div class="section-block">
+          <!-- .invoice-wrapper -->
+          <div [id]="benito" class="invoice-wrapper">
+            <!-- .invoice-actions -->
+            <div class="invoice-actions">
+              <div class="dropdown">
+                <button type="button" class="btn btn-lg btn-secondary rounded-0" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"><span class="fa fa-caret-down"></span></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-arrow mr-1"></div><button type="button" [id]="downloadPdf"
+                    class="dropdown-item">Descargar PDF</button>
+                </div>
+              </div>
+            </div>
+            <!-- /.invoice-actions -->
+            <!-- .invoice -->
+            <div [id]="invoice" class="invoice" data-id="RPT-VENTAS-POR-CANTIDAD-VENDIDA">
+              <!-- .invoice-header -->
+              <div class="invoice-header">
+                <!-- grid row -->
+                <div class="row">
+                  <!-- .col -->
+                  <div class="col d-flex">
+                    <h2 class="invoice-brand align-self-center">
+                      <img src="assets/images/logo-min.png" width="270" alt=""> <span class="sr-only">Reporte la Viña
+                        S.A</span>
+                    </h2>
+                  </div>
+                  <!-- /.col -->
+                  <!-- .col -->
+                  <div class="col">
+                    <table class="table table-borderless table-sm">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <small>Usuario</small><br>
+                            <h6> {{ userS.usuario.name + ' ' + userS.usuario.lastName }} </h6>
+                          </td>
+                          <td colspan="2">
+                            <small>Fecha</small><br>
+                            <h6> {{ today | date:"dd/MM/yyyy HH:mm"}} </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /grid row -->
+              </div>
+              <!-- /.invoice-header -->
+              <!-- .invoice-body -->
+              <div class="invoice-body">
+                <table class="table table-sm">
+                  <caption class="invoice-title">
+                    <span>Reporte</span><br>
+                    <span class="text-primary">Ventas con factura realizadas entre
+                      {{ date1Consulta + ' - ' + date2Consulta }} </span>
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th> Fecha </th>
+                      <th> Cliente </th>
+                      <th> Factura </th>
+                      <th> No. de Despacho </th>
+                      <th> Detalles </th>
+                      <th class="text-right"> Flete (Q) </th>
+                      <th class="text-right"> Subtotal (Q) </th>
+                      <th class="text-right"> Total (Q) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let sale of sales">
+                      <td> {{ sale.date | date: 'dd/MM/yyyy' }} </td>
+                      <td> {{ sale._customer.name }} {{ sale._customer.nit }} </td>
+                      <td> {{ sale.bill }} </td>
+                      <td> {{ sale.serie }} </td>
+                      <td>
+                        <ul *ngFor="let detail of sale.details">
+                          <li>{{ detail.material.code }} {{ detail.material.name }} - {{ detail.total }} </li>
+                        </ul>
+                      </td>
+                      <td class="text-right"> Q{{ sale.flete | number: '1.2-2' }} </td>
+                      <td class="text-right"> Q{{ (sale.total - sale.flete) | number : '1.2-2' }} </td>
+                      <td class="text-right"> Q{{ sale.total | number : '1.2-2' }} </td>
+                    </tr>
+                    <!-- fake border -->
+                    <tr>
+                      <td colspan="7"></td>
+                    </tr>
+                  </tbody>
+                  <tfoot class="table-borderless">
+                    <tr>
+                      <th colspan="4"></th>
+                      <th> Totales </th>
+                      <th class="text-right"> Q{{ totalF | number : '1.2-2' }} </th>
+                      <th class="text-right"> Q{{ (totalS - totalF) | number : '1.2-2' }} </th>
+                      <th class="text-right"> Q{{ totalS | number : '1.2-2' }} </th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.invoice-body -->
+              <!-- .invoice-footer -->
+              <div class="invoice-footer">
+                <p><strong>Copyright &copy; APPLITECH SOFTWARE SOLUTIONS.
+                  </strong> Todos Los Derechos Reservados.</p>
+              </div>
+              <!-- /.invoice-footer -->
+            </div>
+            <!-- /.invoice -->
+          </div>
+          <!-- /.invoice-wrapper -->
+        </div>
+        <!-- /.section-block -->
+      </div>
+      <!-- /.modal-body -->
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button #closeMG type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+      </div>
+      <!-- /.modal-footer -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modalREPORT -->

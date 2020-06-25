@@ -16,6 +16,7 @@ export class CdReportsComponent implements OnInit {
   benito1 = 'benito';
   invoice1 = 'invoice';
   downloadPdf1 = 'download-pdf';
+  // Reporte 2
   myTable2 = '';
   dtButtons2 = '';
   clearSearch2 = '';
@@ -24,6 +25,15 @@ export class CdReportsComponent implements OnInit {
   benito2 = 'benito';
   invoice2 = 'invoice';
   downloadPdf2 = 'download-pdf';
+  // Reporte 3
+  myTable3 = '';
+  dtButtons3 = '';
+  clearSearch3 = '';
+  tableSearch3 = '';
+  filterBy3 = '';
+  benito3 = 'benito';
+  invoice3 = 'invoice';
+  downloadPdf3 = 'download-pdf';
 
   constructor() { }
 
@@ -39,6 +49,7 @@ export class CdReportsComponent implements OnInit {
     this.benito1 = '';
     this.invoice1 = '';
     this.downloadPdf1 = '';
+    // Reporte 2
     this.myTable2 = '';
     this.dtButtons2 = '';
     this.clearSearch2 = '';
@@ -47,6 +58,15 @@ export class CdReportsComponent implements OnInit {
     this.benito2 = '';
     this.invoice2 = '';
     this.downloadPdf2 = '';
+    // Reporte 3
+    this.myTable3 = '';
+    this.dtButtons3 = '';
+    this.clearSearch3 = '';
+    this.tableSearch3 = '';
+    this.filterBy3 = '';
+    this.benito3 = '';
+    this.invoice3 = '';
+    this.downloadPdf3 = '';
 
     switch (report) {
       case 'myTable1':
@@ -68,6 +88,16 @@ export class CdReportsComponent implements OnInit {
         this.benito2 = 'benito';
         this.invoice2 = 'invoice';
         this.downloadPdf2 = 'download-pdf';
+        break;
+      case 'myTable3':
+        this.myTable3 = 'myTable';
+        this.dtButtons3 = 'dt-buttons';
+        this.clearSearch3 = 'clear-search';
+        this.tableSearch3 = 'table-search';
+        this.filterBy3 = 'filterBy';
+        this.benito3 = 'benito';
+        this.invoice3 = 'invoice';
+        this.downloadPdf3 = 'download-pdf';
         break;
       default:
         break;

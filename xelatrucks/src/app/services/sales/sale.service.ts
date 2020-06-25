@@ -82,5 +82,11 @@ export class SaleService {
 
     return this.http.get(url);
   }
+
+  salesNoBill(fecha1: Date, fecha2: Date) {
+    const url = `${URL_SERVICES}/ventas/nobill?startDate=${fecha1}&endDate=${fecha2}`;
+
+    return this.http.get(url);
+  }
   /* #endregion */
 }

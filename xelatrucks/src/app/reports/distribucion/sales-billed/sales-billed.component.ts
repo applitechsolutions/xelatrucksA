@@ -65,4 +65,37 @@ export class SalesBilledComponent implements OnInit {
     init_reports();
   }
 
+  searchB() {
+    if (!this.dateP1.nativeElement.value || !this.dateP2.nativeElement.value) {
+      swal('Oops...', 'Algunos campos son obligatorios', 'warning');
+      return;
+    }
+    this.loading = true;
+
+    const fecha1 = moment(this.dateP1.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha2 = moment(this.dateP2.nativeElement.value, 'DD/MM/YYYY').toDate();
+
+    this.saleService.salesBilled(fecha1, fecha2)
+      .subscribe((res: any) => {
+        console.log(res.ventas);
+        destroy_datatables();
+        this.sales = res.ventas;
+        this.totalB();
+        this.date1Consulta = this.dateP1.nativeElement.value;
+        this.date2Consulta = this.dateP2.nativeElement.value;
+        this.chRef.detectChanges()
+        init_datatables();
+        this.loading = false;
+      }, (err: any) => {
+        console.log(err.message);
+        this.loading = false;
+        swal('Uy!', 'Algo salió mal, intenta más tarde', 'error');
+      });
+  }
+
+  totalB() {
+    this.totalS = this.sales.reduce((sum, item) => sum + item.total, 0);
+    this.totalF = this.sales.reduce((sum, item) => sum + item.flete, 0);
+  }
+
 }

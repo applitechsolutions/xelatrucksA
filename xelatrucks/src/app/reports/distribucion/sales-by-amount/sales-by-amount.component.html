@@ -1,1 +1,301 @@
-<p>sales-by-amount works!</p>
+<div class="section-block">
+  <h2 class="section-title"> Aquí puede consultar las ventas por cantidad vendida en un rango de tiempo. </h2>
+</div>
+<div class="row">
+  <!-- .form-group -->
+  <div class="form-group col-2">
+    <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+    <input #dateP1 name="date1" id="flatpickr" type="text" class="form-control" required>
+  </div>
+  <!-- /.form-group -->
+  <!-- .form-group -->
+  <div class="form-group col-2">
+    <label class="control-label" for="flatpickr02">Fecha final</label>
+    <input #dateP2 name="date2" id="flatpickr" type="text" class="form-control" required>
+  </div>
+  <!-- /.form-group -->
+  <!-- .form-group -->
+  <div class="form-group col-2">
+    <label for="pi9">Cantidad inicial</label>
+    <!-- .input-group -->
+    <div class="input-group">
+      <label class="input-group-prepend" for="cost"><span class="badge">Q</span></label>
+      <input #startAmount name="startAmount" type="number" step="0.01" min="0" class="form-control" id="startAmount"
+        placeholder="0.00" required />
+    </div>
+    <!-- /.input-group -->
+  </div>
+  <!-- /.form-group -->
+  <!-- .form-group -->
+  <div class="form-group col-2">
+    <label for="pi9">Cantidad final</label>
+    <!-- .input-group -->
+    <div class="input-group">
+      <label class="input-group-prepend" for="cost"><span class="badge">Q</span></label>
+      <input #endAmount name="endAmount" type="number" step="0.01" min="0" class="form-control" id="endAmount"
+        placeholder="0.00" required />
+    </div>
+    <!-- /.input-group -->
+  </div>
+  <!-- /.form-group -->
+  <button type="button" [ngStyle]="{'margin-top': '29px', 'margin-left': '10px'}" (click)="searchB()"
+    class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+  <button type="button" (click)="createReportB()" data-toggle="modal" data-target="#modalSalesByAmount"
+    class="btn btn-outline-primary ml-auto" style="margin-right: 10px;">Imprimir reporte <i
+      class="fas fa-print"></i></button>
+</div>
+<!-- .btn-toolbar -->
+<div [id]="dtButtons" class="btn-toolbar ml-auto"></div>
+<!-- /.btn-toolbar -->
+<!-- .form-group -->
+<div class="form-group">
+  <!-- .input-group -->
+  <div class="input-group input-group-alt">
+    <!-- .input-group -->
+    <div class="input-group has-clearable">
+      <button [id]="clearSearch" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+            class="fa fa-times-circle"></i></span></button>
+      <div class="input-group-prepend">
+        <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+      </div><input [id]="tableSearch" type="text" class="form-control" placeholder="Buscar aquí">
+    </div>
+    <!-- /.input-group -->
+    <!-- .input-group-prepend -->
+    <div class="input-group-prepend">
+      <select [id]="filterBy" class="custom-select">
+        <option value='' selected> Filtros </option>
+        <option value="0"> Fecha </option>
+        <option value="1"> Factura </option>
+        <option value="2"> Serie </option>
+        <option value="3"> Documento </option>
+        <option value="4"> Subtotal </option>
+        <option value="5"> Descuento </option>
+        <option value="6"> Total </option>
+      </select>
+    </div>
+    <!-- /.input-group-prepend -->
+  </div>
+  <!-- /.input-group -->
+</div>
+<!-- /.form-group -->
+<!-- .table -->
+<table [id]="idTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th> Fecha </th>
+      <th> Cliente </th>
+      <th> Factura </th>
+      <th> No. Despacho </th>
+      <th> Detalles </th>
+      <th> Flete </th>
+      <th> Subtotal </th>
+      <th> Total </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sale of sales">
+      <td>
+        {{ sale.date | date: 'dd/MM/yyyy' }}
+      </td>
+      <td>
+        {{ sale._customer.name }} {{ sale._customer.nit }}
+      </td>
+      <td>
+        {{ sale.bill }}
+      </td>
+      <td>
+        {{ sale.serie }}
+      </td>
+      <td>
+        <ul *ngFor="let detail of sale.details">
+          <li>{{ detail.material.name }} {{ detail.material.code }} - {{ detail.total }}</li>
+        </ul>
+      </td>
+      <td>
+        Q {{ sale.flete | number : '1.2-2' }}
+      </td>
+      <td>
+        Q {{ (sale.total - sale.flete) | number : '1.2-2' }}
+      </td>
+      <td>
+        Q {{ sale.total | number : '1.2-2' }}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> Totales </th>
+      <th>
+        <h5>
+          Q {{ totalF | number : '1.2-2' }}
+        </h5>
+      </th>
+      <th>
+        <h5>
+          Q {{ (totalS - totalF) | number : '1.2-2' }}
+        </h5>
+      </th>
+      <th>
+        <h5>
+          Q {{ totalS | number : '1.2-2' }}
+        </h5>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+<ng-template #customLoadingTemplate>
+</ng-template>
+<!-- /.table -->
+<!-- .loader -->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+</ngx-loading>
+<!-- /.loader -->
+<!-- .modalREPORT -->
+<div class="modal fade" id="modalSalesByAmount" role="dialog" aria-labelledby="clientContactNewModalLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-money-check-alt"></i> Reporte de ventas por cantidad vendida </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <!-- .section-block -->
+        <div class="section-block">
+          <!-- .invoice-wrapper -->
+          <div [id]="benito" class="invoice-wrapper">
+            <!-- .invoice-actions -->
+            <div class="invoice-actions">
+              <div class="dropdown">
+                <button type="button" class="btn btn-lg btn-secondary rounded-0" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"><span class="fa fa-caret-down"></span></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-arrow mr-1"></div><button type="button" [id]="downloadPdf"
+                    class="dropdown-item">Descargar PDF</button>
+                </div>
+              </div>
+            </div>
+            <!-- /.invoice-actions -->
+            <!-- .invoice -->
+            <div [id]="invoice" class="invoice" data-id="RPT-VENTAS-POR-CANTIDAD-VENDIDA">
+              <!-- .invoice-header -->
+              <div class="invoice-header">
+                <!-- grid row -->
+                <div class="row">
+                  <!-- .col -->
+                  <div class="col d-flex">
+                    <h2 class="invoice-brand align-self-center">
+                      <img src="assets/images/logo-min.png" width="270" alt=""> <span class="sr-only">Reporte la Viña
+                        S.A</span>
+                    </h2>
+                  </div>
+                  <!-- /.col -->
+                  <!-- .col -->
+                  <div class="col">
+                    <table class="table table-borderless table-sm">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <small>Usuario</small><br>
+                            <h6> {{ userS.usuario.name + ' ' + userS.usuario.lastName }} </h6>
+                          </td>
+                          <td colspan="2">
+                            <small>Fecha</small><br>
+                            <h6> {{ today | date:"dd/MM/yyyy HH:mm"}} </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /grid row -->
+              </div>
+              <!-- /.invoice-header -->
+              <!-- .invoice-body -->
+              <div class="invoice-body">
+                <table class="table table-sm">
+                  <caption class="invoice-title">
+                    <span>Reporte</span><br>
+                    <span class="text-primary">Ventas por total entre
+                      Q.{{ amount1Consulta | number: '1.2-2' }} y
+                      Q.{{ amount2Consulta | number: '1.2-2' }}
+                      durante {{ date1Consulta + ' - ' + date2Consulta }} </span>
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th> Fecha </th>
+                      <th> Cliente </th>
+                      <th> Factura </th>
+                      <th> No. de Despacho </th>
+                      <th> Detalles </th>
+                      <th class="text-right"> Flete (Q) </th>
+                      <th class="text-right"> Subtotal (Q) </th>
+                      <th class="text-right"> Total (Q) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let sale of sales">
+                      <td> {{ sale.date | date: 'dd/MM/yyyy' }} </td>
+                      <td> {{ sale._customer.name }} {{ sale._customer.nit }} </td>
+                      <td> {{ sale.bill }} </td>
+                      <td> {{ sale.serie }} </td>
+                      <td>
+                        <ul *ngFor="let detail of sale.details">
+                          <li>{{ detail.material.code }} {{ detail.material.name }} - {{ detail.total }} </li>
+                        </ul>
+                      </td>
+                      <td class="text-right"> Q{{ sale.flete | number: '1.2-2' }} </td>
+                      <td class="text-right"> Q{{ (sale.total - sale.flete) | number : '1.2-2' }} </td>
+                      <td class="text-right"> Q{{ sale.total | number : '1.2-2' }} </td>
+                    </tr>
+                    <!-- fake border -->
+                    <tr>
+                      <td colspan="7"></td>
+                    </tr>
+                  </tbody>
+                  <tfoot class="table-borderless">
+                    <tr>
+                      <th colspan="4"></th>
+                      <th> Totales </th>
+                      <th class="text-right"> Q{{ totalF | number : '1.2-2' }} </th>
+                      <th class="text-right"> Q{{ (totalS - totalF) | number : '1.2-2' }} </th>
+                      <th class="text-right"> Q{{ totalS | number : '1.2-2' }} </th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.invoice-body -->
+              <!-- .invoice-footer -->
+              <div class="invoice-footer">
+                <p><strong>Copyright &copy; APPLITECH SOFTWARE SOLUTIONS.
+                  </strong> Todos Los Derechos Reservados.</p>
+              </div>
+              <!-- /.invoice-footer -->
+            </div>
+            <!-- /.invoice -->
+          </div>
+          <!-- /.invoice-wrapper -->
+        </div>
+        <!-- /.section-block -->
+      </div>
+      <!-- /.modal-body -->
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button #closeMG type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+      </div>
+      <!-- /.modal-footer -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modalREPORT -->

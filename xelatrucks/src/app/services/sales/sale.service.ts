@@ -69,4 +69,12 @@ export class SaleService {
         })
       );
   }
+
+  /* #region REPORTES */
+  salesByAmount(startDate: Date, endDate: Date, startAmount: number, endAmount: number) {
+    const url = `${URL_SERVICES}/ventas/amount?startDate=${startDate}&endDate=${endDate}&startAmount=${startAmount}&endAmount=${endAmount}`;
+
+    return this.http.get(url);
+  }
+  /* #endregion */
 }

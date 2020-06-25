@@ -25,7 +25,9 @@
       <!-- .tab-content -->
       <div id="myTabContent" class="tab-content">
         <div id="amount" class="tab-pane fade active show">
-          <app-sales-by-amount></app-sales-by-amount>
+          <app-sales-by-amount [idTable]="myTable1" [dtButtons]="dtButtons1" [clearSearch]="clearSearch1"
+            [tableSearch]="tableSearch1" [filterBy]="filterBy1" [benito]="benito1" [invoice]="invoice1"
+            [downloadPdf]="downloadPdf1"></app-sales-by-amount>
         </div>
       </div>
       <!-- <div id="myTabContent" class="tab-content">

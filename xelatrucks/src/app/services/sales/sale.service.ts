@@ -76,5 +76,11 @@ export class SaleService {
 
     return this.http.get(url);
   }
+
+  salesBilled(fecha1: Date, fecha2: Date) {
+    const url = `${URL_SERVICES}/ventas/bill?startDate=${fecha1}&endDate=${fecha2}`;
+
+    return this.http.get(url);
+  }
   /* #endregion */
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input, SimpleChanges } from '@angular/core';
 import { SaleService, DatatablesService, UserService } from 'src/app/services/service.index';
 
 import * as moment from 'moment/moment';

@@ -16,7 +16,7 @@
   <!-- /.form-group -->
   <button type="button" [ngStyle]="{'margin-top': '29px', 'margin-left': '10px'}" (click)="searchB()"
     class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
-  <button type="button" (click)="createReportB()" data-toggle="modal" data-target="#modalSalesByAmount"
+  <button type="button" (click)="createReportB()" data-toggle="modal" data-target="#modalSalesBilled"
     class="btn btn-outline-primary ml-auto" style="margin-right: 10px;">Imprimir reporte <i
       class="fas fa-print"></i></button>
 </div>
@@ -132,7 +132,7 @@
 </ngx-loading>
 <!-- /.loader -->
 <!-- .modalREPORT -->
-<div class="modal fade" id="modalSalesByAmount" role="dialog" aria-labelledby="clientContactNewModalLabel"
+<div class="modal fade" id="modalSalesBilled" role="dialog" aria-labelledby="clientContactNewModalLabel"
   aria-hidden="true">
   <!-- .modal-dialog -->
   <div class="modal-dialog modal-lg" role="document">

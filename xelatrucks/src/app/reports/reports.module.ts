@@ -11,6 +11,7 @@ import { PurchasesByProvidersComponent } from './taller/purchasesByProviders/pur
 import { GasConsumptionsComponent } from './taller/gasConsumptions/gas-consumptions.component';
 import { GreenTripsComponent } from './transporte/greenTrips/green-trips.component';
 import { SalesByAmountComponent } from './distribucion/sales-by-amount/sales-by-amount.component';
+import { SalesBilledComponent } from './distribucion/sales-billed/sales-billed.component';
 
 
 @NgModule({
@@ -19,12 +20,14 @@ import { SalesByAmountComponent } from './distribucion/sales-by-amount/sales-by-
         GasConsumptionsComponent,
         DataTableComponent,
         GreenTripsComponent,
-        SalesByAmountComponent
+        SalesByAmountComponent,
+        SalesBilledComponent
     ],
     exports: [
         PurchasesByProvidersComponent,
         GasConsumptionsComponent,
-        SalesByAmountComponent
+        SalesByAmountComponent,
+        SalesBilledComponent
     ],
     imports: [
         CommonModule,

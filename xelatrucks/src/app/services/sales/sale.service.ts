@@ -69,4 +69,30 @@ export class SaleService {
         })
       );
   }
+
+  /* #region REPORTES */
+  salesByAmount(startDate: Date, endDate: Date, startAmount: number, endAmount: number) {
+    const url = `${URL_SERVICES}/ventas/amount?startDate=${startDate}&endDate=${endDate}&startAmount=${startAmount}&endAmount=${endAmount}`;
+
+    return this.http.get(url);
+  }
+
+  salesBilled(fecha1: Date, fecha2: Date) {
+    const url = `${URL_SERVICES}/ventas/bill?startDate=${fecha1}&endDate=${fecha2}`;
+
+    return this.http.get(url);
+  }
+
+  salesNoBill(fecha1: Date, fecha2: Date) {
+    const url = `${URL_SERVICES}/ventas/nobill?startDate=${fecha1}&endDate=${fecha2}`;
+
+    return this.http.get(url);
+  }
+
+  canceledSales(fecha1: Date, fecha2: Date) {
+    const url = `${URL_SERVICES}/ventas/cancel?startDate=${fecha1}&endDate=${fecha2}`;
+
+    return this.http.get(url);
+  }
+  /* #endregion */
 }

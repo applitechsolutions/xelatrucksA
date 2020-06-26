@@ -1,0 +1,62 @@
+<!-- .card-deck-xl -->
+<div class="card-deck-xl">
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-header -->
+    <div class="card-header">
+      <!-- .nav-tabs -->
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active show" (click)="MandarTableID('myTable1')" data-toggle="tab" href="#amount"><span
+              class="badge badge-lg badge-success"><i class="fas fa-money-bill-wave-alt"></i></span> Por cantidad
+            vendida</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="MandarTableID('myTable2')" data-toggle="tab" href="#billed"><span
+              class="badge badge-lg badge-primary"><i class="fas fa-file-invoice-dollar"></i></span> Ventas con
+            factura</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="MandarTableID('myTable3')" data-toggle="tab" href="#nobill"><span
+              class="badge badge-lg badge-warning"><i class="fas fa-receipt"></i></span> Ventas sin factura</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="MandarTableID('myTable4')" data-toggle="tab" href="#canceled"><span
+              class="badge badge-lg badge-danger"><i class="fas fa-ban"></i></span> Ventas anuladas</a>
+        </li>
+      </ul>
+      <!-- /.nav-tabs -->
+    </div>
+    <!-- /.card-header -->
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .tab-content -->
+      <div id="myTabContent" class="tab-content">
+        <div id="amount" class="tab-pane fade active show">
+          <app-sales-by-amount [idTable]="myTable1" [dtButtons]="dtButtons1" [clearSearch]="clearSearch1"
+            [tableSearch]="tableSearch1" [filterBy]="filterBy1" [benito]="benito1" [invoice]="invoice1"
+            [downloadPdf]="downloadPdf1"></app-sales-by-amount>
+        </div>
+        <div id="billed" class="tab-pane fade">
+          <app-sales-billed [idTable]="myTable2" [dtButtons]="dtButtons2" [clearSearch]="clearSearch2"
+            [tableSearch]="tableSearch2" [filterBy]="filterBy2" [benito]="benito2" [invoice]="invoice2"
+            [downloadPdf]="downloadPdf2"></app-sales-billed>
+        </div>
+        <div id="nobill" class="tab-pane fade">
+          <app-sales-nobill [idTable]="myTable3" [dtButtons]="dtButtons3" [clearSearch]="clearSearch3"
+            [tableSearch]="tableSearch3" [filterBy]="filterBy3" [benito]="benito3" [invoice]="invoice3"
+            [downloadPdf]="downloadPdf3"></app-sales-nobill>
+        </div>
+        <div id="canceled" class="tab-pane fade">
+          <app-canceled-sales [idTable]="myTable4" [dtButtons]="dtButtons4" [clearSearch]="clearSearch4"
+            [tableSearch]="tableSearch4" [filterBy]="filterBy4" [benito]="benito4" [invoice]="invoice4"
+            [downloadPdf]="downloadPdf4"></app-canceled-sales>
+        </div>
+      </div>
+      <!-- /.tab-content -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /.card-deck-xl -->

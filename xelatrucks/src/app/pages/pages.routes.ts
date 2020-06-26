@@ -54,6 +54,7 @@ import { CdStockComponent } from './cd-storage/cd-stock.component';
 import { CdPurchaseComponent } from './cd-purchases/cd-purchase.component';
 import { CdPurchasesComponent } from './cd-purchases/cd-purchases.component';
 import { TobePaidsComponent } from './cd-purchases/tobe-paids.component';
+import { CdReportsComponent } from './cd-reports/cd-reports.component';
 
 const pagesRoutes: Routes = [
     {
@@ -377,6 +378,12 @@ const pagesRoutes: Routes = [
         data: {
             titulo: 'Compras pendientes de pago - Centro de distribución'
         }
+    },
+    {
+        path: 'cd/reports',
+        component: CdReportsComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Reportes de ventas' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];

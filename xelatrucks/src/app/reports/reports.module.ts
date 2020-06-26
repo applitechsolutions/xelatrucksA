@@ -13,6 +13,7 @@ import { GreenTripsComponent } from './transporte/greenTrips/green-trips.compone
 import { SalesByAmountComponent } from './distribucion/sales-by-amount/sales-by-amount.component';
 import { SalesBilledComponent } from './distribucion/sales-billed/sales-billed.component';
 import { SalesNobillComponent } from './distribucion/sales-nobill/sales-nobill.component';
+import { CanceledSalesComponent } from './distribucion/canceled-sales/canceled-sales.component';
 
 
 @NgModule({
@@ -23,14 +24,16 @@ import { SalesNobillComponent } from './distribucion/sales-nobill/sales-nobill.c
         GreenTripsComponent,
         SalesByAmountComponent,
         SalesBilledComponent,
-        SalesNobillComponent
+        SalesNobillComponent,
+        CanceledSalesComponent
     ],
     exports: [
         PurchasesByProvidersComponent,
         GasConsumptionsComponent,
         SalesByAmountComponent,
         SalesBilledComponent,
-        SalesNobillComponent
+        SalesNobillComponent,
+        CanceledSalesComponent
     ],
     imports: [
         CommonModule,

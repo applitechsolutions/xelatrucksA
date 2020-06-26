@@ -34,6 +34,15 @@ export class CdReportsComponent implements OnInit {
   benito3 = 'benito';
   invoice3 = 'invoice';
   downloadPdf3 = 'download-pdf';
+  // Reporte 4
+  myTable4 = '';
+  dtButtons4 = '';
+  clearSearch4 = '';
+  tableSearch4 = '';
+  filterBy4 = '';
+  benito4 = 'benito';
+  invoice4 = 'invoice';
+  downloadPdf4 = 'download-pdf';
 
   constructor() { }
 
@@ -67,6 +76,16 @@ export class CdReportsComponent implements OnInit {
     this.benito3 = '';
     this.invoice3 = '';
     this.downloadPdf3 = '';
+    // Reporte 4
+    this.myTable4 = '';
+    this.dtButtons4 = '';
+    this.clearSearch4 = '';
+    this.tableSearch4 = '';
+    this.filterBy4 = '';
+    this.benito4 = '';
+    this.invoice4 = '';
+    this.downloadPdf4 = '';
+
 
     switch (report) {
       case 'myTable1':
@@ -99,6 +118,15 @@ export class CdReportsComponent implements OnInit {
         this.invoice3 = 'invoice';
         this.downloadPdf3 = 'download-pdf';
         break;
+      case 'myTable4':
+        this.myTable4 = 'myTable';
+        this.dtButtons4 = 'dt-buttons';
+        this.clearSearch4 = 'clear-search';
+        this.tableSearch4 = 'table-search';
+        this.filterBy4 = 'filterBy';
+        this.benito4 = 'benito';
+        this.invoice4 = 'invoice';
+        this.downloadPdf4 = 'download-pdf';
       default:
         break;
     }

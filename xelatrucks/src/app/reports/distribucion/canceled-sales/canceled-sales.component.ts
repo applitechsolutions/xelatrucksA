@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { SaleService, DatatablesService, UserService } from 'src/app/services/service.index';
 
 import * as moment from 'moment/moment';
@@ -13,7 +13,7 @@ declare var swal: any;
   styles: [
   ]
 })
-export class CanceledSalesComponent implements OnInit {
+export class CanceledSalesComponent implements OnInit, OnChanges {
 
   @ViewChild('dateP1') dateP1: ElementRef;
   @ViewChild('dateP2') dateP2: ElementRef;

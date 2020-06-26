@@ -157,11 +157,12 @@ export class CdPurchaseComponent implements OnInit, AfterViewInit {
     let paid = false;
     this.loading = true;
 
-    if (this.purchaseCD.payment) {
+    if (this.purchaseCD.payment === true) {
       paid = false;
     } else {
       paid = true;
     }
+    this.purchaseCD.paid = paid;
 
     this.purchaseCDS.crearCompra(this.purchaseCD)
       .subscribe(resp => {

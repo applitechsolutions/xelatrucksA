@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { SaleService, DatatablesService, UserService } from 'src/app/services/service.index';
 
 import * as moment from 'moment/moment';
@@ -13,7 +13,7 @@ declare var swal: any;
   styles: [
   ]
 })
-export class SalesNobillComponent implements OnInit {
+export class SalesNobillComponent implements OnInit, OnChanges {
 
   @ViewChild('dateP1') dateP1: ElementRef;
   @ViewChild('dateP2') dateP2: ElementRef;
@@ -52,7 +52,9 @@ export class SalesNobillComponent implements OnInit {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
 
-    this.cambiarTableID(changes.idTable.currentValue);
+    if (changes.idTable) { // HAY AGREGAR ESTA VALIDACIÓN
+      this.cambiarTableID(changes.idTable.currentValue);
+    }
   }
 
   cambiarTableID(idTable: string) {

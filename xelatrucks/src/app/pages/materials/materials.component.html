@@ -1,1 +1,104 @@
-<p>materials works!</p>
+<!-- floating action -->
+<button #openMaterial type="button" class="btn btn-success btn-floated" data-toggle="modal"
+  data-target="#addMaterial"><span class="fa fa-plus"></span></button>
+<!-- /floating action -->
+<!-- .page-section -->
+<div class="page-section">
+  <!-- .card -->
+  <div class="card card-fluid">
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .btn-toolbar -->
+      <div id="dt-buttons" class="btn-toolbar"></div>
+      <!-- /.btn-toolbar -->
+      <!-- .form-group -->
+      <div class="form-group">
+        <!-- .input-group -->
+        <div class="input-group input-group-alt">
+          <!-- .input-group -->
+          <div class="input-group has-clearable">
+            <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                  class="fa fa-times-circle"></i></span></button>
+            <div class="input-group-prepend">
+              <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+            </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+          </div>
+          <!-- /.input-group -->
+          <!-- .input-group-prepend -->
+          <div class="input-group-prepend">
+            <select id="filterBy" class="custom-select">
+              <option value='' selected> Filtros </option>
+              <option value="0"> Código </option>
+              <option value="1"> Nombre </option>
+              <option value="2"> Existencia mínima </option>
+              <option value="3"> Costo </option>
+              <option value="4"> Precio </option>
+              <option value="5"> Tipo </option>
+            </select>
+          </div>
+          <!-- /.input-group-prepend -->
+        </div>
+        <!-- /.input-group -->
+      </div>
+      <!-- /.form-group -->
+      <!-- .table -->
+      <table id="myTable" class="table table-striped">
+        <thead>
+          <tr>
+            <th> Código </th>
+            <th> Nombre </th>
+            <th> Existencia mínima </th>
+            <th> Costo</th>
+            <th> Precio</th>
+            <th> CD La Viña</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let material of materials">
+            <td class="align-middle">
+              {{ material.code }}
+            </td>
+            <td>{{ material.name }}</td>
+            <ng-container *ngIf="material.isCD">
+              <td class="text-center">{{ material.minStock }}</td>
+              <td>Q{{ material.cost | number: '1.2-2' }}</td>
+              <td>Q{{ material.price | number: '1.2-2' }}</td>
+            </ng-container>
+            <ng-container *ngIf="!material.isCD">
+              <td class="text-center">-</td>
+              <td>-</td>
+              <td>-</td>
+            </ng-container>
+            <td class="text-center">
+              <span *ngIf="material.isCD" class="badge badge-success">Sí</span>
+              <span *ngIf="!material.isCD" class="badge badge-danger">No</span>
+            </td>
+            <td class="align-middle text-right">
+              <a (click)="cargarMaterial( material )" class=" btn btn-sm btn-icon btn-secondary" data-toggle="modal"
+                data-target="#clientNewModal" alt="Editar"><i class="fa fa-pencil-alt"></i> <span
+                  class="sr-only">Edit</span></a>
+              <!-- <a (click)="borrarMaterial( material )" class="btn btn-sm btn-icon btn-secondary pointer"><i
+                  class="far fa-trash-alt"></i><span class="sr-only ">Remove</span></a> -->
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th> Código </th>
+            <th> Nombre </th>
+            <th> Existencia mínima </th>
+            <th> Costo</th>
+            <th> Precio</th>
+            <th> CD La Viña</th>
+            <th></th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /.page-section -->
+<app-material [material]="material" (enviarMaterial)="recibirMaterial($event)"></app-material>

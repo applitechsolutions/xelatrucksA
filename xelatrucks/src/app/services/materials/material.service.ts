@@ -27,6 +27,11 @@ export class MaterialService {
     return this.http.get(url);
   }
 
+  cargarInventario() {
+    const url = URL_SERVICES + '/material/storage';
+    return this.http.get(url);
+  }
+
   // ACTUALIZAR STOCK PURCHASE
   stockPurchase(storage: any) {
     let url = URL_SERVICES + '/material/purchase/';

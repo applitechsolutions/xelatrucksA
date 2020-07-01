@@ -236,13 +236,10 @@ export class SaleComponent implements OnInit, AfterViewInit {
 
   /* #region  colecciones externas */
   cargarMateriales() {
-    this.matService.cargarMateriales()
+    this.matService.cargarInventario()
       .subscribe((res: any) => {
-        res.materiales
-          .map((resp: any) => {
-            this.materials = resp.storage;
-            const ps = new PerfectScrollbar(this.scroll.nativeElement);
-          });
+        this.materials = res.materiales;
+        const ps = new PerfectScrollbar(this.scroll.nativeElement);
       });
   }
 

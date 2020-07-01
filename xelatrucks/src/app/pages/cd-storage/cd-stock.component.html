@@ -92,18 +92,16 @@
                   {{ material.stock | number: "1.2-2" }}m
                 </td>
                 <td class="align-middle">
-                  Q{{ material.cost | number: "1.2-2" }}
+                  Q{{ material._material.cost | number: "1.2-2" }}
                 </td>
                 <td class="align-middle">
-                  -
-                  <!-- Q{{ material.material.price | number: '1.2-2'}} -->
+                  Q{{ material._material.price | number: '1.2-2'}}
                 </td>
                 <td class="align-middle">
-                  Q{{ material.stock * material.cost | number: "1.2-2" }}
+                  Q{{ material.stock * material._material.cost | number: "1.2-2" }}
                 </td>
                 <td class="align-middle">
-                  -
-                  <!-- Q{{ (material.stock * material._material.price) | number: '1.2-2'}} -->
+                  Q{{ (material.stock * material._material.price) | number: '1.2-2'}}
                 </td>
                 <td>
                   <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="cargarModalExcesos(material, true)"

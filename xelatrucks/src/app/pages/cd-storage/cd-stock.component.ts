@@ -139,11 +139,9 @@ export class CdStockComponent implements OnInit {
   }
 
   cargarStorage() {
-    this.materialS.cargarMateriales().subscribe((resp: any) => {
-      resp.materiales
-        .map((res: any) => {
-          this.materials = res.storage;
-        });
+    this.materialS.cargarInventario().subscribe((resp: any) => {
+      this.materials = resp.materiales;
+
       destroy_datatables();
       this.chRef.detectChanges();
       init_datatables();

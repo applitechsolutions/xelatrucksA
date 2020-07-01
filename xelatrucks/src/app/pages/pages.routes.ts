@@ -55,6 +55,7 @@ import { CdPurchaseComponent } from './cd-purchases/cd-purchase.component';
 import { CdPurchasesComponent } from './cd-purchases/cd-purchases.component';
 import { TobePaidsComponent } from './cd-purchases/tobe-paids.component';
 import { CdReportsComponent } from './cd-reports/cd-reports.component';
+import { MaterialsComponent } from './materials/materials.component';
 
 const pagesRoutes: Routes = [
     {
@@ -87,6 +88,12 @@ const pagesRoutes: Routes = [
         component: ReportsComponent,
         canActivate: [VerificaTokenGuard, AdminGuard],
         data: { titulo: 'Reportes' }
+    },
+    {
+        path: 'materials',
+        component: MaterialsComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Catálogo de Materiales' }
     },
     // TRANSPORTES
     {

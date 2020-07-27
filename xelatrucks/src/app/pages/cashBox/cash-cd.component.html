@@ -1,0 +1,497 @@
+<header class="page-title-bar">
+  <!-- floating action -->
+  <button type="button" class="btn btn-success btn-floated" data-toggle="modal" data-target="#modalBox"><span
+      class="fa fa-plus"></span></button>
+  <!-- /floating action -->
+  <!-- title and toolbar -->
+  <div class="d-md-flex align-items-md-start">
+    <!-- <h1 class="page-title mr-sm-auto"> Administración de caja </h1> -->
+    <button [routerLink]="['/sales']" routerLinkActive="router-link-active" type="button"
+      class="btn btn-info ml-auto"><i class="fas fa-external-link-alt mr-2"></i> Ir a
+      ventas</button>
+  </div>
+  <!-- /title and toolbar -->
+</header>
+<!-- .page-section -->
+<div class="page-section">
+  <div class="card card-fluid">
+    <!-- .card-header -->
+    <div class="card-header">
+      <!-- .nav-tabs -->
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active show" data-toggle="tab" href="#diario"><span class="badge badge-lg badge-success"><i
+                class="fas fa-money-bill-wave-alt pulse"></i></span>
+            Movimientos de día</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#tipos"><span class="badge badge-lg badge-info"><i
+                class="fas fa-retweet"></i></span>
+            Tipos de movimiento</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#historial"><i class="fas fa-history"></i>
+            Historial de movimientos</a>
+        </li>
+      </ul>
+      <!-- /.nav-tabs -->
+    </div><!-- /.card-header -->
+    <!-- .card-body -->
+    <div class="card-body">
+      <!-- .tab-content -->
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show" id="diario">
+          <div class="metric-row">
+            <div class="col-3">
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> Fecha </h2>
+                <p class="metric-value h4"><span class="value">{{ today }}</span></p>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> Total Ingresos </h2>
+                <p class="metric-value h1"><sup>Q</sup><span
+                    class="value text-primary">{{ ingresosT | number: '1.2-2' }} </span></p>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> Total Egresos </h2>
+                <p class="metric-value h1"><sup>Q</sup><span class="value text-danger">{{ egresosT | number: '1.2-2' }}
+                  </span></p>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> Efectivo disponible </h2>
+                <p *ngIf="cashBalance" class="metric-value h1"><sup>Q</sup><span
+                    class="value text-success">{{ cashBalance.balance | number: '1.2-2' }} </span></p>
+                <p *ngIf="!cashBalance" class="metric-value h1"><sup>Q</sup><span class="value text-success">0.00
+                  </span></p>
+              </div>
+            </div>
+          </div>
+          <!-- .form-group -->
+          <button type="button" class="btn btn-outline-info mr-auto">Generar reporte <i
+              class="fas fa-print"></i></button>
+          <!-- .table -->
+          <table id="myTablee" class="table">
+            <thead>
+              <tr>
+                <th> Tipo de Movimiento </th>
+                <th> Comentario </th>
+                <th> Ingreso </th>
+                <th> Egreso </th>
+                <th> Saldo </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cash of cashsToday">
+                <td class="align-middle">
+                  <ng-container *ngIf="cash._cashTypeCD">
+                    <span *ngIf="cash._cashTypeCD.type === 'INGRESO'"
+                      class="badge text-white bg-primary">{{ cash._cashTypeCD.name }}</span>
+                    <span *ngIf="cash._cashTypeCD.type === 'EGRESO'"
+                      class="badge text-white bg-danger">{{ cash._cashTypeCD.name }}</span>
+                  </ng-container>
+                  <span *ngIf="!cash._cashTypeCD" class="badge text-white bg-success">Ventas</span>
+                </td>
+                <td class="align-middle">{{ cash.details }}</td>
+                <td class="align-middle">
+                  <ng-container *ngIf="cash._cashTypeCD">
+                    <span *ngIf="cash._cashTypeCD.type === 'INGRESO'"> Q
+                      {{ cash.amount | number: '1.2-2' }} </span>
+                    <span *ngIf="cash._cashTypeCD.type === 'EGRESO'"> - </span>
+                  </ng-container>
+                  <span *ngIf="!cash._cashTypeCD"> Q {{ cash.amount | number: '1.2-2' }} </span>
+                </td>
+                <td class="align-middle">
+                  <ng-container *ngIf="cash._cashTypeCD">
+                    <span *ngIf="cash._cashTypeCD.type === 'EGRESO'"> Q
+                      {{ cash.amount | number: '1.2-2' }} </span>
+                    <span *ngIf="cash._cashTypeCD.type === 'INGRESO'"> - </span>
+                  </ng-container>
+                </td>
+                <td class="align-middle">Q {{ cash.balance | number: '1.2-2' }}</td>
+                <td class="align-middle text-center">
+                  <a *ngIf="!cash._cashTypeCD" (click)="anularMovimiento(cash)"
+                    class="btn btn-sm btn-icon btn-secondary"><i class="far fa-trash-alt"></i> <span
+                      class="sr-only">Eliminar</span></a>
+                  <span *ngIf="cash._cashTypeCD"> - </span>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th> Tipo de Movimiento </th>
+                <th> Comentario </th>
+                <th> Ingreso </th>
+                <th> Egreso </th>
+                <th> saldo </th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="tab-pane fade" id="tipos">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <div class="card-header">
+              <button type="button" class="btn btn-success ml-auto float-right" data-toggle="modal"
+                data-target="#NewCashType"><i class="fas fa-plus-circle"></i> Nuevo tipo</button>
+            </div>
+            <!-- .card-body -->
+            <div class="card-body">
+              <!-- .form-group -->
+              <div class="form-group">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                  <!-- .input-group -->
+                  <div class="input-group has-clearable">
+                    <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                          class="fa fa-times-circle"></i></span></button>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                    </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+                  </div>
+                  <!-- /.input-group -->
+                  <!-- .input-group-prepend -->
+                  <div class="input-group-prepend">
+                    <select id="filterBy" class="custom-select">
+                      <option value='' selected> Filtros </option>
+                      <option value="0"> Nombre </option>
+                      <option value="1"> Tipo </option>
+                    </select>
+                  </div>
+                  <!-- /.input-group-prepend -->
+                </div>
+                <!-- /.input-group -->
+              </div>
+              <!-- /.form-group -->
+              <!-- .table -->
+              <table id="myTable" class="table">
+                <thead>
+                  <tr>
+                    <th> Nombre </th>
+                    <th> Tipo </th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let cashType of cashTypes">
+                    <td class="align-middle">{{ cashType.name }}</td>
+                    <td class="align-middle text-center">
+                      <span *ngIf="cashType.type === 'INGRESO'" class="badge badge-success">Ingreso</span>
+                      <span *ngIf="cashType.type === 'EGRESO'" class="badge badge-danger">Egreso</span>
+                    </td>
+                    <td class="align-middle text-center">
+                      <a (click)="cargarTipo( cashType._id )" class=" btn btn-sm btn-icon btn-secondary"
+                        data-toggle="modal" data-target="#NewCashType" alt="Editar"><i class="fa fa-pencil-alt"></i>
+                        <span class="sr-only">Editar</span></a>
+                      <a (click)="borrarTipo(cashType)" class="btn btn-sm btn-icon btn-secondary pointer"><i
+                          class="far fa-trash-alt"></i><span class="sr-only ">Eliminar</span></a>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th> Nombre </th>
+                    <th> Tipo </th>
+                    <th> </th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <div class="tab-pane fade" id="historial">
+          <!-- .card -->
+          <div class="card card-fluid">
+            <div class=" card-header d-flex">
+              <!-- .form-group -->
+              <div class="form-group col-3">
+                <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+                <input #date1 name="date1" id="flatpickr" type="text" class="form-control" required>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group col-3">
+                <label class="control-label" for="flatpickr02">Fecha final</label>
+                <input #date2 name="date2" id="flatpickr" type="text" class="form-control" required>
+              </div>
+              <!-- /.form-group -->
+              <button (click)="buscarMovimientos()" type="button" [ngStyle]="{'margin-top': '29px'}"
+                class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+            </div>
+            <!-- .card-body -->
+            <div class="card-body">
+              <!-- .form-group -->
+              <div class="form-group">
+                <!-- .input-group -->
+                <div class="input-group input-group-alt">
+                  <!-- .input-group -->
+                  <div class="input-group has-clearable">
+                    <button id="clear-search2" type="button" class="close" aria-label="Close"><span
+                        aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                    </div><input id="table-search2" type="text" class="form-control" placeholder="Buscar aquí">
+                  </div>
+                  <!-- /.input-group -->
+                  <!-- .input-group-prepend -->
+                  <div class="input-group-prepend">
+                    <select id="filterBy2" class="custom-select">
+                      <option value='' selected> Filtros </option>
+                      <option value="0"> Tipo de movimiento </option>
+                      <option value="1"> Fecha </option>
+                      <option value="2"> Comentario </option>
+                      <option value="3"> Ingreso </option>
+                      <option value="4"> Egreso </option>
+                      <option value="5"> Saldo </option>
+                    </select>
+                  </div>
+                  <!-- /.input-group-prepend -->
+                </div>
+                <!-- /.input-group -->
+              </div>
+              <!-- /.form-group -->
+              <!-- .table -->
+              <table id="myTable2" class="table">
+                <thead>
+                  <tr>
+                    <th> Tipo de Movimiento </th>
+                    <th> Fecha </th>
+                    <th> Comentario </th>
+                    <th> Ingreso </th>
+                    <th> Egreso </th>
+                    <th> Saldo </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let cash of cashs">
+                    <td class="align-middle">
+                      <ng-container *ngIf="cash._cashTypeCD">
+                        <span *ngIf="cash._cashTypeCD.type === 'INGRESO'"
+                          class="badge text-white bg-primary">{{ cash._cashTypeCD.name }}</span>
+                        <span *ngIf="cash._cashTypeCD.type === 'EGRESO'"
+                          class="badge text-white bg-danger">{{ cash._cashTypeCD.name }}</span>
+                      </ng-container>
+                      <span *ngIf="!cash._cashTypeCD" class="badge text-white bg-success">Ventas</span>
+                    </td>
+                    <td class="align-middle">{{ datePickerS.fromJsonDate(cash.date) }}</td>
+                    <td class="align-middle">{{ cash.details }}</td>
+                    <td class="align-middle">
+                      <ng-container *ngIf="cash._cashTypeCD">
+                        <span *ngIf="cash._cashTypeCD.type === 'INGRESO'"> Q
+                          {{ cash.amount | number: '1.2-2' }} </span>
+                        <span *ngIf="cash._cashTypeCD.type === 'EGRESO'"> - </span>
+                      </ng-container>
+                      <span *ngIf="!cash._cashTypeCD"> Q {{ cash.amount | number: '1.2-2' }} </span>
+                    </td>
+                    <td class="align-middle">
+                      <ng-container *ngIf="cash._cashTypeCD">
+                        <span *ngIf="cash._cashTypeCD.type === 'EGRESO'"> Q
+                          {{ cash.amount | number: '1.2-2' }} </span>
+                        <span *ngIf="cash._cashTypeCD.type === 'INGRESO'"> - </span>
+                      </ng-container>
+                    </td>
+                    <td class="align-middle">Q {{ cash.balance | number: '1.2-2' }}</td>
+                    <td>-</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th> Tipo de Movimiento </th>
+                    <th> Fecha </th>
+                    <th> Comentario </th>
+                    <th> Ingreso </th>
+                    <th> Egreso </th>
+                    <th> Saldo </th>
+                    <th></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- .tab-content -->
+      <ng-template #customLoadingTemplate>
+      </ng-template>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+      </ngx-loading>
+    </div>
+  </div>
+</div>
+<!-- /.page-section -->
+<!-- .form -->
+<form ngNativeValidate [formGroup]="formaCash" (ngSubmit)="crearMovimiento()">
+  <!-- .modal -->
+  <div class="modal fade" id="modalBox" role="dialog" aria-labelledby="modalNewTaskLabel" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content px-lg-4 py-lg-3">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h6 id="modalNewTaskLabel" class="modal-title"><i class="far fa-money-bill-alt mr-2"></i> Ingresar Movimiento
+          </h6>
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label class="control-label" for="flatpickr">Fecha <span
+                    class="badge badge-danger">Obligatorio</span></label> <input #date id="flatpickr" name="date"
+                  type="text" class="form-control" required>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label id="job">Tipo de Movimiento <span class="badge badge-danger">Obligatorio</span></label>
+                <select #selectT formControlName="cashType" name="type" class="custom-select"
+                  style="width:100%!important;">
+                  <option value=""> Seleccione un tipo </option>
+                  <option *ngFor="let cashType of cashTypes" [value]="cashType._id"> {{ cashType.name }}</option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="pay">Monto <span class="badge badge-danger">Obligatorio</span></label>
+                <div class="input-group">
+                  <label class="input-group-prepend" for="pi9"><span class="badge">Q</span></label>
+                  <input formControlName="amount" name="amount" type="number" min="0" step="0.01" class="form-control"
+                    id="amount" placeholder="0.00" required>
+                </div>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-12">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Detalles</label> <input formControlName="details" type="text" name="details"
+                  id="details" class="form-control" placeholder="Ingrese los detalles del movimiento">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <!-- /.modal-body -->
+        <hr>
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary"> Ingresar
+            Movimiento</button>
+          <button #closeM type="reset" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+        </div>
+        <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <ngx-loading [show]="loadingM" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</form>
+<!-- /.form -->
+<!-- .form -->
+<form ngNativeValidate (ngSubmit)="crearTipo()">
+  <!-- .modal -->
+  <div class="modal fade" id="NewCashType" tabindex="-1" role="dialog" aria-labelledby="modalNewTaskLabel"
+    aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-lg" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content px-lg-4 py-lg-3">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h6 id="modalNewTaskLabel" class="modal-title"><i class="fas fa-exchange-alt mr-2"></i>Crear
+            nuevo tipo de movimiento </h6>
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-12">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Nombre <span class="badge badge-danger">Obligatorio</span></label>
+                <input [(ngModel)]="cashType.name" name="name" type="text" id="tasksTitle" class="form-control" required
+                  autocomplete="off" placeholder="Ingrese el nombre del tipo de movimiento" data-autofocus="true">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-12">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label id="type">Tipo <span class="badge badge-danger">Obligatorio</span></label>
+                <select [(ngModel)]="cashType.type" name="type" class="custom-select" style="width:100%!important;">
+                  <option value="INGRESO"> Ingreso </option>
+                  <option value="EGRESO"> Egreso </option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <!-- /.modal-body -->
+        <hr>
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button> <button #closeM type="reset"
+            class="btn btn-light" data-dismiss="modal">Cancelar</button>
+        </div>
+        <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <!-- /.table -->
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</form>
+<!-- /.form -->

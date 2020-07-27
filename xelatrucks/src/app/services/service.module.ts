@@ -33,7 +33,8 @@ import {
   SaleService,
   CustomerService,
   PurchaseCDService,
-  CdStorageService
+  CdStorageService,
+  CashServiceService
 } from './service.index';
 
 @NgModule({
@@ -73,7 +74,8 @@ import {
     SaleService,
     CustomerService,
     PurchaseCDService,
-    CdStorageService
+    CdStorageService,
+    CashServiceService
   ]
 })
 export class ServiceModule { }

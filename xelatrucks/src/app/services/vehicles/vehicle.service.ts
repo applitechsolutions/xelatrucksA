@@ -30,27 +30,27 @@ export class VehicleService {
     return this.http.get(url);
   }
 
-  guardarRim( rim: Rim ) {
+  guardarRim(rim: Rim) {
     let url = URL_SERVICES + '/llanta';
     url += '?token=' + this.userS.token;
 
     return this.http.post(url, rim)
       .pipe(
-        map( (res: any) => {
+        map((res: any) => {
           const rimDB = res.llanta;
           return rimDB;
         })
       );
   }
 
-  cargarVehiculo( id: string ) {
+  cargarVehiculo(id: string) {
     const url = URL_SERVICES + '/vehiculo/' + id;
 
     return this.http.get(url)
-      .pipe( map( (resp: any) =>  resp.vehiculo));
+      .pipe(map((resp: any) => resp.vehiculo));
   }
 
-  crearGasoline( gasoline: Gas, idVehicle: string ) {
+  crearGasoline(gasoline: Gas, idVehicle: string) {
 
     let url = URL_SERVICES + '/vehiculo/gasoline';
 
@@ -58,63 +58,75 @@ export class VehicleService {
       url += '/' + idVehicle;
       url += '?token=' + this.userS.token;
 
-      return this.http.put(url, gasoline )
-        .pipe( map( (resp: any) => {
-            const vehicleDB = resp.vehiculo;
-            swal({
-              title: '¡Vechículo Actualizado!',
-              text: 'Placa #' + vehicleDB.plate,
-              icon: 'success',
-              button: false,
-              timer: 1000
-            });
-            return resp;
-          }),
+      return this.http.put(url, gasoline)
+        .pipe(map((resp: any) => {
+          const vehicleDB = resp.vehiculo;
+          swal({
+            title: '¡Vechículo Actualizado!',
+            text: 'Placa #' + vehicleDB.plate,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
+          return resp;
+        }),
           catchError((err, caught) => {
             console.log(err);
-            swal(err.error.mensaje, err.error.errors.message , 'error');
-            return throwError( err );
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
           }));
 
     } else {
-        url += '/' + idVehicle;
-        url += '?token=' + this.userS.token;
+      url += '/' + idVehicle;
+      url += '?token=' + this.userS.token;
 
-        return this.http.post(url, gasoline)
-          .pipe( map( (resp: any) => {
-            const vehicleDB = resp.vehiculo;
-            swal({
-              title: '¡Vechículo Actualizado!',
-              text: 'Placa #' + vehicleDB.plate,
-              icon: 'success',
-              button: false,
-              timer: 1000
-            });
-            return resp;
-          }),
+      return this.http.post(url, gasoline)
+        .pipe(map((resp: any) => {
+          const vehicleDB = resp.vehiculo;
+          swal({
+            title: '¡Vechículo Actualizado!',
+            text: 'Placa #' + vehicleDB.plate,
+            icon: 'success',
+            button: false,
+            timer: 1000
+          });
+          return resp;
+        }),
           catchError((err, caught) => {
             console.log(err);
-            swal(err.error.mensaje, err.error.errors.message , 'error');
-            return throwError( err );
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
           }));
     }
   }
 
-  cargarGasolinesAll( fecha1: Date, fecha2: Date ) {
+  cargarGasolinesAll(fecha1: Date, fecha2: Date) {
     const url = URL_SERVICES + '/vehiculo/gasolines/all?fecha1=' + fecha1 + '&fecha2=' + fecha2;
 
     return this.http.get(url)
-      .pipe( map( (resp: any) =>  resp.gasoline));
+      .pipe(map((resp: any) => resp.gasoline));
   }
 
-  cargarGasolines( id: string, fecha1: Date, fecha2: Date ) {
+  cargarGasolines(id: string, fecha1: Date, fecha2: Date) {
     const url = URL_SERVICES + '/vehiculo/gasolines?id=' + id + '&fecha1=' + fecha1 + '&fecha2=' + fecha2;
 
     return this.http.get(url)
-      .pipe( map( (resp: any) =>  resp.gasoline));
+      .pipe(map((resp: any) => resp.gasoline));
   }
 
-  crearVehiculo( vehicle: Vehicle ) {
+  cargarRptKmts(id: string, fecha1: Date, fecha2: Date) {
+    const url = URL_SERVICES + '/vehiculo/kmByVehicle/' + id + '?fecha1=' + fecha1 + '&fecha2=' + fecha2;
+
+    return this.http.get(url);
+  }
+
+  cargarRptKmtsByDestinations(fecha1: Date, fecha2: Date) {
+    const url = URL_SERVICES + '/vehiculo/kmByVehicle' + '?fecha1=' + fecha1 + '&fecha2=' + fecha2;
+
+    return this.http.get(url);
+  }
+
+  crearVehiculo(vehicle: Vehicle) {
 
     let url = URL_SERVICES + '/vehiculo';
 
@@ -122,67 +134,67 @@ export class VehicleService {
       url += '/' + vehicle._id + '?token=' + this.userS.token;
 
       return this.http.put(url, vehicle)
-        .pipe( map( (resp: any) => {
+        .pipe(map((resp: any) => {
           const vehicleDB = resp.vehiculo;
-          swal('Vechículo actualizado', 'Placa #' + vehicleDB.plate , 'success');
+          swal('Vechículo actualizado', 'Placa #' + vehicleDB.plate, 'success');
           return resp;
         }),
-        catchError((err, caught) => {
-          console.log(err);
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
-        }));
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          }));
 
     } else {
       url += '?token=' + this.userS.token;
 
       return this.http.post(url, vehicle)
-        .pipe( map( (resp: any) => {
+        .pipe(map((resp: any) => {
           const vehicleDB = resp.vehiculo;
-          swal('Vechículo creado', 'Placa #' + vehicleDB.plate , 'success');
+          swal('Vechículo creado', 'Placa #' + vehicleDB.plate, 'success');
           return resp;
         }),
-        catchError((err, caught) => {
-          console.log(err);
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
-        }));
+          catchError((err, caught) => {
+            console.log(err);
+            swal(err.error.mensaje, err.error.errors.message, 'error');
+            return throwError(err);
+          }));
     }
   }
 
-  borrarGasoline( gasoline: Gas, idVehicle: string ) {
+  borrarGasoline(gasoline: Gas, idVehicle: string) {
 
     let url = URL_SERVICES + '/vehiculo/gasoline/delete';
 
     url += '/' + idVehicle;
     url += '?token=' + this.userS.token;
-    return this.http.put(url, gasoline )
-      .pipe( map( (resp: any) => {
-          const vehicleDB = resp.vehiculo;
-          swal('Vechículo actualizado', 'Placa #' + vehicleDB.plate , 'success');
-          return resp;
-        }),
+    return this.http.put(url, gasoline)
+      .pipe(map((resp: any) => {
+        const vehicleDB = resp.vehiculo;
+        swal('Vechículo actualizado', 'Placa #' + vehicleDB.plate, 'success');
+        return resp;
+      }),
         catchError((err, caught) => {
           console.log(err);
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
         }));
   }
 
-  borrarVehiculo( id: string) {
+  borrarVehiculo(id: string) {
     let url = URL_SERVICES + '/vehiculo/delete/' + id;
     url += '?token=' + this.userS.token;
 
     return this.http.put(url, '')
       .pipe(
-        map( resp => {
+        map(resp => {
           swal('Vehículo borrado', 'El usuario ha sido eliminado correctamente', 'success');
           return true;
         }),
         catchError((err, caught) => {
           console.log(err);
-          swal(err.error.mensaje, err.error.errors.message , 'error');
-          return throwError( err );
+          swal(err.error.mensaje, err.error.errors.message, 'error');
+          return throwError(err);
         }));
   }
 }

@@ -10,6 +10,7 @@ export { SaleService } from './sales/sale.service';
 export { CustomerService } from './customers/customer.service';
 export { PurchaseCDService } from './purchasesCD/purchase-cd.service';
 export { CdStorageService } from './cd-storages/cd-storage.service';
+export { CashServiceService } from './cashCD/cash-service.service';
 // VIAJES
 export { EmployeeService } from './employees/employee.service';
 export { TripService } from './trips/trip.service';

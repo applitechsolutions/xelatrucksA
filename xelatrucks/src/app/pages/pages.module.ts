@@ -39,7 +39,6 @@ import { CustomersComponent } from './customers/customers.component';
 import { GbillsComponent } from './gbills/gbills.component';
 import { GbillComponent } from './gbills/gbill.component';
 import { TypeTripsComponent } from './type-trips/type-trips.component';
-import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
 import { DestinationsComponent } from './destinations/destinations.component';
 import { DestinationComponent } from './destinations/destination.component';
@@ -69,6 +68,12 @@ import { CdPurchasesComponent } from './cd-purchases/cd-purchases.component';
 import { TobePaidsComponent } from './cd-purchases/tobe-paids.component';
 import { DespachoComponent } from './prints/despacho/despacho.component';
 import { CdReportsComponent } from './cd-reports/cd-reports.component';
+import { CashCDComponent } from './cashBox/cash-cd.component';
+import { MenuComponent } from './reports/menu.component';
+import { PurchasesByProvidersComponent } from './reports/taller/purchases-by-providers/purchases-by-providers.component';
+import { GasConsumptionsComponent } from './reports/taller/gas-consumptions/gas-consumptions.component';
+import { KmByVehiclesComponent } from './reports/transporte/km-by-vehicles/km-by-vehicles.component';
+import { KmByDestinationsComponent } from './reports/transporte/km-by-destinations/km-by-destinations.component';
 
 @NgModule({
         declarations: [
@@ -100,7 +105,6 @@ import { CdReportsComponent } from './cd-reports/cd-reports.component';
                 GbillsComponent,
                 GbillComponent,
                 TypeTripsComponent,
-                ReportsComponent,
                 RepairsComponent,
                 DestinationsComponent,
                 DestinationComponent,
@@ -128,7 +132,13 @@ import { CdReportsComponent } from './cd-reports/cd-reports.component';
                 CdPurchasesComponent,
                 CdPurchaseComponent,
                 DespachoComponent,
-                CdReportsComponent
+                CdReportsComponent,
+                CashCDComponent,
+                MenuComponent,
+                PurchasesByProvidersComponent,
+                GasConsumptionsComponent,
+                KmByVehiclesComponent,
+                KmByDestinationsComponent
         ],
         exports: [
                 DashboardComponent,
@@ -147,4 +157,3 @@ import { CdReportsComponent } from './cd-reports/cd-reports.component';
 })
 
 export class PagesModule { }
-

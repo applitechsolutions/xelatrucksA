@@ -137,6 +137,10 @@ export class CdPurchaseComponent implements OnInit, AfterViewInit {
       });
   }
 
+  redondear(decimals: number) {
+    this.purchaseCD.total = Number(this.purchaseCD.total) + Number(decimals);
+  }
+
   crearCompra() {
 
     if (this.selectO.nativeElement.value === '' || this.date.nativeElement.value === '') {

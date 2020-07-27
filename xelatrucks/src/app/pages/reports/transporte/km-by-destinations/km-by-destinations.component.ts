@@ -19,6 +19,8 @@ export class KmByDestinationsComponent implements OnInit {
   @ViewChild('date2') date2: ElementRef;
   loading: boolean = false;
 
+  report: any[] = [];
+
   today: Date;
   titulo = '';
   subTitulo = '';
@@ -56,7 +58,14 @@ export class KmByDestinationsComponent implements OnInit {
 
     this.vehicleS.cargarRptKmtsByDestinations(fecha1, fecha2).subscribe((resp: any) => {
       destroy_datatables();
+      const unionArrays = [
+        ...resp.greenTrips,
+        ...resp.whiteTrips,
+        ...resp.tankTrips
+      ];
       console.log(resp);
+      // console.log(this.agruparArreglo(unionArrays, '_id'));
+      this.report = Object.values(this.agruparArreglo(unionArrays, '_id'));
       this.totals();
 
       this.chRef.detectChanges();
@@ -65,11 +74,21 @@ export class KmByDestinationsComponent implements OnInit {
     });
   }
 
+  agruparArreglo(miarray, prop) {
+    return miarray.reduce((groups, item) => {
+      const val = item[prop];
+      groups[val] = groups[val] || { _id: item._id, viajes: 0 };
+      groups[val].viajes += item.viajes;
+      return groups;
+    }, {});
+  }
+
+
   totals() {
     // SUMAS PARA LOS TOTALES -------------
     // this.greenTripsT = this.greenTrips.reduce((sum, item) => sum + item.trips, 0);
     // this.greenKms = this.greenTrips.reduce((sum, item) => sum + (item.trips * item._type.km), 0);
-    // this.whiteKms = this.whiteTrips.reduce((sum, item) => sum + (item._pull._order._destination.km * 2), 0);
+    // this.whiteKms = this.whiteTrips.reduce((sum, item) => sum + item._pull._order._destination.km, 0);
   }
 
 }

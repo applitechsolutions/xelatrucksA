@@ -115,12 +115,8 @@
             <div class="input-group-prepend">
               <select id="filterBy" class="custom-select">
                 <option value='' selected> Filtros </option>
-                <option value="0"> Fecha </option>
-                <option value="1"> Producción </option>
-                <option value="2"> Empleado </option>
-                <option value="3"> Material </option>
-                <option value="4"> Viajes </option>
-                <option value="5"> Kilómetros</option>
+                <option value="0"> Rango </option>
+                <option value="1"> Viajes </option>
               </select>
             </div>
             <!-- /.input-group-prepend -->
@@ -132,45 +128,24 @@
         <table id="myTable" class="table">
           <thead>
             <tr>
-              <th> Fecha </th>
-              <th> Producción </th>
-              <th> Empleado </th>
-              <th> Material </th>
+              <th> Rango </th>
               <th> Viajes </th>
-              <th> Kilómetros </th>
             </tr>
           </thead>
           <tbody>
-            <!-- <tr *ngFor="let greenTrip of greenTrips">
-                <td>
-                  {{ greenTrip.date | date: 'dd/MM/yyyy' }}
-                </td>
-                <td>
-                  <span class="badge badge-info">{{ greenTrip._type.km }} km</span>
-                  {{ greenTrip._type.code }} - {{ greenTrip._type.name }}
-                </td>
-                <td>
-                  {{ greenTrip._employee.name }}
-                </td>
-                <td>
-                  {{ greenTrip._material.code }} - {{ greenTrip._material.name }}
-                </td>
-                <td class="text-center">
-                  {{ greenTrip.trips }}
-                </td>
-                <td class="text-center">
-                  {{ (greenTrip.trips * greenTrip._type.km) | number : '1.2-2' }} km
-                </td>
-              </tr> -->
+            <tr *ngFor="let item of report">
+              <td>
+                {{ item._id }}
+              </td>
+              <td class="text-center">
+                {{ item.viajes }}
+              </td>
+            </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th> Fecha </th>
-              <th> Producción </th>
-              <th> Empleado </th>
-              <th> Material </th>
+              <th> Rango </th>
               <th> Viajes </th>
-              <th> Kilómetros </th>
             </tr>
           </tfoot>
         </table>

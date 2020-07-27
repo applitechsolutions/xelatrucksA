@@ -279,7 +279,7 @@
                   {{ whiteTrip._pull._order._destination.name }}
                 </td>
                 <td class="text-center">
-                  {{ (whiteTrip._pull._order._destination.km * 2) | number : '1.2-2' }} km
+                  {{ whiteTrip._pull._order._destination.km | number : '1.2-2' }} km
                 </td>
               </tr>
             </tbody>
@@ -551,7 +551,7 @@
                           {{ whiteTrip._pull._order._destination.name }}
                         </td>
                         <td class="text-center">
-                          {{ (whiteTrip._pull._order._destination.km * 2) | number : '1.2-2' }} km
+                          {{ whiteTrip._pull._order._destination.km | number : '1.2-2' }} km
                         </td>
                       </tr>
                       <!-- fake border -->

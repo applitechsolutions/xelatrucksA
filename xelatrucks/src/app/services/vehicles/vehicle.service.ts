@@ -121,7 +121,7 @@ export class VehicleService {
   }
 
   cargarRptKmtsByDestinations(fecha1: Date, fecha2: Date) {
-    const url = URL_SERVICES + '/vehiculo/kmByVehicle' + '?fecha1=' + fecha1 + '&fecha2=' + fecha2;
+    const url = URL_SERVICES + '/vehiculo/kmByDestination' + '?fecha1=' + fecha1 + '&fecha2=' + fecha2;
 
     return this.http.get(url);
   }

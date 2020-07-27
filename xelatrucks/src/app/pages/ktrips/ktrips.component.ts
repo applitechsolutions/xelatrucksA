@@ -31,7 +31,7 @@ export class KtripsComponent implements OnInit {
     this.dtService.init_datePicker(today);
   }
 
-  eliminarViajeCisterna( tankTrip: TankTrip ) {
+  eliminarViajeCisterna(tankTrip: TankTrip) {
 
     const km = tankTrip._destination.km * tankTrip.trips * -1;
 
@@ -70,6 +70,7 @@ export class KtripsComponent implements OnInit {
     this.tripService.cargarTankTrips(fecha1, fecha2)
       .subscribe((res: any) => {
         destroy_datatables();
+        // console.log(res);
         this.tankTrips = res.viajesA;
         this.loading = false;
         this.chRef.detectChanges();

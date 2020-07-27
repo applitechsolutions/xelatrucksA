@@ -105,7 +105,7 @@ export class KmByVehiclesComponent implements OnInit, AfterViewInit {
     // SUMAS PARA LOS TOTALES -------------
     this.greenTripsT = this.greenTrips.reduce((sum, item) => sum + item.trips, 0);
     this.greenKms = this.greenTrips.reduce((sum, item) => sum + (item.trips * item._type.km), 0);
-    this.whiteKms = this.whiteTrips.reduce((sum, item) => sum + (item._pull._order._destination.km * 2), 0);
+    this.whiteKms = this.whiteTrips.reduce((sum, item) => sum + item._pull._order._destination.km, 0);
   }
 
 }

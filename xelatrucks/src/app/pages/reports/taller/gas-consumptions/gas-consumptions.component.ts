@@ -12,31 +12,22 @@ declare var swal: any;
 @Component({
   selector: 'app-gas-consumptions',
   templateUrl: './gas-consumptions.component.html',
-  styles: []
+  styles: [
+  ]
 })
-export class GasConsumptionsComponent implements OnInit, AfterViewInit, OnChanges {
+export class GasConsumptionsComponent implements OnInit, AfterViewInit {
 
   loading: boolean = false;
-  @ViewChild('dateG1') dateG1: ElementRef;
-  @ViewChild('dateG2') dateG2: ElementRef;
-
-  @Input() idTable: string;
-  @Input() dtButtons: string;
-  @Input() clearSearch: string;
-  @Input() tableSearch: string;
-  @Input() filterBy: string;
-  @Input() benito: string;
-  @Input() invoice: string;
-  @Input() downloadPdf: string;
+  @ViewChild('date1') date1: ElementRef;
+  @ViewChild('date2') date2: ElementRef;
 
   gasolines: any[] = [];
   totalGas = 0.00;
   totalGal = 0.00;
 
   today: Date;
-  date1Consulta = '';
-  date2Consulta = '';
-  nombreSelect = '';
+  titulo = 'Consumo de combustible';
+  subTitulo = '';
 
   constructor(
     public dtService: DatatablesService,
@@ -45,7 +36,7 @@ export class GasConsumptionsComponent implements OnInit, AfterViewInit, OnChange
     public vehicleS: VehicleService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const today = moment(new Date()).format('DD/MM/YYYY');
     this.dtService.init_datePicker(today);
   }
@@ -54,42 +45,29 @@ export class GasConsumptionsComponent implements OnInit, AfterViewInit, OnChange
     $('.select2').select2();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-
-    this.cambiarTableID(changes.idTable.currentValue);
-    // You can also use categoryId.previousValue and
-    // categoryId.firstChange for comparing old and new values
-
-  }
-
-  cambiarTableID(idTable: string) {
-    destroy_datatables();
-  }
-
-  createReportG() {
+  createReport() {
     this.today = new Date();
     this.chRef.detectChanges();
     init_reports();
   }
 
-  searchG() {
+  search() {
 
-    if (!this.dateG1.nativeElement.value || !this.dateG2.nativeElement.value) {
+    if (!this.date1.nativeElement.value || !this.date2.nativeElement.value) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }
 
     this.loading = true;
-    const fecha1 = moment(this.dateG1.nativeElement.value, 'DD/MM/YYYY').toDate();
-    const fecha2 = moment(this.dateG2.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha1 = moment(this.date1.nativeElement.value, 'DD/MM/YYYY').toDate();
+    const fecha2 = moment(this.date2.nativeElement.value, 'DD/MM/YYYY').toDate();
+    this.subTitulo = this.date1.nativeElement.value + ' - ' + this.date2.nativeElement.value;
 
     this.vehicleS.cargarGasolinesAll(fecha1, fecha2).subscribe((resp: any) => {
       destroy_datatables();
       this.gasolines = resp;
       // console.log(this.gasolines);
       this.totalsG();
-      this.date1Consulta = this.dateG1.nativeElement.value;
-      this.date2Consulta = this.dateG2.nativeElement.value;
       this.chRef.detectChanges();
       init_datatables();
       this.loading = false;

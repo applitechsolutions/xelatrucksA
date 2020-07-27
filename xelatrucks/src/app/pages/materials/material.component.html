@@ -25,26 +25,49 @@
               id="name" placeholder="Ingrese el nombre del material">
           </div>
           <!-- /.form-group -->
-          <!-- .form-group -->
-          <div class="form-group">
-            <label for="minStock">Existencia Mínima</label>
-            <div class="input-group">
-              <label class="input-group-prepend" for="minStock"><span class="badge">u</span></label>
-              <input formControlName="minStock" name="minStock" type="number" min="0.00" step="0.01"
-                class="form-control" id="minStock" placeholder="Ingrese la existencia mínima del material">
+          <hr>
+          <!-- .switcher-control -->
+          <label for="material">Material para el CD La Viña</label><br>
+          <label class="switcher-control switcher-control-lg"><input formControlName="isCD" type="checkbox"
+              class="switcher-input" checked> <span class="switcher-indicator"></span> <span
+              class="switcher-label-on">SI</span> <span class="switcher-label-off">NO</span></label>
+          <!-- /.switcher-control -->
+          <ng-container *ngIf="formMat.get('isCD').value">
+            <!-- .form-group -->
+            <div class="form-group mt-3">
+              <label for="minStock">Existencia Mínima</label>
+              <div class="input-group">
+                <label class="input-group-prepend" for="minStock"><span class="badge">u</span></label>
+                <input formControlName="minStock" name="minStock" type="number" min="0.00" step="0.01"
+                  class="form-control" id="minStock" placeholder="Ingrese la existencia mínima del material">
+              </div>
             </div>
-          </div>
-          <!-- /.form-group -->
-          <!-- .form-group -->
-          <div class="form-group">
-            <label for="price">Precio de venta</label>
-            <div class="input-group">
-              <label class="input-group-prepend" for="price"><span class="badge">Q</span></label>
-              <input formControlName="price" name="price" type="number" min="0.00" step="0.01" class="form-control"
-                id="price" placeholder="Ingrese el precio de venta del material">
+            <!-- /.form-group -->
+            <!-- form-row -->
+            <div class="form-row">
+              <!-- .form-group -->
+              <div class="form-group col-6">
+                <label for="price">Costo de compra</label>
+                <div class="input-group">
+                  <label class="input-group-prepend" for="cost"><span class="badge">Q</span></label>
+                  <input formControlName="cost" name="cost" type="number" min="0.00" step="0.01" class="form-control"
+                    id="cost" placeholder="Ingrese el costo de compra del material">
+                </div>
+              </div>
+              <!-- /.form-group -->
+              <!-- .form-group -->
+              <div class="form-group col-6">
+                <label for="price">Precio de venta</label>
+                <div class="input-group">
+                  <label class="input-group-prepend" for="price"><span class="badge">Q</span></label>
+                  <input formControlName="price" name="price" type="number" min="0.00" step="0.01" class="form-control"
+                    id="price" placeholder="Ingrese el precio de venta del material">
+                </div>
+              </div>
+              <!-- /.form-group -->
             </div>
-          </div>
-          <!-- /.form-group -->
+            <!-- /form-row -->
+          </ng-container>
           <!-- .modal-footer -->
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Guardar</button> <button #closeMMt type="button"

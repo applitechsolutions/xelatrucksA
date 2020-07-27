@@ -1,0 +1,361 @@
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <div class=" card-header d-flex">
+        <!-- .form-group -->
+        <div class="form-group col-md-2">
+          <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+          <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
+        </div>
+        <!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group col-md-2">
+          <label class="control-label" for="flatpickr02">Fecha final</label>
+          <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
+        </div>
+        <!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group col-md-4">
+          <label class="control-label">Proveedor</label>
+          <select #selectP name="autoProvider" class="form-control select2" id="autoProvider"
+            style="width:100%!important;">
+            <option value=""> Seleccione un proveedor </option>
+            <option *ngFor="let autoProvider of autoProviders" [value]="autoProvider._id"> {{ autoProvider.name }}
+            </option>
+          </select>
+        </div>
+        <!-- /.form-group -->
+        <button type="button" [ngStyle]="{'margin-top': '29px'}" (click)="search()" class="btn btn-primary"><i
+            class="fas fa-search"></i> Consultar</button>
+        <button type="button" (click)="createReport()" data-toggle="modal" data-target="#modalBuySpares"
+          class="btn btn-outline-info ml-auto">Generar reporte <i class="fas fa-print"></i></button>
+      </div>
+      <!-- .card-body -->
+      <div class="card-body">
+        <h5 class="title">{{ titulo }}</h5>
+        <h6 class="text-muted">
+          {{ subTitulo }}</h6>
+        <!-- .section-block -->
+        <div class="section-block">
+          <!-- metric row -->
+          <div class="metric-row">
+            <!-- metric column -->
+            <div class="col">
+              <!-- .metric -->
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> COMPRAS </h2>
+                <p class="metric-value h1">
+                  <sup>#</sup> <span class="value">{{ buySpares.length }}</span>
+                </p>
+              </div>
+              <!-- /.metric -->
+            </div>
+            <!-- /metric column -->
+            <!-- metric column -->
+            <div class="col">
+              <!-- .metric -->
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> SUBTOTAL </h2>
+                <p class="metric-value h1">
+                  <sup>Q</sup> <span class="value">{{ totalB | number : '1.2-2' }}</span>
+                </p>
+              </div>
+              <!-- /.metric -->
+            </div>
+            <!-- /metric column -->
+            <!-- metric column -->
+            <div class="col">
+              <!-- .metric -->
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> DESCUENTO </h2>
+                <p class="metric-value h1">
+                  <sup>Q</sup> <span class="value text-info">{{ totalDiscountB | number : '1.2-2' }}</span>
+                </p>
+              </div>
+              <!-- /.metric -->
+            </div>
+            <!-- /metric column -->
+            <!-- metric column -->
+            <div class="col">
+              <!-- .metric -->
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> TOTAL </h2>
+                <p class="metric-value h1">
+                  <sup>Q</sup> <span
+                    class="value text-success">{{ (totalB - totalDiscountB) | number : '1.2-2' }}</span>
+                </p>
+              </div>
+              <!-- /.metric -->
+            </div>
+            <!-- /metric column -->
+          </div>
+          <!-- /metric row -->
+        </div>
+        <!-- /.section-block -->
+        <!-- .form-group -->
+        <div class="form-group">
+          <!-- .input-group -->
+          <div class="input-group input-group-alt">
+            <!-- .input-group -->
+            <div class="input-group has-clearable">
+              <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                    class="fa fa-times-circle"></i></span></button>
+              <div class="input-group-prepend">
+                <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+              </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+            </div>
+            <!-- /.input-group -->
+            <!-- .input-group-prepend -->
+            <div class="input-group-prepend">
+              <select id="filterBy" class="custom-select">
+                <option value='' selected> Filtros </option>
+                <option value="0"> Fecha </option>
+                <option value="1"> Factura </option>
+                <option value="2"> Serie </option>
+                <option value="3"> Documento </option>
+                <option value="4"> Subtotal </option>
+                <option value="5"> Descuento </option>
+                <option value="6"> Total </option>
+              </select>
+            </div>
+            <!-- /.input-group-prepend -->
+          </div>
+          <!-- /.input-group -->
+        </div>
+        <!-- /.form-group -->
+        <!-- .table -->
+        <table id="myTable" class="table">
+          <thead>
+            <tr>
+              <th> Fecha </th>
+              <th> Factura </th>
+              <th> Serie </th>
+              <th> Documento </th>
+              <th> Subtotal </th>
+              <th> Descuento </th>
+              <th> Total </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let buySpare of buySpares">
+              <td>
+                {{ buySpare.date | date: 'dd/MM/yyyy' }}
+              </td>
+              <td>
+                {{ buySpare.noBill }}
+              </td>
+              <td>
+                {{ buySpare.serie }}
+              </td>
+              <td>
+                {{ buySpare.noDoc }}
+              </td>
+              <td>
+                Q {{ buySpare.total | number : '1.2-2' }}
+              </td>
+              <td>
+                Q {{ buySpare.discount | number : '1.2-2' }}
+              </td>
+              <td>
+                Q {{ (buySpare.total - buySpare.discount) | number : '1.2-2' }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th> Fecha </th>
+              <th> Factura </th>
+              <th> Serie </th>
+              <th> Documento </th>
+              <th> Subtotal </th>
+              <th> Descuento </th>
+              <th> Total </th>
+            </tr>
+          </tfoot>
+        </table>
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <!-- /.table -->
+        <ngx-loading [show]="" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.page-inner -->
+  <!-- .page-sidebar -->
+  <div class="page-sidebar">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-sm-none">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" data-toggle="sidebar"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Atras</a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.sidebar-header -->
+    <!-- .sidebar-section-fill -->
+    <div class="sidebar-section-fill">
+      <!-- .card -->
+      <div class="card card-reflow">
+        <div class="card-header">
+          <h5 class="modal-title"> Reportes </h5>
+        </div>
+        <!-- .card-body -->
+        <div class="card-body">
+          <button type="button" class="close mt-n1 d-none d-xl-none d-sm-block" data-toggle="sidebar"
+            aria-label="Close"><span aria-hidden="true">×</span></button>
+          <app-menu></app-menu>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.sidebar-section-fill -->
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->
+<!-- .modalREPORT -->
+<div class="modal fade" id="modalBuySpares" role="dialog" aria-labelledby="clientContactNewModalLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-money-check-alt"></i> Reporte de compras por proveedor </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <!-- .section-block -->
+        <div class="section-block">
+          <!-- .invoice-wrapper -->
+          <div id="benito" class="invoice-wrapper">
+            <!-- .invoice-actions -->
+            <div class="invoice-actions">
+              <div class="dropdown">
+                <button type="button" class="btn btn-lg btn-secondary rounded-0" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"><span class="fa fa-caret-down"></span></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-arrow mr-1"></div><button type="button" id="downloadPdf"
+                    class="dropdown-item">Descargar PDF</button>
+                </div>
+              </div>
+            </div>
+            <!-- /.invoice-actions -->
+            <!-- .invoice -->
+            <div id="invoice" class="invoice" data-id="RPT-COMPRAS-PROVEEDOR">
+              <!-- .invoice-header -->
+              <div class="invoice-header">
+                <!-- grid row -->
+                <div class="row">
+                  <!-- .col -->
+                  <div class="col d-flex">
+                    <h2 class="invoice-brand align-self-center">
+                      <img src="assets/images/logo-min.png" width="270" alt=""> <span class="sr-only">Reporte la Viña
+                        S.A</span>
+                    </h2>
+                  </div>
+                  <!-- /.col -->
+                  <!-- .col -->
+                  <div class="col">
+                    <table class="table table-borderless table-sm">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <small>Usuario</small><br>
+                            <h6> {{ userS.usuario.name + ' ' + userS.usuario.lastName }} </h6>
+                          </td>
+                          <td colspan="2">
+                            <small>Fecha</small><br>
+                            <h6> {{ today | date:"dd/MM/yyyy HH:mm"}} </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /grid row -->
+              </div>
+              <!-- /.invoice-header -->
+              <!-- .invoice-body -->
+              <div class="invoice-body">
+                <table class="table table-sm">
+                  <caption class="invoice-title">
+                    <span>Reporte</span><br>
+                    <span class="text-primary">{{ titulo }} </span><br>
+                    <span class="text-primary">{{ subTitulo }} </span>
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th> Fecha </th>
+                      <th> Factura </th>
+                      <th> Serie </th>
+                      <th> Documento </th>
+                      <th class="text-right"> Subtotal (Q) </th>
+                      <th class="text-right"> Descuento (Q) </th>
+                      <th class="text-right"> Total (Q) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let buySpare of buySpares">
+                      <td> {{ buySpare.date | date: 'dd/MM/yyyy' }} </td>
+                      <td> {{ buySpare.noBill }} </td>
+                      <td> {{ buySpare.serie }} </td>
+                      <td> {{ buySpare.noDoc }} </td>
+                      <td class="text-right"> Q{{ buySpare.total | number: '1.2-2' }} </td>
+                      <td class="text-right"> Q{{ buySpare.discount | number : '1.2-2' }} </td>
+                      <td class="text-right"> Q{{ (buySpare.total - buySpare.discount) | number : '1.2-2' }} </td>
+                    </tr>
+                    <!-- fake border -->
+                    <tr>
+                      <td colspan="7"></td>
+                    </tr>
+                  </tbody>
+                  <tfoot class="table-borderless">
+                    <tr>
+                      <th colspan="3"></th>
+                      <th> Totales </th>
+                      <th class="text-right"> Q{{ totalB | number : '1.2-2' }} </th>
+                      <th class="text-right"> Q{{ totalDiscountB | number : '1.2-2' }} </th>
+                      <th class="text-right"> Q{{ (totalB - totalDiscountB) | number : '1.2-2' }} </th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.invoice-body -->
+              <!-- .invoice-footer -->
+              <div class="invoice-footer">
+                <p><strong>Copyright &copy; APPLITECH SOFTWARE SOLUTIONS.
+                  </strong> Todos Los Derechos Reservados.</p>
+              </div>
+              <!-- /.invoice-footer -->
+            </div>
+            <!-- /.invoice -->
+          </div>
+          <!-- /.invoice-wrapper -->
+        </div>
+        <!-- /.section-block -->
+      </div>
+      <!-- /.modal-body -->
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button #closeMG type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+      </div>
+      <!-- /.modal-footer -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modalREPORT -->

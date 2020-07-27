@@ -36,7 +36,6 @@ import { GbillComponent } from './gbills/gbill.component';
 import { AdminGuard } from '../services/service.index';
 import { TypeTripComponent } from './type-trips/type-trip.component';
 import { TypeTripsComponent } from './type-trips/type-trips.component';
-import { ReportsComponent } from './reports/reports.component';
 import { RepairsComponent } from './repairs/repairs.component';
 import { DestinationsComponent } from './destinations/destinations.component';
 import { DestinationComponent } from './destinations/destination.component';
@@ -55,6 +54,12 @@ import { CdPurchaseComponent } from './cd-purchases/cd-purchase.component';
 import { CdPurchasesComponent } from './cd-purchases/cd-purchases.component';
 import { TobePaidsComponent } from './cd-purchases/tobe-paids.component';
 import { CdReportsComponent } from './cd-reports/cd-reports.component';
+import { MaterialsComponent } from './materials/materials.component';
+import { CashCDComponent } from './cashBox/cash-cd.component';
+import { PurchasesByProvidersComponent } from './reports/taller/purchases-by-providers/purchases-by-providers.component';
+import { GasConsumptionsComponent } from './reports/taller/gas-consumptions/gas-consumptions.component';
+import { KmByVehiclesComponent } from './reports/transporte/km-by-vehicles/km-by-vehicles.component';
+import { KmByDestinationsComponent } from './reports/transporte/km-by-destinations/km-by-destinations.component';
 
 const pagesRoutes: Routes = [
     {
@@ -83,10 +88,35 @@ const pagesRoutes: Routes = [
         data: { titulo: 'Crear Usuario' }
     },
     {
-        path: 'reports',
-        component: ReportsComponent,
+        path: 'materials',
+        component: MaterialsComponent,
         canActivate: [VerificaTokenGuard, AdminGuard],
-        data: { titulo: 'Reportes' }
+        data: { titulo: 'Catálogo de Materiales' }
+    },
+    // REPORTES
+    {
+        path: 'reports/purchasesByProviders',
+        component: PurchasesByProvidersComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Compras por proveedor' }
+    },
+    {
+        path: 'reports/gasConsumptions',
+        component: GasConsumptionsComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Consumo de combustible' }
+    },
+    {
+        path: 'reports/kmByVehicles',
+        component: KmByVehiclesComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Kilómetros recorridos por vehículo' }
+    },
+    {
+        path: 'reports/kmByDestinations',
+        component: KmByDestinationsComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Rangos de kilómetros recorridos' }
     },
     // TRANSPORTES
     {
@@ -384,6 +414,12 @@ const pagesRoutes: Routes = [
         component: CdReportsComponent,
         canActivate: [VerificaTokenGuard, AdminGuard],
         data: { titulo: 'Reportes de ventas' }
+    },
+    {
+        path: 'cd/cash',
+        component: CashCDComponent,
+        canActivate: [VerificaTokenGuard, AdminGuard],
+        data: { titulo: 'Administración de caja' }
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];

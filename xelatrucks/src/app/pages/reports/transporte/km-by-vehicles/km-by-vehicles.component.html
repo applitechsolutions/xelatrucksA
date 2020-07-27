@@ -1,0 +1,632 @@
+<!-- .page -->
+<div class="page has-sidebar has-sidebar-expand-xl">
+  <!-- .page-inner -->
+  <div class="page-inner">
+    <!-- .card -->
+    <div class="card card-fluid">
+      <div class=" card-header d-flex">
+        <!-- .form-group -->
+        <div class="form-group col-md-2">
+          <label class="control-label" for="flatpickr02">Fecha de inicio</label>
+          <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
+        </div>
+        <!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group col-md-2">
+          <label class="control-label" for="flatpickr02">Fecha final</label>
+          <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
+        </div>
+        <!-- /.form-group -->
+        <!-- .form-group -->
+        <div class="form-group col-md-4">
+          <label id="job">Vehículo</label>
+          <select #selectV name="vehicle" class="form-control select2" style="width:100%!important;">
+            <option value=""> Seleccione un vehículo </option>
+            <ng-container *ngFor="let vehicle of vehicles">
+              <option *ngIf="vehicle.type === 'camion'" [value]="vehicle._id"> {{ vehicle.plate + ' (Camión)' }}
+              </option>
+              <option *ngIf="vehicle.type === 'camionG'" [value]="vehicle._id">
+                {{ vehicle.plate + ' (Camión Gondola)' }}</option>
+            </ng-container>
+          </select>
+        </div>
+        <!-- /.form-group -->
+        <button type="button" [ngStyle]="{'margin-top': '29px'}" (click)="search()" class="btn btn-primary"><i
+            class="fas fa-search"></i> Consultar</button>
+        <button type="button" (click)="createReport()" data-toggle="modal" data-target="#modalKmByVehicles"
+          class="btn btn-outline-info ml-auto">Generar reporte <i class="fas fa-print"></i></button>
+      </div>
+      <!-- .card-body -->
+      <div class="card-body">
+        <h5 class="title">{{ titulo }}</h5>
+        <h6 class="text-muted">
+          {{ subTitulo }}</h6>
+        <!-- .section-block -->
+        <div class="section-block">
+          <!-- metric row -->
+          <div class="metric-row">
+            <!-- metric column -->
+            <div class="col">
+              <!-- .metric -->
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> VIAJES </h2>
+                <p class="metric-value h1">
+                  <sup>#</sup> <span class="value">{{ greenTripsT + whiteTrips.length | number : '1.2-2' }}</span>
+                </p>
+              </div>
+              <!-- /.metric -->
+            </div>
+            <!-- /metric column -->
+            <!-- metric column -->
+            <div class="col">
+              <!-- .metric -->
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> KILÓMETROS RECORRIDOS </h2>
+                <p class="metric-value h1">
+                  <sup>km</sup> <span class="value text-success">{{ greenKms + whiteKms | number : '1.2-2' }}</span>
+                </p>
+              </div>
+              <!-- /.metric -->
+            </div>
+            <!-- /metric column -->
+            <!-- metric column -->
+            <div class="col">
+              <!-- .metric -->
+              <div class="metric metric-bordered">
+                <h2 class="metric-label"> PROMEDIO km/viaje </h2>
+                <p class="metric-value h1">
+                  <sup>#</sup> <span
+                    class="value
+                    text-info">{{ (greenKms + whiteKms) / ( greenTripsT + whiteTrips.length) | number : '1.2-2' }}</span>
+                </p>
+              </div>
+              <!-- /.metric -->
+            </div>
+            <!-- /metric column -->
+          </div>
+          <!-- /metric row -->
+        </div>
+        <!-- /.section-block -->
+        <ng-container *ngIf="greenTrips.length > 0">
+          <div class="card-body border-top border-bottom mt-2">
+            <div class="row">
+              <div class="col">
+                <div class="metric">
+                  <h5 class="metric-value"> Producciones </h5>
+                </div>
+              </div>
+              <div class="col">
+                <div class="metric">
+                  <p class="metric-label"> Reportes </p>
+                  <h5 class="metric-value"> {{ greenTrips.length }} </h5>
+                </div>
+              </div>
+              <div class="col">
+                <div class="metric">
+                  <p class="metric-label"> Viajes </p>
+                  <h5 class="metric-value"> {{ greenTripsT  }} </h5>
+                </div>
+              </div>
+              <div class="col">
+                <div class="metric">
+                  <p class="metric-label"> Kilómetros </p>
+                  <h5 class="metric-value"> {{  greenKms | number: '1.2-2'}} km </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- .form-group -->
+          <div class="form-group">
+            <!-- .input-group -->
+            <div class="input-group input-group-alt">
+              <!-- .input-group -->
+              <div class="input-group has-clearable">
+                <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                      class="fa fa-times-circle"></i></span></button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+              </div>
+              <!-- /.input-group -->
+              <!-- .input-group-prepend -->
+              <div class="input-group-prepend">
+                <select id="filterBy" class="custom-select">
+                  <option value='' selected> Filtros </option>
+                  <option value="0"> Fecha </option>
+                  <option value="1"> Producción </option>
+                  <option value="2"> Empleado </option>
+                  <option value="3"> Material </option>
+                  <option value="4"> Viajes </option>
+                  <option value="5"> Kilómetros</option>
+                </select>
+              </div>
+              <!-- /.input-group-prepend -->
+            </div>
+            <!-- /.input-group -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .table -->
+          <table id="myTable" class="table">
+            <thead>
+              <tr>
+                <th> Fecha </th>
+                <th> Producción </th>
+                <th> Empleado </th>
+                <th> Material </th>
+                <th> Viajes </th>
+                <th> Kilómetros </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let greenTrip of greenTrips">
+                <td>
+                  {{ greenTrip.date | date: 'dd/MM/yyyy' }}
+                </td>
+                <td>
+                  <span class="badge badge-info">{{ greenTrip._type.km }} km</span>
+                  {{ greenTrip._type.code }} - {{ greenTrip._type.name }}
+                </td>
+                <td>
+                  {{ greenTrip._employee.name }}
+                </td>
+                <td>
+                  {{ greenTrip._material.code }} - {{ greenTrip._material.name }}
+                </td>
+                <td class="text-center">
+                  {{ greenTrip.trips }}
+                </td>
+                <td class="text-center">
+                  {{ (greenTrip.trips * greenTrip._type.km) | number : '1.2-2' }} km
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th> Fecha </th>
+                <th> Producción </th>
+                <th> Empleado </th>
+                <th> Material </th>
+                <th> Viajes </th>
+                <th> Kilómetros </th>
+              </tr>
+            </tfoot>
+          </table>
+        </ng-container>
+        <ng-container *ngIf="whiteTrips.length > 0">
+          <div class="card-body border-top border-bottom mt-2">
+            <div class="row">
+              <div class="col">
+                <div class="metric">
+                  <h5 class="metric-value"> Viajes </h5>
+                </div>
+              </div>
+              <div class="col">
+                <div class="metric">
+                  <p class="metric-label"> Viajes </p>
+                  <h5 class="metric-value"> {{ whiteTrips.length  }} </h5>
+                </div>
+              </div>
+              <div class="col">
+                <div class="metric">
+                  <p class="metric-label"> Kilómetros </p>
+                  <h5 class="metric-value"> {{  whiteKms | number: '1.2-2'}} km </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- .form-group -->
+          <div class="form-group">
+            <!-- .input-group -->
+            <div class="input-group input-group-alt">
+              <!-- .input-group -->
+              <div class="input-group has-clearable">
+                <button id="clear-search2" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                      class="fa fa-times-circle"></i></span></button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div><input id="table-search2" type="text" class="form-control" placeholder="Buscar aquí">
+              </div>
+              <!-- /.input-group -->
+              <!-- .input-group-prepend -->
+              <div class="input-group-prepend">
+                <select id="filterBy2" class="custom-select">
+                  <option value='' selected> Filtros </option>
+                  <option value="0"> Fecha </option>
+                  <option value="1"> Orden </option>
+                  <option value="2"> Entrega </option>
+                  <option value="3"> Empleado </option>
+                  <option value="4"> Material </option>
+                  <option value="5"> Destino </option>
+                  <option value="6"> Kilómetros</option>
+                </select>
+              </div>
+              <!-- /.input-group-prepend -->
+            </div>
+            <!-- /.input-group -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .table -->
+          <table id="myTable2" class="table">
+            <thead>
+              <tr>
+                <th> Fecha </th>
+                <th> Orden </th>
+                <th> Entrega </th>
+                <th> Empleado </th>
+                <th> Material </th>
+                <th> Destino </th>
+                <th> Kilómetros </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let whiteTrip of whiteTrips">
+                <td>
+                  {{ whiteTrip.date | date: 'dd/MM/yyyy' }}
+                </td>
+                <td>
+                  {{ whiteTrip._pull._order.order }}
+                </td>
+                <td>
+                  {{ whiteTrip.noTicket }}
+                </td>
+                <td>
+                  {{ whiteTrip._employee.name }}
+                </td>
+                <td>
+                  {{ whiteTrip._pull._material.code }} - {{ whiteTrip._pull._material.name }}
+                </td>
+                <td class="text-center">
+                  {{ whiteTrip._pull._order._destination.name }}
+                </td>
+                <td class="text-center">
+                  {{ whiteTrip._pull._order._destination.km | number : '1.2-2' }} km
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th> Fecha </th>
+                <th> Orden </th>
+                <th> Entrega </th>
+                <th> Empleado </th>
+                <th> Material </th>
+                <th> Destino </th>
+                <th> Kilómetros </th>
+              </tr>
+            </tfoot>
+          </table>
+        </ng-container>
+        <ng-template #customLoadingTemplate>
+        </ng-template>
+        <!-- /.table -->
+        <ngx-loading [show]="" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <!-- /.page-inner -->
+  <!-- .page-sidebar -->
+  <div class="page-sidebar">
+    <!-- .sidebar-header -->
+    <header class="sidebar-header d-sm-none">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">
+            <a href="#" data-toggle="sidebar"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i>Atras</a>
+          </li>
+        </ol>
+      </nav>
+    </header>
+    <!-- /.sidebar-header -->
+    <!-- .sidebar-section-fill -->
+    <div class="sidebar-section-fill">
+      <!-- .card -->
+      <div class="card card-reflow">
+        <div class="card-header">
+          <h5 class="modal-title"> Reportes </h5>
+        </div>
+        <!-- .card-body -->
+        <div class="card-body">
+          <button type="button" class="close mt-n1 d-none d-xl-none d-sm-block" data-toggle="sidebar"
+            aria-label="Close"><span aria-hidden="true">×</span></button>
+          <app-menu></app-menu>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.sidebar-section-fill -->
+  </div>
+  <!-- /.page-sidebar -->
+</div>
+<!-- /.page -->
+<!-- .modalREPORT -->
+<div class="modal fade" id="modalKmByVehicles" role="dialog" aria-labelledby="clientContactNewModalLabel"
+  aria-hidden="true">
+  <!-- .modal-dialog -->
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- .modal-content -->
+    <div class="modal-content">
+      <!-- .modal-header -->
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-money-check-alt"></i> Reporte de kilómetros recorridos por vehículo
+        </h5>
+      </div>
+      <!-- /.modal-header -->
+      <!-- .modal-body -->
+      <div class="modal-body">
+        <!-- .section-block -->
+        <div class="section-block">
+          <!-- .invoice-wrapper -->
+          <div id="benito" class="invoice-wrapper">
+            <!-- .invoice-actions -->
+            <div class="invoice-actions">
+              <div class="dropdown">
+                <button type="button" class="btn btn-lg btn-secondary rounded-0" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"><span class="fa fa-caret-down"></span></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-arrow mr-1"></div><button type="button" id="downloadPdf"
+                    class="dropdown-item">Descargar PDF</button>
+                </div>
+              </div>
+            </div>
+            <!-- /.invoice-actions -->
+            <!-- .invoice -->
+            <div id="invoice" class="invoice" data-id="RPT-KM-BY-VEHICLES">
+              <!-- .invoice-header -->
+              <div class="invoice-header">
+                <!-- grid row -->
+                <div class="row">
+                  <!-- .col -->
+                  <div class="col d-flex">
+                    <h2 class="invoice-brand align-self-center">
+                      <img src="assets/images/logo-min.png" width="270" alt=""> <span class="sr-only">Reporte la Viña
+                        S.A</span>
+                    </h2>
+                  </div>
+                  <!-- /.col -->
+                  <!-- .col -->
+                  <div class="col">
+                    <table class="table table-borderless table-sm">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <small>Usuario</small><br>
+                            <h6> {{ userS.usuario.name + ' ' + userS.usuario.lastName }} </h6>
+                          </td>
+                          <td colspan="2">
+                            <small>Fecha</small><br>
+                            <h6> {{ today | date:"dd/MM/yyyy HH:mm"}} </h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /grid row -->
+              </div>
+              <!-- /.invoice-header -->
+              <!-- .invoice-body -->
+              <div class="invoice-body">
+                <div class="row">
+                  <caption class="invoice-title">
+                    <span>Reporte</span><br>
+                    <span class="text-primary">{{ titulo }} </span><br>
+                    <span class="text-primary">{{ subTitulo }} </span>
+                  </caption>
+                </div>
+                <ng-container *ngIf="greenTrips.length > 0">
+                  <div class="card-body border-top border-bottom mt-2">
+                    <div class="row">
+                      <div class="col">
+                        <div class="metric">
+                          <h5 class="metric-value"> Producciones </h5>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="metric">
+                          <p class="metric-label"> Reportes </p>
+                          <h5 class="metric-value"> {{ greenTrips.length }} </h5>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="metric">
+                          <p class="metric-label"> Viajes </p>
+                          <h5 class="metric-value"> {{ greenTripsT  }} </h5>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="metric">
+                          <p class="metric-label"> Kilómetros </p>
+                          <h5 class="metric-value"> {{  greenKms | number: '1.2-2'}} km </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th> Fecha </th>
+                        <th> Producción </th>
+                        <th> Empleado </th>
+                        <th> Material </th>
+                        <th> Viajes </th>
+                        <th> Kilómetros </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let greenTrip of greenTrips">
+                        <td>
+                          {{ greenTrip.date | date: 'dd/MM/yyyy' }}
+                        </td>
+                        <td>
+                          <span class="badge badge-info">{{ greenTrip._type.km }} km</span>
+                          {{ greenTrip._type.code }} - {{ greenTrip._type.name }}
+                        </td>
+                        <td>
+                          {{ greenTrip._employee.name }}
+                        </td>
+                        <td>
+                          {{ greenTrip._material.code }} - {{ greenTrip._material.name }}
+                        </td>
+                        <td class="text-center">
+                          {{ greenTrip.trips }}
+                        </td>
+                        <td class="text-center">
+                          {{ (greenTrip.trips * greenTrip._type.km) | number : '1.2-2' }} km
+                        </td>
+                      </tr>
+                      <!-- fake border -->
+                      <tr>
+                        <td colspan="6"></td>
+                      </tr>
+                    </tbody>
+                    <tfoot class="table-borderless">
+                      <tr>
+                        <th> Fecha </th>
+                        <th> Producción </th>
+                        <th> Empleado </th>
+                        <th> Material </th>
+                        <th> Viajes </th>
+                        <th> Kilómetros </th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </ng-container>
+                <ng-container *ngIf="whiteTrips.length > 0">
+                  <div class="card-body border-top border-bottom mt-2">
+                    <div class="row">
+                      <div class="col">
+                        <div class="metric">
+                          <h5 class="metric-value"> Viajes </h5>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="metric">
+                          <p class="metric-label"> Viajes </p>
+                          <h5 class="metric-value"> {{ whiteTrips.length  }} </h5>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="metric">
+                          <p class="metric-label"> Kilómetros </p>
+                          <h5 class="metric-value"> {{  whiteKms | number: '1.2-2'}} km </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th> Fecha </th>
+                        <th> Orden </th>
+                        <th> Entrega </th>
+                        <th> Empleado </th>
+                        <th> Material </th>
+                        <th> Destino </th>
+                        <th> Kilómetros </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let whiteTrip of whiteTrips">
+                        <td>
+                          {{ whiteTrip.date | date: 'dd/MM/yyyy' }}
+                        </td>
+                        <td>
+                          {{ whiteTrip._pull._order.order }}
+                        </td>
+                        <td>
+                          {{ whiteTrip.noTicket }}
+                        </td>
+                        <td>
+                          {{ whiteTrip._employee.name }}
+                        </td>
+                        <td>
+                          {{ whiteTrip._pull._material.code }} - {{ whiteTrip._pull._material.name }}
+                        </td>
+                        <td class="text-center">
+                          {{ whiteTrip._pull._order._destination.name }}
+                        </td>
+                        <td class="text-center">
+                          {{ whiteTrip._pull._order._destination.km | number : '1.2-2' }} km
+                        </td>
+                      </tr>
+                      <!-- fake border -->
+                      <tr>
+                        <td colspan="7"></td>
+                      </tr>
+                    </tbody>
+                    <tfoot class="table-borderless">
+                      <tr>
+                        <th> Fecha </th>
+                        <th> Orden </th>
+                        <th> Entrega </th>
+                        <th> Empleado </th>
+                        <th> Material </th>
+                        <th> Destino </th>
+                        <th> Kilómetros </th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </ng-container>
+                <div class="card-body border-top border-bottom mt-2">
+                  <div class="row">
+                    <div class="col">
+                      <div class="metric">
+                        <h5 class="metric-value"> TOTALES </h5>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="metric">
+                        <p class="metric-label"> VIAJES </p>
+                        <h5 class="metric-value">
+                          {{ greenTripsT + whiteTrips.length | number : '1.2-2' }} </h5>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="metric">
+                        <p class="metric-label"> KILÓMETROS RECORRIDOS </p>
+                        <h5 class="metric-value"> {{ greenKms + whiteKms | number : '1.2-2' }} km
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="metric">
+                        <p class="metric-label"> PROMEDIO km/viaje </p>
+                        <h5 class="metric-value">
+                          {{ (greenKms + whiteKms) / ( greenTripsT + whiteTrips.length) | number : '1.2-2' }}
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.invoice-body -->
+              <!-- .invoice-footer -->
+              <div class="invoice-footer">
+                <p><strong>Copyright &copy; APPLITECH SOFTWARE SOLUTIONS.
+                  </strong> Todos Los Derechos Reservados.</p>
+              </div>
+              <!-- /.invoice-footer -->
+            </div>
+            <!-- /.invoice -->
+          </div>
+          <!-- /.invoice-wrapper -->
+        </div>
+        <!-- /.section-block -->
+      </div>
+      <!-- /.modal-body -->
+      <!-- .modal-footer -->
+      <div class="modal-footer">
+        <button #closeMG type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+      </div>
+      <!-- /.modal-footer -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modalREPORT -->

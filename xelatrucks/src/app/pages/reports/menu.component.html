@@ -1,0 +1,50 @@
+ <div class="list-group list-group-divider mb-3">
+   <div class="list-group-header"> Taller </div>
+   <!-- Link -->
+   <a [routerLink]="[ '/reports/purchasesByProviders' ]" routerLinkActive="active"
+     class="list-group-item list-group-item-action">
+     <div class="list-group-item-figure">
+       <span class="fas fa-lg fa-fw fa-shopping-cart"></span>
+     </div>
+     <div class="list-group-item-body">
+       <span class="list-group-item-text">Compras por proveedor</span>
+     </div>
+   </a>
+   <!-- /Link -->
+   <!-- Link -->
+   <a [routerLink]="[ '/reports/gasConsumptions' ]" routerLinkActive="active"
+     class="list-group-item list-group-item-action">
+     <div class="list-group-item-figure">
+       <span class="fas fa-lg fa-fw fa-gas-pump"></span>
+     </div>
+     <div class="list-group-item-body">
+       <span class="list-group-item-text">Consumo de combustible</span>
+     </div>
+   </a>
+   <!-- /Link -->
+   <div class="list-group-header"> Transporte </div>
+   <!-- Link -->
+   <a [routerLink]="[ '/reports/kmByVehicles' ]" routerLinkActive="active"
+     class="list-group-item list-group-item-action">
+     <div class="list-group-item-figure">
+       <span class="fas fa-lg fa-fw fa-truck"></span>
+     </div>
+     <div class="list-group-item-body">
+       <span class="list-group-item-text">
+         Kilómetros recorridos por vehículo</span>
+     </div>
+   </a>
+   <!-- /Link -->
+   <!-- Link -->
+   <a [routerLink]="[ '/reports/kmByDestinations' ]" routerLinkActive="active"
+     class="list-group-item list-group-item-action">
+     <div class="list-group-item-figure">
+       <span class="fas fa-lg fa-fw fa-list-ol"></span>
+     </div>
+     <div class="list-group-item-body">
+       <span class="list-group-item-text">
+         Rangos de kilómetros recorridos</span>
+     </div>
+   </a>
+   <!-- /Link -->
+ </div>

@@ -111,7 +111,7 @@ export class CdOrdersComponent implements OnInit, AfterViewInit {
     this.pullS.cargarActivasCD()
       .subscribe((resp: any) => {
         destroy_datatables();
-        // console.log(resp);
+        console.log(resp);
         this.pulls = resp.pulls;
         this.chRef.detectChanges();
         init_datatables();

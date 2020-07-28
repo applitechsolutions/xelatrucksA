@@ -19,7 +19,7 @@
         <!-- /.form-group -->
         <button type="button" [ngStyle]="{'margin-top': '29px'}" (click)="search()" class="btn btn-primary"><i
             class="fas fa-search"></i> Consultar</button>
-        <button type="button" (click)="createReport()" data-toggle="modal" data-target="#modalKmByVehicles"
+        <button type="button" (click)="createReport()" data-toggle="modal" data-target="#modalKmByDestinations"
           class="btn btn-outline-info ml-auto">Generar reporte <i class="fas fa-print"></i></button>
       </div>
       <!-- .card-body -->
@@ -37,7 +37,7 @@
               <div class="metric metric-bordered">
                 <h2 class="metric-label"> VIAJES </h2>
                 <p class="metric-value h1">
-                  <!-- <sup>#</sup> <span class="value">{{ greenTripsT + whiteTrips.length | number : '1.2-2' }}</span> -->
+                  <sup>#</sup> <span class="value">{{ tripsT | number : '1.2-2' }}</span>
                 </p>
               </div>
               <!-- /.metric -->
@@ -49,7 +49,7 @@
               <div class="metric metric-bordered">
                 <h2 class="metric-label"> KILÓMETROS RECORRIDOS </h2>
                 <p class="metric-value h1">
-                  <!-- <sup>km</sup> <span class="value text-success">{{ greenKms + whiteKms | number : '1.2-2' }}</span> -->
+                  <sup>km</sup> <span class="value text-success">{{ kmsT | number : '1.2-2' }}</span>
                 </p>
               </div>
               <!-- /.metric -->
@@ -61,7 +61,7 @@
               <div class="metric metric-bordered">
                 <h2 class="metric-label"> PROMEDIO km/viaje </h2>
                 <p class="metric-value h1">
-                  <!-- <sup>#</sup> <span class="value text-info">{{ (greenKms + whiteKms) / ( greenTripsT + whiteTrips.length) | number : '1.2-2' }}</span> -->
+                  <sup>km</sup> <span class="value text-info">{{ kmsT / tripsT | number : '1.2-2' }}</span>
                 </p>
               </div>
               <!-- /.metric -->
@@ -71,33 +71,6 @@
           <!-- /metric row -->
         </div>
         <!-- /.section-block -->
-        <div class="card-body border-top border-bottom mt-2">
-          <div class="row">
-            <div class="col">
-              <div class="metric">
-                <h5 class="metric-value"> Producciones </h5>
-              </div>
-            </div>
-            <div class="col">
-              <div class="metric">
-                <p class="metric-label"> Reportes </p>
-                <!-- <h5 class="metric-value"> {{ greenTrips.length }} </h5> -->
-              </div>
-            </div>
-            <div class="col">
-              <div class="metric">
-                <p class="metric-label"> Viajes </p>
-                <!-- <h5 class="metric-value"> {{ greenTripsT  }} </h5> -->
-              </div>
-            </div>
-            <div class="col">
-              <div class="metric">
-                <p class="metric-label"> Kilómetros </p>
-                <!-- <h5 class="metric-value"> {{  greenKms | number: '1.2-2'}} km </h5> -->
-              </div>
-            </div>
-          </div>
-        </div>
         <!-- .form-group -->
         <div class="form-group">
           <!-- .input-group -->
@@ -130,6 +103,7 @@
             <tr>
               <th> Rango </th>
               <th> Viajes </th>
+              <th> Kilómetros recorridos </th>
             </tr>
           </thead>
           <tbody>
@@ -140,12 +114,16 @@
               <td class="text-center">
                 {{ item.viajes }}
               </td>
+              <td class="text-center">
+                {{ item.total }} km
+              </td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <th> Rango </th>
               <th> Viajes </th>
+              <th> Kilómetros recorridos </th>
             </tr>
           </tfoot>
         </table>
@@ -196,7 +174,7 @@
 </div>
 <!-- /.page -->
 <!-- .modalREPORT -->
-<div class="modal fade" id="modalKmByVehicles" role="dialog" aria-labelledby="clientContactNewModalLabel"
+<div class="modal fade" id="modalKmByDestinations" role="dialog" aria-labelledby="clientContactNewModalLabel"
   aria-hidden="true">
   <!-- .modal-dialog -->
   <div class="modal-dialog modal-lg" role="document">
@@ -204,7 +182,7 @@
     <div class="modal-content">
       <!-- .modal-header -->
       <div class="modal-header">
-        <h5 class="modal-title"><i class="fas fa-money-check-alt"></i> Reporte de kilómetros recorridos por vehículo
+        <h5 class="modal-title"><i class="fas fa-money-check-alt"></i> Reporte de rangos de kilómetros recorridos
         </h5>
       </div>
       <!-- /.modal-header -->
@@ -227,7 +205,7 @@
             </div>
             <!-- /.invoice-actions -->
             <!-- .invoice -->
-            <div id="invoice" class="invoice" data-id="RPT-KM-BY-VEHICLES">
+            <div id="invoice" class="invoice" data-id="RPT-KM-BY-RANGES">
               <!-- .invoice-header -->
               <div class="invoice-header">
                 <!-- grid row -->
@@ -274,49 +252,33 @@
                 <table class="table table-sm">
                   <thead>
                     <tr>
-                      <th> Fecha </th>
-                      <th> Producción </th>
-                      <th> Empleado </th>
-                      <th> Material </th>
+                      <th> Rango </th>
                       <th> Viajes </th>
-                      <th> Kilómetros </th>
+                      <th> Kilómetros recorridos </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <tr *ngFor="let greenTrip of greenTrips">
-                        <td>
-                          {{ greenTrip.date | date: 'dd/MM/yyyy' }}
-                        </td>
-                        <td>
-                          <span class="badge badge-info">{{ greenTrip._type.km }} km</span>
-                          {{ greenTrip._type.code }} - {{ greenTrip._type.name }}
-                        </td>
-                        <td>
-                          {{ greenTrip._employee.name }}
-                        </td>
-                        <td>
-                          {{ greenTrip._material.code }} - {{ greenTrip._material.name }}
-                        </td>
-                        <td class="text-center">
-                          {{ greenTrip.trips }}
-                        </td>
-                        <td class="text-center">
-                          {{ (greenTrip.trips * greenTrip._type.km) | number : '1.2-2' }} km
-                        </td>
-                      </tr> -->
+                    <tr *ngFor="let item of report">
+                      <td>
+                        {{ item._id }}
+                      </td>
+                      <td class="text-center">
+                        {{ item.viajes }}
+                      </td>
+                      <td class="text-center">
+                        {{ item.total }} km
+                      </td>
+                    </tr>
                     <!-- fake border -->
                     <tr>
-                      <td colspan="6"></td>
+                      <td colspan="3"></td>
                     </tr>
                   </tbody>
                   <tfoot class="table-borderless">
                     <tr>
-                      <th> Fecha </th>
-                      <th> Producción </th>
-                      <th> Empleado </th>
-                      <th> Material </th>
+                      <th> Rango </th>
                       <th> Viajes </th>
-                      <th> Kilómetros </th>
+                      <th> Kilómetros recorridos </th>
                     </tr>
                   </tfoot>
                 </table>
@@ -330,23 +292,23 @@
                     <div class="col">
                       <div class="metric">
                         <p class="metric-label"> VIAJES </p>
-                        <!-- <h5 class="metric-value">
-                          {{ greenTripsT + whiteTrips.length | number : '1.2-2' }} </h5> -->
+                        <h5 class="metric-value">
+                          {{ tripsT | number : '1.2-2' }} </h5>
                       </div>
                     </div>
                     <div class="col">
                       <div class="metric">
                         <p class="metric-label"> KILÓMETROS RECORRIDOS </p>
-                        <!-- <h5 class="metric-value"> {{ greenKms + whiteKms | number : '1.2-2' }} km
-                        </h5> -->
+                        <h5 class="metric-value"> {{ kmsT | number : '1.2-2' }} km
+                        </h5>
                       </div>
                     </div>
                     <div class="col">
                       <div class="metric">
                         <p class="metric-label"> PROMEDIO km/viaje </p>
-                        <!-- <h5 class="metric-value">
-                          {{ (greenKms + whiteKms) / ( greenTripsT + whiteTrips.length) | number : '1.2-2' }}
-                        </h5> -->
+                        <h5 class="metric-value">
+                          {{ kmsT / tripsT | number : '1.2-2' }} km
+                        </h5>
                       </div>
                     </div>
                   </div>

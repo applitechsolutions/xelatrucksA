@@ -20,6 +20,8 @@ export class KmByDestinationsComponent implements OnInit {
   loading: boolean = false;
 
   report: any[] = [];
+  tripsT = 0;
+  kmsT = 0;
 
   today: Date;
   titulo = '';
@@ -66,6 +68,9 @@ export class KmByDestinationsComponent implements OnInit {
       console.log(resp);
       // console.log(this.agruparArreglo(unionArrays, '_id'));
       this.report = Object.values(this.agruparArreglo(unionArrays, '_id'));
+      this.report.sort((a, b) => {
+        return (parseInt(a._id.split(' ')[0], 10) - parseInt(b._id.split(' ')[0], 10));
+      });
       this.totals();
 
       this.chRef.detectChanges();
@@ -77,8 +82,9 @@ export class KmByDestinationsComponent implements OnInit {
   agruparArreglo(miarray, prop) {
     return miarray.reduce((groups, item) => {
       const val = item[prop];
-      groups[val] = groups[val] || { _id: item._id, viajes: 0 };
+      groups[val] = groups[val] || { _id: item._id, viajes: 0, total: 0 };
       groups[val].viajes += item.viajes;
+      groups[val].total += item.total;
       return groups;
     }, {});
   }
@@ -86,9 +92,8 @@ export class KmByDestinationsComponent implements OnInit {
 
   totals() {
     // SUMAS PARA LOS TOTALES -------------
-    // this.greenTripsT = this.greenTrips.reduce((sum, item) => sum + item.trips, 0);
-    // this.greenKms = this.greenTrips.reduce((sum, item) => sum + (item.trips * item._type.km), 0);
-    // this.whiteKms = this.whiteTrips.reduce((sum, item) => sum + item._pull._order._destination.km, 0);
+    this.tripsT = this.report.reduce((sum, item) => sum + item.viajes, 0);
+    this.kmsT = this.report.reduce((sum, item) => sum + item.total, 0);
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-import { TankTrip } from '../../models/tankTrip.model';
 import { TripService, DatatablesService } from '../../services/service.index';
+import { TankTrip } from '../../models/tankTrip.model';
 import * as moment from 'moment/moment';
 
 declare var swal: any;
@@ -70,7 +70,7 @@ export class KtripsComponent implements OnInit {
     this.tripService.cargarTankTrips(fecha1, fecha2)
       .subscribe((res: any) => {
         destroy_datatables();
-        // console.log(res);
+        console.log(res);
         this.tankTrips = res.viajesA;
         this.loading = false;
         this.chRef.detectChanges();

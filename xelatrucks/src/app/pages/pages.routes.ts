@@ -60,6 +60,7 @@ import { PurchasesByProvidersComponent } from './reports/taller/purchases-by-pro
 import { GasConsumptionsComponent } from './reports/taller/gas-consumptions/gas-consumptions.component';
 import { KmByVehiclesComponent } from './reports/transporte/km-by-vehicles/km-by-vehicles.component';
 import { KmByDestinationsComponent } from './reports/transporte/km-by-destinations/km-by-destinations.component';
+import { WtripsHistoryComponent } from './wtrips/wtrips-history.component';
 
 const pagesRoutes: Routes = [
     {
@@ -208,6 +209,12 @@ const pagesRoutes: Routes = [
         component: WtripsComponent,
         canActivate: [VerificaTokenGuard],
         data: { titulo: 'Anular reporte blanco' }
+    },
+    {
+        path: 'wtrips',
+        component: WtripsHistoryComponent,
+        canActivate: [VerificaTokenGuard],
+        data: { titulo: 'Listado de reportes lineas' }
     },
     {
         path: 'typeTrip/:id',

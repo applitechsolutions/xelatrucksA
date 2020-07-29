@@ -74,6 +74,7 @@ import { PurchasesByProvidersComponent } from './reports/taller/purchases-by-pro
 import { GasConsumptionsComponent } from './reports/taller/gas-consumptions/gas-consumptions.component';
 import { KmByVehiclesComponent } from './reports/transporte/km-by-vehicles/km-by-vehicles.component';
 import { KmByDestinationsComponent } from './reports/transporte/km-by-destinations/km-by-destinations.component';
+import { WtripsHistoryComponent } from './wtrips/wtrips-history.component';
 
 @NgModule({
         declarations: [
@@ -138,7 +139,8 @@ import { KmByDestinationsComponent } from './reports/transporte/km-by-destinatio
                 PurchasesByProvidersComponent,
                 GasConsumptionsComponent,
                 KmByVehiclesComponent,
-                KmByDestinationsComponent
+                KmByDestinationsComponent,
+                WtripsHistoryComponent
         ],
         exports: [
                 DashboardComponent,

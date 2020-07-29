@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { WhiteTrip } from '../../models/whiteTrip.model';
 import { TripService, DatatablesService } from "../../services/service.index";
+import { WhiteTrip } from '../../models/whiteTrip.model';
 
 declare var swal: any;
 declare function init_datatables();
@@ -17,7 +17,6 @@ export class WtripsComponent implements OnInit {
   id: string = '';
 
   whiteTrips: WhiteTrip[] = [];
-  whiteTrip: WhiteTrip = { _employee: null, _vehicle: null, _pull: null, date: null, noTicket: '', mts: 0, kgB: 0, kgT: 0, kgN: 0, checkIN: null, checkOUT: null, tariff: 0, invoiced: false };
 
   constructor(
     public activatedRouter: ActivatedRoute,

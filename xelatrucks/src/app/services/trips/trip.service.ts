@@ -109,6 +109,18 @@ export class TripService {
 
   /* #region  VIAJES BLANCOS */
 
+  cargarWhiteTripsActives() {
+    const url = URL_SERVICES + '/viajeB/actives';
+    return this.http.get(url);
+  }
+
+  cargarWhiteTripsHistory(fecha1: Date, fecha2: Date) {
+    let url = URL_SERVICES + '/viajeB/history';
+    url += '?fecha1=' + fecha1;
+    url += '&fecha2=' + fecha2;
+    return this.http.get(url);
+  }
+
   cargarWhiteTripsPurchaseCD() {
     const url = URL_SERVICES + '/viajeB/purchaseCD';
     return this.http.get(url);

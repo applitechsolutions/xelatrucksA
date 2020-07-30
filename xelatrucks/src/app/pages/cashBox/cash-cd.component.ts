@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CashServiceService, DatatablesService, UserService } from 'src/app/services/service.index';
 import { CashCD } from '../../models/cashCD.model';
 import { CashTypeCD } from '../../models/cashTypeCD.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Sale } from '../../models/sale.model';
 
 declare function init_datatables();
 declare function destroy_datatables();
@@ -30,6 +31,8 @@ export class CashCDComponent implements OnInit {
   cashsToday: CashCD[] = [];
   cashs: CashCD[] = [];
   cashTypes: CashTypeCD[] = [];
+  sales: Sale[] = [];
+  salesHistory: Sale[] = [];
   cashBalance: any = {};
   cashType: CashTypeCD = {
     name: '',
@@ -38,6 +41,8 @@ export class CashCDComponent implements OnInit {
   formaCash: FormGroup;
   ingresosT = 0;
   egresosT = 0;
+  ventasT = 0;
+  ventasTH = 0;
   today;
 
   constructor(
@@ -63,9 +68,13 @@ export class CashCDComponent implements OnInit {
   }
 
   cargarBalance() {
-    this.cashS.cargarSaldo().subscribe(cash => {
-      this.cashBalance = cash;
-      // console.log(this.saleCorrelative);
+    const fecha1 = moment(this.today, 'DD/MM/YYYY').subtract(1, 'd').toDate();
+    const fecha2 = moment(this.today, 'DD/MM/YYYY').subtract(1, 'd').toDate();
+    this.cashS.cargarSaldo(fecha1, fecha2).subscribe(cash => {
+      this.cashBalance = cash.saldo;
+      if (cash.ventas.length > 0) {
+        this.cashBalance = cash.ventas.reduce((sum, item) => sum + (item.flete + item.total));
+      }
     });
   }
 
@@ -78,8 +87,9 @@ export class CashCDComponent implements OnInit {
     this.cashS.cargarMovimientos(fecha1, fecha2)
       .subscribe(resp => {
         // destroy_datatables();
-        this.cashsToday = resp;
-
+        this.cashsToday = resp.movimientos;
+        this.sales = resp.ventas;
+        this.ventasT = this.sales.reduce((sum, item) => sum + (item.flete + item.total), 0);
         this.cashsToday.forEach((index) => {
           if (!index._cashTypeCD || index._cashTypeCD.type === 'INGRESO') {
             this.ingresosT = +this.ingresosT + +index.amount;
@@ -97,7 +107,9 @@ export class CashCDComponent implements OnInit {
     this.cashS.cargarMovimientos(fecha1, fecha2)
       .subscribe(resp => {
         destroy_datatables2();
-        this.cashs = resp;
+        this.cashs = resp.movimientos;
+        this.salesHistory = resp.ventas;
+        this.ventasTH = this.salesHistory.reduce((sum, item) => sum + (item.flete + item.total), 0);
 
         this.chRef.detectChanges();
         init_datatables2();
@@ -134,10 +146,6 @@ export class CashCDComponent implements OnInit {
     }
     this.loadingM = true;
     const fecha = moment(this.date.nativeElement.value, 'DD/MM/YYYY').toDate();
-    const fecha1 = moment(this.today, 'DD/MM/YYYY').toDate();
-    const fecha2 = moment(this.today, 'DD/MM/YYYY').toDate();
-
-
     let balance = 0;
 
     if (this.cashBalance) {

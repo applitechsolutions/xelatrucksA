@@ -52,7 +52,7 @@
               <div class="metric metric-bordered">
                 <h2 class="metric-label"> Total Ingresos </h2>
                 <p class="metric-value h1"><sup>Q</sup><span
-                    class="value text-primary">{{ ingresosT | number: '1.2-2' }} </span></p>
+                    class="value text-primary">{{ (ingresosT + ventasT) | number: '1.2-2' }} </span></p>
               </div>
             </div>
             <div class="col-3">
@@ -66,8 +66,9 @@
               <div class="metric metric-bordered">
                 <h2 class="metric-label"> Efectivo disponible </h2>
                 <p *ngIf="cashBalance" class="metric-value h1"><sup>Q</sup><span
-                    class="value text-success">{{ cashBalance.balance | number: '1.2-2' }} </span></p>
-                <p *ngIf="!cashBalance" class="metric-value h1"><sup>Q</sup><span class="value text-success">0.00
+                    class="value text-success">{{ (cashBalance.balance + ventasT) | number: '1.2-2' }} </span></p>
+                <p *ngIf="!cashBalance" class="metric-value h1"><sup>Q</sup><span class="value text-success">
+                    {{ ventasT | number: '1.2-2' }}
                   </span></p>
               </div>
             </div>
@@ -88,6 +89,22 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td class="align-middle">
+                  <span class="badge text-white bg-success">Ventas</span>
+                </td>
+                <td class="align-middle">Total de ventas realizadas</td>
+                <td class="align-middle">
+                  Q {{ ventasT | number: '1.2-2' }}
+                </td>
+                <td class="align-middle">
+                  -
+                </td>
+                <td class="align-middle">Q {{ (cashBalance.balance + ventasT) | number: '1.2-2' }}</td>
+                <td class="align-middle text-center">
+                  -
+                </td>
+              </tr>
               <tr *ngFor="let cash of cashsToday">
                 <td class="align-middle">
                   <ng-container *ngIf="cash._cashTypeCD">
@@ -226,6 +243,14 @@
               <!-- /.form-group -->
               <button (click)="buscarMovimientos()" type="button" [ngStyle]="{'margin-top': '29px'}"
                 class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+              <div class="col-3 ml-auto">
+                <div class="metric metric-bordered">
+                  <h2 class="metric-label"> Ingresos sobre ventas </h2>
+                  <p class="metric-value h1"><sup>Q</sup><span
+                      class="value text-success">{{ ventasTH | number: '1.2-2' }}
+                    </span></p>
+                </div>
+              </div>
             </div>
             <!-- .card-body -->
             <div class="card-body">

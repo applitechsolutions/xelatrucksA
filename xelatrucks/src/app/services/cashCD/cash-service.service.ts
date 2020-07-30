@@ -20,12 +20,12 @@ export class CashServiceService {
     public userS: UserService
   ) { }
 
-  cargarSaldo() {
-    const url = URL_SERVICES + '/cajaCD/lastBalance';
+  cargarSaldo(fecha1: Date, fecha2: Date) {
+    const url = URL_SERVICES + '/cajaCD/lastBalance?fecha1=' + fecha1 + '&fecha2=' + fecha2;
 
     return this.http.get(url)
       .pipe(
-        map((resp: any) => resp.saldo),
+        map((resp: any) => resp),
         catchError((err, caught) => {
           console.log(err);
           swal(err.error.mensaje, err.error.errors.message, 'error');
@@ -38,7 +38,7 @@ export class CashServiceService {
     const url = URL_SERVICES + '/cajaCD?fecha1=' + fecha1 + '&fecha2=' + fecha2;
 
     return this.http.get(url)
-      .pipe(map((resp: any) => resp.movimientos));
+      .pipe(map((resp: any) => resp));
   }
 
   cargarPagos(fecha1: Date, fecha2: Date) {

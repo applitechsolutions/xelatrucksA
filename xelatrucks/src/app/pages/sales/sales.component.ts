@@ -126,4 +126,8 @@ export class SalesComponent implements OnInit, AfterViewInit {
     init_despacho();
   }
 
+  generarBill() {
+
+  }
+
 }

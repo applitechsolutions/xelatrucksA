@@ -34,9 +34,16 @@ export class GbillService {
     return this.http.get(url);
   }
 
-  cargarFacturasNoPaid() {
+  cargarPreFacturas() {
     let url = URL_SERVICES + '/facturaV';
-    url += '/nopaid';
+    url += '/prebills';
+
+    return this.http.get(url);
+  }
+
+  cargarCreditosFacturas() {
+    let url = URL_SERVICES + '/facturaV';
+    url += '/creditbills';
 
     return this.http.get(url);
   }
@@ -59,7 +66,7 @@ export class GbillService {
       .pipe(
         map((res: any) => {
           const gbDB = res.bill;
-          swal('Factura creada correctamente!', 'success');
+          swal('Cambios aplicados correctamente!', 'success');
           return res.facturaV;
         }),
         catchError((err, caught) => {

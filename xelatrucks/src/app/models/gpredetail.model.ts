@@ -1,3 +1,4 @@
+import { GreenTrip } from './greenTrip.model';
 import { Tariff } from './tariff.model';
 export class PreDetailBill {
     constructor(

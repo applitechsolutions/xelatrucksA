@@ -7,6 +7,10 @@ import * as moment from 'moment/moment';
 
 declare function init_datatables();
 declare function destroy_datatables();
+declare function init_datatables2();
+declare function destroy_datatables2();
+declare function init_datatables3();
+declare function destroy_datatables3();
 declare var swal: any;
 
 @Component({
@@ -19,13 +23,19 @@ export class GbillsComponent implements OnInit {
   @ViewChild('date1') date1: ElementRef;
   @ViewChild('date2') date2: ElementRef;
   @ViewChild('closeM') closeM: ElementRef;
+  @ViewChild('closeM2') closeM2: ElementRef;
+  @ViewChild('payDoc') payDoc: ElementRef;
 
   formGB: FormGroup;
-  greenbil: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };
+  greenbill: GreenBill = { _customer: null, noBill: '', serie: '', date: null, total: 0, state: false, paid: false };
   loading: boolean = false;
+  loadingM: boolean = false;
 
+  preBills: GreenBill[] = [];
+  creditBills: GreenBill[] = [];
+  today;
+  today2;
   bills: GreenBill[] = [];
-  nobills: GreenBill[] = [];
   details: DetailBill[] = [];
 
   oc: string;
@@ -38,9 +48,11 @@ export class GbillsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const today = moment(new Date()).format('DD/MM/YYYY');
-    this.dtService.init_datePicker(today);
-    this.cargarNoPaid();
+    this.today = moment(new Date()).format('DD/MM/YYYY');
+    this.today2 = moment(new Date()).format('YYYY-MM-DD');
+    this.dtService.init_datePicker(this.today);
+    this.cargarPreFacturas();
+    this.cargarCreditosFacturas();
 
     this.formGB = new FormGroup({
       nobill: new FormControl('', Validators.required),
@@ -50,6 +62,13 @@ export class GbillsComponent implements OnInit {
       ac: new FormControl('', Validators.required)
     });
   }
+
+  calculateDiff(dateSent){
+    let currentDate = new Date();
+    dateSent = new Date(dateSent);
+
+    return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(), dateSent.getDate()) ) /(1000 * 60 * 60 * 24));
+}
 
   resetModal() {
     this.formGB.reset();
@@ -73,76 +92,87 @@ export class GbillsComponent implements OnInit {
 
     this.gbillService.cargarFacturas( fecha1, fecha2 )
       .subscribe((res: any) => {
-        destroy_datatables();
+        destroy_datatables3();
 
-        console.log(res);
         this.bills = res.facturas;
         this.chRef.detectChanges();
-        init_datatables();
+        init_datatables3();
         this.loading = false;
 
       });
   }
 
-  cargarNoPaid() {
+  cargarPreFacturas() {
 
-    this.loading = true;
-
-    this.gbillService.cargarFacturasNoPaid()
+    this.gbillService.cargarPreFacturas()
       .subscribe((res: any) => {
 
         destroy_datatables();
-        this.nobills = res.facturas;
+        this.preBills = res.facturas;
         this.chRef.detectChanges();
         init_datatables();
-        this.loading = false;
+      });
+  }
+
+  cargarCreditosFacturas() {
+
+    this.gbillService.cargarCreditosFacturas()
+      .subscribe((res: any) => {
+
+        destroy_datatables2();
+        this.creditBills = res.facturas;
+        this.chRef.detectChanges();
+        init_datatables2();
       });
   }
 
   cargarFactura( greenbill: GreenBill ) {
-    this.greenbil = greenbill;
+    this.greenbill = greenbill;
   }
 
-  pagarFactura() {
+  confirmarPreFactura() {
 
     if (this.formGB.invalid) {
       swal('Oops...', 'Algunos campos son obligatorios', 'warning');
       return;
     }
 
-    let greenbill;
+    this.loadingM = true;
 
-    if (this.greenbil._id) {
-      greenbill = new GreenBill(
-        null,
-        this.formGB.value.nobill,
-        this.formGB.value.serie,
-        moment(this.formGB.value.date, 'DD/MM/YYYY').toDate(),
-        0,
-        false,
-        true,
-        this.formGB.value.oc,
-        this.formGB.value.ac,
-        this.details,
-        0,
-        this.greenbil._id
-      );
-    } else {
-      return;
-    }
+    this.greenbill.noBill = this.formGB.value.nobill;
+    this.greenbill.serie = this.formGB.value.serie;
+    this.greenbill.date = moment(this.formGB.value.date, 'DD/MM/YYYY').toDate();
+    this.greenbill.oc = this.formGB.value.oc;
+    this.greenbill.ac = this.formGB.value.ac;
 
-    this.gbillService.crearFacturaVerde( greenbill )
+    this.gbillService.crearFacturaVerde( this.greenbill )
       .subscribe( () => {
-        this.cargarNoPaid();
+        this.loadingM = false;
         this.closeM.nativeElement.click();
         this.resetModal();
+        this.cargarPreFacturas();
+        this.cargarCreditosFacturas();
+      });
+  }
+
+  confirmarPago() {
+    this.loadingM = true;
+    this.greenbill.paidDoc = this.payDoc.nativeElement.value;
+    this.greenbill.paid = true;
+
+    this.gbillService.crearFacturaVerde( this.greenbill )
+      .subscribe( () => {
+        this.loadingM = false;
+        this.closeM2.nativeElement.click();
+        this.payDoc.nativeElement.value = '';
+        this.cargarCreditosFacturas();
       });
   }
 
   borrarFactura( bill: GreenBill ) {
     swal({
       title: '¿Está seguro?',
-      text: 'Está a punto de borrar la factuna número: ' + bill.noBill + ' ' + bill.serie,
+      text: 'Está a punto de borrar la factura con total: Q' + bill.total.toFixed(2),
       icon: 'warning',
       buttons: true,
       dangerMode: true,
@@ -150,10 +180,12 @@ export class GbillsComponent implements OnInit {
     .then( borrar => {
       if (borrar) {
 
+        this.loading = true;
         bill.state = true;
 
         this.gbillService.borrarFactura( bill )
           .subscribe( borrado => {
+          this.loading = false;
             swal({
               title: 'Exito!',
               text: 'Factura borrada correctamente',
@@ -161,18 +193,13 @@ export class GbillsComponent implements OnInit {
               button: false,
               timer: 1000
             });
-            destroy_datatables();
+            this.cargarPreFacturas();
+            this.cargarCreditosFacturas();
             this.buscarFacturas();
           });
-        // empleado.state = true;
-
-        // this.empService.borrarEmpleado( empleado )
-        //   .subscribe( borrado => {
-        //     this.dtService.destroy_table();
-        //     this.cargarEmpleados();
-        //   });
       }
 
     });
   }
+
 }

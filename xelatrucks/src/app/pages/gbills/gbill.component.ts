@@ -34,9 +34,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
   preDetail: PreDetailBill = { code: '', prod: '', totalmts: 0, trips: 0 };
   preDetails: any[] = [];
   details: DetailBill[] = [];
-  total: number = 0;
   tarifa: number = 0;
-  optional: number = 0;
   loading: boolean = false;
 
   cpcustomers: CPCustomer[] = [];
@@ -46,6 +44,9 @@ export class GbillComponent implements OnInit, AfterViewInit {
   // NUEVAS VARIABLES
   TOTALVIAJES = 0;
   TOTALMTRS = 0;
+
+  // greenTrip para editar
+  tripTemp = null;
 
   constructor(
     public router: Router,
@@ -65,8 +66,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
     this.cargarTypeTrips();
 
     this.formGB = new FormGroup({
-      customer: new FormControl(''),
-      date: new FormControl(null, Validators.required)
+      customer: new FormControl('')
     });
   }
 
@@ -104,7 +104,7 @@ export class GbillComponent implements OnInit, AfterViewInit {
       .subscribe((res: any) => {
 
         if (res.preDetail.length <= 0) {
-          swal('Oops...', 'No hay viajes en ese rango de fechas', 'warning');
+          swal('Oops...', 'No hay viajes para facturar en ese rango de fechas', 'warning');
           this.details = [];
           this.loading = false;
           return;
@@ -112,61 +112,62 @@ export class GbillComponent implements OnInit, AfterViewInit {
         destroy_datatables();
         this.preDetails = res.preDetail;
 
-        // console.log(this.preDetails);
-
         // CALCULAMOS EL TOTAL DE VIAJES Y DE METROS DE TODAS LAS FECHAS
         this.calcularTotales();
-        console.log(this.TOTALMTRS);
-        console.log(this.TOTALVIAJES);
         // BUSCAMOS EL TARIFARIO DENTRO DEL TIPO DE PRODUCCION
         const row = this.types.find(e => e._id === this.selectTT.nativeElement.value);
 
         this.tarifas = row.tariff;
-        this.details = [];
         if (extra <= 0 || extra === '') {
-          this.optional = 0;
           this.tarifas.forEach(element => {
             if (this.TOTALMTRS >= element.start && this.TOTALMTRS <= element.end) {
               this.tarifa = (element.cost * 1.12);
-              this.total = this.tarifa * this.preDetail.totalmts;
-              this.details.push({
-                _type: {
-                  code: this.preDetail.code,
-                  name: this.preDetail.prod,
-                  km: 0,
-                  tariff: null,
-                  _id: this.selectTT.nativeElement.value
-                },
-                mts: this.TOTALMTRS,
-                trips: this.TOTALVIAJES,
-                cost: this.tarifa
-              });
             }
           });
         } else {
-          this.optional = extra;
           this.tarifa = (extra * 1.12);
-          this.total = this.tarifa * this.preDetail.totalmts;
-          this.details.push({
-            _type: {
-              code: this.preDetail.code,
-              name: this.preDetail.prod,
-              km: 0,
-              tariff: null,
-              _id: this.selectTT.nativeElement.value
-            },
-            mts: this.preDetail.totalmts,
-            trips: this.preDetail.trips,
-            cost: this.tarifa
-          })
         }
         this.chRef.detectChanges();
         init_datatables();
+
 
         this.loading = false;
       }, error => {
         this.loading = false;
       });
+  }
+
+  addBillDetails() {
+    this.preDetails.forEach(detail => {
+      this.details.push({
+        date: detail._id,
+        _type: {
+          code: detail.code,
+          name: detail.prod,
+          km: 0,
+          tariff: [],
+          _id: detail._type
+        },
+        details: detail.detalles,
+        mts: detail.totalmts,
+        trips: detail.totalTrips,
+        cost: this.tarifa,
+      });
+    });
+    this.preDetails = [];
+    this.calcularTotales();
+  }
+
+  totalsFactura() {
+    let billTotals = {
+      trips: 0,
+      mts: 0,
+      total: 0
+    };
+     billTotals.trips = this.details.reduce((sum, item) => sum + item.trips, 0)
+     billTotals.mts = this.details.reduce((sum, item) => sum + item.mts, 0)
+     billTotals.total = this.details.reduce((sum, item) => sum + (item.mts * item.cost), 0)
+     return billTotals;
   }
 
   crearFacturaVerde() {
@@ -184,22 +185,22 @@ export class GbillComponent implements OnInit, AfterViewInit {
     }
 
     let greenbill;
+    this.loading = true;
 
     if (this.greenbil._id) {
       return;
     } else {
       greenbill = new GreenBill(
         this.formGB.value.customer,
-        'sin asignar',
-        'sin asignar',
-        moment(this.formGB.value.date, 'DD/MM/YYYY').toDate(),
-        this.total,
+        '',
+        '',
+        null,
+        this.totalsFactura().total,
         false,
         false,
         '',
         '',
-        this.details,
-        this.optional
+        this.details
       );
     }
 
@@ -220,6 +221,15 @@ export class GbillComponent implements OnInit, AfterViewInit {
         this.types = res.viajes;
       });
   }
+
+  editar(_id) {
+    this.tripTemp = _id;
+  }
+
+  recibirGreenTrip(event){
+    this.generarPreDetalle();
+  }
+
 
   /* #endregion */
 

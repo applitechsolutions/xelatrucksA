@@ -11,12 +11,18 @@
       <!-- .nav-tabs -->
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-          <a class="nav-link active show" data-toggle="tab" href="#tabListadoPre"><i class="far fa-list-alt"></i>
-            Listado de pre facturas </a>
+          <a class="nav-link active show" data-toggle="tab" href="#tabListadoPre"><span class="badge badge-info"><i
+                class="fas fa-file-invoice"></i></span>
+            Pre-facturas ({{ preBills.length }})</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#tabListado"><i class="fas fa-clipboard-list"></i> Listado
-            Facturas</a>
+          <a class="nav-link" data-toggle="tab" href="#tabListadoCre"><span class="badge badge-warning"><i
+                class="fas fa-file-invoice-dollar secondary"></i></span>
+            Créditos ({{ creditBills.length }})</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#tabListado"><i class="fas fa-history"></i> Historial de
+            facturas</a>
         </li>
       </ul>
       <!-- /.nav-tabs -->
@@ -28,9 +34,8 @@
       <div class="tab-pane fade show active" id="tabListadoPre" role="tabpanel" aria-labelledby="tab">
         <!-- .card-body -->
         <div class="card-body">
-          <!-- .btn-toolbar -->
-          <div id="dt-buttons" class="btn-toolbar"></div>
-          <!-- /.btn-toolbar -->
+          <h5>Listado de pre-facturas</h5>
+          <br>
           <!-- .form-group -->
           <div class="form-group">
             <!-- .input-group -->
@@ -48,8 +53,8 @@
               <div class="input-group-prepend">
                 <select id="filterBy" class="custom-select">
                   <option value='' selected> Filtros </option>
-                  <option value="0"> Cliente </option>
-                  <option value="1"> Fecha </option>
+                  <option value="0"> Fecha </option>
+                  <option value="1"> Cliente </option>
                   <option value="2"> Estado </option>
                   <option value="3"> Total </option>
                 </select>
@@ -59,36 +64,147 @@
             <!-- /.input-group -->
           </div>
           <!-- /.form-group -->
+          <!-- .btn-toolbar -->
+          <div id="dt-buttons" class="btn-toolbar"></div>
+          <!-- /.btn-toolbar -->
           <!-- .table -->
           <table id="myTable" class="table table-striped">
             <thead>
               <tr>
-                <th> Cliente </th>
                 <th> Fecha </th>
+                <th> Cliente </th>
                 <th> Estado </th>
                 <th> Total </th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let bill of nobills">
+              <tr *ngFor="let bill of preBills">
+                <td> {{ dtService.fromJsonDate(bill.createdAt) }} </td>
                 <td> {{ bill._customer.name }} </td>
-                <td> {{ dtService.fromJsonDate(bill.date) }} </td>
-                <td><span class="badge badge-danger"> Sin Pagar </span></td>
-                <td> {{ bill.total | number : '1.2-2' }} </td>
-                <td class="align-middle text-right">
-                  <!-- .btn -->
-                  <button class="btn btn-light btn-icon text-muted" data-toggle="modal" data-target="#modalNewTask"
-                    title="Add task" (click)="cargarFactura( bill )"><i class="fa fa-plus-circle"></i></button>
-                  <!-- /.btn -->
+                <td><span class="badge badge-info"> Sin aceptación</span></td>
+                <td>Q {{ bill.total | number : '1.2-2' }} </td>
+                <td class="align-middle text-center">
+                  <!-- .dropdown -->
+                  <div class="dropdown d-inline-block">
+                    <button class="btn btn-icon btn-secondary" data-toggle="dropdown"><i
+                        class="fa fa-fw fa-ellipsis-h"></i></button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <div class="dropdown-arrow"></div>
+                      <button (click)="cargarFactura( bill )" data-toggle="modal" data-target="#modalPreFactura"
+                        type="button" class="dropdown-item">Confirmar</button>
+                      <button (click)="cargarFactura( bill )" data-toggle="modal" data-target="#details" type="button"
+                        class="dropdown-item">Detalles</button>
+                      <div class="dropdown-divider"></div>
+                      <button (click)="borrarFactura( bill )" type="button" class="dropdown-item">Eliminar</button>
+                    </div>
+                  </div>
+                  <!-- /.dropdown -->
                 </td>
               </tr>
             </tbody>
           </table>
           <!-- /.table -->
           <ng-template #customLoadingTemplate></ng-template>
-          <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } "
-            [template]="customLoadingTemplate "></ngx-loading>
+          <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+          </ngx-loading>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.tab-pane -->
+      <!-- .tab-pane -->
+      <div class="tab-pane fade show" id="tabListadoCre" role="tabpanel" aria-labelledby="tab">
+        <!-- .card-body -->
+        <div class="card-body">
+          <h5>Listado facturas al crédito</h5>
+          <br>
+          <!-- .form-group -->
+          <div class="form-group">
+            <!-- .input-group -->
+            <div class="input-group input-group-alt">
+              <!-- .input-group -->
+              <div class="input-group has-clearable">
+                <button id="clear-search2" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                      class="fa fa-times-circle"></i></span></button>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                </div><input id="table-search2" type="text" class="form-control" placeholder="Buscar aquí">
+              </div>
+              <!-- /.input-group -->
+              <!-- .input-group-prepend -->
+              <div class="input-group-prepend">
+                <select id="filterBy2" class="custom-select">
+                  <option value='' selected> Filtros </option>
+                  <option value="0"> Fecha </option>
+                  <option value="1"> Factura </option>
+                  <option value="2"> Serie </option>
+                  <option value="3"> Cliente </option>
+                  <option value="4"> Orden de compra </option>
+                  <option value="5"> Aceptación de compra </option>
+                  <option value="6"> Estado </option>
+                  <option value="7"> Total </option>
+                </select>
+              </div>
+              <!-- /.input-group-prepend -->
+            </div>
+            <!-- /.input-group -->
+          </div>
+          <!-- /.form-group -->
+          <!-- .btn-toolbar -->
+          <div id="dt-buttons2" class="btn-toolbar"></div>
+          <!-- /.btn-toolbar -->
+          <!-- .table -->
+          <table id="myTable2" class="table table-striped">
+            <thead>
+              <tr>
+                <th> Fecha </th>
+                <th> Factura </th>
+                <th> Serie </th>
+                <th> Cliente </th>
+                <th> Orden de compra </th>
+                <th> Aceptación de compra </th>
+                <th> Estado </th>
+                <th> Total </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let bill of creditBills">
+                <td> {{ dtService.fromJsonDate(bill.date) }} </td>
+                <td> {{ bill.noBill }} </td>
+                <td> {{ bill.serie }} </td>
+                <td> {{ bill._customer.name }} </td>
+                <td> {{ bill.oc }} </td>
+                <td> {{ bill.ac }} </td>
+                <td>
+                  <span *ngIf="calculateDiff(bill.date) <= 30" class="badge badge-warning">Pendiente</span>
+                  <span *ngIf="calculateDiff(bill.date) > 30" class="badge badge-danger">Vencida</span>
+                </td>
+                <td>Q {{ bill.total | number : '1.2-2' }} </td>
+                <td class="align-middle text-center">
+                  <!-- .dropdown -->
+                  <div class="dropdown d-inline-block">
+                    <button class="btn btn-icon btn-secondary" data-toggle="dropdown"><i
+                        class="fa fa-fw fa-ellipsis-h"></i></button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <div class="dropdown-arrow"></div>
+                      <button (click)="cargarFactura( bill )" data-toggle="modal" data-target="#payBill" type="button"
+                        class="dropdown-item">Ingresar pago</button>
+                      <button (click)="cargarFactura( bill )" data-toggle="modal" data-target="#details" type="button"
+                        class="dropdown-item">Detalles</button>
+                      <div class="dropdown-divider"></div>
+                      <button (click)="borrarFactura( bill )" type="button" class="dropdown-item">Eliminar</button>
+                    </div>
+                  </div>
+                  <!-- /.dropdown -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- /.table -->
+          <ng-template #customLoadingTemplate></ng-template>
+          <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+          </ngx-loading>
         </div>
         <!-- /.card-body -->
       </div>
@@ -114,7 +230,7 @@
               class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
           </div>
           <!-- .btn-toolbar -->
-          <div id="dt-buttons" class="btn-toolbar"></div>
+          <div id="dt-buttons3" class="btn-toolbar"></div>
           <!-- /.btn-toolbar -->
           <!-- .form-group -->
           <div class="form-group">
@@ -122,25 +238,25 @@
             <div class="input-group input-group-alt">
               <!-- .input-group -->
               <div class="input-group has-clearable">
-                <button id="clear-search" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
+                <button id="clear-search3" type="button" class="close" aria-label="Close"><span aria-hidden="true"><i
                       class="fa fa-times-circle"></i></span></button>
                 <div class="input-group-prepend">
                   <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
-                </div><input id="table-search" type="text" class="form-control" placeholder="Buscar aquí">
+                </div><input id="table-search3" type="text" class="form-control" placeholder="Buscar aquí">
               </div>
               <!-- /.input-group -->
               <!-- .input-group-prepend -->
               <div class="input-group-prepend">
-                <select id="filterBy" class="custom-select">
+                <select id="filterBy3" class="custom-select">
                   <option value='' selected> Filtros </option>
-                  <option value="0"> No. de Factura </option>
-                  <option value="1"> No. de Serie </option>
-                  <option value="2"> Cliente </option>
-                  <option value="3"> Fecha </option>
+                  <option value="0"> Fecha </option>
+                  <option value="1"> Factura </option>
+                  <option value="2"> Serie </option>
+                  <option value="3"> Cliente </option>
                   <option value="4"> Orden de Compra </option>
                   <option value="5"> Aceptación de Compra </option>
-                  <option value="5"> Estado </option>
-                  <option value="5"> Total </option>
+                  <option value="6"> Estado </option>
+                  <option value="7"> Total </option>
                 </select>
               </div>
               <!-- /.input-group-prepend -->
@@ -149,15 +265,15 @@
           </div>
           <!-- /.form-group -->
           <!-- .table -->
-          <table id="myTable" class="table table-striped">
+          <table id="myTable3" class="table table-striped">
             <thead>
               <tr>
-                <th> No. de Factura </th>
-                <th> No. de Serie </th>
-                <th> Cliente </th>
                 <th> Fecha </th>
-                <th> Orden de Compra </th>
-                <th> Aceptación de Compra </th>
+                <th> Factura </th>
+                <th> Serie </th>
+                <th> Cliente </th>
+                <th> Orden de compra </th>
+                <th> Aceptación de compra </th>
                 <th> Estado </th>
                 <th> Total </th>
                 <th></th>
@@ -165,25 +281,43 @@
             </thead>
             <tbody>
               <tr *ngFor="let bill of bills">
+                <td> {{ dtService.fromJsonDate(bill.date) }} </td>
                 <td> {{ bill.noBill }} </td>
                 <td> {{ bill.serie }} </td>
                 <td> {{ bill._customer.name }} </td>
-                <td> {{ dtService.fromJsonDate(bill.date) }} </td>
                 <td> {{ bill.oc }} </td>
                 <td> {{ bill.ac }} </td>
-                <td> <span class="badge badge-success"> Pagada </span></td>
+                <td>
+                  <span *ngIf="calculateDiff(bill.date) <= 30 && !bill.paid"
+                    class="badge badge-warning">Pendiente</span>
+                  <span *ngIf="calculateDiff(bill.date) > 30 && !bill.paid" class="badge badge-danger">Vencida</span>
+                  <div *ngIf="bill.paid">
+                    <span>{{ bill.paidDoc }}</span><br>
+                    <span class="badge badge-success"> Pagada </span>
+                  </div>
+                </td>
                 <td> {{ bill.total | number : '1.2-2' }} </td>
-                <td class="align-middle text-right">
-                  <a class="btn btn-sm btn-icon btn-secondary pointer" (click)="borrarFactura( bill )"><i
-                      class="far fa-trash-alt "></i> <span class="sr-only ">Remove</span></a>
+                <td class="align-middle text-center">
+                  <!-- .dropdown -->
+                  <div class="dropdown d-inline-block">
+                    <button class="btn btn-icon btn-secondary" data-toggle="dropdown"><i
+                        class="fa fa-fw fa-ellipsis-h"></i></button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <div class="dropdown-arrow"></div>
+                      <button (click)="cargarFactura( bill )" data-toggle="modal" data-target="#details" type="button"
+                        class="dropdown-item">Detalles</button>
+                      <button (click)="borrarFactura( bill )" type="button" class="dropdown-item">Eliminar</button>
+                    </div>
+                  </div>
+                  <!-- /.dropdown -->
                 </td>
               </tr>
             </tbody>
           </table>
           <!-- /.table -->
           <ng-template #customLoadingTemplate></ng-template>
-          <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } "
-            [template]="customLoadingTemplate "></ngx-loading>
+          <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+          </ngx-loading>
         </div>
         <!-- /.card-body -->
       </div>
@@ -196,53 +330,72 @@
 <!-- /.page-section -->
 
 <!-- Large modal -->
-<div id="details " class="modal fade " tabindex="-1 " role="dialog " aria-labelledby="Detalles " aria-hidden="true ">
+<div id="details" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Detalles" aria-hidden="true">
   <!-- .modal-dialog -->
-  <div class="modal-dialog modal-lg " role="document ">
+  <div class="modal-dialog modal-lg" role="document">
     <!-- .modal-content -->
-    <div class="modal-content ">
+    <div class="modal-content">
       <!-- .modal-header -->
-      <div class="modal-header ">
-        <h5 id="myLargeModalLabel " class="modal-title "> Viajes del reporte </h5>
+      <div class="modal-header">
+        <h5 id="myLargeModalLabel" class="modal-title"> Producciones realizadas </h5>
+        <!-- .card-footer-item -->
+        <div class="card-footer-item card-footer-item-bordered">
+          <!-- .metric -->
+          <div class="metric">
+            <p class="metric-label mb-1"> Creada </p>
+            <h6 class="metric-value"> {{ dtService.fromJsonDate(greenbill.createdAt) }} </h6>
+          </div><!-- /.metric -->
+        </div><!-- /.card-footer-item -->
+        <!-- .card-footer-item -->
+        <div class="card-footer-item card-footer-item-bordered">
+          <!-- .metric -->
+          <div class="metric">
+            <p class="metric-label mb-1"> Total </p>
+            <h6 class="metric-value"> Q{{ greenbill.total | number: '1.2-2' }} </h6>
+          </div><!-- /.metric -->
+        </div><!-- /.card-footer-item -->
       </div>
       <!-- /.modal-header -->
       <!-- .modal-body -->
-      <div class="modal-body ">
+      <div class="modal-body">
         <!-- .table -->
-        <table id="table1 " class="table dt-responsive nowrap w-100 ">
+        <table id="table1" class="table dt-responsive nowrap w-100">
           <thead>
             <tr>
-              <th> Producción </th>
-              <th> Metros </th>
-              <th> Viajes </th>
-              <th> Costo </th>
+              <th> FECHA </th>
+              <th> PRODUCCIÓN </th>
+              <th> VIAJES </th>
+              <th> MTS </th>
+              <th> TARIFA (Q) </th>
+              <th> TOTAL (Q) </th>
             </tr>
           </thead>
           <tbody>
-            <!-- <tr *ngFor="let detail of detailsV ">
-                            <td>
-                                <h6>{{ detail._part.code + ' ' + detail._part.desc }}</h6>
-                            </td>
-                            <td> {{ detail.quantity }} </td>
-                            <td>Q {{ detail.cost | number : '1.2-2' }} </td>
-                            <td>Q {{ detail.quantity * detail.cost | number : '1.2-2' }} </td>
-                        </tr> -->
+            <ng-container *ngFor="let detail of greenbill.details">
+              <tr>
+                <td>
+                  {{ detail.date | date: 'dd/MM/yyyy' }}
+                </td>
+                <td>
+                  {{ detail._type.code }} <br>
+                  {{ detail._type.name }}
+                </td>
+                <td>{{ detail.trips }}</td>
+                <td>{{ detail.mts | number: '1.2-2'}}</td>
+                <td>{{ detail.cost | number: '1.2-2' }} </td>
+                <td>
+                  {{ (detail.mts * detail.cost ) | number: '1.2-2' }}
+                </td>
+              </tr>
+            </ng-container>
           </tbody>
-          <tfoot>
-            <tr>
-              <th> Repuesto </th>
-              <th> Cantidad </th>
-              <th> Costo </th>
-              <th> SubTotal </th>
-            </tr>
-          </tfoot>
         </table>
         <!-- /.table -->
       </div>
       <!-- /.modal-body -->
       <!-- .modal-footer -->
-      <div class="modal-footer ">
-        <button type="button " data-dismiss="modal " class="btn btn-light ">Cerrar</button>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-light">Cerrar</button>
       </div>
       <!-- /.modal-footer -->
     </div>
@@ -251,18 +404,21 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-<!-- .form -->
-<form ngNativeValidate [formGroup]="formGB" (ngSubmit)="pagarFactura()">
-  <!-- .modal -->
-  <div class="modal fade" id="modalNewTask" tabindex="-1" role="dialog" aria-labelledby="modalNewTaskLabel"
-    aria-hidden="true">
+<!-- form -->
+<form ngNativeValidate (ngSubmit)="confirmarPago()">
+  <!-- Alert Warning Modal -->
+  <div class="modal modal-alert fade" id="payBill" data-backdrop="static" role="dialog"
+    aria-labelledby="exampleModalAlertWarningLabel" aria-hidden="true">
     <!-- .modal-dialog -->
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <!-- .modal-content -->
-      <div class="modal-content px-lg-4 py-lg-3">
+      <div class="modal-content">
         <!-- .modal-header -->
         <div class="modal-header">
-          <h6 id="modalNewTaskLabel" class="modal-title"> Pagar Factura </h6>
+          <h5 id="exampleModalAlertWarningLabel" class="modal-title">
+            <i class="fa fa-bullhorn text-warning mr-1"></i> Factura: {{ greenbill.noBill }} - {{ greenbill.serie }}
+          </h5>
+          <h6 class="text-muted">Ingresar pago</h6>
         </div>
         <!-- /.modal-header -->
         <!-- .modal-body -->
@@ -270,7 +426,77 @@
           <!-- .form-group -->
           <div class="form-group form-row">
             <!-- .col -->
-            <div class="col-md-6">
+            <div class="col-md-6 offset-3">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Comprobante de pago</label> <input #payDoc type="text" class="form-control"
+                  placeholder="Ingrese un comprobante" data-autofocus="true">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.form-group -->
+        </div>
+        <!-- /.modal-body -->
+        <!-- .modal-footer -->
+        <div class="modal-footer">
+          <button #closeM2 type="button" class="btn btn-warning" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-light">
+            Pagar
+          </button>
+        </div>
+        <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate> </ng-template>
+        <!-- /.table -->
+        <ngx-loading [show]="loadingM" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</form>
+<!-- /.form -->
+<!-- .form -->
+<form ngNativeValidate [formGroup]="formGB" (ngSubmit)="confirmarPreFactura()">
+  <!-- .modal -->
+  <div class="modal fade" id="modalPreFactura" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- .modal-dialog -->
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <!-- .modal-content -->
+      <div class="modal-content px-lg-4 py-lg-3">
+        <!-- .modal-header -->
+        <div class="modal-header">
+          <h6 class="modal-title"> Confirmación de pre-factura </h6>
+          <!-- .card-footer-item -->
+          <div class="card-footer-item card-footer-item-bordered">
+            <!-- .metric -->
+            <div class="metric">
+              <p class="metric-label mb-1"> Creada </p>
+              <h6 class="metric-value"> {{ dtService.fromJsonDate(greenbill.createdAt) }} </h6>
+            </div><!-- /.metric -->
+          </div><!-- /.card-footer-item -->
+          <!-- .card-footer-item -->
+          <div class="card-footer-item card-footer-item-bordered">
+            <!-- .metric -->
+            <div class="metric">
+              <p class="metric-label mb-1"> Total </p>
+              <h6 class="metric-value"> Q{{ greenbill.total | number: '1.2-2' }} </h6>
+            </div><!-- /.metric -->
+          </div><!-- /.card-footer-item -->
+        </div>
+        <!-- /.modal-header -->
+        <!-- .modal-body -->
+        <div class="modal-body">
+          <br>
+          <!-- .form-group -->
+          <div class="form-group form-row">
+            <!-- .col -->
+            <div class="col-md-4">
               <!-- .form-group -->
               <div class="form-group">
                 <label for="tasksTitle">No. Factura</label> <input type="text" formControlName="nobill" name="nobill"
@@ -278,6 +504,20 @@
                   data-autofocus="true">
               </div>
               <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
+              <!-- .form-group -->
+              <div class="form-group">
+                <label for="tasksTitle">Serie</label> <input type="text" formControlName="serie" name="serie" id="serie"
+                  class="form-control" required="" placeholder="Ingrese la serie de la factura">
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <!-- .col -->
+            <div class="col-md-4">
               <!-- .form-group -->
               <div class="form-group">
                 <label class="control-label" for="flatpickr">Fecha <span
@@ -287,19 +527,8 @@
               <!-- /.form-group -->
             </div>
             <!-- /.col -->
-            <!-- .col -->
-            <div class="col-md-6">
-              <!-- .form-group -->
-              <div class="form-group">
-                <label for="tasksTitle">Serie</label> <input type="text" formControlName="serie" name="serie" id="serie"
-                  class="form-control" required="" placeholder="Ingrese la serie de la factura">
-              </div>
-              <!-- /.form-group -->
-            </div>
-            <!-- /.col -->
           </div>
           <!-- /.form-group -->
-          <hr>
           <!-- .form-group -->
           <div class="form-group form-row">
             <!-- .col -->
@@ -324,15 +553,21 @@
             <!-- /.col -->
           </div>
           <!-- /.form-group -->
+          <p>*El crédito de 30 días comienza a partir de la fecha ingresada</p>
+          <hr>
         </div>
         <!-- /.modal-body -->
         <hr>
         <!-- .modal-footer -->
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button> <button #closeM
-            type="reset" class="btn btn-light" data-dismiss="modal">Cancel</button>
+            type="reset" class="btn btn-light" data-dismiss="modal">Cancelar</button>
         </div>
         <!-- /.modal-footer -->
+        <ng-template #customLoadingTemplate> </ng-template>
+        <!-- /.table -->
+        <ngx-loading [show]="loadingM" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+        </ngx-loading>
       </div>
       <!-- /.modal-content -->
     </div>

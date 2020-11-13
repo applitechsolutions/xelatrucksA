@@ -4,14 +4,15 @@
   <div class="card-deck-xl">
     <!-- .card -->
     <div class="card card-fluid">
-      <div class="card-header"> Generar detalle </div>
+      <div class="card-header">
+        Consultar viajes
+      </div>
       <!-- .card-body -->
       <div class="card-body">
-        <p class="text-muted"> Seleccione el viaje y el rango de fechas para generar el detalle. </p>
         <!-- grid row -->
         <div class="row">
           <!-- .form-group -->
-          <div class="form-group col-4">
+          <div class="form-group col-3">
             <label id="typeL">Tipo de Viaje</label>
             <select #selectTT name="typetrip" class="form-control select2" style="width:100%!important;">
               <option value=""> Seleccione un viaje </option>
@@ -20,103 +21,30 @@
           </div>
           <!-- /.form-group -->
           <!-- .form-group -->
-          <div class="form-group col-4">
+          <div class="form-group col-2">
             <label id="typeL">Fecha inicial</label>
             <input #date1 id="flatpickr" name="date1" type="text" class="form-control" required>
           </div>
           <!-- /.form-group -->
           <!-- .form-group -->
-          <div class="form-group col-4">
+          <div class="form-group col-2">
             <label id="typeL">Fecha final</label>
             <input #date2 id="flatpickr" name="date2" type="text" class="form-control" required>
           </div>
           <!-- /.form-group -->
-        </div>
-        <!-- /grid row -->
-        <!-- grid row -->
-        <div class="row">
           <!-- .form-group -->
-          <div class="form-group col-4">
-            <label for="tf2">Tarifa extraordinaria</label>
+          <div class="form-group col-2">
+            <label for="tf2">Tarifa <span class="badge badge-warning">Extraordinaria</span></label>
             <input #extra id="ext" name="ext" type="number" class="form-control" min="0" step="0.01" value="0"
               placeholder="Ingrese la tarifa extraordinaria del viaje" required>
           </div>
           <!-- /.form-group -->
           <button type="button" class="btn btn-primary" style="margin-top: 28px; margin-left: 10px;"
-            (click)="generarPreDetalle()"><i class="fas fa-search"></i> Buscar</button>
+            (click)="generarPreDetalle()"><i class="fas fa-search"></i> Consultar</button>
         </div>
         <!-- /grid row -->
-      </div>
-      <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-    <!-- .card -->
-    <div class="card card-fluid">
-      <div class="card-header"> Crear pre-factura </div>
-      <!-- .card-body -->
-      <div class="card-body">
-        <p class="text-muted"> Seleccione el cliente y la fecha para continuar </p>
-        <form ngNativeValidate [formGroup]="formGB" (ngSubmit)="crearFacturaVerde()">
-          <!-- grid row -->
-          <div class="row">
-            <!-- .form-group -->
-            <div class="form-group col-4">
-              <label id="typeL">Cliente <span class="badge badge-danger">Obligatorio</span></label> <select #selectC
-                formControlName="customer" name="customer" class="form-control select2" style="width:100%!important;">
-                <option value=""> Seleccione un cliente </option>
-                <option *ngFor="let customer of cpcustomers" [value]="customer._id"> {{ customer.name }} </option>
-              </select>
-            </div>
-            <!-- /.form-group -->
-            <!-- .form-group -->
-            <div class="form-group col-4">
-              <label class="control-label" for="flatpickr">Fecha <span
-                  class="badge badge-danger">Obligatorio</span></label> <input id="flatpickr" formControlName="date"
-                name="date" type="text" class="form-control" required>
-            </div>
-            <!-- /.form-group -->
-            <button type="submit" class="btn btn-primary" style="margin-top: 28px; margin-left: 10px;"><i
-                class="fas fa-save"></i> Guardar</button>
-          </div>
-          <!-- /grid row -->
-        </form>
-      </div>
-      <!-- /.card-body -->
-      <!-- .card-body -->
-      <div class="card-body border-top">
-        <!-- .list-group -->
-        <div class="list-group list-group-flush list-group-divider">
-          <!-- .list-group-item -->
-          <div class="list-group-item" *ngFor="let detail of details">
-            <div class="list-group-item-figure">
-              <a class="tile tile-circle bg-success"><span class="fas fa-truck-monster"></span></a>
-            </div>
-            <div class="list-group-item-body">
-              <h4 class="list-group-item-title">
-                <a> {{ detail._type.code }} {{ detail._type.name }} </a>
-              </h4>
-              <p class="list-group-item-text"><strong> metros: </strong>{{ detail.mts }}</p>
-            </div>
-            <div class="list-group-item-figure">
-
-              <p class="list-group-item-text gree"><i class="fas fa-money-bill-wave-alt"></i> <span
-                  class="badge badge-subtle badge-success"> Q.{{ total | number : '1.2-2' }}</span></p>
-            </div>
-          </div>
-          <!-- /.list-group-item -->
-        </div>
-        <!-- /.list-group -->
-      </div>
-      <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-  </div>
-  <!-- /.card-deck-xl -->
-  <div class="card-deck-xl">
-    <!-- .card -->
-    <div class="card card-fluid">
-      <!-- .card-body -->
-      <div class="card-body">
+        <br>
+        <h6>Listado de viajes consultados</h6>
         <!-- .form-group -->
         <div class="form-group">
           <!-- .input-group -->
@@ -150,6 +78,22 @@
             </tr>
           </thead>
           <tbody>
+            <ng-container *ngIf="preDetails.length === 0">
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <div class="alert alert-warning has-icon" role="alert">
+                    <div class="alert-icon">
+                      <span class="fa fa-bullhorn"></span>
+                    </div>No hay viajes encontrados, por favor realice una consulta.
+                  </div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </ng-container>
             <ng-container *ngFor="let preDetail of preDetails">
               <tr>
                 <td>
@@ -167,7 +111,14 @@
                 <td>{{ detail.mts | number: '1.2-2'}}</td>
                 <td>{{ detail.trips }}</td>
                 <td>{{ detail.totalmts | number: '1.2-2' }}</td>
-                <td> - </td>
+                <td class="align-middle text-left">
+                  <a data-toggle="modal"
+                  data-target="#modalNewTask" (click)="editar(detail._id)"
+                   class="btn btn-sm btn-icon btn-secondary pointer" title="Editar"><i class="fas fa-edit"></i> <span
+                      class="sr-only ">Editar</span></a>
+                  <!-- <a class="btn btn-sm btn-icon btn-secondary pointer" title="Eliminar" (click)="eliminarViajeVerde( gt )"><i
+         class="far fa-trash-alt "></i> <span class="sr-only ">Eliminar</span></a> -->
+                </td>
               </tr>
               <tr>
                 <td></td>
@@ -197,8 +148,8 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>-</th>
-              <th>-</th>
+              <th></th>
+              <th></th>
               <th>
                 <h5>
                   TOTALES
@@ -225,11 +176,129 @@
         <!-- /.table -->
       </div>
       <!-- /.card-body -->
+      <div class="card-footer">
+        <button *ngIf="preDetails.length > 0"  (click)="addBillDetails()"  class="btn btn-info btn-block"><i class="fas fa-arrow-down"></i> Agregar
+          producción a
+          pre-factura</button>
+      </div>
     </div>
+    <!-- /.card -->
   </div>
-  <!-- /.card-deck-xl -->
+  <hr class="my-5">
+  <!-- .card -->
+  <div class="card card-fluid">
+    <div class="card-header"> Crear pre-factura </div>
+    <!-- .card-body -->
+    <div class="card-body">
+      <form ngNativeValidate [formGroup]="formGB" (ngSubmit)="crearFacturaVerde()">
+        <!-- grid row -->
+        <div class="row">
+          <!-- .form-group -->
+          <div class="form-group col-4">
+            <label id="typeL">Cliente <span class="badge badge-danger">Obligatorio</span></label> <select #selectC
+              formControlName="customer" name="customer" class="form-control select2" style="width:100%!important;">
+              <option value=""> Seleccione un cliente </option>
+              <option *ngFor="let customer of cpcustomers" [value]="customer._id"> {{ customer.name }} </option>
+            </select>
+          </div>
+          <!-- /.form-group -->
+          <button *ngIf="details.length > 0" type="submit" class="btn btn-success" style="margin-top: 28px; margin-left: 10px;"><i
+              class="fas fa-save"></i> Crear pre-factura</button>
+        </div>
+        <!-- /grid row -->
+      </form>
+    </div>
+    <!-- /.card-body -->
+    <!-- .card-body -->
+    <div class="card-body border-top">
+      <div class="section-block">
+        <h2 class="section-title"> Detalle de pre-factura </h2><!-- metric row -->
+        <div class="metric-row">
+          <!-- metric column -->
+          <div class="col">
+            <!-- .metric -->
+            <div class="metric metric-bordered">
+              <h2 class="metric-label"> Total Viajes </h2>
+              <p class="metric-value h1">
+                <span class="value"> {{ totalsFactura().trips }}</span>
+              </p>
+            </div><!-- /.metric -->
+          </div><!-- /metric column -->
+          <!-- metric column -->
+          <div class="col">
+            <!-- .metric -->
+            <div class="metric metric-bordered">
+              <h2 class="metric-label"> Total Metros </h2>
+              <p class="metric-value h1">
+                <span class="value">{{ totalsFactura().mts | number: '1.2-2' }}</span><sup>m</sup>
+              </p>
+            </div><!-- /.metric -->
+          </div><!-- /metric column -->
+          <!-- metric column -->
+          <div class="col">
+            <!-- .metric -->
+            <div class="metric metric-bordered">
+              <h2 class="metric-label"> Total </h2>
+              <p class="metric-value h1">
+                <sup>Q</sup><span class="value">{{ totalsFactura().total | number: '1.2-2' }}</span>
+              </p>
+            </div><!-- /.metric -->
+          </div><!-- /metric column -->
+        </div><!-- /metric row -->
+      </div>
+      <!-- .table -->
+      <table id="myTable1" class="table table-striped">
+        <thead>
+          <tr>
+            <th> FECHA </th>
+            <th> PRODUCCIÓN </th>
+            <th> VIAJES </th>
+            <th> MTS </th>
+            <th> TARIFA </th>
+            <th> TOTAL </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="details.length === 0">
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <div class="alert alert-warning has-icon" role="alert">
+                  <div class="alert-icon">
+                    <span class="fa fa-bullhorn"></span>
+                  </div>No hay producciones agregadas a la pre-factura.
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </ng-container>
+          <ng-container *ngFor="let detail of details">
+            <tr>
+              <td>
+                {{ detail.date | date: 'dd/MM/yyyy' }}
+              </td>
+              <td>{{ detail._type.code + ' ' + detail._type.name }}</td>
+              <td>{{ detail.trips }}</td>
+              <td>{{ detail.mts | number: '1.2-2'}}</td>
+              <td>Q {{ detail.cost | number: '1.2-2' }} </td>
+              <td>
+                Q {{ (detail.mts * detail.cost ) | number: '1.2-2' }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <!-- /.table -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
   <ng-template #customLoadingTemplate></ng-template>
   <ngx-loading [show]="loading " [config]="{ backdropBorderRadius: '3px' } " [template]="customLoadingTemplate ">
   </ngx-loading>
 </div>
 <!-- /.page-section -->
+<app-gtrip-modal [_idTrip]="tripTemp" (pasarGreenTrip)="recibirGreenTrip($event)"></app-gtrip-modal>

@@ -75,6 +75,7 @@ import { GasConsumptionsComponent } from './reports/taller/gas-consumptions/gas-
 import { KmByVehiclesComponent } from './reports/transporte/km-by-vehicles/km-by-vehicles.component';
 import { KmByDestinationsComponent } from './reports/transporte/km-by-destinations/km-by-destinations.component';
 import { WtripsHistoryComponent } from './wtrips/wtrips-history.component';
+import { GtripModalComponent } from './gtrips/gtrip-modal/gtrip-modal.component';
 
 @NgModule({
         declarations: [
@@ -140,7 +141,8 @@ import { WtripsHistoryComponent } from './wtrips/wtrips-history.component';
                 GasConsumptionsComponent,
                 KmByVehiclesComponent,
                 KmByDestinationsComponent,
-                WtripsHistoryComponent
+                WtripsHistoryComponent,
+                GtripModalComponent,
         ],
         exports: [
                 DashboardComponent,

@@ -1,0 +1,181 @@
+<!-- .form -->
+<form ngNativeValidate [formGroup]="formGT" (ngSubmit)="crearViajeVerde()">
+    <!-- .modal -->
+    <div class="modal fade" id="modalNewTask" role="dialog" aria-labelledby="modalNewTaskLabel" aria-hidden="true">
+      <!-- .modal-dialog -->
+      <div class="modal-dialog modal-lg" role="document">
+        <!-- .modal-content -->
+        <div class="modal-content px-lg-4 py-lg-3">
+          <!-- .modal-header -->
+          <div class="modal-header">
+            <h6 id="modalNewTaskLabel" class="modal-title">Reporte Cuadros
+            </h6>
+          </div>
+          <!-- /.modal-header -->
+          <!-- .modal-body -->
+          <div class="modal-body">
+            <!-- .form-group -->
+            <div class="form-group form-row">
+              <!-- .col -->
+              <div class="col-md-6">
+                <!-- .form-group -->
+                <div class="form-group">
+                    <label>Vehículo <span class="badge badge-danger">Obligatorio</span></label>
+                    <select #selectV formControlName="vehicle" name="vehicle" class="form-control select2"
+                    style="width:100%!important;">
+                    <option value=""> Seleccione un vehículo </option>
+                    <ng-container *ngFor="let vehicle of vehicles">
+                      <option *ngIf="vehicle.type === 'camion'" [selected]="vehicle._id === tempVehicle"
+                        [value]="vehicle._id"> {{ vehicle.plate + ' (Camión)' }}</option>
+                      <option *ngIf="vehicle.type === 'camionG'" [selected]="vehicle._id === tempVehicle"
+                        [value]="vehicle._id"> {{ vehicle.plate + ' (Camión Gondola)' }}</option>
+                    </ng-container>
+                  </select>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-md-6">
+                <!-- .form-group -->
+                <div class="form-group">
+                    <label>Empleado <span class="badge badge-danger">Obligatorio</span></label>
+                  <select #selectE formControlName="employee" name="employee" class="form-control select2"
+                    style="width:100%!important;">
+                    <option value=""> Seleccione un empleado </option>
+                    <option *ngFor="let empleado of employees" [selected]="empleado._id === tempEmp"
+                      [value]="empleado._id"> {{ empleado.name }}
+                    </option>
+                  </select>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.form-group -->
+            <!-- .form-group -->
+            <div class="form-group form-row">
+              <!-- .col -->
+              <div class="col-md-6">
+                <!-- .form-group -->
+                <div class="form-group">
+                    <label>Producción <span class="badge badge-danger">Obligatorio</span></label>
+                    <select #selectT formControlName="type" name="type" class="form-control select2"
+                      style="width:100%!important;">
+                      <option value=""> Seleccione un tipo de producción </option>
+                      <option *ngFor="let type of types" [selected]="type._id === tempType" [value]="type._id">
+                        {{ type.name + ' ' + '('+ type.km + ' km)' }}
+                      </option>
+                    </select>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-md-6">
+                <!-- .form-group -->
+                <div class="form-group">
+                    <label>Material <span class="badge badge-danger">Obligatorio</span></label> <select
+                    #selectM formControlName="material" name="material" class="form-control select2"
+                    style="width:100%!important;">
+                    <option value=""> Seleccione un material </option>
+                    <option *ngFor="let material of materials" [selected]="material._material._id === tempMat"
+                      [value]="material._material._id"> {{ material._material.code }} {{ material._material.name }}
+                    </option>
+                  </select>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.form-group -->
+            <hr>
+            <!-- .form-group -->
+            <div class="form-group form-row">
+              <!-- .col -->
+              <div class="col-md-3">
+                <!-- .form-group -->
+                <div class="form-group">
+                    <label class="control-label" for="flatpickr">Fecha <span
+                        class="badge badge-danger">Obligatorio</span></label> <input #date id="flatpickr"
+                      formControlName="date" name="date" type="text" class="form-control">
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-md-3">
+                <!-- .form-group -->
+                <div class="form-group">
+                    <label class="control-label" for="flatpickr08"> Hora de entrada </label> <input #checkIN
+                    id="flatpickr08" formControlName="checkIN" name="checkIN" type="text" class="form-control"
+                    data-toggle="flatpickr" data-enable-time="true" data-no-calendar="true" data-date-format="H:i"
+                    data-default-date="12:00">
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-md-3">
+                <!-- .form-group -->
+                <div class="form-group">
+                    <label class="control-label" for="flatpickr08"> Hora de salida </label> <input #checkOUT
+                    id="flatpickr08" formControlName="checkOUT" name="checkOUT" type="text" class="form-control"
+                    data-toggle="flatpickr" data-enable-time="true" data-no-calendar="true" data-date-format="H:i"
+                    data-default-date="12:00">
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+              <!-- .col -->
+              <div class="col-md-3">
+                <!-- .form-group -->
+                <div class="form-group">
+                    <label for="pay">Viajes <span class="badge badge-danger">Obligatorio</span></label>
+                    <div class="input-group">
+                      <label class="input-group-prepend" for="pi9"><span class="badge"><i
+                            class="fas fa-snowplow"></i></span></label>
+                      <input formControlName="trips" name="trips" type="number" min="0" step="1" class="form-control"
+                        id="trips" placeholder="Ingrese el total de viajes" required>
+                    </div>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.form-group -->
+            <!-- .form-group -->
+            <div class="form-group form-row">
+              <!-- .col -->
+              <div class="col-md-12">
+                <!-- .form-group -->
+                <div class="form-group">
+                    <label for="tf6">Detalles</label>
+                    <textarea formControlName="details" name="details" class="form-control" id="tf6" rows="3"></textarea>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.form-group -->
+          </div>
+          <!-- /.modal-body -->
+          <hr>
+          <!-- .modal-footer -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button> <button #closeM
+              type="reset" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+          </div>
+          <!-- /.modal-footer -->
+          <ng-template #customLoadingTemplate>
+          </ng-template>
+          <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate">
+          </ngx-loading>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+  </form>
+  <!-- /.form -->
